@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import DateAndTime from "./DateAndTime";
 import DailyForecast from "./dailyForecast/DailyForecast";
 import Button from "@/app/components/elements/button/Button";
 
@@ -91,10 +90,18 @@ const FavoriteCityCard = React.memo(
       }
     };
 
-    const handleDetailsClick = () => {
+    const handleWeatherInfoClick = () => {
       router.push(
         `/weather/${cityLat}/${cityLng}?place=${placeNameToDisplay}&address=${cityAddress}&id=${cityPlaceId}`
       );
+    };
+
+    const handlePlaceInfoClick = async () => {
+      const res = await fetch(
+        `/api/tourist-spots?lat=${cityLat}&lon=${cityLng}&radius=5000`
+      );
+      const data = await res.json();
+      console.log(data);
     };
 
     return (
@@ -144,10 +151,6 @@ const FavoriteCityCard = React.memo(
             <div className={styles.cityCard__currentDateTime}>
               {currentDateTime}
             </div>
-            {/* <DateAndTime
-              timeZone={timeZone}
-              className={styles.cityCard__currentDateTime}
-            /> */}
             <div className={styles.cityCard__currentWeather}>
               <div className={styles.cityCard__currentWeatherIconContainer}>
                 <WeatherIcon
@@ -162,7 +165,12 @@ const FavoriteCityCard = React.memo(
               <Button
                 text="Weather Details"
                 type="button"
-                onClick={handleDetailsClick}
+                onClick={handleWeatherInfoClick}
+              />
+              <Button
+                text="Spots & Events"
+                type="button"
+                onClick={handlePlaceInfoClick}
               />
             </div>
           </div>

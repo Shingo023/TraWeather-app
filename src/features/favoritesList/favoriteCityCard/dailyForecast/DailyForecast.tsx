@@ -74,7 +74,8 @@ const DailyForecast = ({
           const temp = Math.round(hourlyWeather.temp);
           const precipProb = Math.round(hourlyWeather.precipprob / 5) * 5;
 
-          const precipAmount = hourlyWeather.precip ?? 0;
+          const rawPrecipAmount = hourlyWeather.precip ?? 0;
+          const precipAmount = Number(rawPrecipAmount.toFixed(1));
           const windSpeed = Math.round(hourlyWeather.windspeed);
 
           return (
