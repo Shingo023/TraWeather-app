@@ -98,7 +98,7 @@ const FavoriteCityCard = React.memo(
 
     const handlePlaceInfoClick = async () => {
       const res = await fetch(
-        `/api/tourist-spots?lat=${cityLat}&lon=${cityLng}&radius=5000`
+        `/api/tourist-spots?lat=${cityLat}&lon=${cityLng}&radius=500`
       );
       const data = await res.json();
       console.log(data);
