@@ -13,7 +13,8 @@ export async function GET(request: Request) {
   try {
     const response = await fetch(googlePlacesUrl);
     const data = await response.json();
-    return NextResponse.json(data);
+    const touristSpots = data.results;
+    return NextResponse.json(touristSpots);
   } catch (error) {
     return NextResponse.json(
       { error: "Failed to fetch data from Google Places API" },

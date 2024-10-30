@@ -97,11 +97,25 @@ const FavoriteCityCard = React.memo(
     };
 
     const handlePlaceInfoClick = async () => {
-      const res = await fetch(
-        `/api/tourist-spots?lat=${cityLat}&lon=${cityLng}&radius=500`
-      );
-      const data = await res.json();
-      console.log(data);
+      // // tourist attractions
+      // const zoomLevel = 15;
+      // const searchQuery = encodeURIComponent("tourist attraction");
+      // const googleMapsUrl = `https://www.google.com/maps/search/${searchQuery}/@${cityLat},${cityLng},${zoomLevel}z`;
+
+      // window.open(googleMapsUrl, "_blank");
+
+      // events
+      // Construct the search query using city name and address
+      const searchQuery = encodeURIComponent(`${cityAddress}, ${cityName}`);
+
+      // Construct the Eventbrite URL
+      const googleMapsUrl = `https://www.eventbrite.com/d/nearby--${searchQuery}/?page=1&sort=best`;
+
+      // Construct the Facebook events URL
+      // const googleMapsUrl = `https://www.facebook.com/events/search/?q=${searchQuery}`;
+
+      // Open the constructed URL in a new tab
+      window.open(googleMapsUrl, "_blank");
     };
 
     return (
@@ -167,11 +181,11 @@ const FavoriteCityCard = React.memo(
                 type="button"
                 onClick={handleWeatherInfoClick}
               />
-              <Button
+              {/* <Button
                 text="Spots & Events"
                 type="button"
                 onClick={handlePlaceInfoClick}
-              />
+              /> */}
             </div>
           </div>
           <DailyForecast twentyFourHoursWeather={twentyFourHoursWeather} />
