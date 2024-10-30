@@ -26,7 +26,7 @@ const FavoriteCityCardSkeleton = () => {
             <div className={styles.cityCard__buttonSkeleton} />
           </div>
         </div>
-        <DailyForecastSkeleton />
+        <DailyForecastSkeleton iconHeight={30} iconWidth={30} />
       </div>
     </div>
   );

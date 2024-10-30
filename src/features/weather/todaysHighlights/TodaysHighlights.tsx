@@ -52,7 +52,7 @@ const TodaysHighlights = ({
           Daily Highlights
           <span
             style={{
-              fontSize: "14px",
+              fontSize: "12px",
               fontWeight: "normal",
               marginLeft: "8px",
             }}

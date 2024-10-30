@@ -1,3 +1,6 @@
+import { WeatherHour } from "@/types";
+import { getCurrentHourInTimeZone } from "./dateUtils";
+
 // wind speed(kph)
 export const getWindStrength = (windspeed: number) => {
   if (windspeed >= 0 && windspeed <= 5) {
@@ -51,4 +54,14 @@ export const getVisibilityIndex = (visibility: number) => {
   } else {
     return "Very Good";
   }
+};
+
+export const getWeatherForNext24Hours = (
+  todaysWeather: WeatherHour[],
+  tomorrowsWeather: WeatherHour[],
+  timeZone: string
+) => {
+  const fortyEightHoursWeather = [...todaysWeather, ...tomorrowsWeather];
+  const currentHour = getCurrentHourInTimeZone(timeZone);
+  return fortyEightHoursWeather.slice(currentHour, currentHour + 24);
 };

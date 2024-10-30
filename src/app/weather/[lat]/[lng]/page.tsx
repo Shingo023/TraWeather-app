@@ -5,11 +5,12 @@ import SearchBar from "@/features/weather/searchBar/SearchBar";
 import CurrentWeather from "@/features/weather/currentWeather/CurrentWeather";
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
-import { WeatherData, WeatherDay } from "@/types";
+import { WeatherData, WeatherDay, WeatherHour } from "@/types";
 import { useSession } from "next-auth/react";
 import styles from "./page.module.scss";
 import TodaysHighlights from "@/features/weather/todaysHighlights/TodaysHighlights";
 import TodaysForecast from "@/features/weather/todaysForecast/TodaysForecast";
+import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 
 export default function WeatherPage() {
   const { lat, lng } = useParams();
@@ -24,6 +25,9 @@ export default function WeatherPage() {
     string[]
   >([]);
   const [todaysWeather, setTodaysWeather] = useState<WeatherDay | null>(null);
+  const [twentyFourHoursWeather, setTwentyFourHoursWeather] = useState<
+    WeatherHour[] | null
+  >(null);
 
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -37,8 +41,18 @@ export default function WeatherPage() {
 
       setDisplayedCityWeather(weatherData);
       console.log(weatherData);
+
       const todaysWeatherData = weatherData.days[0];
       setTodaysWeather(todaysWeatherData);
+
+      const todaysHourlyWeather = weatherData.days[0].hours;
+      const tomorrowsHourlyWeather = weatherData.days[1].hours;
+      const twentyFourHoursWeatherData = getWeatherForNext24Hours(
+        todaysHourlyWeather,
+        tomorrowsHourlyWeather,
+        weatherData.timezone
+      );
+      setTwentyFourHoursWeather(twentyFourHoursWeatherData);
     } catch (error) {
       console.error("Error fetching weather data:", error);
     }
@@ -89,13 +103,20 @@ export default function WeatherPage() {
           latitude={lat as string}
           longitude={lng as string}
         />
-        <TodaysForecast />
-        <TodaysHighlights todaysWeather={todaysWeather} timeZone={displayedCityWeather?.timezone} />
+        <TodaysForecast
+          twentyFourHoursWeather={twentyFourHoursWeather}
+          todaysWeather={todaysWeather}
+        />
+        <TodaysHighlights
+          todaysWeather={todaysWeather}
+          timeZone={displayedCityWeather?.timezone}
+        />
       </div>
       <div className={styles.weatherPage__rightContent}>
         <WeeklyComponent
           displayedCityWeather={displayedCityWeather}
           setTodaysWeather={setTodaysWeather}
+          setTwentyFourHoursWeather={setTwentyFourHoursWeather}
         />
       </div>
     </div>

@@ -1,6 +1,7 @@
 /* Non-scrollable wrapper for positioning the arrows */
 .dailyForecastWrapper {
   position: relative;
+  height: 100%;
   width: 100%;
   overflow-x: auto;
 }
@@ -8,6 +9,7 @@
 /* Scrollable content */
 .dailyForecast {
   display: flex;
+  height: 100%;
   width: 100%;
   overflow-x: auto;
   scroll-behavior: smooth;

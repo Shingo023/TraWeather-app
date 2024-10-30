@@ -8,8 +8,12 @@ import { ChevronsLeft, ChevronsRight } from "lucide-react";
 
 const DailyForecast = ({
   twentyFourHoursWeather,
+  iconWidth,
+  iconHeight,
 }: {
-  twentyFourHoursWeather: WeatherHour[];
+  twentyFourHoursWeather: WeatherHour[] | null;
+  iconWidth: number;
+  iconHeight: number;
 }) => {
   const [hovered, setHovered] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -67,7 +71,7 @@ const DailyForecast = ({
       )}
 
       <div className={styles.dailyForecast} ref={scrollContainer}>
-        {twentyFourHoursWeather.map((hourlyWeather: WeatherHour) => {
+        {twentyFourHoursWeather?.map((hourlyWeather: WeatherHour, index) => {
           const hour = formatTimeTo12Hour(hourlyWeather.datetime);
           const weatherIcon = hourlyWeather.icon as WeatherIconType;
           const weatherIconSrc = iconMapping[weatherIcon];
@@ -80,11 +84,11 @@ const DailyForecast = ({
 
           return (
             <HourlyWeatherCard
-              key={hourlyWeather.datetime}
+              key={index}
               hour={hour}
               weatherIconSrc={weatherIconSrc}
-              iconWidth={50}
-              iconHeight={50}
+              iconWidth={iconWidth}
+              iconHeight={iconHeight}
               temp={temp}
               precipProb={precipProb}
               precipAmount={precipAmount}

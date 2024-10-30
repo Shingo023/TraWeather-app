@@ -15,6 +15,7 @@ import {
   getCurrentTimeAndDate,
 } from "@/utils/dateUtils";
 import FavoriteCityCardSkeleton from "@/features/favoritesList/favoriteCityCard/FavoriteCityCardSkeleton";
+import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 
 const FavoriteList = () => {
   const [favoriteCitiesWithWeather, setFavoriteCitiesWithWeather] = useState<
@@ -157,11 +158,10 @@ const FavoriteList = () => {
 
         const todaysWeather = favoriteCityWithWeather.weather.days[0].hours;
         const tomorrowsWeather = favoriteCityWithWeather.weather.days[1].hours;
-        const fortyEightHoursWeather = [...todaysWeather, ...tomorrowsWeather];
-        const currentHour = getCurrentHourInTimeZone(timeZone);
-        const twentyFourHoursWeather = fortyEightHoursWeather.slice(
-          currentHour,
-          currentHour + 24
+        const twentyFourHoursWeather = getWeatherForNext24Hours(
+          todaysWeather,
+          tomorrowsWeather,
+          timeZone
         );
 
         return (
