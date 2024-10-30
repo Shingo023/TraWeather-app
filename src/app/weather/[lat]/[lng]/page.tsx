@@ -93,7 +93,10 @@ export default function WeatherPage() {
         <TodaysHighlights todaysWeather={todaysWeather} timeZone={displayedCityWeather?.timezone} />
       </div>
       <div className={styles.weatherPage__rightContent}>
-        <WeeklyComponent displayedCityWeather={displayedCityWeather} />
+        <WeeklyComponent
+          displayedCityWeather={displayedCityWeather}
+          setTodaysWeather={setTodaysWeather}
+        />
       </div>
     </div>
   );

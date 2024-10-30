@@ -1,0 +1,50 @@
+/* Non-scrollable wrapper for positioning the arrows */
+.dailyForecastWrapper {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Scrollable content */
+.dailyForecast {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.arrowLeft, .arrowRight {
+  position: absolute; 
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.5);
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10; 
+}
+
+.arrowLeft {
+  left: 0; 
+}
+
+.arrowRight {
+  right: 0; 
+}
+
+.arrowLeft:hover, .arrowRight:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.arrowIcon {
+  width: 45px;
+  height: 45px;
+  fill: rgba(255, 255, 255, 0.5);
+  stroke-width: 2px;
+  color: rgba(29, 29, 29, 0.5);
+  transition: color 0.3s ease;
+}
+
+.arrowIcon:hover {
+  color: rgba(29, 29, 29, 0.8);
+}

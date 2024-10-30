@@ -11,6 +11,7 @@ const CurrentDateTime = ({
   setDisplayedCityWeather,
   latitude,
   longitude,
+  setLoading,
 }: CurrentDateAndTimePropsType) => {
   const currentTimeAndDate =
     placeTimeZone !== undefined
@@ -18,6 +19,7 @@ const CurrentDateTime = ({
       : undefined;
 
   const updateWeatherInfo = async () => {
+    setLoading(true);
     setDisplayedCityWeather(null);
 
     if (latitude !== undefined && longitude !== undefined) {
@@ -28,6 +30,7 @@ const CurrentDateTime = ({
         const updatedWeather: WeatherData = await weatherResponse.json();
 
         setDisplayedCityWeather(updatedWeather);
+        setLoading(false);
       } catch (error) {
         console.error("Error updating weather information:", error);
       }

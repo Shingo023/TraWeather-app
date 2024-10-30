@@ -11,7 +11,7 @@
     height: 100%;
   }
   h2 {
-    font-weight: 400;
+    font-weight: 600;
     margin-bottom: 20px;
     font-size: 20px;
   }
@@ -30,91 +30,112 @@
 .WeeklyComponentItem {
   flex: 1;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-end;
   border-bottom: 1px solid rgb(188, 188, 188);
+  transition: all 0.3s ease;
   &:last-child {
     border-bottom: none;
   }
+  &:hover {
+    cursor: pointer;
+    background-color: #BFBFBF; 
+    border-radius: 6px;
+  }
 
-  &__left {
-    width: 55%;
+  &__date {
+    margin-left: 8px;
+  }
+
+  &__weatherInfo {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+  }
+  &__weatherInfoLeft {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
     div {
       display: flex;
     }
   }
-  &__right {
-    width: 45%;
+  &__weatherInfoRight {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px;
+    p {
+      min-width: 60px;
+    }
   }
 }
-
-.WeeklyComponentDay {
-  width: 65px;
+.active {
+  background-color: #BFBFBF; 
+  border-radius: 6px;
 }
 
-.humidity {
+.chanceOfRain {
   display: flex;
   align-items: center;
   gap: 1px;
+  min-width: 60px;
   &__icon {
     width: 18px;
     height: 18px;
   }
+  p {
+    min-width: 0;
+  }
 }
 
 // Skeletons
-.skeleton {
-  background-color: #e0e0e0; 
-  width: 100%;
-  height: 100%;
-  padding: 28px 34px 20px 34px;
-  border-radius: 10px;
+.WeeklyComponent__headerSkeleton {
+  height: 20px;
+  width: 150px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
 
-  h2,
-  &__WeeklyComponentDay,
-  &__WeeklyComponentWeatherIcon,
-  &__temps,
-  &__humidity {
+.WeeklyComponentItem {
+  &__dateSkeleton,
+  &__weatherIconSkeleton,
+  &__tempsSkeleton,
+  &__chanceOfRainSkeleton {
     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
   }
 
-  h2 {
-    margin-bottom: 20px;
-    height: 20px;
-    width: 150px;
+  &__dateSkeleton {
+    height: 14px;
+    width: 80px;
+    margin-left: 8px;
     border-radius: 6px;
   }
 
-  &__WeeklyComponentDay {
-    height: 14px;
-    width: 35px;
-    border-radius: 6px;
-  }
-
-  &__WeeklyComponentWeatherIcon {
-    height: 35px;
-    width: 35px;
+  &__weatherIconSkeleton {
+    height: 30px;
+    width: 30px;
+    margin: 15px;
     border-radius: 6px;    
   }
 
-  &__temps {
+  &__tempsSkeletonWrapper,
+  &__chanceOfRainSkeletonSkeletonWrapper {
+    min-width: 60px;
+  }
+  &__tempsSkeleton {
     height: 14px;
     width: 45px;
-    border-radius: 6px;    
+    border-radius: 6px;   
   }
 
-  &__humidity {
+  &__chanceOfRainSkeleton {
     height: 14px;
-    width: 45px;
+    width: 55px;
     border-radius: 6px;    
   }
 }

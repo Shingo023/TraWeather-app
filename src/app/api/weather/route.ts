@@ -36,7 +36,6 @@ export async function GET(request: Request) {
       longitude: data.longitude,
       address: data.address,
       timezone: data.timezone,
-      description: data.description,
       days: data.days.slice(0, 7).map(
         (day: any): WeatherDay => ({
           datetime: day.datetime,
@@ -44,6 +43,8 @@ export async function GET(request: Request) {
           tempmin: day.tempmin,
           temp: day.temp,
           feelslike: day.feelslike,
+          feelslikemax: day.feelslikemax,
+          feelslikemin: day.feelslikemin,
           humidity: day.humidity,
           precip: day.precip || null,
           precipprob: day.precipprob,
@@ -59,6 +60,8 @@ export async function GET(request: Request) {
           sunset: day.sunset,
           conditions: day.conditions,
           icon: day.icon,
+          visibility: day.visibility,
+
           hours: day.hours.map(
             (hour: any): WeatherHour => ({
               datetime: hour.datetime,
@@ -75,6 +78,7 @@ export async function GET(request: Request) {
               uvindex: hour.uvindex,
               conditions: hour.conditions,
               icon: hour.icon,
+              visibility: hour.visibility,
             })
           ),
         })

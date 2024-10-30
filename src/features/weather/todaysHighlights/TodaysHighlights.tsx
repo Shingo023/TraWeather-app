@@ -1,8 +1,10 @@
 import SunsetAndSunrise from "./sunsetAndSunrise/SunsetAndSunrise";
 import UVIndex from "./uvIndex/UVIndex";
-import WindStatus from "./windStatus/windStatus";
 import styles from "./TodaysHighlights.module.scss";
 import { WeatherDay } from "@/types";
+import Overview from "./overview/Overview";
+import { formatDate } from "@/utils/dateUtils";
+import TodaysHighlightsSkeleton from "./TodaysHighlightsSkeleton";
 import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 
 const TodaysHighlights = ({
@@ -12,13 +14,24 @@ const TodaysHighlights = ({
   todaysWeather: WeatherDay | null;
   timeZone: string | undefined;
 }) => {
-  if (!todaysWeather) return;
+  if (!todaysWeather) {
+    return <TodaysHighlightsSkeleton />;
+  }
+
+  const date = formatDate(todaysWeather.datetime);
+
+  const humidity = Math.round(todaysWeather.humidity);
+  const snowDepth = todaysWeather.snowdepth ?? 0;
+  const weatherOverview = todaysWeather.description;
+  const visibility = todaysWeather.visibility;
+  const feelsLikeTempMax = Math.round(todaysWeather.feelslikemax);
+  const feelsLikeTempMin = Math.round(todaysWeather.feelslikemin);
 
   function getHourFromTimeString(timeString: string): number {
     const [hours] = timeString.split(":");
     return parseInt(hours);
   }
-  
+
   const currentTime = timeZone ? getCurrentTimeAndDate(timeZone) : "";
 
   const sunriseData: number = getHourFromTimeString(todaysWeather.sunrise);
@@ -35,9 +48,27 @@ const TodaysHighlights = ({
   return (
     <div className={styles.todaysHighlights}>
       <div className={styles.todaysHighlights__container}>
-        <h2>{"Today's Highlights"}</h2>
+        <h2>
+          Daily Highlights
+          <span
+            style={{
+              fontSize: "14px",
+              fontWeight: "normal",
+              marginLeft: "8px",
+            }}
+          >
+            {date}
+          </span>
+        </h2>
         <div className={styles.todaysHighlights__contents}>
-          <WindStatus />
+          <Overview
+            humidity={humidity}
+            snowDepth={snowDepth}
+            weatherOverview={weatherOverview}
+            visibility={visibility}
+            feelsLikeTempMax={feelsLikeTempMax}
+            feelsLikeTempMin={feelsLikeTempMin}
+          />
           <UVIndex uvIndex={uvIndexData} />
           <SunsetAndSunrise
             sunrise={todaysWeather.sunrise.slice(0, 5)}

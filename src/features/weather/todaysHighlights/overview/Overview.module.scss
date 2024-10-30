@@ -1,0 +1,91 @@
+.overview {
+  background-color: #F9F9F9;
+  border-radius: 10px;
+  flex: 1;
+  padding: 15px 10px;
+  height: 100%;
+  min-width: 0;
+  overflow-y: auto;
+
+  h5 {
+    font-size: 12px;
+    font-weight: 500;
+    margin-bottom: 2.5px;
+    flex-grow: 0;
+  }
+
+  &__container {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  &__humidity,
+  &__snowDepth,
+  &__weatherOverview,
+  &__visibility,
+  &__feelsLikeTemps {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 4px 6px;
+
+    div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-bottom: 2.5px;
+      flex-grow: 1;
+    }
+    p {
+      text-align: center;
+      font-size: 12px;
+    }
+  }
+
+  &__humidity,
+  &__visibility {
+    min-width: 65px;
+    max-width: 50%;
+  }
+  &__snowDepth {
+    min-width: 82px;
+  }
+  &__weatherOverview {
+    min-width: 120px;
+    p {
+      text-align: left;
+    }
+  }
+  &__feelsLikeTemps {
+    min-width: 100px;
+    // max-width: 50%;
+  }
+
+  &__numberData {
+    font-size: 16px;
+    font-weight: 600;
+    margin-right: 1px;
+  }
+  &__snowDepth {
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  &__icon {
+    color: rgb(144, 117, 117);
+    height: 18px;
+    width: 18px;
+    min-height: 18px;
+    min-width: 18px;
+  }
+
+  &__weatherIndex {
+    color: rgb(144, 117, 117);
+    font-size: 12px;
+  }
+}
+

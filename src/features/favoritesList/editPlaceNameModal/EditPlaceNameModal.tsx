@@ -10,7 +10,7 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
   isModalOpen,
   setIsModalOpen,
   setPlaceNameToDisplay,
-  favoriteCityId,
+  userFavoriteCityId,
   cityAddress,
 }) => {
   const [editedCityName, setEditedCityName] = useState(cityName);
@@ -27,7 +27,7 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
 
     try {
       const response = await fetch(
-        `/api/user-favorite-cities?id=${favoriteCityId}`,
+        `/api/user-favorite-cities?id=${userFavoriteCityId}`,
         {
           method: "PUT",
           headers: {

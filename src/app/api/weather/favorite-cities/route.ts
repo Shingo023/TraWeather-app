@@ -52,6 +52,7 @@ export async function GET(request: Request) {
               precip: hour.precip || null,
               precipprob: hour.precipprob,
               icon: hour.icon,
+              windspeed: hour.windspeed,
             })
           ),
         })

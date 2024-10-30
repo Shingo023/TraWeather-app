@@ -91,6 +91,7 @@ const CurrentWeather = ({
               setDisplayedCityWeather={setDisplayedCityWeather}
               latitude={latitude}
               longitude={longitude}
+              setLoading={setLoading}
             />
           )}
         </div>

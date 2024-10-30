@@ -39,6 +39,8 @@ async function main() {
       userId: user1.id,
       favoriteCityId: london.id,
       isDefault: true,
+      customName: "London",
+      displayOrder: 1,
     },
   });
 

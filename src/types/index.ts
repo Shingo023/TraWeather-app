@@ -12,95 +12,12 @@ export type DisplayedCityWeatherContextType = {
   setPlaceId: (state: string | null) => void;
 };
 
-// The original types of the weather data
-// export type WeatherData = {
-//   queryCost: number;
-//   latitude: number;
-//   longitude: number;
-//   resolvedAddress: string;
-//   address: string;
-//   timezone: string;
-//   tzoffset: number;
-//   description: string;
-//   days: WeatherDay[];
-//   currentConditions: { feelslike: number; icon: string; temp: number };
-// };
-
-// export type WeatherDay = {
-//   datetime: string;
-//   datetimeEpoch: number;
-//   tempmax: number;
-//   tempmin: number;
-//   temp: number;
-//   feelslikemax: number;
-//   feelslikemin: number;
-//   feelslike: number;
-//   dew: number;
-//   humidity: number;
-//   precip: number | null;
-//   precipprob: number;
-//   precipcover: number;
-//   preciptype: string[] | null;
-//   snow: number | null;
-//   snowdepth: number | null;
-//   windgust: number;
-//   windspeed: number;
-//   winddir: number;
-//   pressure: number;
-//   description: string;
-//   cloudcover: number;
-//   visibility: number;
-//   solarradiation: number;
-//   solarenergy: number;
-//   uvindex: number;
-//   severerisk: number;
-//   sunrise: string;
-//   sunriseEpoch: number;
-//   sunset: string;
-//   sunsetEpoch: number;
-//   moonphase: number;
-//   conditions: string;
-//   icon: string;
-//   stations: string[] | null;
-//   source: string;
-//   hours: WeatherHour[];
-// };
-
-// type WeatherHour = {
-//   datetime: string;
-//   datetimeEpoch: number;
-//   temp: number;
-//   feelslike: number;
-//   humidity: number;
-//   dew: number;
-//   precip: number | null;
-//   precipprob: number;
-//   snow: number | null;
-//   snowdepth: number | null;
-//   preciptype: string[] | null;
-//   windgust: number;
-//   windspeed: number;
-//   winddir: number;
-//   pressure: number;
-//   visibility: number;
-//   cloudcover: number;
-//   solarradiation: number;
-//   solarenergy: number;
-//   uvindex: number;
-//   severerisk: number;
-//   conditions: string;
-//   icon: string;
-//   stations: string[] | null;
-//   source: string;
-// };
-
 // Formatted types of the weather data so that unnecessary fields will not be fetched
 export type WeatherData = {
   latitude: number;
   longitude: number;
   address: string;
   timezone: string;
-  description: string;
   days: WeatherDay[];
   currentConditions: {
     datetime: string;
@@ -116,6 +33,8 @@ export type WeatherDay = {
   tempmin: number;
   temp: number;
   feelslike: number;
+  feelslikemax: number;
+  feelslikemin: number;
   humidity: number;
   precip: number | null;
   precipprob: number;
@@ -132,6 +51,7 @@ export type WeatherDay = {
   conditions: string;
   icon: string;
   hours: WeatherHour[];
+  visibility: number;
 };
 
 export type WeatherHour = {
@@ -149,6 +69,7 @@ export type WeatherHour = {
   uvindex: number;
   conditions: string;
   icon: string;
+  visibility: number;
 };
 
 // Weather types for the favorites list
@@ -179,6 +100,7 @@ export type WeatherHourForFavoritesList = {
   precip: number | null;
   precipprob: number;
   icon: string;
+  windspeed: number;
 };
 export type WeatherIconType =
   | "clear-day"
@@ -243,35 +165,43 @@ export type autocompleteSuggestion = {
 };
 
 export type FavoriteCityContainerPropsType = {
-  favoriteCityId: number;
+  userFavoriteCityId: number;
   userId: string | undefined;
   cityName: string;
   cityAddress: string;
   cityPlaceId: string;
   currentTemp: number;
   currentWeather: WeatherIconType;
-  timeZone: string;
+  currentDateTime: string;
   homeLocationId: number | null;
   setHomeLocationId: (homeLocationId: number | null) => void;
   cityLat: number;
   cityLng: number;
+  twentyFourHoursWeather: WeatherHour[];
+  handleDragStart: (cityId: number) => void;
+  handleDrop: (targetCityId: number) => Promise<void>;
+  handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
 };
 
 export type FavoriteCityCardPropsType = {
-  favoriteCityId: number;
+  userFavoriteCityId: number;
   userId: string | undefined;
   cityName: string;
   cityAddress: string;
   cityPlaceId: string;
   currentTemp: number;
   currentWeather: WeatherIconType;
-  timeZone: string;
+  currentDateTime: string;
   homeLocationId: number | null;
   setHomeLocationId: (homeLocationId: number | null) => void;
   cityLat: number;
   cityLng: number;
   placeNameToDisplay: string;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  twentyFourHoursWeather: WeatherHour[];
+  handleDragStart: (cityId: number) => void;
+  handleDrop: (targetCityId: number) => Promise<void>;
+  handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
 };
 
 export type EditPlaceNameModalPropsType = {
@@ -279,7 +209,7 @@ export type EditPlaceNameModalPropsType = {
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
   setPlaceNameToDisplay: (name: string) => void;
-  favoriteCityId: number;
+  userFavoriteCityId: number;
   cityAddress: string;
 };
 
@@ -300,6 +230,7 @@ export type CurrentDateAndTimePropsType = {
   setDisplayedCityWeather: (weatherData: WeatherData | null) => void;
   latitude: string;
   longitude: string;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 export type StarIconPropsType = {
@@ -321,4 +252,13 @@ export type UserFavoriteCity = {
   customName: string | null;
   isDefault: boolean;
   favoriteCity: FavoriteCity;
+};
+
+export type TodaysWeatherOverviewType = {
+  humidity: number;
+  snowDepth: number;
+  weatherOverview: string;
+  visibility: number;
+  feelsLikeTempMax: number;
+  feelsLikeTempMin: number;
 };

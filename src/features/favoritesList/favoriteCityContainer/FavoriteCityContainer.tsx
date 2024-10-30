@@ -4,18 +4,22 @@ import FavoriteCityCard from "../favoriteCityCard/FavoriteCityCard";
 import { useState } from "react";
 
 const FavoriteCityContainer = ({
-  favoriteCityId,
+  userFavoriteCityId,
   userId,
   cityName,
   cityAddress,
   cityPlaceId,
   currentTemp,
   currentWeather,
-  timeZone,
+  currentDateTime,
   homeLocationId,
   setHomeLocationId,
   cityLat,
   cityLng,
+  twentyFourHoursWeather,
+  handleDragStart,
+  handleDrop,
+  handleDragOver,
 }: FavoriteCityContainerPropsType) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [placeNameToDisplay, setPlaceNameToDisplay] = useState(cityName);
@@ -24,26 +28,31 @@ const FavoriteCityContainer = ({
     <div>
       <FavoriteCityCard
         userId={userId}
-        favoriteCityId={favoriteCityId}
+        userFavoriteCityId={userFavoriteCityId}
         cityName={cityName}
         cityAddress={cityAddress}
         cityPlaceId={cityPlaceId}
         currentTemp={currentTemp}
         currentWeather={currentWeather}
-        timeZone={timeZone}
+        currentDateTime={currentDateTime}
         homeLocationId={homeLocationId}
         setHomeLocationId={setHomeLocationId}
         cityLat={cityLat}
         cityLng={cityLng}
         placeNameToDisplay={placeNameToDisplay}
         setIsModalOpen={setIsModalOpen}
+        twentyFourHoursWeather={twentyFourHoursWeather}
+        handleDragStart={handleDragStart}
+        handleDrop={handleDrop}
+        handleDragOver={handleDragOver}
       />
+
       <EditPlaceNameModal
         cityName={cityName}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         setPlaceNameToDisplay={setPlaceNameToDisplay}
-        favoriteCityId={favoriteCityId}
+        userFavoriteCityId={userFavoriteCityId}
         cityAddress={cityAddress}
       />
     </div>

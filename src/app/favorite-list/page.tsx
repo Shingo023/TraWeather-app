@@ -10,6 +10,11 @@ import {
 } from "@/types";
 import FavoriteCityContainer from "@/features/favoritesList/favoriteCityContainer/FavoriteCityContainer";
 import styles from "./page.module.scss";
+import {
+  getCurrentHourInTimeZone,
+  getCurrentTimeAndDate,
+} from "@/utils/dateUtils";
+import FavoriteCityCardSkeleton from "@/features/favoritesList/favoriteCityCard/FavoriteCityCardSkeleton";
 
 const FavoriteList = () => {
   const [favoriteCitiesWithWeather, setFavoriteCitiesWithWeather] = useState<
@@ -17,6 +22,7 @@ const FavoriteList = () => {
   >([]);
   const [homeLocationId, setHomeLocationId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
+  const [draggedCityId, setDraggedCityId] = useState<number | null>(null);
 
   const { data: session, status } = useSession();
 
@@ -48,7 +54,9 @@ const FavoriteList = () => {
               }
             )
           );
-          favoriteCitiesWithWeatherData.sort((a, b) => a.id - b.id);
+          favoriteCitiesWithWeatherData.sort(
+            (a, b) => a.displayOrder - b.displayOrder
+          );
           setFavoriteCitiesWithWeather(favoriteCitiesWithWeatherData);
         } catch (error) {
           console.error("Error fetching favorite cities:", error);
@@ -65,39 +73,64 @@ const FavoriteList = () => {
     }
   }, [status, session?.user?.id]);
 
+  // Handle drag events
+  const handleDragStart = (userFavoriteCityId: number) => {
+    setDraggedCityId(userFavoriteCityId);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = async (targetUserFavoriteCityId: number) => {
+    if (draggedCityId === null) return;
+
+    const updatedCities = [...favoriteCitiesWithWeather];
+    const draggedCityIndex = updatedCities.findIndex(
+      (city) => city.id === draggedCityId
+    );
+    const targetCityIndex = updatedCities.findIndex(
+      (city) => city.id === targetUserFavoriteCityId
+    );
+
+    // Reorder the cities
+    const [draggedCity] = updatedCities.splice(draggedCityIndex, 1);
+    updatedCities.splice(targetCityIndex, 0, draggedCity);
+
+    setFavoriteCitiesWithWeather(updatedCities);
+    setDraggedCityId(null);
+
+    // Save the new order to the database
+    const response = await fetch(`/api/update-favorite-cities-order`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: session?.user.id,
+        cityOrder: updatedCities.map((city) => city.id),
+      }),
+    });
+
+    if (!response.ok) {
+      console.error("Request failed with status:", response.status);
+    } else {
+      try {
+        const data = await response.json();
+      } catch (error) {
+        console.error("Error parsing JSON:", error);
+      }
+    }
+  };
+
   // Render skeletons while loading
   if (loading) {
-    const skeletons = Array(4).fill(null);
+    const skeletons = Array(3).fill(null);
 
     return (
       <div className={styles.favoritesList}>
         {skeletons.map((_, index) => (
-          <div key={index} className={styles.skeleton}>
-            <div className={styles.cityCard__cityInfo}>
-              <div className={styles.cityCard__homeIconContainer}>
-                <div className={styles.skeleton__homeIcon} />
-              </div>
-              <div className={styles.skeleton__cityName} />
-              <div className={styles.skeleton__cityAddress} />
-            </div>
-
-            <div className={styles.cityCard__weather}>
-              <div className={styles.cityCard__currentInfo}>
-                <div className={styles.skeleton__dateAndTime} />
-                <div className={styles.cityCard__currentWeather}>
-                  <div className={styles.cityCard__currentWeatherIconContainer}>
-                    <div className={styles.skeleton__weatherIcon} />
-                  </div>
-                  <div className={styles.skeleton__currentTemp} />
-                </div>
-              </div>
-              <div className={styles.cityCard__hourlyWeather}></div>
-            </div>
-
-            <div className={styles.cityCard__buttons}>
-              <div className={styles.skeleton__weatherDetailBtn} />
-            </div>
-          </div>
+          <FavoriteCityCardSkeleton key={index} />
         ))}
       </div>
     );
@@ -118,24 +151,38 @@ const FavoriteList = () => {
         const currentWeather = favoriteCityWithWeather.weather.currentConditions
           .icon as WeatherIconType;
         const timeZone = favoriteCityWithWeather.favoriteCity.timeZone;
+        const currentDateTime = getCurrentTimeAndDate(timeZone);
         const cityLat = favoriteCityWithWeather.favoriteCity.latitude;
         const cityLng = favoriteCityWithWeather.favoriteCity.longitude;
+
+        const todaysWeather = favoriteCityWithWeather.weather.days[0].hours;
+        const tomorrowsWeather = favoriteCityWithWeather.weather.days[1].hours;
+        const fortyEightHoursWeather = [...todaysWeather, ...tomorrowsWeather];
+        const currentHour = getCurrentHourInTimeZone(timeZone);
+        const twentyFourHoursWeather = fortyEightHoursWeather.slice(
+          currentHour,
+          currentHour + 24
+        );
 
         return (
           <FavoriteCityContainer
             key={userFavoriteCityId}
             userId={userId}
-            favoriteCityId={userFavoriteCityId}
+            userFavoriteCityId={userFavoriteCityId}
             cityName={cityName}
             cityAddress={cityAddress}
             cityPlaceId={favoriteCityPlaceId}
             currentTemp={currentTemp}
             currentWeather={currentWeather}
-            timeZone={timeZone}
+            currentDateTime={currentDateTime}
             homeLocationId={homeLocationId}
             setHomeLocationId={setHomeLocationId}
             cityLat={cityLat}
             cityLng={cityLng}
+            twentyFourHoursWeather={twentyFourHoursWeather}
+            handleDragStart={handleDragStart}
+            handleDrop={handleDrop}
+            handleDragOver={handleDragOver}
           />
         );
       })}

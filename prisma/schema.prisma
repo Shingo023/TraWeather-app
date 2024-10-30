@@ -46,6 +46,7 @@ model UserFavoriteCity {
   favoriteCityId Int
   customName     String? // Optional field to allow users to rename their favorite city
   isDefault      Boolean      @default(false)
+  displayOrder   Int
   user           User         @relation(fields: [userId], references: [id])
   favoriteCity   FavoriteCity @relation(fields: [favoriteCityId], references: [id])
 

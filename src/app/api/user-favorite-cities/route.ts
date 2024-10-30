@@ -37,11 +37,16 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const { userId, customName, favoriteCityId } = await request.json();
+    const userFavoriteCitiesCount = await prisma.userFavoriteCity.count({
+      where: { userId },
+    });
+
     const userFavoriteCity = await prisma.userFavoriteCity.create({
       data: {
         userId,
         customName,
         favoriteCityId,
+        displayOrder: userFavoriteCitiesCount + 1,
       },
     });
     return NextResponse.json(

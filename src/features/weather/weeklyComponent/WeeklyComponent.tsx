@@ -1,48 +1,31 @@
+"use client";
+
 import { WeatherData, WeatherDay, WeatherIconType } from "@/types";
 import styles from "./WeeklyComponent.module.scss";
 import { iconMapping } from "@/utils/weatherIconMapping";
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
-import { Droplet } from "lucide-react";
+import { Umbrella } from "lucide-react";
+import { formatDate } from "@/utils/dateUtils";
+import WeeklyComponentSkeleton from "./WeeklyComponentSkeleton";
 
 export const WeeklyComponent = ({
   displayedCityWeather,
+  setTodaysWeather,
 }: {
   displayedCityWeather: WeatherData | null;
+  setTodaysWeather: Dispatch<SetStateAction<WeatherDay | null>>;
 }) => {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const weeklyWeather: WeatherDay[] | undefined =
-    displayedCityWeather?.days.slice(0, 7);
+  const weeklyWeather: WeatherDay[] | undefined = displayedCityWeather?.days;
 
-  const isCurrentDate = (dateString: string): boolean => {
-    // Create a Date object from the date string
-    const givenDate = new Date(dateString);
-
-    // Get the current date
-    const currentDate = new Date();
-
-    return (
-      givenDate.getUTCFullYear() === currentDate.getUTCFullYear() &&
-      givenDate.getUTCMonth() === currentDate.getUTCMonth() &&
-      givenDate.getUTCDate() === currentDate.getUTCDate()
-    );
-  };
-
-  const getWeekday = (dateString: string): string => {
-    const date = new Date(dateString);
-
-    // Array of weekday names
-    const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-
-    const dayIndex = date.getDay();
-
-    if (isCurrentDate(dateString)) {
-      return "Today";
-    }
-
-    return weekdays[dayIndex];
-  };
+  useEffect(() => {
+    if (!displayedCityWeather) return;
+    const today = displayedCityWeather.days[0].datetime;
+    setSelectedDate(today);
+  }, [displayedCityWeather]);
 
   useEffect(() => {
     if (weeklyWeather && weeklyWeather.length > 0) {
@@ -50,33 +33,14 @@ export const WeeklyComponent = ({
     }
   }, [weeklyWeather]);
 
+  const handleClick = (date: string, selectedDateWeather: WeatherDay) => {
+    setSelectedDate(date);
+    setTodaysWeather(selectedDateWeather);
+  };
+
   // Render skeletons while loading
   if (loading) {
-    const items = Array(7).fill(null); // Create an array with 7 undefined elements
-
-    return (
-      <div className={styles.skeleton}>
-        <div className={styles.WeeklyComponent__content}>
-          <h2 />
-          <ul className={styles.WeeklyComponentList}>
-            {items.map((_, index) => (
-              <li key={index} className={styles.WeeklyComponentItem}>
-                <div className={styles.WeeklyComponentItem__left}>
-                  <p className={styles.skeleton__WeeklyComponentDay} />
-                  <div
-                    className={styles.skeleton__WeeklyComponentWeatherIcon}
-                  />
-                </div>
-                <div className={styles.WeeklyComponentItem__right}>
-                  <p className={styles.skeleton__temps} />
-                  <div className={styles.skeleton__humidity} />
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    );
+    return <WeeklyComponentSkeleton />;
   }
 
   return (
@@ -90,28 +54,41 @@ export const WeeklyComponent = ({
                 iconMapping[dailyWeather.icon as WeatherIconType];
 
               return (
-                <li className={styles.WeeklyComponentItem} key={index}>
-                  <div className={styles.WeeklyComponentItem__left}>
-                    <p className={styles.WeeklyComponentDay}>
-                      {getWeekday(dailyWeather.datetime)}
-                    </p>
-                    <div>
-                      <WeatherIcon
-                        weatherIcon={dailyWeatherIcon}
-                        width={60}
-                        height={60}
-                      />
+                <li
+                  className={`${styles.WeeklyComponentItem} ${
+                    dailyWeather.datetime === selectedDate && styles.active
+                  }`}
+                  key={index}
+                  onClick={() =>
+                    handleClick(dailyWeather.datetime, dailyWeather)
+                  }
+                >
+                  <p className={styles.WeeklyComponentItem__date}>
+                    {formatDate(dailyWeather.datetime)}
+                  </p>
+                  <div className={styles.WeeklyComponentItem__weatherInfo}>
+                    <div
+                      className={styles.WeeklyComponentItem__weatherInfoLeft}
+                    >
+                      <div>
+                        <WeatherIcon
+                          weatherIcon={dailyWeatherIcon}
+                          width={60}
+                          height={60}
+                        />
+                      </div>
                     </div>
-                  </div>
-
-                  <div className={styles.WeeklyComponentItem__right}>
-                    <p>
-                      {Math.round(dailyWeather.tempmax)}°/
-                      {Math.round(dailyWeather.tempmin)}°
-                    </p>
-                    <div className={styles.humidity}>
-                      <Droplet className={styles.humidity__icon} />
-                      <p>{Math.round(dailyWeather.humidity)}%</p>
+                    <div
+                      className={styles.WeeklyComponentItem__weatherInfoRight}
+                    >
+                      <p>
+                        {Math.round(dailyWeather.tempmax)}°/
+                        {Math.round(dailyWeather.tempmin)}°
+                      </p>
+                      <div className={styles.chanceOfRain}>
+                        <Umbrella className={styles.chanceOfRain__icon} />
+                        <p>{Math.round(dailyWeather.precipprob / 5) * 5}%</p>
+                      </div>
                     </div>
                   </div>
                 </li>
