@@ -1,12 +1,21 @@
 import styles from "./HourlyWeatherCard.module.scss";
 
-const HourlyWeatherCardSkeleton = () => {
+const HourlyWeatherCardSkeleton = ({
+  iconHeight,
+  iconWidth,
+}: {
+  iconHeight: number;
+  iconWidth: number;
+}) => {
   return (
     <div className={styles.hourlyWeather}>
       <div className={styles.hourlyWeather__top}>
         <p className={styles.hourlyWeather__timeSkeleton} />
         <div className={styles.hourlyWeather__weatherIcon}>
-          <div className={styles.hourlyWeather__weatherIconSkeleton} />
+          <div
+            className={styles.hourlyWeather__weatherIconSkeleton}
+            style={{ width: iconWidth, height: iconHeight }}
+          />
         </div>
         <div className={styles.hourlyWeather__tempSkeleton} />
       </div>

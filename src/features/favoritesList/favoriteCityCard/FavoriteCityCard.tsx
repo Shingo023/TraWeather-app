@@ -188,7 +188,11 @@ const FavoriteCityCard = React.memo(
               /> */}
             </div>
           </div>
-          <DailyForecast twentyFourHoursWeather={twentyFourHoursWeather} />
+          <DailyForecast
+            twentyFourHoursWeather={twentyFourHoursWeather}
+            iconHeight={50}
+            iconWidth={50}
+          />
         </div>
       </div>
     );

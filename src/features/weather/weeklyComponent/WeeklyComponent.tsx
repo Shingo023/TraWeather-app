@@ -1,6 +1,6 @@
 "use client";
 
-import { WeatherData, WeatherDay, WeatherIconType } from "@/types";
+import { WeatherData, WeatherDay, WeatherHour, WeatherIconType } from "@/types";
 import styles from "./WeeklyComponent.module.scss";
 import { iconMapping } from "@/utils/weatherIconMapping";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -8,13 +8,16 @@ import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import { Umbrella } from "lucide-react";
 import { formatDate } from "@/utils/dateUtils";
 import WeeklyComponentSkeleton from "./WeeklyComponentSkeleton";
+import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 
 export const WeeklyComponent = ({
   displayedCityWeather,
   setTodaysWeather,
+  setTwentyFourHoursWeather,
 }: {
   displayedCityWeather: WeatherData | null;
   setTodaysWeather: Dispatch<SetStateAction<WeatherDay | null>>;
+  setTwentyFourHoursWeather: Dispatch<SetStateAction<WeatherHour[] | null>>;
 }) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -34,6 +37,20 @@ export const WeeklyComponent = ({
   }, [weeklyWeather]);
 
   const handleClick = (date: string, selectedDateWeather: WeatherDay) => {
+    if (!displayedCityWeather) return;
+    const today = displayedCityWeather.days[0].datetime;
+    if (date === today) {
+      const todaysHourlyWeather = displayedCityWeather.days[0].hours;
+      const tomorrowsHourlyWeather = displayedCityWeather.days[1].hours;
+      const twentyFourHoursWeatherData = getWeatherForNext24Hours(
+        todaysHourlyWeather,
+        tomorrowsHourlyWeather,
+        displayedCityWeather.timezone
+      );
+      setTwentyFourHoursWeather(twentyFourHoursWeatherData);
+    } else {
+      setTwentyFourHoursWeather(selectedDateWeather.hours);
+    }
     setSelectedDate(date);
     setTodaysWeather(selectedDateWeather);
   };
