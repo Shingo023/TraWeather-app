@@ -6,6 +6,7 @@ import Overview from "./overview/Overview";
 import { formatDate } from "@/utils/dateUtils";
 import TodaysHighlightsSkeleton from "./TodaysHighlightsSkeleton";
 import { getCurrentTimeAndDate } from "@/utils/dateUtils";
+import { daylightPercentage } from "@/utils/mathUtils";
 
 const TodaysHighlights = ({
   todaysWeather,
@@ -27,21 +28,30 @@ const TodaysHighlights = ({
   const feelsLikeTempMax = Math.round(todaysWeather.feelslikemax);
   const feelsLikeTempMin = Math.round(todaysWeather.feelslikemin);
 
-  function getHourFromTimeString(timeString: string): number {
-    const [hours] = timeString.split(":");
-    return parseInt(hours);
-  }
+  // function getHourFromTimeString(timeString: string): number {
+  //   const [hours] = timeString.split(":");
+  //   return parseInt(hours);
+  // }
 
-  const currentTime = timeZone ? getCurrentTimeAndDate(timeZone) : "";
+  // const currentTime = timeZone ? getCurrentTimeAndDate(timeZone) : "";
 
-  const sunriseData: number = getHourFromTimeString(todaysWeather.sunrise);
+  // const sunriseData: number = getHourFromTimeString(todaysWeather.sunrise);
 
-  const sunsetData: number = getHourFromTimeString(todaysWeather.sunset);
+  // const sunsetData: number = getHourFromTimeString(todaysWeather.sunset);
 
-  const now: Date = new Date(currentTime);
-  const totalHours: number = sunsetData - sunriseData;
-  const currentHour: number = now.getHours();
-  const sunCurrentLocation: number = (currentHour * 100) / totalHours;
+  // const now: Date = new Date(currentTime);
+  // const totalHours: number = sunsetData - sunriseData;
+  // const currentHour: number = now.getHours();
+  // const sunCurrentLocation: number = (currentHour * 100) / totalHours;
+
+  const sunCurrentLocation = timeZone
+    ? daylightPercentage(
+        timeZone,
+        todaysWeather.datetime,
+        todaysWeather.sunrise,
+        todaysWeather.sunset
+      )
+    : null;
 
   const uvIndexData = (180 * todaysWeather.uvindex * 10) / 100;
 
@@ -74,7 +84,6 @@ const TodaysHighlights = ({
             sunrise={todaysWeather.sunrise.slice(0, 5)}
             sunset={todaysWeather.sunset.slice(0, 5)}
             sunCurrentLocation={sunCurrentLocation}
-            isNight={currentHour > sunsetData ? true : false}
           />
         </div>
       </div>

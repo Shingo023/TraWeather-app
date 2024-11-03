@@ -34,19 +34,21 @@ const UVIndex = ({ uvIndex }: { uvIndex: number }) => {
 
   return (
     <div className={styles.uvIndex}>
-      UV index
+      <h3>UV index</h3>
       <div className={styles.circles}>
         <div className={styles.gauge}>
           <div className={styles.gaugeBody}>
             <div className={styles.gaugeFill} style={UVpercentage}></div>
             <div className={styles.gaugeCover}>
-              <p>{(uvIndex * 100) / 10 / 180} uv</p>
+              <p>
+                {(uvIndex * 100) / 10 / 180} <span>UV</span>
+              </p>
             </div>
           </div>
         </div>
-        <p className={styles.uvMessage}>
+        <div className={styles.uvMessage}>
           {getUvMessage((uvIndex * 100) / 10 / 180)}
-        </p>
+        </div>
       </div>
     </div>
   );

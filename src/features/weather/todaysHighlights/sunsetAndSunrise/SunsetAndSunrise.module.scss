@@ -1,104 +1,244 @@
 .sunsetAndSunrise {
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+
+  padding: 15px 10px 10px 10px;
   background-color: #f9f9f9;
   border-radius: 10px;
   flex: 1;
-}
 
-.SunsetAndSunriseTitle {
-  margin-bottom: 5px;
-}
+  &__title {
+    font-size: 14px;
+    font-weight: 500;
+  }
 
-.sunsetAndSunriseContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
+  &__container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-.circles {
-  width: 80%;
-  height: 60%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
+  // sun orbit 
+  &__sunOrbitContainer {
+   width: 100%;
+   max-width: 250px;
+   display: flex;
+   justify-content: center;
+   overflow: hidden;
+   padding: 5% 10% 0 10%;
+   position: relative;
+  }
 
-.gaugeSun {
-  width: 80%;
-  max-width: 250px;
-}
+  &__sunOrbitLeft {
+    width: 100%;
+    height: 0;
+    border: #FD8A03 dashed 1.75px;
+    border-bottom: none; 
+    border-top-left-radius: 100% 200%; 
+    border-top-right-radius: 100% 200%;
+    padding-bottom: 50%;
+    background: linear-gradient(to bottom, #FFC62E80, #FFC62E1A);
+    // clip-path: polygon(0 0, 30% 0, 30% 100%, 0 100%);
+  }
+  &__sunOrbitRight {
+    width: 80%;
+    height: 0;
+    border: black dashed 1.75px;
+    border-bottom: none; 
+    border-top-left-radius: 100% 200%; 
+    border-top-right-radius: 100% 200%;
+    position: absolute;  
+    padding-bottom: 40%;
+    // clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%);
+  }
 
-.gaugeBodySun {
-  width: 100%;
-  height: 0;
-  padding-bottom: 50%;
-  border: 2px black dashed;
-  border-bottom: none;
-  position: relative;
-  border-top-left-radius: 100% 200%;
-  border-top-right-radius: 100% 200%;
-  overflow: hidden;
-}
+  &__clockHandWrapper {
+    position: absolute;
+    bottom: calc(0% - 11px);
+    right: 50%;
+    width: calc(40% + 11px);
+    height: 22px;
 
-.gaugeFillSun {
-  position: absolute;
-  top: 100%;
-  left: -12px;
-  width: 110%;
-  height: 100%;
-  background-color: #fd8a03;
-  border-bottom: none;
-  transform-origin: center top;
-  transition: transform 0.2s ease-out;
-}
+    transform-origin: right center; /* Set rotation point to bottom center */
+    // transform: rotate(172deg); 
+  }
+  &__sunIcon {
+    width: 22px;
+    height: 22px;
+  }
+  
+  // hours
+  &__hoursContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    border-top:  black solid 1.5px;
+    padding-top: 3px;
+  }
 
-.gaugeFillMoon {
-  position: absolute;
-  top: 100%;
-  left: -12px;
-  width: 110%;
-  height: 100%;
-  background-color: #2f009d;
-  border-bottom: none;
-  transform-origin: center top;
-  transition: transform 0.2s ease-out;
-}
+  .dayTime {
+   display: flex;
+    flex-direction: column;
 
-.gaugeCoverSun {
-  width: 90%;
-  height: 175%;
-  background-color: #f9f9f9;
-  border-radius: 50%;
-  position: absolute;
-  top: 10%;
-  left: 5%;
-  transform: translateX(-50%);
+    &__icon {
+     min-height: 18px;
+     height: 18px;
+     stroke-width: 1.5px;
+     color: #4F4F4F;
+    }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform 0.2s ease-in-out;
-}
+    span {
+     font-size: 10px;
+     font-weight: 500;
+     color: #FD8A03;
+    }
+    p {
+     font-size: 11px;
+     font-weight: 500;
+    }
 
-.hoursContainer {
-  display: flex;
-  justify-content: space-between;
-  padding-top: 5px;
-  width: 100%;
-}
+    &.sunrise {
+     align-items: left;
+    }
 
-.dayTime {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  span {
-    color: #fd8a03;
+    &.sunset {
+     align-items: flex-end;
+    }
   }
 }
 
-.sunIcon {
-  position: absolute;
-  left: -9px;
-}
+
+// .sunsetAndSunrise {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+
+//   padding: 15px 10px;
+//   background-color: #f9f9f9;
+//   border-radius: 10px;
+//   flex: 1;
+// }
+
+// .SunsetAndSunriseTitle {
+//   font-size: 14px;
+//   font-weight: 500;
+// }
+
+// .sunsetAndSunriseContainer {
+//   width: 100%;
+//   height: 80%;
+//   display: flex;
+//   justify-content: center;
+// }
+
+// .circles {
+//   width: 80%;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   flex-direction: column;
+// }
+
+// .gaugeSun {
+//   width: 90%;
+//   max-width: 250px;
+// }
+
+// .gaugeBodySun {
+//   width: 100%;
+//   height: 0;
+//   padding-bottom: 50%;
+//   border: 1.5px black dashed;
+  
+//   border-bottom: none;
+//   position: relative;
+//   border-top-left-radius: 100% 200%;
+//   border-top-right-radius: 100% 200%;
+//   overflow: hidden;
+// }
+
+// .gaugeFillSun {
+//   position: absolute;
+//   top: 100%;
+//   left: -12px;
+//   width: 110%;
+//   height: 100%;
+//   background-color: #fd8a03;
+//   opacity: 0.7;
+//   border-bottom: none;
+//   transform-origin: center top;
+//   transition: transform 0.2s ease-out;
+// }
+
+// .gaugeFillMoon {
+//   position: absolute;
+//   top: 100%;
+//   left: -12px;
+//   width: 110%;
+//   height: 100%;
+//   background-color: #2f009d;
+//   border-bottom: none;
+//   transform-origin: center top;
+//   transition: transform 0.2s ease-out;
+// }
+
+// .gaugeCoverSun {
+//   width: 90%;
+//   height: 175%;
+//   background-color: #f9f9f9;
+//   border-radius: 50%;
+//   position: absolute;
+//   top: 10%;
+//   left: 5%;
+//   transform: translateX(-50%);
+
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   transition: transform 0.2s ease-in-out;
+// }
+
+// .hoursContainer {
+//   display: flex;
+//   justify-content: space-between;
+//   padding-top: 5px;
+//   width: 103%;
+// }
+
+// .dayTime {
+//   display: flex;
+//   flex-direction: column;
+
+//   &__icon {
+//     min-height: 20px;
+//     height: 20px;
+//     stroke-width: 1.25px;
+//     color: #4F4F4F;
+//   }
+
+//   span {
+//     font-size: 11px;
+//     font-weight: 500;
+//     color: #FD8A03;
+//   }
+//   p {
+//     font-size: 11px;
+//     font-weight: 500;
+//   }
+
+//   &.sunrise {
+//     align-items: left;
+//   }
+
+//   &.sunset {
+//     align-items: flex-end;
+//   }
+// }
+
+// .sunIcon {
+//   position: absolute;
+//   left: -9px;
+// }
