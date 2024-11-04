@@ -62,8 +62,7 @@
     width: calc(40% + 11px);
     height: 22px;
 
-    transform-origin: right center; /* Set rotation point to bottom center */
-    // transform: rotate(172deg); 
+    transform-origin: right center;
   }
   &__sunIcon {
     width: 22px;

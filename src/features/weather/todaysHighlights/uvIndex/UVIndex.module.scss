@@ -1,84 +1,174 @@
 .uvIndex {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
+  padding: 15px 10px 10px 10px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  flex: 1;
 
-  h3 {
+  &__title {
     font-size: 14px;
     font-weight: 500;
   }
-  p {
+
+  &__contents {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  // Gauge
+  &__gaugeContainer {
+    width: 100%;
+    max-width: 250px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    padding: 5% 5% 0 5%;
+  }
+
+  &__gauge {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    height: 0;
+    padding-bottom: 45%;
+    background: linear-gradient(to right, #07070740, #00000090);
+    border-top-left-radius: 100% 200%; 
+    border-top-right-radius: 100% 200%;
+    position: relative;
+  }
+  &__gaugeMeterCover {
+    width: 110%;
+    height: 0;
+    padding-bottom: 55%;
+    background: #f9f9f9;
+    opacity: 0.9;
+    position: absolute;
+    bottom: 0;
+    transform-origin: bottom;
+  }
+  &__gaugeBottomCover {
+    position: absolute;
+    bottom: 0;
+    width: 70%;
+    height: 0;
+    padding-bottom: 35%;
+    background-color: #f9f9f9;
+    border-top-left-radius: 100% 200%; 
+    border-top-right-radius: 100% 200%;
+  }
+  &__value {
     font-size: 24px;
     font-weight: 700;
+    span {
+      font-size: 12px;
+      font-weight: 500;
+    }
+    position: absolute;
+    bottom: 5%;
   }
-  span {
-    font-size: 12px;
+
+  // Indicator message
+  &__indicator {
+    height: 36px;
+    font-size: 16px;
     font-weight: 500;
+    display: flex;
+    align-items: center;
   }
+}
+
+
+
+
+
+
+
+// .uvIndex {
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   height: 100%;
+
+//   h3 {
+//     font-size: 14px;
+//     font-weight: 500;
+//   }
+//   p {
+//     font-size: 24px;
+//     font-weight: 700;
+//   }
+//   span {
+//     font-size: 12px;
+//     font-weight: 500;
+//   }
   
-  background-color: #F9F9F9;
-  border-radius: 10px;
-  flex: 1;
-  padding: 15px 10px;
-}
+//   background-color: #F9F9F9;
+//   border-radius: 10px;
+//   flex: 1;
+//   padding: 15px 10px;
+// }
 
-.circles {
-  width: 100%;
-  height: 80%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-  margin-top: auto;
-}
+// .circles {
+//   width: 100%;
+//   height: 80%;
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   flex-direction: column;
+//   margin-top: auto;
+// }
 
-.gauge {
-  width: 80%;
-  max-width: 250px;
-}
+// .gauge {
+//   width: 80%;
+//   max-width: 250px;
+// }
 
-.gaugeBody {
-  width: 100%;
-  height: 0;
-  padding-bottom: 50%;
-  background-color: #e7e7e7;
-  position: relative;
-  border-top-left-radius: 100% 200%;
-  border-top-right-radius: 100% 200%;
-  overflow: hidden;
-}
+// .gaugeBody {
+//   width: 100%;
+//   height: 0;
+//   padding-bottom: 50%;
+//   background-color: #e7e7e7;
+//   position: relative;
+//   border-top-left-radius: 100% 200%;
+//   border-top-right-radius: 100% 200%;
+//   overflow: hidden;
+// }
 
-.gaugeFill {
-  position: absolute;
-  top: 100%;
-  left: -12px;
-  width: 110%;
-  height: 100%;
-  // background: linear-gradient(to left, #66666608, #0000004D); 
-  background: linear-gradient(to left, #66666620, #00000080);
+// .gaugeFill {
+//   position: absolute;
+//   top: 100%;
+//   left: -12px;
+//   width: 110%;
+//   height: 100%;
+//   // background: linear-gradient(to left, #66666608, #0000004D); 
+//   background: linear-gradient(to left, #66666620, #00000080);
 
-  transform-origin: center top;
-  transition: transform 0.2s ease-out;
-}
+//   transform-origin: center top;
+//   transition: transform 0.2s ease-out;
+// }
 
-.gaugeCover {
-  width: 80%;
-  height: 175%;
-  background-color: #f9f9f9;
-  border-radius: 50%;
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
+// .gaugeCover {
+//   width: 80%;
+//   height: 175%;
+//   background-color: #f9f9f9;
+//   border-radius: 50%;
+//   position: absolute;
+//   top: 20%;
+//   left: 50%;
+//   transform: translateX(-50%);
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 25%;
-  box-sizing: border-box;
-}
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   padding-bottom: 25%;
+//   box-sizing: border-box;
+// }
 
-.uvMessage {
-  font-size: 14px;
-}
+// .uvMessage {
+//   font-size: 14px;
+// }

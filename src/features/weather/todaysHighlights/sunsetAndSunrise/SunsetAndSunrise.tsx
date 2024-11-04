@@ -14,8 +14,6 @@ const SunsetAndSunrise = ({
   sunset: string;
   sunCurrentLocation: number | boolean | null;
 }) => {
-  console.log(sunCurrentLocation);
-
   if (
     typeof sunCurrentLocation !== "number" ||
     sunCurrentLocation < 0 ||

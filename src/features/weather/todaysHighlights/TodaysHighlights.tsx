@@ -28,22 +28,6 @@ const TodaysHighlights = ({
   const feelsLikeTempMax = Math.round(todaysWeather.feelslikemax);
   const feelsLikeTempMin = Math.round(todaysWeather.feelslikemin);
 
-  // function getHourFromTimeString(timeString: string): number {
-  //   const [hours] = timeString.split(":");
-  //   return parseInt(hours);
-  // }
-
-  // const currentTime = timeZone ? getCurrentTimeAndDate(timeZone) : "";
-
-  // const sunriseData: number = getHourFromTimeString(todaysWeather.sunrise);
-
-  // const sunsetData: number = getHourFromTimeString(todaysWeather.sunset);
-
-  // const now: Date = new Date(currentTime);
-  // const totalHours: number = sunsetData - sunriseData;
-  // const currentHour: number = now.getHours();
-  // const sunCurrentLocation: number = (currentHour * 100) / totalHours;
-
   const sunCurrentLocation = timeZone
     ? daylightPercentage(
         timeZone,
