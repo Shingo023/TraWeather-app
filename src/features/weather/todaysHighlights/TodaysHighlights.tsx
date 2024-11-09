@@ -5,8 +5,6 @@ import { WeatherDay } from "@/types";
 import Overview from "./overview/Overview";
 import { formatDate } from "@/utils/dateUtils";
 import TodaysHighlightsSkeleton from "./TodaysHighlightsSkeleton";
-import { getCurrentTimeAndDate } from "@/utils/dateUtils";
-import { daylightPercentage } from "@/utils/mathUtils";
 
 const TodaysHighlights = ({
   todaysWeather,
@@ -28,14 +26,8 @@ const TodaysHighlights = ({
   const feelsLikeTempMax = Math.round(todaysWeather.feelslikemax);
   const feelsLikeTempMin = Math.round(todaysWeather.feelslikemin);
 
-  const sunCurrentLocation = timeZone
-    ? daylightPercentage(
-        timeZone,
-        todaysWeather.datetime,
-        todaysWeather.sunrise,
-        todaysWeather.sunset
-      )
-    : null;
+  const sunrise = todaysWeather.sunrise;
+  const sunset = todaysWeather.sunset;
 
   const uvIndexData = (180 * todaysWeather.uvindex * 10) / 100;
 
@@ -65,9 +57,9 @@ const TodaysHighlights = ({
           />
           <UVIndex uvIndex={uvIndexData} />
           <SunsetAndSunrise
-            sunrise={todaysWeather.sunrise.slice(0, 5)}
-            sunset={todaysWeather.sunset.slice(0, 5)}
-            sunCurrentLocation={sunCurrentLocation}
+            timeZone={timeZone}
+            sunrise={sunrise}
+            sunset={sunset}
           />
         </div>
       </div>

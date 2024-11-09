@@ -1,18 +1,26 @@
 import styles from "./SunsetAndSunrise.module.scss";
 import Image from "next/image";
-import { formatTimeTo12Hour } from "@/utils/dateUtils";
+import { formatTimeTo12Hour, getTodayDateInTimeZone } from "@/utils/dateUtils";
 import { Sunrise, Sunset } from "lucide-react";
-import { getBackgroundPercentage } from "@/utils/mathUtils";
+import { daylightPercentage, getBackgroundPercentage } from "@/utils/mathUtils";
+import React from "react";
 
 const SunsetAndSunrise = ({
+  timeZone,
   sunrise,
   sunset,
-  sunCurrentLocation,
 }: {
+  timeZone: string | undefined;
   sunrise: string;
   sunset: string;
-  sunCurrentLocation: number | boolean | null;
 }) => {
+  const todayDate = timeZone ? getTodayDateInTimeZone(timeZone) : null;
+
+  const sunCurrentLocation =
+    timeZone && todayDate
+      ? daylightPercentage(timeZone, todayDate, sunrise, sunset)
+      : null;
+
   const sunDegrees =
     typeof sunCurrentLocation === "number"
       ? 180 * sunCurrentLocation * 0.01
@@ -57,12 +65,12 @@ const SunsetAndSunrise = ({
           <div className={`${styles.dayTime} ${styles.sunrise}`}>
             <Sunrise className={styles.dayTime__icon} />
             {/* <span>sunrise</span> */}
-            <p>{formatTimeTo12Hour(sunrise)}</p>
+            <p>{formatTimeTo12Hour(sunrise.slice(0, 5))}</p>
           </div>
           <div className={`${styles.dayTime} ${styles.sunset}`}>
             <Sunset className={styles.dayTime__icon} />
             {/* <span>sunset</span> */}
-            <p>{formatTimeTo12Hour(sunset)}</p>
+            <p>{formatTimeTo12Hour(sunset.slice(0, 5))}</p>
           </div>
         </div>
       </div>
@@ -70,4 +78,4 @@ const SunsetAndSunrise = ({
   );
 };
 
-export default SunsetAndSunrise;
+export default React.memo(SunsetAndSunrise);

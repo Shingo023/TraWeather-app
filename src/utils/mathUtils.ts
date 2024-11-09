@@ -76,6 +76,7 @@ export function daylightPercentage(
     "yyyy-MM-dd HH:mm:ss",
     { zone: timezone }
   );
+
   const sunsetTime = DateTime.fromFormat(
     `${date} ${sunset}`,
     "yyyy-MM-dd HH:mm:ss",
