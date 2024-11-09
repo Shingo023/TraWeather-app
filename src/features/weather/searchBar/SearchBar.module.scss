@@ -3,6 +3,7 @@
 .searchBar {
   position: relative;
   height: 6%;
+  min-height: 44px;
 
   &__searchIcon {
     position: absolute;

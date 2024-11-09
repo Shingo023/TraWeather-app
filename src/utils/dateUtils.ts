@@ -56,3 +56,18 @@ export const formatTimeTo12Hour = (time24: string): string => {
   hour = hour % 12 || 12; // Converts '0' or '12' to '12'
   return `${hour}:${minutes} ${period}`;
 };
+
+// "2024-10-19"
+export const getTodayDateInTimeZone = (timeZone: string) => {
+  const today = new Date();
+  // Use Intl.DateTimeFormat to format the date in the given time zone
+  const formattedDate = new Intl.DateTimeFormat("en-CA", {
+    timeZone: timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(today);
+
+  // Return the formatted date in yyyy-MM-dd format
+  return formattedDate;
+};
