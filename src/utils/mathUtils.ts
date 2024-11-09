@@ -84,7 +84,7 @@ export function daylightPercentage(
 
   // Check if the dates are valid
   if (!sunriseTime.isValid || !sunsetTime.isValid) {
-    return false; // Invalid date/time format or timezone
+    return false;
   }
 
   // Get the current time in the specified timezone
@@ -104,5 +104,5 @@ export function daylightPercentage(
   const percentagePassed =
     (timePassedSinceSunrise / totalDaylightDuration) * 100;
 
-  return Math.round(percentagePassed * 100) / 100; // Return rounded to two decimal places
+  return Math.round(percentagePassed * 100) / 100;
 }

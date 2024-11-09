@@ -1,6 +1,5 @@
 import styles from "./SunsetAndSunrise.module.scss";
 import Image from "next/image";
-import sun from "../../../../public/heroicons_sun-solid.svg";
 import { formatTimeTo12Hour } from "@/utils/dateUtils";
 import { Sunrise, Sunset } from "lucide-react";
 import { getBackgroundPercentage } from "@/utils/mathUtils";
@@ -14,16 +13,12 @@ const SunsetAndSunrise = ({
   sunset: string;
   sunCurrentLocation: number | boolean | null;
 }) => {
-  if (
-    typeof sunCurrentLocation !== "number" ||
-    sunCurrentLocation < 0 ||
-    sunCurrentLocation > 100
-  ) {
-    return null;
-  }
-
-  const sunDegrees = 180 * sunCurrentLocation * 0.01;
-  const backgroundPercentage = getBackgroundPercentage(sunDegrees);
+  const sunDegrees =
+    typeof sunCurrentLocation === "number"
+      ? 180 * sunCurrentLocation * 0.01
+      : 270;
+  const backgroundPercentage =
+    sunDegrees === 270 ? 0 : getBackgroundPercentage(sunDegrees);
 
   return (
     <div className={styles.sunsetAndSunrise}>
@@ -49,8 +44,10 @@ const SunsetAndSunrise = ({
           >
             <Image
               className={styles.sunsetAndSunrise__sunIcon}
-              src={sun}
-              alt=""
+              src="/heroicons_sun-solid.svg"
+              alt="sun-icon"
+              width={22}
+              height={22}
             />
           </div>
         </div>
@@ -74,82 +71,3 @@ const SunsetAndSunrise = ({
 };
 
 export default SunsetAndSunrise;
-
-// import styles from "./SunsetAndSunrise.module.scss";
-// import Image from "next/image";
-// import sun from "../../../../public/heroicons_sun-solid.svg";
-// import { formatTimeTo12Hour } from "@/utils/dateUtils";
-// import { Sunrise, Sunset } from "lucide-react";
-
-// const SunsetAndSunrise = ({
-//   sunrise,
-//   sunset,
-//   sunCurrentLocation,
-//   isNight,
-// }: {
-//   sunrise: string;
-//   sunset: string;
-//   sunCurrentLocation: number;
-//   isNight: boolean;
-// }) => {
-//   const sunPathPercentage = {
-//     transform: `rotate(${sunCurrentLocation}deg`,
-//   };
-
-//   const sunIconPathPercentage = {
-//     transform: `rotate(${sunCurrentLocation + 5}deg`,
-//   };
-
-//   return (
-//     <div className={styles.sunsetAndSunrise}>
-//       <p className={styles.SunsetAndSunriseTitle}>Sunrise & Sunset</p>
-//       <div className={styles.sunsetAndSunriseContainer}>
-//         <div className={styles.circles}>
-//           <div className={styles.gaugeSun}>
-//             <div className={styles.gaugeBodySun}>
-//               {isNight ? (
-//                 <>
-//                   <div
-//                     className={styles.gaugeFillMoon}
-//                     style={{ transform: `rotate(${180}deg` }}
-//                   ></div>
-//                   <div
-//                     className={styles.gaugeCoverSun}
-//                     style={sunIconPathPercentage}
-//                   ></div>
-//                 </>
-//               ) : (
-//                 <>
-//                   <div
-//                     className={styles.gaugeFillSun}
-//                     style={sunPathPercentage}
-//                   ></div>
-//                   <div
-//                     className={styles.gaugeCoverSun}
-//                     style={sunIconPathPercentage}
-//                   >
-//                     <Image className={styles.sunIcon} src={sun} alt="" />
-//                   </div>
-//                 </>
-//               )}
-//             </div>
-//           </div>
-//           <div className={styles.hoursContainer}>
-//             <div className={`${styles.dayTime} ${styles.sunrise}`}>
-//               <Sunrise className={styles.dayTime__icon} />
-//               {/* <span>sunrise</span> */}
-//               <p>{formatTimeTo12Hour(sunrise)}</p>
-//             </div>
-//             <div className={`${styles.dayTime} ${styles.sunset}`}>
-//               <Sunset className={styles.dayTime__icon} />
-//               {/* <span>sunset</span> */}
-//               <p>{formatTimeTo12Hour(sunset)}</p>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default SunsetAndSunrise;
