@@ -223,6 +223,7 @@ export type CurrentWeatherPropsType = {
   setFavoriteCitiesPlaceIds: React.Dispatch<React.SetStateAction<string[]>>;
   latitude: string;
   longitude: string;
+  setCurrentDateTime: Dispatch<SetStateAction<string | null>>;
 };
 
 export type CurrentDateAndTimePropsType = {
@@ -231,6 +232,7 @@ export type CurrentDateAndTimePropsType = {
   latitude: string;
   longitude: string;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  setCurrentDateTime: Dispatch<SetStateAction<string | null>>;
 };
 
 export type StarIconPropsType = {
