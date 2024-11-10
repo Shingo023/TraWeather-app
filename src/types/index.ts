@@ -38,12 +38,9 @@ export type WeatherDay = {
   humidity: number;
   precip: number | null;
   precipprob: number;
-  precipcover: number;
   snow: number | null;
   snowdepth: number | null;
-  windgust: number;
   windspeed: number;
-  winddir: number;
   description: string;
   uvindex: number;
   sunrise: string;
@@ -63,9 +60,7 @@ export type WeatherHour = {
   precipprob: number;
   snow: number | null;
   snowdepth: number | null;
-  windgust: number;
   windspeed: number;
-  winddir: number;
   uvindex: number;
   conditions: string;
   icon: string;
