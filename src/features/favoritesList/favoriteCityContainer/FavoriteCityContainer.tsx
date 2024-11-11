@@ -16,6 +16,7 @@ const FavoriteCityContainer = ({
   setHomeLocationId,
   cityLat,
   cityLng,
+  weeklyWeather,
   twentyFourHoursWeather,
   handleDragStart,
   handleDrop,
@@ -41,6 +42,7 @@ const FavoriteCityContainer = ({
         cityLng={cityLng}
         placeNameToDisplay={placeNameToDisplay}
         setIsModalOpen={setIsModalOpen}
+        weeklyWeather={weeklyWeather}
         twentyFourHoursWeather={twentyFourHoursWeather}
         handleDragStart={handleDragStart}
         handleDrop={handleDrop}

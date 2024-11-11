@@ -5,7 +5,7 @@ import { useSession } from "next-auth/react";
 import {
   FavoriteCityWithWeather,
   UserFavoriteCity,
-  WeatherData,
+  WeatherDataForFavoritesList,
   WeatherIconType,
 } from "@/types";
 import FavoriteCityContainer from "@/features/favoritesList/favoriteCityContainer/FavoriteCityContainer";
@@ -28,51 +28,53 @@ const FavoriteList = () => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
+    if (status !== "authenticated") return;
+
     const fetchFavoriteCitiesWithWeather = async () => {
-      if (session?.user?.id) {
-        try {
-          const response = await fetch(
-            `/api/user-favorite-cities?userId=${session.user.id}`
-          );
-          const userFavoriteCitiesData = await response.json();
+      if (!session?.user?.id) return;
 
-          // Fetch weather for each favorite city
-          const favoriteCitiesWithWeatherData = await Promise.all(
-            userFavoriteCitiesData.map(
-              async (userFavoriteCity: UserFavoriteCity) => {
-                if (userFavoriteCity.isDefault) {
-                  setHomeLocationId(userFavoriteCity.id);
-                }
+      try {
+        const response = await fetch(
+          `/api/user-favorite-cities?userId=${session.user.id}`
+        );
+        const userFavoriteCitiesData = await response.json();
 
-                const weatherResponse = await fetch(
-                  `/api/weather/favorite-cities?lat=${userFavoriteCity.favoriteCity.latitude}&lng=${userFavoriteCity.favoriteCity.longitude}`
-                );
-                const weatherData: WeatherData = await weatherResponse.json();
-                return {
-                  ...userFavoriteCity,
-                  weather: weatherData,
-                };
+        // Fetch weather data for each favorite city
+        const favoriteCitiesWithWeatherData = await Promise.all(
+          userFavoriteCitiesData.map(
+            async (userFavoriteCity: UserFavoriteCity) => {
+              if (userFavoriteCity.isDefault) {
+                setHomeLocationId(userFavoriteCity.id);
               }
-            )
-          );
-          favoriteCitiesWithWeatherData.sort(
-            (a, b) => a.displayOrder - b.displayOrder
-          );
-          setFavoriteCitiesWithWeather(favoriteCitiesWithWeatherData);
-        } catch (error) {
-          console.error("Error fetching favorite cities:", error);
-        } finally {
-          // Set loading to false after all data is fetched and processed
-          setLoading(false);
-        }
+
+              const weatherResponse = await fetch(
+                `/api/weather/favorite-cities?lat=${userFavoriteCity.favoriteCity.latitude}&lng=${userFavoriteCity.favoriteCity.longitude}`
+              );
+              const weatherData: WeatherDataForFavoritesList =
+                await weatherResponse.json();
+
+              return {
+                ...userFavoriteCity,
+                weather: weatherData,
+              };
+            }
+          )
+        );
+
+        favoriteCitiesWithWeatherData.sort(
+          (a, b) => a.displayOrder - b.displayOrder
+        );
+
+        setFavoriteCitiesWithWeather(favoriteCitiesWithWeatherData);
+      } catch (error) {
+        console.error("Error fetching favorite cities:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    // Only run the effect once the session is loaded and available
-    if (status === "authenticated") {
-      fetchFavoriteCitiesWithWeather();
-    }
-  }, [status, session?.user?.id]);
+    fetchFavoriteCitiesWithWeather();
+  }, [status === "authenticated", session?.user?.id]);
 
   // Handle drag events
   const handleDragStart = (userFavoriteCityId: number) => {
@@ -126,7 +128,7 @@ const FavoriteList = () => {
 
   // Render skeletons while loading
   if (loading) {
-    const skeletons = Array(3).fill(null);
+    const skeletons = Array(4).fill(null);
 
     return (
       <div className={styles.favoritesList}>
@@ -156,6 +158,8 @@ const FavoriteList = () => {
         const cityLat = favoriteCityWithWeather.favoriteCity.latitude;
         const cityLng = favoriteCityWithWeather.favoriteCity.longitude;
 
+        const weeklyWeather = favoriteCityWithWeather.weather.weeklyWeather;
+
         const todaysWeather = favoriteCityWithWeather.weather.days[0].hours;
         const tomorrowsWeather = favoriteCityWithWeather.weather.days[1].hours;
         const twentyFourHoursWeather = getWeatherForNext24Hours(
@@ -179,6 +183,7 @@ const FavoriteList = () => {
             setHomeLocationId={setHomeLocationId}
             cityLat={cityLat}
             cityLng={cityLng}
+            weeklyWeather={weeklyWeather}
             twentyFourHoursWeather={twentyFourHoursWeather}
             handleDragStart={handleDragStart}
             handleDrop={handleDrop}

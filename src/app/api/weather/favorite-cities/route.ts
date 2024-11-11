@@ -1,8 +1,4 @@
-import {
-  WeatherDataForFavoritesList,
-  WeatherDayForFavoritesList,
-  WeatherHourForFavoritesList,
-} from "@/types";
+import { WeatherDataForFavoritesList, WeatherDay, WeatherHour } from "@/types";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -38,28 +34,26 @@ export async function GET(request: Request) {
     const weatherData: WeatherDataForFavoritesList = {
       latitude: data.latitude,
       longitude: data.longitude,
-      address: data.address,
       timezone: data.timezone,
-      description: data.description,
-      days: data.days.slice(0, 2).map(
-        (day: any): WeatherDayForFavoritesList => ({
-          hours: day.hours.map(
-            (hour: any): WeatherHourForFavoritesList => ({
-              datetime: hour.datetime,
-              temp: hour.temp,
-              feelslike: hour.feelslike,
-              humidity: hour.humidity,
-              precip: hour.precip || null,
-              precipprob: hour.precipprob,
-              icon: hour.icon,
-              windspeed: hour.windspeed,
-            })
-          ),
-        })
-      ),
+      weeklyWeather: data.days.slice(0, 7).map((day: WeatherDay) => ({
+        datetime: day.datetime,
+        icon: day.icon,
+        precipprob: day.precipprob,
+        tempmax: day.tempmax,
+        tempmin: day.tempmin,
+      })),
+      days: data.days.slice(0, 2).map((day: WeatherDay) => ({
+        hours: day.hours.map((hour: WeatherHour) => ({
+          datetime: hour.datetime,
+          temp: hour.temp,
+          precip: hour.precip || null,
+          precipprob: hour.precipprob,
+          icon: hour.icon,
+          windspeed: hour.windspeed,
+        })),
+      })),
       currentConditions: {
         datetime: data.currentConditions.datetime,
-        feelslike: data.currentConditions.feelslike,
         icon: data.currentConditions.icon,
         temp: data.currentConditions.temp,
       },

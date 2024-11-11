@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import DailyForecast from "./dailyForecast/DailyForecast";
 import Button from "@/app/components/elements/button/Button";
+import WeeklyForecast from "./weeklyForecast/WeeklyForecast";
 
 const FavoriteCityCard = React.memo(
   ({
@@ -28,12 +29,14 @@ const FavoriteCityCard = React.memo(
     cityLng,
     placeNameToDisplay,
     setIsModalOpen,
+    weeklyWeather,
     twentyFourHoursWeather,
     handleDragStart,
     handleDrop,
     handleDragOver,
   }: FavoriteCityCardPropsType) => {
     const [isDragging, setIsDragging] = useState(false);
+    const [showTodaysWeather, setShowTodaysWeather] = useState(true);
 
     const currentWeatherIcon =
       currentWeather !== undefined ? iconMapping[currentWeather] : null;
@@ -188,11 +191,40 @@ const FavoriteCityCard = React.memo(
               /> */}
             </div>
           </div>
-          <DailyForecast
-            twentyFourHoursWeather={twentyFourHoursWeather}
-            iconHeight={50}
-            iconWidth={50}
-          />
+          <div>
+            <div
+              onClick={() => {
+                if (showTodaysWeather === false) {
+                  setShowTodaysWeather(true);
+                }
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              Today
+            </div>
+            <div
+              onClick={() => {
+                if (showTodaysWeather === true) {
+                  setShowTodaysWeather(false);
+                }
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              Week
+            </div>
+          </div>
+          {/* <WeeklyForecast /> */}
+          {showTodaysWeather === true ? (
+            <DailyForecast
+              twentyFourHoursWeather={twentyFourHoursWeather}
+              iconHeight={50}
+              iconWidth={50}
+            />
+          ) : (
+            weeklyWeather.map((dailyWeather: any) => (
+              <p key={dailyWeather.datetime}>{dailyWeather.datetime}</p>
+            ))
+          )}
         </div>
       </div>
     );

@@ -1,17 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { DefaultSession } from "next-auth";
 
-export type DisplayedCityWeatherContextType = {
-  displayedCityWeather: WeatherData | null;
-  setDisplayedCityWeather: Dispatch<SetStateAction<WeatherData | null>>;
-  cityToDisplay: string | null;
-  setCityToDisplay: React.Dispatch<React.SetStateAction<string | null>>;
-  address: string | null;
-  setAddress: (state: string | null) => void;
-  placeId: string | null;
-  setPlaceId: (state: string | null) => void;
-};
-
 // Formatted types of the weather data so that unnecessary fields will not be fetched
 export type WeatherData = {
   latitude: number;
@@ -71,32 +60,16 @@ export type WeatherHour = {
 export type WeatherDataForFavoritesList = {
   latitude: number;
   longitude: number;
-  address: string;
   timezone: string;
-  description: string;
+  weeklyWeather: WeatherDay[];
   days: WeatherDay[];
   currentConditions: {
     datetime: string;
-    feelslike: number;
     icon: string;
     temp: number;
   };
 };
 
-export type WeatherDayForFavoritesList = {
-  hours: WeatherHour[];
-};
-
-export type WeatherHourForFavoritesList = {
-  datetime: string;
-  temp: number;
-  feelslike: number;
-  humidity: number;
-  precip: number | null;
-  precipprob: number;
-  icon: string;
-  windspeed: number;
-};
 export type WeatherIconType =
   | "clear-day"
   | "clear-night"
@@ -138,7 +111,7 @@ export type FavoriteCityWithWeather = {
   customName: string;
   isDefault: boolean;
   favoriteCity: FavoriteCity;
-  weather: WeatherData;
+  weather: WeatherDataForFavoritesList;
 };
 
 export type LocationDetails = {
@@ -172,6 +145,7 @@ export type FavoriteCityContainerPropsType = {
   setHomeLocationId: (homeLocationId: number | null) => void;
   cityLat: number;
   cityLng: number;
+  weeklyWeather: WeatherDay[];
   twentyFourHoursWeather: WeatherHour[];
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
@@ -193,6 +167,7 @@ export type FavoriteCityCardPropsType = {
   cityLng: number;
   placeNameToDisplay: string;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  weeklyWeather: WeatherDay[];
   twentyFourHoursWeather: WeatherHour[];
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
