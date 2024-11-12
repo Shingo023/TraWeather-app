@@ -70,6 +70,17 @@ export type WeatherDataForFavoritesList = {
   };
 };
 
+export type WeatherDataForForecast = {
+  datetime: string;
+  tempmax: number;
+  tempmin: number;
+  temp: number;
+  precip: number | null;
+  precipprob: number;
+  windspeed: number;
+  icon: string;
+};
+
 export type WeatherIconType =
   | "clear-day"
   | "clear-night"

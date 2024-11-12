@@ -9,9 +9,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import DailyForecast from "./dailyForecast/DailyForecast";
+import WeatherForecast from "./weatherForecast/WeatherForecast";
 import Button from "@/app/components/elements/button/Button";
-import WeeklyForecast from "./weeklyForecast/WeeklyForecast";
 
 const FavoriteCityCard = React.memo(
   ({
@@ -213,17 +212,18 @@ const FavoriteCityCard = React.memo(
               Week
             </div>
           </div>
-          {/* <WeeklyForecast /> */}
           {showTodaysWeather === true ? (
-            <DailyForecast
-              twentyFourHoursWeather={twentyFourHoursWeather}
+            <WeatherForecast
+              dailyOrWeeklyWeather={twentyFourHoursWeather}
               iconHeight={50}
               iconWidth={50}
             />
           ) : (
-            weeklyWeather.map((dailyWeather: any) => (
-              <p key={dailyWeather.datetime}>{dailyWeather.datetime}</p>
-            ))
+            <WeatherForecast
+              dailyOrWeeklyWeather={weeklyWeather}
+              iconHeight={50}
+              iconWidth={50}
+            />
           )}
         </div>
       </div>

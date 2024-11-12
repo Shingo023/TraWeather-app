@@ -1,7 +1,7 @@
 import HourlyWeatherCardSkeleton from "@/features/weather/todaysForecast/hourlyWeatherCard/HourlyWeatherCardSkeleton";
-import styles from "./DailyForecast.module.scss";
+import styles from "./WeatherForecast.module.scss";
 
-const DailyForecastSkeleton = ({
+const WeatherForecastSkeleton = ({
   iconHeight,
   iconWidth,
 }: {
@@ -10,7 +10,7 @@ const DailyForecastSkeleton = ({
 }) => {
   const skeletons = Array(12).fill(null);
   return (
-    <div className={styles.dailyForecast}>
+    <div className={styles.weatherForecast}>
       {skeletons.map((_, index) => (
         <HourlyWeatherCardSkeleton
           key={index}
@@ -22,4 +22,4 @@ const DailyForecastSkeleton = ({
   );
 };
 
-export default DailyForecastSkeleton;
+export default WeatherForecastSkeleton;

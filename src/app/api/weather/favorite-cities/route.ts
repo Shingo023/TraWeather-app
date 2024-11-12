@@ -46,10 +46,10 @@ export async function GET(request: Request) {
         hours: day.hours.map((hour: WeatherHour) => ({
           datetime: hour.datetime,
           temp: hour.temp,
-          precip: hour.precip || null,
+          // precip: hour.precip || null,
           precipprob: hour.precipprob,
           icon: hour.icon,
-          windspeed: hour.windspeed,
+          // windspeed: hour.windspeed,
         })),
       })),
       currentConditions: {

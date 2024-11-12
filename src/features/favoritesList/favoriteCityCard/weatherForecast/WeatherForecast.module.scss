@@ -1,5 +1,5 @@
 /* Non-scrollable wrapper for positioning the arrows */
-.dailyForecastWrapper {
+.weatherForecastWrapper {
   position: relative;
   height: 100%;
   width: 100%;
@@ -7,7 +7,7 @@
 }
 
 /* Scrollable content */
-.dailyForecast {
+.weatherForecast {
   display: flex;
   height: 100%;
   width: 100%;

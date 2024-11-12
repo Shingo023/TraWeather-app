@@ -9,6 +9,8 @@ const HourlyWeatherCard = ({
   iconWidth,
   iconHeight,
   temp,
+  tempMax,
+  tempMin,
   precipProb,
   precipAmount,
   windSpeed,
@@ -18,9 +20,11 @@ const HourlyWeatherCard = ({
   iconWidth: number;
   iconHeight: number;
   temp: number;
+  tempMax: number;
+  tempMin: number;
   precipProb: number;
-  precipAmount: number;
-  windSpeed: number;
+  precipAmount?: number | null;
+  windSpeed?: number | null;
 }) => {
   return (
     <div className={styles.hourlyWeather}>
@@ -33,7 +37,13 @@ const HourlyWeatherCard = ({
             height={iconHeight}
           />
         </div>
-        <div className={styles.hourlyWeather__temp}>{temp}°</div>
+        {temp ? (
+          <div className={styles.hourlyWeather__temp}>{temp}°</div>
+        ) : (
+          <div className={styles.hourlyWeather__temp}>
+            {tempMax}° / {tempMin}°
+          </div>
+        )}
       </div>
 
       <div className={styles.hourlyWeather__bottom}>
@@ -49,27 +59,31 @@ const HourlyWeatherCard = ({
           </p>
         </div>
 
-        <div className={styles.hourlyWeather__precip}>
-          <CloudHail className={styles.hourlyWeather__icon} />
-          <p>
-            {precipAmount}
-            <span>mm</span>
-          </p>
-          <div className={styles.hourlyWeather__weatherIndex}>
-            {getPrecipIntensity(precipAmount)}
+        {typeof precipAmount === "number" ? (
+          <div className={styles.hourlyWeather__precip}>
+            <CloudHail className={styles.hourlyWeather__icon} />
+            <p>
+              {precipAmount}
+              <span>mm</span>
+            </p>
+            <div className={styles.hourlyWeather__weatherIndex}>
+              {getPrecipIntensity(precipAmount)}
+            </div>
           </div>
-        </div>
+        ) : null}
 
-        <div className={styles.hourlyWeather__wind}>
-          <Wind className={styles.hourlyWeather__icon} />
-          <p>
-            {windSpeed}
-            <span>kph</span>
-          </p>
-          <div className={styles.hourlyWeather__weatherIndex}>
-            {getWindStrength(windSpeed)}
+        {windSpeed ? (
+          <div className={styles.hourlyWeather__wind}>
+            <Wind className={styles.hourlyWeather__icon} />
+            <p>
+              {windSpeed}
+              <span>kph</span>
+            </p>
+            <div className={styles.hourlyWeather__weatherIndex}>
+              {getWindStrength(windSpeed)}
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </div>
   );

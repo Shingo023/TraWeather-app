@@ -1,4 +1,4 @@
-import DailyForecastSkeleton from "./dailyForecast/DailyForecastSkeleton";
+import WeatherForecastSkeleton from "./weatherForecast/WeatherForecastSkeleton";
 import styles from "./FavoriteCityCard.module.scss";
 
 const FavoriteCityCardSkeleton = () => {
@@ -26,7 +26,7 @@ const FavoriteCityCardSkeleton = () => {
             <div className={styles.cityCard__buttonSkeleton} />
           </div>
         </div>
-        <DailyForecastSkeleton iconHeight={30} iconWidth={30} />
+        <WeatherForecastSkeleton iconHeight={30} iconWidth={30} />
       </div>
     </div>
   );
