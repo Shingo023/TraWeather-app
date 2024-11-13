@@ -7,12 +7,17 @@
 
 .cityCard {
   height: 230px;
-  background-color: #D9D9D9;
+  background-color: #F9F9F9;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   margin-bottom: 15px;
   border-radius: 10px;
   padding: 20px 15px 17px 15px;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   cursor: grab;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+
   &:active {
     cursor: grabbing;
   }
@@ -21,11 +26,17 @@
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
   }
 
+  // header 
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
   // Place[City] section
   &__cityInfo {
     display: flex;
     align-items: center;
     gap: 3px;
+ 
   }
   &__cityName {
     font-size: 28px;
@@ -90,6 +101,14 @@
     margin-left: 8px;
     margin-top: 5px;
   }
+
+  // Forecast toggle
+  &__forecastToggle {
+    display: flex;
+    gap: 25px;
+    align-items: flex-end;
+  }
+
 
   // Weather section
   &__weather {

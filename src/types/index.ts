@@ -156,8 +156,8 @@ export type FavoriteCityContainerPropsType = {
   setHomeLocationId: (homeLocationId: number | null) => void;
   cityLat: number;
   cityLng: number;
-  weeklyWeather: WeatherDay[];
-  twentyFourHoursWeather: WeatherHour[];
+  weeklyWeather: WeatherDataForForecast[];
+  twentyFourHoursWeather: WeatherDataForForecast[];
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
@@ -178,8 +178,8 @@ export type FavoriteCityCardPropsType = {
   cityLng: number;
   placeNameToDisplay: string;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  weeklyWeather: WeatherDay[];
-  twentyFourHoursWeather: WeatherHour[];
+  weeklyWeather: WeatherDataForForecast[];
+  twentyFourHoursWeather: WeatherDataForForecast[];
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;

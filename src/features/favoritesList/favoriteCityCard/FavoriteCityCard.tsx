@@ -2,7 +2,7 @@
 
 import { FavoriteCityCardPropsType } from "@/types";
 import styles from "./FavoriteCityCard.module.scss";
-import { iconMapping } from "@/utils/weatherIconMapping";
+import { backgroundMapping, iconMapping } from "@/utils/weatherIconMapping";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-toastify";
@@ -39,6 +39,8 @@ const FavoriteCityCard = React.memo(
 
     const currentWeatherIcon =
       currentWeather !== undefined ? iconMapping[currentWeather] : null;
+    const backgroundWeather =
+      currentWeather !== undefined ? backgroundMapping[currentWeather] : null;
     const router = useRouter();
 
     const updateHomeLocationApi = async (body: any) => {
@@ -134,32 +136,60 @@ const FavoriteCityCard = React.memo(
           setIsDragging(false);
           handleDrop(userFavoriteCityId);
         }}
+        style={{ backgroundImage: `url(${backgroundWeather})` }}
       >
-        <div className={styles.cityCard__cityInfo}>
-          <div className={styles.cityCard__homeIconContainer}>
-            <MapPinIcon
-              className={`${styles.cityCard__homeIcon} ${
-                userFavoriteCityId === homeLocationId ? styles.active : ""
-              }`}
-              onClick={handleIconClick}
-            />
-            <span className={styles.cityCard__homeIconTooltip}>
-              {userFavoriteCityId === homeLocationId
-                ? "Unset home location"
-                : "Set as home location"}
-            </span>
+        <div className={styles.cityCard__header}>
+          <div className={styles.cityCard__cityInfo}>
+            <div className={styles.cityCard__homeIconContainer}>
+              <MapPinIcon
+                className={`${styles.cityCard__homeIcon} ${
+                  userFavoriteCityId === homeLocationId ? styles.active : ""
+                }`}
+                onClick={handleIconClick}
+              />
+              <span className={styles.cityCard__homeIconTooltip}>
+                {userFavoriteCityId === homeLocationId
+                  ? "Unset home location"
+                  : "Set as home location"}
+              </span>
+            </div>
+            <div className={styles.cityCard__cityName}>
+              {placeNameToDisplay}
+            </div>
+            <div
+              className={styles.cityCard__placeEdit}
+              onClick={(event) => {
+                event.stopPropagation();
+                setIsModalOpen(true);
+              }}
+            >
+              Edit
+            </div>
+            {/* <div className={styles.cityCard__cityAddress}>{cityAddress}</div> */}
           </div>
-          <div className={styles.cityCard__cityName}>{placeNameToDisplay}</div>
-          <div
-            className={styles.cityCard__placeEdit}
-            onClick={(event) => {
-              event.stopPropagation();
-              setIsModalOpen(true);
-            }}
-          >
-            Edit
+
+          <div className={styles.cityCard__forecastToggle}>
+            <div
+              onClick={() => {
+                if (showTodaysWeather === false) {
+                  setShowTodaysWeather(true);
+                }
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              Today
+            </div>
+            <div
+              onClick={() => {
+                if (showTodaysWeather === true) {
+                  setShowTodaysWeather(false);
+                }
+              }}
+              style={{ cursor: "pointer" }}
+            >
+              Week
+            </div>
           </div>
-          <div className={styles.cityCard__cityAddress}>{cityAddress}</div>
         </div>
 
         <div className={styles.cityCard__weather}>
@@ -190,28 +220,7 @@ const FavoriteCityCard = React.memo(
               /> */}
             </div>
           </div>
-          <div>
-            <div
-              onClick={() => {
-                if (showTodaysWeather === false) {
-                  setShowTodaysWeather(true);
-                }
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              Today
-            </div>
-            <div
-              onClick={() => {
-                if (showTodaysWeather === true) {
-                  setShowTodaysWeather(false);
-                }
-              }}
-              style={{ cursor: "pointer" }}
-            >
-              Week
-            </div>
-          </div>
+
           {showTodaysWeather === true ? (
             <WeatherForecast
               dailyOrWeeklyWeather={twentyFourHoursWeather}

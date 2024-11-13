@@ -1,4 +1,4 @@
-import { WeatherDay, WeatherHour } from "@/types";
+import { WeatherDataForForecast, WeatherDay } from "@/types";
 import styles from "./TodaysForecast.module.scss";
 import WeatherForecast from "@/features/favoritesList/favoriteCityCard/weatherForecast/WeatherForecast";
 import { formatDate } from "@/utils/dateUtils";
@@ -8,7 +8,7 @@ const TodaysForecast = ({
   twentyFourHoursWeather,
   todaysWeather,
 }: {
-  twentyFourHoursWeather: WeatherHour[] | null;
+  twentyFourHoursWeather: WeatherDataForForecast[] | null;
   todaysWeather: WeatherDay | null;
 }) => {
   const date = todaysWeather ? formatDate(todaysWeather.datetime) : "";

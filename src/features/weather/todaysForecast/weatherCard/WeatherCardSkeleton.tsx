@@ -1,6 +1,6 @@
-import styles from "./HourlyWeatherCard.module.scss";
+import styles from "./WeatherCard.module.scss";
 
-const HourlyWeatherCardSkeleton = ({
+const WeatherCardSkeleton = ({
   iconHeight,
   iconWidth,
 }: {
@@ -31,4 +31,4 @@ const HourlyWeatherCardSkeleton = ({
   );
 };
 
-export default HourlyWeatherCardSkeleton;
+export default WeatherCardSkeleton;

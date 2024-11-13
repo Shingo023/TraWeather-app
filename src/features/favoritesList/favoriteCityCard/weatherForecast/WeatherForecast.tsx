@@ -1,7 +1,7 @@
 import { WeatherDataForForecast, WeatherIconType } from "@/types";
 import styles from "./WeatherForecast.module.scss";
 import { formatDate, formatTimeTo12Hour } from "@/utils/dateUtils";
-import HourlyWeatherCard from "@/features/weather/todaysForecast/hourlyWeatherCard/HourlyWeatherCard";
+import WeatherCard from "@/features/weather/todaysForecast/weatherCard/WeatherCard";
 import { iconMapping } from "@/utils/weatherIconMapping";
 import { useEffect, useRef, useState } from "react";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
@@ -91,7 +91,7 @@ const WeatherForecast = ({
           const windSpeed = Math.round(weather.windspeed);
 
           return (
-            <HourlyWeatherCard
+            <WeatherCard
               key={index}
               hour={dateTime}
               weatherIconSrc={weatherIconSrc}

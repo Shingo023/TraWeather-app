@@ -1,9 +1,9 @@
 import { CloudHail, Umbrella, Wind } from "lucide-react";
-import styles from "./HourlyWeatherCard.module.scss";
+import styles from "./WeatherCard.module.scss";
 import { getPrecipIntensity, getWindStrength } from "@/utils/weatherUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 
-const HourlyWeatherCard = ({
+const WeatherCard = ({
   hour,
   weatherIconSrc,
   iconWidth,
@@ -89,4 +89,4 @@ const HourlyWeatherCard = ({
   );
 };
 
-export default HourlyWeatherCard;
+export default WeatherCard;
