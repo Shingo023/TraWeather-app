@@ -8,24 +8,24 @@ const WeatherCardSkeleton = ({
   iconWidth: number;
 }) => {
   return (
-    <div className={styles.hourlyWeather}>
-      <div className={styles.hourlyWeather__top}>
-        <p className={styles.hourlyWeather__timeSkeleton} />
-        <div className={styles.hourlyWeather__weatherIcon}>
+    <div className={styles.weatherCard}>
+      <div className={styles.weatherCard__top}>
+        <p className={styles.weatherCard__timeSkeleton} />
+        <div className={styles.weatherCard__weatherIcon}>
           <div
-            className={styles.hourlyWeather__weatherIconSkeleton}
+            className={styles.weatherCard__weatherIconSkeleton}
             style={{ width: iconWidth, height: iconHeight }}
           />
         </div>
-        <div className={styles.hourlyWeather__tempSkeleton} />
+        <div className={styles.weatherCard__tempSkeleton} />
       </div>
 
-      <div className={styles.hourlyWeather__bottom}>
-        <div className={styles.hourlyWeather__precipProbSkeleton} />
+      <div className={styles.weatherCard__bottom}>
+        <div className={styles.weatherCard__precipProbSkeleton} />
 
-        <div className={styles.hourlyWeather__precipSkeleton} />
+        <div className={styles.weatherCard__precipSkeleton} />
 
-        <div className={styles.hourlyWeather__windSkeleton} />
+        <div className={styles.weatherCard__windSkeleton} />
       </div>
     </div>
   );

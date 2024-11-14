@@ -10,10 +10,12 @@ const WeatherForecast = ({
   dailyOrWeeklyWeather,
   iconWidth,
   iconHeight,
+  cardWidth,
 }: {
   dailyOrWeeklyWeather: WeatherDataForForecast[] | null;
   iconWidth: number;
   iconHeight: number;
+  cardWidth: number;
 }) => {
   const [hovered, setHovered] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -93,7 +95,7 @@ const WeatherForecast = ({
           return (
             <WeatherCard
               key={index}
-              hour={dateTime}
+              dateTime={dateTime}
               weatherIconSrc={weatherIconSrc}
               iconWidth={iconWidth}
               iconHeight={iconHeight}
@@ -103,6 +105,7 @@ const WeatherForecast = ({
               precipProb={precipProb}
               precipAmount={precipAmount}
               windSpeed={windSpeed}
+              cardWidth={cardWidth}
             />
           );
         })}

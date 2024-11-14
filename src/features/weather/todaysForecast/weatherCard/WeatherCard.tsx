@@ -4,7 +4,7 @@ import { getPrecipIntensity, getWindStrength } from "@/utils/weatherUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 
 const WeatherCard = ({
-  hour,
+  dateTime,
   weatherIconSrc,
   iconWidth,
   iconHeight,
@@ -14,8 +14,9 @@ const WeatherCard = ({
   precipProb,
   precipAmount,
   windSpeed,
+  cardWidth,
 }: {
-  hour: string;
+  dateTime: string;
   weatherIconSrc: string;
   iconWidth: number;
   iconHeight: number;
@@ -25,12 +26,16 @@ const WeatherCard = ({
   precipProb: number;
   precipAmount?: number | null;
   windSpeed?: number | null;
+  cardWidth: number;
 }) => {
   return (
-    <div className={styles.hourlyWeather}>
-      <div className={styles.hourlyWeather__top}>
-        <p className={styles.hourlyWeather__time}>{hour}</p>
-        <div className={styles.hourlyWeather__weatherIcon}>
+    <div
+      className={styles.weatherCard}
+      style={{ width: `${cardWidth}px`, minWidth: `${cardWidth}px` }}
+    >
+      <div className={styles.weatherCard__top}>
+        <p className={styles.weatherCard__time}>{dateTime}</p>
+        <div className={styles.weatherCard__weatherIcon}>
           <WeatherIcon
             weatherIcon={weatherIconSrc}
             width={iconWidth}
@@ -38,21 +43,21 @@ const WeatherCard = ({
           />
         </div>
         {temp ? (
-          <div className={styles.hourlyWeather__temp}>{temp}°</div>
+          <div className={styles.weatherCard__temp}>{temp}°</div>
         ) : (
-          <div className={styles.hourlyWeather__temp}>
+          <div className={styles.weatherCard__temp}>
             {tempMax}° / {tempMin}°
           </div>
         )}
       </div>
 
-      <div className={styles.hourlyWeather__bottom}>
+      <div className={styles.weatherCard__bottom}>
         <div
-          className={`${styles.hourlyWeather__precipProb} ${
+          className={`${styles.weatherCard__precipProb} ${
             precipProb > 0 ? styles.precipProbActive : ""
           }`}
         >
-          <Umbrella className={styles.hourlyWeather__icon} />
+          <Umbrella className={styles.weatherCard__icon} />
           <p>
             {precipProb}
             <span>%</span>
@@ -60,26 +65,26 @@ const WeatherCard = ({
         </div>
 
         {typeof precipAmount === "number" ? (
-          <div className={styles.hourlyWeather__precip}>
-            <CloudHail className={styles.hourlyWeather__icon} />
+          <div className={styles.weatherCard__precip}>
+            <CloudHail className={styles.weatherCard__icon} />
             <p>
               {precipAmount}
               <span>mm</span>
             </p>
-            <div className={styles.hourlyWeather__weatherIndex}>
+            <div className={styles.weatherCard__weatherIndex}>
               {getPrecipIntensity(precipAmount)}
             </div>
           </div>
         ) : null}
 
         {windSpeed ? (
-          <div className={styles.hourlyWeather__wind}>
-            <Wind className={styles.hourlyWeather__icon} />
+          <div className={styles.weatherCard__wind}>
+            <Wind className={styles.weatherCard__icon} />
             <p>
               {windSpeed}
               <span>kph</span>
             </p>
-            <div className={styles.hourlyWeather__weatherIndex}>
+            <div className={styles.weatherCard__weatherIndex}>
               {getWindStrength(windSpeed)}
             </div>
           </div>

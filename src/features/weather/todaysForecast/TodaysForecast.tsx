@@ -37,6 +37,7 @@ const TodaysForecast = ({
             dailyOrWeeklyWeather={twentyFourHoursWeather}
             iconHeight={60}
             iconWidth={60}
+            cardWidth={130}
           />
         </div>
       </div>

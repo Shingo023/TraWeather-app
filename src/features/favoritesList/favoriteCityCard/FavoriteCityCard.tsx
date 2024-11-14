@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import WeatherForecast from "./weatherForecast/WeatherForecast";
 import Button from "@/app/components/elements/button/Button";
+import { ExternalLink, Pencil, Trash2 } from "lucide-react";
 
 const FavoriteCityCard = React.memo(
   ({
@@ -100,14 +101,16 @@ const FavoriteCityCard = React.memo(
       );
     };
 
-    const handlePlaceInfoClick = async () => {
-      // // tourist attractions
-      // const zoomLevel = 15;
-      // const searchQuery = encodeURIComponent("tourist attraction");
-      // const googleMapsUrl = `https://www.google.com/maps/search/${searchQuery}/@${cityLat},${cityLng},${zoomLevel}z`;
+    const handleAttractionInfoClick = async () => {
+      // tourist attractions
+      const zoomLevel = 15;
+      const searchQuery = encodeURIComponent("tourist attraction");
+      const googleMapsUrl = `https://www.google.com/maps/search/${searchQuery}/@${cityLat},${cityLng},${zoomLevel}z`;
 
-      // window.open(googleMapsUrl, "_blank");
+      window.open(googleMapsUrl, "_blank");
+    };
 
+    const handleEventInfoClick = async () => {
       // events
       // Construct the search query using city name and address
       const searchQuery = encodeURIComponent(`${cityAddress}, ${cityName}`);
@@ -163,29 +166,36 @@ const FavoriteCityCard = React.memo(
                 setIsModalOpen(true);
               }}
             >
-              Edit
+              <Pencil width={20} height={20} />
+            </div>
+            <div className={styles.cityCard__placeEdit}>
+              <Trash2 width={20} height={20} />
             </div>
             {/* <div className={styles.cityCard__cityAddress}>{cityAddress}</div> */}
           </div>
 
           <div className={styles.cityCard__forecastToggle}>
             <div
+              className={`${styles.cityCard__selectedForecast} ${
+                showTodaysWeather === true ? styles.active : ""
+              } `}
               onClick={() => {
                 if (showTodaysWeather === false) {
                   setShowTodaysWeather(true);
                 }
               }}
-              style={{ cursor: "pointer" }}
             >
               Today
             </div>
             <div
+              className={`${styles.cityCard__selectedForecast} ${
+                showTodaysWeather === false ? styles.active : ""
+              } `}
               onClick={() => {
                 if (showTodaysWeather === true) {
                   setShowTodaysWeather(false);
                 }
               }}
-              style={{ cursor: "pointer" }}
             >
               Week
             </div>
@@ -213,27 +223,38 @@ const FavoriteCityCard = React.memo(
                 type="button"
                 onClick={handleWeatherInfoClick}
               />
-              {/* <Button
-                text="Spots & Events"
-                type="button"
-                onClick={handlePlaceInfoClick}
-              /> */}
             </div>
           </div>
 
-          {showTodaysWeather === true ? (
-            <WeatherForecast
-              dailyOrWeeklyWeather={twentyFourHoursWeather}
-              iconHeight={50}
-              iconWidth={50}
-            />
-          ) : (
-            <WeatherForecast
-              dailyOrWeeklyWeather={weeklyWeather}
-              iconHeight={50}
-              iconWidth={50}
-            />
-          )}
+          <div className={styles.cityCard__contentRight}>
+            <div className={styles.cityCard__weatherForecast}>
+              {showTodaysWeather === true ? (
+                <WeatherForecast
+                  dailyOrWeeklyWeather={twentyFourHoursWeather}
+                  iconHeight={50}
+                  iconWidth={50}
+                  cardWidth={110}
+                />
+              ) : (
+                <WeatherForecast
+                  dailyOrWeeklyWeather={weeklyWeather}
+                  iconHeight={50}
+                  iconWidth={50}
+                  cardWidth={110}
+                />
+              )}
+            </div>
+            <div className={styles.cityCard__placeInfoLinks}>
+              <div onClick={handleAttractionInfoClick}>
+                Tourist Attractions
+                <ExternalLink width={20} height={20} />
+              </div>
+              <div onClick={handleEventInfoClick}>
+                Events
+                <ExternalLink width={20} height={20} />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );
