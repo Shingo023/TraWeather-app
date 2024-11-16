@@ -1,4 +1,4 @@
-import { WeatherHour } from "@/types";
+import { WeatherDataForForecast, WeatherHour } from "@/types";
 import { getCurrentHourInTimeZone } from "./dateUtils";
 
 // wind speed(kph)
@@ -57,8 +57,8 @@ export const getVisibilityIndex = (visibility: number) => {
 };
 
 export const getWeatherForNext24Hours = (
-  todaysWeather: WeatherHour[],
-  tomorrowsWeather: WeatherHour[],
+  todaysWeather: WeatherDataForForecast[],
+  tomorrowsWeather: WeatherDataForForecast[],
   timeZone: string
 ) => {
   const fortyEightHoursWeather = [...todaysWeather, ...tomorrowsWeather];

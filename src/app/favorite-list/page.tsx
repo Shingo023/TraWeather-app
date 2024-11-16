@@ -10,10 +10,7 @@ import {
 } from "@/types";
 import FavoriteCityContainer from "@/features/favoritesList/favoriteCityContainer/FavoriteCityContainer";
 import styles from "./page.module.scss";
-import {
-  getCurrentHourInTimeZone,
-  getCurrentTimeAndDate,
-} from "@/utils/dateUtils";
+import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import FavoriteCityCardSkeleton from "@/features/favoritesList/favoriteCityCard/FavoriteCityCardSkeleton";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 

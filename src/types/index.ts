@@ -36,7 +36,7 @@ export type WeatherDay = {
   sunset: string;
   conditions: string;
   icon: string;
-  hours: WeatherHour[];
+  hours: WeatherDataForForecast[];
   visibility: number;
 };
 
@@ -61,7 +61,7 @@ export type WeatherDataForFavoritesList = {
   latitude: number;
   longitude: number;
   timezone: string;
-  weeklyWeather: WeatherDay[];
+  weeklyWeather: WeatherDataForForecast[];
   days: WeatherDay[];
   currentConditions: {
     datetime: string;
@@ -177,7 +177,8 @@ export type FavoriteCityCardPropsType = {
   cityLat: number;
   cityLng: number;
   placeNameToDisplay: string;
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
+  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
+  setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
   weeklyWeather: WeatherDataForForecast[];
   twentyFourHoursWeather: WeatherDataForForecast[];
   handleDragStart: (cityId: number) => void;

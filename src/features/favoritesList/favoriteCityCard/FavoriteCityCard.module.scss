@@ -83,7 +83,8 @@
     opacity: 0; 
     transition: opacity 0.3s ease-in-out;
   }
-  &__placeEdit {
+  &__edit,
+  &__delete {
     transition: all 0.3s ease; 
     margin-left: 5px;
     color: rgba(0, 0, 255, 0.8);

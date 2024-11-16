@@ -28,7 +28,8 @@ const FavoriteCityCard = React.memo(
     cityLat,
     cityLng,
     placeNameToDisplay,
-    setIsModalOpen,
+    setIsEditModalOpen,
+    setIsDeleteModalOpen,
     weeklyWeather,
     twentyFourHoursWeather,
     handleDragStart,
@@ -160,15 +161,21 @@ const FavoriteCityCard = React.memo(
               {placeNameToDisplay}
             </div>
             <div
-              className={styles.cityCard__placeEdit}
+              className={styles.cityCard__edit}
               onClick={(event) => {
                 event.stopPropagation();
-                setIsModalOpen(true);
+                setIsEditModalOpen(true);
               }}
             >
               <Pencil width={20} height={20} />
             </div>
-            <div className={styles.cityCard__placeEdit}>
+            <div
+              className={styles.cityCard__delete}
+              onClick={(event) => {
+                event.stopPropagation();
+                setIsDeleteModalOpen(true);
+              }}
+            >
               <Trash2 width={20} height={20} />
             </div>
             {/* <div className={styles.cityCard__cityAddress}>{cityAddress}</div> */}
@@ -219,6 +226,7 @@ const FavoriteCityCard = React.memo(
             </div>
             <div className={styles.cityCard__buttons}>
               <Button
+                className="primary"
                 text="Weather Details"
                 type="button"
                 onClick={handleWeatherInfoClick}
