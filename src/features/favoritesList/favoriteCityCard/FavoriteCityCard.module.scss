@@ -5,25 +5,94 @@
   opacity: 0.7; 
 }
 
-.cityCard {
-  height: 230px;
-  background-color: #F9F9F9;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  padding: 15px 20px 10px 15px;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  cursor: grab;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
-
-  &:active {
-    cursor: grabbing;
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-80px);
   }
-  &:hover {
-    background-color: #BFBFBF; 
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-80px);
+  }
+}
+
+.cityCard {
+  display: flex;
+  margin-bottom: 15px;
+  width: calc(100% + 80px);
+  transform: translateX(-80px); /* Initial hidden state */
+  padding: 0 5px;
+  &.deleteActive {
+    animation: slideInFromLeft 0.3s forwards;
+   }
+  &.deleteInactive {
+     animation: slideOutToLeft 0.3s forwards;
+   } 
+
+  // Delete check mark
+  &__deleteSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+  }
+  &__iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 180px;
+    border: rgba(#999, 0.8) solid 2px;
+    color: rgba(#999, 0.8);
+    padding: 5px;
+    transition: all ease 0.3s;
+    &:hover {
+      cursor: pointer;
+      // border: 2px solid #F1A98C;
+      // background: #F1A98C;
+      // color: white;
+    }
+    &.isChecked {
+      border: 2px solid #D75C3A;
+      background: #D75C3A;
+      color: white;
+    }
+  }
+  &__deleteCheckIcon {
+    width: 30px;
+    height: 30px;
+    stroke-width: 3px;
+  }
+
+  // Card Section
+  &__card {
+    border-radius: 10px;
+    height: 230px;
+    width: 100%;
+
+    background-color: #F9F9F9;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 15px 20px 10px 15px;
+    transition: all 0.3s ease;
+    cursor: grab;
+    overflow: auto;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    transition: all 0.3s ease;
+    &:active {
+      cursor: grabbing;
+    }    
+    &:hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
   }
 
   // header 

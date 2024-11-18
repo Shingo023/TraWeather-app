@@ -161,6 +161,7 @@ export type FavoriteCityContainerPropsType = {
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
+  deleteActive: boolean;
 };
 
 export type FavoriteCityCardPropsType = {
@@ -184,6 +185,7 @@ export type FavoriteCityCardPropsType = {
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
+  deleteActive: boolean;
 };
 
 export type EditPlaceNameModalPropsType = {

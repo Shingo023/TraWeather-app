@@ -13,6 +13,8 @@ import styles from "./page.module.scss";
 import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import FavoriteCityCardSkeleton from "@/features/favoritesList/favoriteCityCard/FavoriteCityCardSkeleton";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
+import { RotateCw, Trash2 } from "lucide-react";
+import Button from "../components/elements/button/Button";
 
 const FavoriteList = () => {
   const [favoriteCitiesWithWeather, setFavoriteCitiesWithWeather] = useState<
@@ -21,6 +23,7 @@ const FavoriteList = () => {
   const [homeLocationId, setHomeLocationId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [draggedCityId, setDraggedCityId] = useState<number | null>(null);
+  const [deleteActive, setDeleteActive] = useState(false);
 
   const { data: session, status } = useSession();
 
@@ -123,6 +126,9 @@ const FavoriteList = () => {
     }
   };
 
+  // Button actions
+  const handleDelete = () => {};
+
   // Render skeletons while loading
   if (loading) {
     const skeletons = Array(4).fill(null);
@@ -138,56 +144,92 @@ const FavoriteList = () => {
 
   return (
     <div className={styles.favoritesList}>
-      {favoriteCitiesWithWeather.map((favoriteCityWithWeather) => {
-        const userId = session?.user.id;
-        const userFavoriteCityId = favoriteCityWithWeather.id;
-        const favoriteCityPlaceId =
-          favoriteCityWithWeather.favoriteCity.placeId;
-        const cityName = favoriteCityWithWeather.customName;
-        const cityAddress = favoriteCityWithWeather.favoriteCity.address;
-        const currentTemp = Math.round(
-          favoriteCityWithWeather.weather.currentConditions.temp
-        );
-        const currentWeather = favoriteCityWithWeather.weather.currentConditions
-          .icon as WeatherIconType;
-        const timeZone = favoriteCityWithWeather.favoriteCity.timeZone;
-        const currentDateTime = getCurrentTimeAndDate(timeZone);
-        const cityLat = favoriteCityWithWeather.favoriteCity.latitude;
-        const cityLng = favoriteCityWithWeather.favoriteCity.longitude;
+      <div className={styles.favoritesList__header}>
+        <div
+          className={styles.favoritesList__iconContainer}
+          onClick={() => setDeleteActive(true)}
+        >
+          <Trash2 className={styles.favoritesList__icon} />
+        </div>
+        <div className={styles.favoritesList__headerTitle}>Favorite List</div>
+        <div className={styles.favoritesList__iconContainer}>
+          <RotateCw className={styles.favoritesList__icon} />
+        </div>
+      </div>
 
-        const weeklyWeather = favoriteCityWithWeather.weather.weeklyWeather;
+      <div
+        className={`${styles.favoritesList__deleteButtons} ${
+          deleteActive ? styles.deleteActive : styles.deleteInactive
+        }`}
+      >
+        <Button
+          className="deleteCancel"
+          onClick={() => setDeleteActive(false)}
+          text="Cancel"
+          type="button"
+        />
+        <Button
+          className="delete"
+          onClick={handleDelete}
+          text="Delete"
+          type="button"
+        />
+      </div>
 
-        const todaysWeather = favoriteCityWithWeather.weather.days[0].hours;
-        const tomorrowsWeather = favoriteCityWithWeather.weather.days[1].hours;
-        const twentyFourHoursWeather = getWeatherForNext24Hours(
-          todaysWeather,
-          tomorrowsWeather,
-          timeZone
-        );
+      <div className={styles.favoritesList__favoritesContainer}>
+        {favoriteCitiesWithWeather.map((favoriteCityWithWeather) => {
+          const userId = session?.user.id;
+          const userFavoriteCityId = favoriteCityWithWeather.id;
+          const favoriteCityPlaceId =
+            favoriteCityWithWeather.favoriteCity.placeId;
+          const cityName = favoriteCityWithWeather.customName;
+          const cityAddress = favoriteCityWithWeather.favoriteCity.address;
+          const currentTemp = Math.round(
+            favoriteCityWithWeather.weather.currentConditions.temp
+          );
+          const currentWeather = favoriteCityWithWeather.weather
+            .currentConditions.icon as WeatherIconType;
+          const timeZone = favoriteCityWithWeather.favoriteCity.timeZone;
+          const currentDateTime = getCurrentTimeAndDate(timeZone);
+          const cityLat = favoriteCityWithWeather.favoriteCity.latitude;
+          const cityLng = favoriteCityWithWeather.favoriteCity.longitude;
 
-        return (
-          <FavoriteCityContainer
-            key={userFavoriteCityId}
-            userId={userId}
-            userFavoriteCityId={userFavoriteCityId}
-            cityName={cityName}
-            cityAddress={cityAddress}
-            cityPlaceId={favoriteCityPlaceId}
-            currentTemp={currentTemp}
-            currentWeather={currentWeather}
-            currentDateTime={currentDateTime}
-            homeLocationId={homeLocationId}
-            setHomeLocationId={setHomeLocationId}
-            cityLat={cityLat}
-            cityLng={cityLng}
-            weeklyWeather={weeklyWeather}
-            twentyFourHoursWeather={twentyFourHoursWeather}
-            handleDragStart={handleDragStart}
-            handleDrop={handleDrop}
-            handleDragOver={handleDragOver}
-          />
-        );
-      })}
+          const weeklyWeather = favoriteCityWithWeather.weather.weeklyWeather;
+
+          const todaysWeather = favoriteCityWithWeather.weather.days[0].hours;
+          const tomorrowsWeather =
+            favoriteCityWithWeather.weather.days[1].hours;
+          const twentyFourHoursWeather = getWeatherForNext24Hours(
+            todaysWeather,
+            tomorrowsWeather,
+            timeZone
+          );
+
+          return (
+            <FavoriteCityContainer
+              key={userFavoriteCityId}
+              userId={userId}
+              userFavoriteCityId={userFavoriteCityId}
+              cityName={cityName}
+              cityAddress={cityAddress}
+              cityPlaceId={favoriteCityPlaceId}
+              currentTemp={currentTemp}
+              currentWeather={currentWeather}
+              currentDateTime={currentDateTime}
+              homeLocationId={homeLocationId}
+              setHomeLocationId={setHomeLocationId}
+              cityLat={cityLat}
+              cityLng={cityLng}
+              weeklyWeather={weeklyWeather}
+              twentyFourHoursWeather={twentyFourHoursWeather}
+              handleDragStart={handleDragStart}
+              handleDrop={handleDrop}
+              handleDragOver={handleDragOver}
+              deleteActive={deleteActive}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };
