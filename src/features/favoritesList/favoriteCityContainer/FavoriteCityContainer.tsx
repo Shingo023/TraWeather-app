@@ -7,6 +7,7 @@ import DeleteFavoriteModal from "../deleteFavoriteModal/DeleteFavoriteModal";
 import styles from "./FavoriteCityContainer.module.scss";
 
 const FavoriteCityContainer = ({
+  favoriteCityId,
   userFavoriteCityId,
   userId,
   cityName,
@@ -25,6 +26,7 @@ const FavoriteCityContainer = ({
   handleDrop,
   handleDragOver,
   deleteActive,
+  setFavoriteCitiesToDelete,
 }: FavoriteCityContainerPropsType) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -34,6 +36,7 @@ const FavoriteCityContainer = ({
     <div className={styles.cityCardContainer}>
       <FavoriteCityCard
         userId={userId}
+        favoriteCityId={favoriteCityId}
         userFavoriteCityId={userFavoriteCityId}
         cityName={cityName}
         cityAddress={cityAddress}
@@ -54,6 +57,7 @@ const FavoriteCityContainer = ({
         handleDrop={handleDrop}
         handleDragOver={handleDragOver}
         deleteActive={deleteActive}
+        setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
       />
 
       <EditPlaceNameModal

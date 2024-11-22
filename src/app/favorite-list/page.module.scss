@@ -27,6 +27,9 @@
       cursor: pointer;
       background-color: rgba(black, 0.2);
     }
+    &.deleteActive {
+      background-color: rgba(black, 0.2);
+    }
   }
   &__icon {
     width: 25px;

@@ -8,13 +8,14 @@ import { MapPinIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import WeatherForecast from "./weatherForecast/WeatherForecast";
 import Button from "@/app/components/elements/button/Button";
 import { Check, ExternalLink, Pencil, Trash2 } from "lucide-react";
 
 const FavoriteCityCard = React.memo(
   ({
+    favoriteCityId,
     userFavoriteCityId,
     userId,
     cityName,
@@ -36,6 +37,7 @@ const FavoriteCityCard = React.memo(
     handleDrop,
     handleDragOver,
     deleteActive,
+    setFavoriteCitiesToDelete,
   }: FavoriteCityCardPropsType) => {
     const [isDragging, setIsDragging] = useState(false);
     const [showTodaysWeather, setShowTodaysWeather] = useState(true);
@@ -128,6 +130,23 @@ const FavoriteCityCard = React.memo(
       window.open(googleMapsUrl, "_blank");
     };
 
+    const selectCityToDelete = (favoriteCityId: number) => {
+      setIsChecked((prev) => !prev);
+      setFavoriteCitiesToDelete((prev) => {
+        if (prev.includes(favoriteCityId)) {
+          return prev.filter((id) => id !== favoriteCityId);
+        } else {
+          return [...prev, favoriteCityId];
+        }
+      });
+    };
+
+    useEffect(() => {
+      if (!deleteActive) {
+        setIsChecked(false);
+      }
+    }, [deleteActive]);
+
     return (
       <div
         className={`${styles.cityCard} ${isDragging ? styles.dragging : ""} ${
@@ -150,7 +169,9 @@ const FavoriteCityCard = React.memo(
             className={`${styles.cityCard__iconContainer} ${
               isChecked ? styles.isChecked : ""
             }`}
-            onClick={() => setIsChecked((prev) => !prev)}
+            onClick={() => {
+              selectCityToDelete(favoriteCityId);
+            }}
           >
             <Check className={styles.cityCard__deleteCheckIcon} />
           </div>

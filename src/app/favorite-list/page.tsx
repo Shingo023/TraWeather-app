@@ -15,6 +15,9 @@ import FavoriteCityCardSkeleton from "@/features/favoritesList/favoriteCityCard/
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 import { RotateCw, Trash2 } from "lucide-react";
 import Button from "../components/elements/button/Button";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { deleteCity } from "@/utils/apiHelper";
 
 const FavoriteList = () => {
   const [favoriteCitiesWithWeather, setFavoriteCitiesWithWeather] = useState<
@@ -24,6 +27,9 @@ const FavoriteList = () => {
   const [loading, setLoading] = useState(true);
   const [draggedCityId, setDraggedCityId] = useState<number | null>(null);
   const [deleteActive, setDeleteActive] = useState(false);
+  const [favoriteCitiesToDelete, setFavoriteCitiesToDelete] = useState<
+    number[]
+  >([]); // favoriteCityIds
 
   const { data: session, status } = useSession();
 
@@ -127,7 +133,31 @@ const FavoriteList = () => {
   };
 
   // Button actions
-  const handleDelete = () => {};
+  const deleteSelectedCities = async () => {
+    if (!session?.user?.id) return;
+
+    setLoading(true);
+    try {
+      await Promise.all(
+        favoriteCitiesToDelete.map((favoriteCityId) => {
+          deleteCity(session.user.id, favoriteCityId);
+        })
+      );
+
+      setFavoriteCitiesWithWeather((prev) => {
+        return prev.filter(
+          (item) => !favoriteCitiesToDelete.includes(item.favoriteCity.id)
+        );
+      });
+
+      toast.success("Selected cities have been removed from your favorites.");
+    } catch (error) {
+      console.error("Error deleting favorite cities:", error);
+      toast.error("Failed to remove selected cities from favorites.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Render skeletons while loading
   if (loading) {
@@ -146,8 +176,10 @@ const FavoriteList = () => {
     <div className={styles.favoritesList}>
       <div className={styles.favoritesList__header}>
         <div
-          className={styles.favoritesList__iconContainer}
-          onClick={() => setDeleteActive(true)}
+          className={`${styles.favoritesList__iconContainer} ${
+            deleteActive ? styles.deleteActive : ""
+          }`}
+          onClick={() => setDeleteActive((prev) => !prev)}
         >
           <Trash2 className={styles.favoritesList__icon} />
         </div>
@@ -164,14 +196,17 @@ const FavoriteList = () => {
       >
         <Button
           className="deleteCancel"
-          onClick={() => setDeleteActive(false)}
+          onClick={() => {
+            setDeleteActive(false);
+            setFavoriteCitiesToDelete([]);
+          }}
           text="Cancel"
           type="button"
         />
         <Button
           className="delete"
-          onClick={handleDelete}
-          text="Delete"
+          onClick={deleteSelectedCities}
+          text={`Delete(${favoriteCitiesToDelete.length})`}
           type="button"
         />
       </div>
@@ -179,6 +214,7 @@ const FavoriteList = () => {
       <div className={styles.favoritesList__favoritesContainer}>
         {favoriteCitiesWithWeather.map((favoriteCityWithWeather) => {
           const userId = session?.user.id;
+          const favoriteCityId = favoriteCityWithWeather.favoriteCity.id;
           const userFavoriteCityId = favoriteCityWithWeather.id;
           const favoriteCityPlaceId =
             favoriteCityWithWeather.favoriteCity.placeId;
@@ -209,6 +245,7 @@ const FavoriteList = () => {
             <FavoriteCityContainer
               key={userFavoriteCityId}
               userId={userId}
+              favoriteCityId={favoriteCityId}
               userFavoriteCityId={userFavoriteCityId}
               cityName={cityName}
               cityAddress={cityAddress}
@@ -226,6 +263,7 @@ const FavoriteList = () => {
               handleDrop={handleDrop}
               handleDragOver={handleDragOver}
               deleteActive={deleteActive}
+              setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
             />
           );
         })}

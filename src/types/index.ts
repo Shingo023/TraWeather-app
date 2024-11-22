@@ -144,6 +144,7 @@ export type autocompleteSuggestion = {
 };
 
 export type FavoriteCityContainerPropsType = {
+  favoriteCityId: number;
   userFavoriteCityId: number;
   userId: string | undefined;
   cityName: string;
@@ -162,9 +163,11 @@ export type FavoriteCityContainerPropsType = {
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   deleteActive: boolean;
+  setFavoriteCitiesToDelete: Dispatch<SetStateAction<number[]>>;
 };
 
 export type FavoriteCityCardPropsType = {
+  favoriteCityId: number;
   userFavoriteCityId: number;
   userId: string | undefined;
   cityName: string;
@@ -186,6 +189,7 @@ export type FavoriteCityCardPropsType = {
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   deleteActive: boolean;
+  setFavoriteCitiesToDelete: Dispatch<SetStateAction<number[]>>;
 };
 
 export type EditPlaceNameModalPropsType = {
