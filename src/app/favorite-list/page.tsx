@@ -31,56 +31,54 @@ const FavoriteList = () => {
     number[]
   >([]); // favoriteCityIds
 
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
+
+  const fetchFavoriteCitiesWithWeather = async () => {
+    try {
+      const response = await fetch(
+        `/api/user-favorite-cities?userId=${session?.user?.id}`
+      );
+      const userFavoriteCitiesData = await response.json();
+
+      // Fetch weather data for each favorite city
+      const favoriteCitiesWithWeatherData = await Promise.all(
+        userFavoriteCitiesData.map(
+          async (userFavoriteCity: UserFavoriteCity) => {
+            if (userFavoriteCity.isDefault) {
+              setHomeLocationId(userFavoriteCity.id);
+            }
+
+            const weatherResponse = await fetch(
+              `/api/weather/favorite-cities?lat=${userFavoriteCity.favoriteCity.latitude}&lng=${userFavoriteCity.favoriteCity.longitude}`
+            );
+            const weatherData: WeatherDataForFavoritesList =
+              await weatherResponse.json();
+
+            return {
+              ...userFavoriteCity,
+              weather: weatherData,
+            };
+          }
+        )
+      );
+
+      favoriteCitiesWithWeatherData.sort(
+        (a, b) => a.displayOrder - b.displayOrder
+      );
+
+      setFavoriteCitiesWithWeather(favoriteCitiesWithWeatherData);
+    } catch (error) {
+      console.error("Error fetching favorite cities:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    if (status !== "authenticated") return;
-
-    const fetchFavoriteCitiesWithWeather = async () => {
-      if (!session?.user?.id) return;
-
-      try {
-        const response = await fetch(
-          `/api/user-favorite-cities?userId=${session.user.id}`
-        );
-        const userFavoriteCitiesData = await response.json();
-
-        // Fetch weather data for each favorite city
-        const favoriteCitiesWithWeatherData = await Promise.all(
-          userFavoriteCitiesData.map(
-            async (userFavoriteCity: UserFavoriteCity) => {
-              if (userFavoriteCity.isDefault) {
-                setHomeLocationId(userFavoriteCity.id);
-              }
-
-              const weatherResponse = await fetch(
-                `/api/weather/favorite-cities?lat=${userFavoriteCity.favoriteCity.latitude}&lng=${userFavoriteCity.favoriteCity.longitude}`
-              );
-              const weatherData: WeatherDataForFavoritesList =
-                await weatherResponse.json();
-
-              return {
-                ...userFavoriteCity,
-                weather: weatherData,
-              };
-            }
-          )
-        );
-
-        favoriteCitiesWithWeatherData.sort(
-          (a, b) => a.displayOrder - b.displayOrder
-        );
-
-        setFavoriteCitiesWithWeather(favoriteCitiesWithWeatherData);
-      } catch (error) {
-        console.error("Error fetching favorite cities:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (!session?.user?.id) return;
 
     fetchFavoriteCitiesWithWeather();
-  }, [status === "authenticated", session?.user?.id]);
+  }, [session?.user?.id]);
 
   // Handle drag events
   const handleDragStart = (userFavoriteCityId: number) => {
@@ -149,7 +147,8 @@ const FavoriteList = () => {
           (item) => !favoriteCitiesToDelete.includes(item.favoriteCity.id)
         );
       });
-
+      setFavoriteCitiesToDelete([]);
+      setDeleteActive(false);
       toast.success("Selected cities have been removed from your favorites.");
     } catch (error) {
       console.error("Error deleting favorite cities:", error);
@@ -208,6 +207,7 @@ const FavoriteList = () => {
           onClick={deleteSelectedCities}
           text={`Delete(${favoriteCitiesToDelete.length})`}
           type="button"
+          isDisabled={!favoriteCitiesToDelete.length}
         />
       </div>
 
