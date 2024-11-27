@@ -1,6 +1,6 @@
 "use client";
 
-import { FavoriteCityCardPropsType } from "@/types";
+import { FavoriteCityCardPropsType, WeatherIconType } from "@/types";
 import styles from "./FavoriteCityCard.module.scss";
 import { backgroundMapping, iconMapping } from "@/utils/weatherIconMapping";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
@@ -17,27 +17,12 @@ import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 
 const FavoriteCityCard = React.memo(
   ({
-    favoriteCityId,
-    userFavoriteCityId,
     userId,
-    cityName,
-    cityAddress,
-    cityPlaceId,
-    currentTemp,
-    currentWeather,
-    // currentDateTime,
-    timeZone,
+    favoriteCityWithWeather,
     homeLocationId,
     setHomeLocationId,
-    cityLat,
-    cityLng,
     placeNameToDisplay,
     setIsEditModalOpen,
-    setIsDeleteModalOpen,
-    weeklyWeather,
-    // twentyFourHoursWeather,
-    todaysWeather,
-    tomorrowsWeather,
     handleDragStart,
     handleDrop,
     handleDragOver,
@@ -47,6 +32,23 @@ const FavoriteCityCard = React.memo(
     const [isDragging, setIsDragging] = useState(false);
     const [showTodaysWeather, setShowTodaysWeather] = useState(true);
     const [isChecked, setIsChecked] = useState(false);
+
+    const currentWeather = favoriteCityWithWeather.weather.currentConditions
+      .icon as WeatherIconType;
+    const timeZone = favoriteCityWithWeather.weather.timezone;
+    const todaysWeather = favoriteCityWithWeather.weather.days[0].hours;
+    const tomorrowsWeather = favoriteCityWithWeather.weather.days[1].hours;
+    const cityName = favoriteCityWithWeather.customName;
+    const userFavoriteCityId = favoriteCityWithWeather.id;
+    const cityLat = favoriteCityWithWeather.latitude;
+    const cityLng = favoriteCityWithWeather.longitude;
+    const cityAddress = favoriteCityWithWeather.address;
+    const cityPlaceId = favoriteCityWithWeather.placeId;
+    const favoriteCityId = favoriteCityWithWeather.favoriteCityId;
+    const currentTemp = Math.round(
+      favoriteCityWithWeather.weather.currentConditions.temp
+    );
+    const weeklyWeather = favoriteCityWithWeather.weather.weeklyWeather;
 
     const currentWeatherIcon =
       currentWeather !== undefined ? iconMapping[currentWeather] : null;
@@ -222,16 +224,6 @@ const FavoriteCityCard = React.memo(
               >
                 <Pencil width={20} height={20} />
               </div>
-              <div
-                className={styles.cityCard__delete}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  setIsDeleteModalOpen(true);
-                }}
-              >
-                <Trash2 width={20} height={20} />
-              </div>
-              {/* <div className={styles.cityCard__cityAddress}>{cityAddress}</div> */}
             </div>
 
             <div className={styles.cityCard__forecastToggle}>

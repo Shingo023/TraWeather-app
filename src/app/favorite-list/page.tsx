@@ -6,7 +6,6 @@ import {
   FavoriteCityWithWeather,
   UserFavoriteCity,
   WeatherDataForFavoritesList,
-  WeatherIconType,
 } from "@/types";
 import FavoriteCityContainer from "@/features/favoritesList/favoriteCityContainer/FavoriteCityContainer";
 import styles from "./page.module.scss";
@@ -80,6 +79,7 @@ const FavoriteList = () => {
   };
 
   useEffect(() => {
+    if (!session?.user?.id) return;
     const fetchAllData = async () => {
       const cities = await fetchFavoriteCities();
       if (cities.length > 0) {
@@ -237,45 +237,13 @@ const FavoriteList = () => {
 
       <div className={styles.favoritesList__favoritesContainer}>
         {favoriteCitiesWithWeather.map((favoriteCityWithWeather) => {
-          const favoriteCityId = favoriteCityWithWeather.favoriteCityId;
-          const userFavoriteCityId = favoriteCityWithWeather.id;
-          const favoriteCityPlaceId = favoriteCityWithWeather.placeId;
-          const cityName = favoriteCityWithWeather.customName;
-          const cityAddress = favoriteCityWithWeather.address;
-          const currentTemp = Math.round(
-            favoriteCityWithWeather.weather.currentConditions.temp
-          );
-          const currentWeather = favoriteCityWithWeather.weather
-            .currentConditions.icon as WeatherIconType;
-          const timeZone = favoriteCityWithWeather.weather.timezone;
-          const cityLat = favoriteCityWithWeather.latitude;
-          const cityLng = favoriteCityWithWeather.longitude;
-
-          const weeklyWeather = favoriteCityWithWeather.weather.weeklyWeather;
-
-          const todaysWeather = favoriteCityWithWeather.weather.days[0].hours;
-          const tomorrowsWeather =
-            favoriteCityWithWeather.weather.days[1].hours;
-
           return (
             <FavoriteCityContainer
-              key={userFavoriteCityId}
+              key={favoriteCityWithWeather.id}
               userId={session?.user.id}
-              favoriteCityId={favoriteCityId}
-              userFavoriteCityId={userFavoriteCityId}
-              cityName={cityName}
-              cityAddress={cityAddress}
-              cityPlaceId={favoriteCityPlaceId}
-              currentTemp={currentTemp}
-              currentWeather={currentWeather}
-              timeZone={timeZone}
+              favoriteCityWithWeather={favoriteCityWithWeather}
               homeLocationId={homeLocationId}
               setHomeLocationId={setHomeLocationId}
-              cityLat={cityLat}
-              cityLng={cityLng}
-              weeklyWeather={weeklyWeather}
-              todaysWeather={todaysWeather}
-              tomorrowsWeather={tomorrowsWeather}
               handleDragStart={handleDragStart}
               handleDrop={handleDrop}
               handleDragOver={handleDragOver}

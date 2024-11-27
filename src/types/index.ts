@@ -140,24 +140,10 @@ export type autocompleteSuggestion = {
 };
 
 export type FavoriteCityContainerPropsType = {
-  favoriteCityId: number;
-  userFavoriteCityId: number;
   userId: string | undefined;
-  cityName: string;
-  cityAddress: string;
-  cityPlaceId: string;
-  currentTemp: number;
-  currentWeather: WeatherIconType;
-  // currentDateTime: string;
-  timeZone: string;
+  favoriteCityWithWeather: FavoriteCityWithWeather;
   homeLocationId: number | null;
   setHomeLocationId: (homeLocationId: number | null) => void;
-  cityLat: number;
-  cityLng: number;
-  weeklyWeather: WeatherDataForForecast[];
-  // twentyFourHoursWeather: WeatherDataForForecast[];
-  todaysWeather: WeatherDataForForecast[];
-  tomorrowsWeather: WeatherDataForForecast[];
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
@@ -166,27 +152,12 @@ export type FavoriteCityContainerPropsType = {
 };
 
 export type FavoriteCityCardPropsType = {
-  favoriteCityId: number;
-  userFavoriteCityId: number;
   userId: string | undefined;
-  cityName: string;
-  cityAddress: string;
-  cityPlaceId: string;
-  currentTemp: number;
-  currentWeather: WeatherIconType;
-  // currentDateTime: string;
-  timeZone: string;
+  favoriteCityWithWeather: FavoriteCityWithWeather;
   homeLocationId: number | null;
   setHomeLocationId: (homeLocationId: number | null) => void;
-  cityLat: number;
-  cityLng: number;
   placeNameToDisplay: string;
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
-  setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
-  weeklyWeather: WeatherDataForForecast[];
-  // twentyFourHoursWeather: WeatherDataForForecast[];
-  todaysWeather: WeatherDataForForecast[];
-  tomorrowsWeather: WeatherDataForForecast[];
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
