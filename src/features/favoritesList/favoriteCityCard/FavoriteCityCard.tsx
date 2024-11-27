@@ -8,10 +8,12 @@ import { MapPinIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import WeatherForecast from "./weatherForecast/WeatherForecast";
 import Button from "@/app/components/elements/button/Button";
 import { Check, ExternalLink, Pencil, Trash2 } from "lucide-react";
+import { getCurrentTimeAndDate } from "@/utils/dateUtils";
+import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 
 const FavoriteCityCard = React.memo(
   ({
@@ -23,7 +25,8 @@ const FavoriteCityCard = React.memo(
     cityPlaceId,
     currentTemp,
     currentWeather,
-    currentDateTime,
+    // currentDateTime,
+    timeZone,
     homeLocationId,
     setHomeLocationId,
     cityLat,
@@ -32,7 +35,9 @@ const FavoriteCityCard = React.memo(
     setIsEditModalOpen,
     setIsDeleteModalOpen,
     weeklyWeather,
-    twentyFourHoursWeather,
+    // twentyFourHoursWeather,
+    todaysWeather,
+    tomorrowsWeather,
     handleDragStart,
     handleDrop,
     handleDragOver,
@@ -48,6 +53,16 @@ const FavoriteCityCard = React.memo(
     const backgroundWeather =
       currentWeather !== undefined ? backgroundMapping[currentWeather] : null;
     const router = useRouter();
+
+    const currentDateTime = useMemo(
+      () => getCurrentTimeAndDate(timeZone),
+      [timeZone]
+    );
+
+    const twentyFourHoursWeather = useMemo(
+      () => getWeatherForNext24Hours(todaysWeather, tomorrowsWeather, timeZone),
+      [todaysWeather, tomorrowsWeather, timeZone]
+    );
 
     const updateHomeLocationApi = async (body: any) => {
       const response = await fetch(`/api/users/${userId}/default-city`, {

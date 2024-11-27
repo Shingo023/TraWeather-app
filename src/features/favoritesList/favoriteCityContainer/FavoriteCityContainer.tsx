@@ -15,13 +15,16 @@ const FavoriteCityContainer = ({
   cityPlaceId,
   currentTemp,
   currentWeather,
-  currentDateTime,
+  // currentDateTime,
+  timeZone,
   homeLocationId,
   setHomeLocationId,
   cityLat,
   cityLng,
   weeklyWeather,
-  twentyFourHoursWeather,
+  // twentyFourHoursWeather,
+  todaysWeather,
+  tomorrowsWeather,
   handleDragStart,
   handleDrop,
   handleDragOver,
@@ -43,7 +46,8 @@ const FavoriteCityContainer = ({
         cityPlaceId={cityPlaceId}
         currentTemp={currentTemp}
         currentWeather={currentWeather}
-        currentDateTime={currentDateTime}
+        // currentDateTime={currentDateTime}
+        timeZone={timeZone}
         homeLocationId={homeLocationId}
         setHomeLocationId={setHomeLocationId}
         cityLat={cityLat}
@@ -52,7 +56,9 @@ const FavoriteCityContainer = ({
         setIsEditModalOpen={setIsEditModalOpen}
         setIsDeleteModalOpen={setIsDeleteModalOpen}
         weeklyWeather={weeklyWeather}
-        twentyFourHoursWeather={twentyFourHoursWeather}
+        // twentyFourHoursWeather={twentyFourHoursWeather}
+        todaysWeather={todaysWeather}
+        tomorrowsWeather={tomorrowsWeather}
         handleDragStart={handleDragStart}
         handleDrop={handleDrop}
         handleDragOver={handleDragOver}

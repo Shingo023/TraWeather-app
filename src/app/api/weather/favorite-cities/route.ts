@@ -32,8 +32,6 @@ export async function GET(request: Request) {
 
     // format the weather to extract only the necessary fields of the data
     const weatherData: WeatherDataForFavoritesList = {
-      latitude: data.latitude,
-      longitude: data.longitude,
       timezone: data.timezone,
       weeklyWeather: data.days.slice(0, 7).map((day: WeatherDay) => ({
         datetime: day.datetime,
@@ -46,10 +44,8 @@ export async function GET(request: Request) {
         hours: day.hours.map((hour: WeatherHour) => ({
           datetime: hour.datetime,
           temp: hour.temp,
-          // precip: hour.precip || null,
           precipprob: hour.precipprob,
           icon: hour.icon,
-          // windspeed: hour.windspeed,
         })),
       })),
       currentConditions: {

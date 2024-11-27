@@ -10,9 +10,7 @@ import {
 } from "@/types";
 import FavoriteCityContainer from "@/features/favoritesList/favoriteCityContainer/FavoriteCityContainer";
 import styles from "./page.module.scss";
-import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import FavoriteCityCardSkeleton from "@/features/favoritesList/favoriteCityCard/FavoriteCityCardSkeleton";
-import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 import { RotateCw, Trash2 } from "lucide-react";
 import Button from "../components/elements/button/Button";
 import { toast } from "react-toastify";
@@ -20,6 +18,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { deleteCity } from "@/utils/apiHelper";
 
 const FavoriteList = () => {
+  const [favoriteCities, setFavoriteCities] = useState<UserFavoriteCity[]>([]);
   const [favoriteCitiesWithWeather, setFavoriteCitiesWithWeather] = useState<
     FavoriteCityWithWeather[]
   >([]);
@@ -33,33 +32,39 @@ const FavoriteList = () => {
 
   const { data: session } = useSession();
 
-  const fetchFavoriteCitiesWithWeather = async () => {
+  const fetchFavoriteCities = async () => {
     try {
       const response = await fetch(
         `/api/user-favorite-cities?userId=${session?.user?.id}`
       );
       const userFavoriteCitiesData = await response.json();
+      setFavoriteCities(userFavoriteCitiesData);
+      return userFavoriteCitiesData;
+    } catch (error) {
+      console.error("Error fetching favorite cities:", error);
+    }
+  };
 
+  const fetchWeatherData = async (cities: UserFavoriteCity[]) => {
+    try {
       // Fetch weather data for each favorite city
       const favoriteCitiesWithWeatherData = await Promise.all(
-        userFavoriteCitiesData.map(
-          async (userFavoriteCity: UserFavoriteCity) => {
-            if (userFavoriteCity.isDefault) {
-              setHomeLocationId(userFavoriteCity.id);
-            }
-
-            const weatherResponse = await fetch(
-              `/api/weather/favorite-cities?lat=${userFavoriteCity.favoriteCity.latitude}&lng=${userFavoriteCity.favoriteCity.longitude}`
-            );
-            const weatherData: WeatherDataForFavoritesList =
-              await weatherResponse.json();
-
-            return {
-              ...userFavoriteCity,
-              weather: weatherData,
-            };
+        cities.map(async (userFavoriteCity: UserFavoriteCity) => {
+          if (userFavoriteCity.isDefaultCity) {
+            setHomeLocationId(userFavoriteCity.id);
           }
-        )
+
+          const weatherResponse = await fetch(
+            `/api/weather/favorite-cities?lat=${userFavoriteCity.latitude}&lng=${userFavoriteCity.longitude}`
+          );
+          const weatherData: WeatherDataForFavoritesList =
+            await weatherResponse.json();
+
+          return {
+            ...userFavoriteCity,
+            weather: weatherData,
+          };
+        })
       );
 
       favoriteCitiesWithWeatherData.sort(
@@ -68,16 +73,21 @@ const FavoriteList = () => {
 
       setFavoriteCitiesWithWeather(favoriteCitiesWithWeatherData);
     } catch (error) {
-      console.error("Error fetching favorite cities:", error);
+      console.error("Error fetching weather data of favorite cities:", error);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (!session?.user?.id) return;
+    const fetchAllData = async () => {
+      const cities = await fetchFavoriteCities();
+      if (cities.length > 0) {
+        await fetchWeatherData(cities);
+      }
+    };
 
-    fetchFavoriteCitiesWithWeather();
+    fetchAllData();
   }, [session?.user?.id]);
 
   // Handle drag events
@@ -142,9 +152,15 @@ const FavoriteList = () => {
         })
       );
 
+      setFavoriteCities((prev) => {
+        return prev.filter(
+          (item) => !favoriteCitiesToDelete.includes(item.favoriteCityId)
+        );
+      });
+
       setFavoriteCitiesWithWeather((prev) => {
         return prev.filter(
-          (item) => !favoriteCitiesToDelete.includes(item.favoriteCity.id)
+          (item) => !favoriteCitiesToDelete.includes(item.favoriteCityId)
         );
       });
       setFavoriteCitiesToDelete([]);
@@ -183,7 +199,15 @@ const FavoriteList = () => {
           <Trash2 className={styles.favoritesList__icon} />
         </div>
         <div className={styles.favoritesList__headerTitle}>Favorite List</div>
-        <div className={styles.favoritesList__iconContainer}>
+        <div
+          className={styles.favoritesList__iconContainer}
+          onClick={() => {
+            if (!session?.user?.id) return;
+
+            setLoading(true);
+            fetchWeatherData(favoriteCities);
+          }}
+        >
           <RotateCw className={styles.favoritesList__icon} />
         </div>
       </div>
@@ -213,38 +237,30 @@ const FavoriteList = () => {
 
       <div className={styles.favoritesList__favoritesContainer}>
         {favoriteCitiesWithWeather.map((favoriteCityWithWeather) => {
-          const userId = session?.user.id;
-          const favoriteCityId = favoriteCityWithWeather.favoriteCity.id;
+          const favoriteCityId = favoriteCityWithWeather.favoriteCityId;
           const userFavoriteCityId = favoriteCityWithWeather.id;
-          const favoriteCityPlaceId =
-            favoriteCityWithWeather.favoriteCity.placeId;
+          const favoriteCityPlaceId = favoriteCityWithWeather.placeId;
           const cityName = favoriteCityWithWeather.customName;
-          const cityAddress = favoriteCityWithWeather.favoriteCity.address;
+          const cityAddress = favoriteCityWithWeather.address;
           const currentTemp = Math.round(
             favoriteCityWithWeather.weather.currentConditions.temp
           );
           const currentWeather = favoriteCityWithWeather.weather
             .currentConditions.icon as WeatherIconType;
-          const timeZone = favoriteCityWithWeather.favoriteCity.timeZone;
-          const currentDateTime = getCurrentTimeAndDate(timeZone);
-          const cityLat = favoriteCityWithWeather.favoriteCity.latitude;
-          const cityLng = favoriteCityWithWeather.favoriteCity.longitude;
+          const timeZone = favoriteCityWithWeather.weather.timezone;
+          const cityLat = favoriteCityWithWeather.latitude;
+          const cityLng = favoriteCityWithWeather.longitude;
 
           const weeklyWeather = favoriteCityWithWeather.weather.weeklyWeather;
 
           const todaysWeather = favoriteCityWithWeather.weather.days[0].hours;
           const tomorrowsWeather =
             favoriteCityWithWeather.weather.days[1].hours;
-          const twentyFourHoursWeather = getWeatherForNext24Hours(
-            todaysWeather,
-            tomorrowsWeather,
-            timeZone
-          );
 
           return (
             <FavoriteCityContainer
               key={userFavoriteCityId}
-              userId={userId}
+              userId={session?.user.id}
               favoriteCityId={favoriteCityId}
               userFavoriteCityId={userFavoriteCityId}
               cityName={cityName}
@@ -252,13 +268,14 @@ const FavoriteList = () => {
               cityPlaceId={favoriteCityPlaceId}
               currentTemp={currentTemp}
               currentWeather={currentWeather}
-              currentDateTime={currentDateTime}
+              timeZone={timeZone}
               homeLocationId={homeLocationId}
               setHomeLocationId={setHomeLocationId}
               cityLat={cityLat}
               cityLng={cityLng}
               weeklyWeather={weeklyWeather}
-              twentyFourHoursWeather={twentyFourHoursWeather}
+              todaysWeather={todaysWeather}
+              tomorrowsWeather={tomorrowsWeather}
               handleDragStart={handleDragStart}
               handleDrop={handleDrop}
               handleDragOver={handleDragOver}

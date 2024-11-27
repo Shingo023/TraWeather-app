@@ -43,23 +43,14 @@ export type WeatherDay = {
 export type WeatherHour = {
   datetime: string;
   temp: number;
-  feelslike: number;
-  humidity: number;
-  precip: number | null;
+  precip?: number | null;
   precipprob: number;
-  snow: number | null;
-  snowdepth: number | null;
-  windspeed: number;
-  uvindex: number;
-  conditions: string;
+  windspeed?: number;
   icon: string;
-  visibility: number;
 };
 
 // Weather types for the favorites list
 export type WeatherDataForFavoritesList = {
-  latitude: number;
-  longitude: number;
   timezone: string;
   weeklyWeather: WeatherDataForForecast[];
   days: WeatherDay[];
@@ -120,8 +111,13 @@ export type FavoriteCity = {
 export type FavoriteCityWithWeather = {
   id: number;
   customName: string;
-  isDefault: boolean;
-  favoriteCity: FavoriteCity;
+  isDefaultCity: boolean;
+  displayOrder: number;
+  favoriteCityId: number;
+  placeId: string;
+  address: string;
+  latitude: number;
+  longitude: number;
   weather: WeatherDataForFavoritesList;
 };
 
@@ -152,13 +148,16 @@ export type FavoriteCityContainerPropsType = {
   cityPlaceId: string;
   currentTemp: number;
   currentWeather: WeatherIconType;
-  currentDateTime: string;
+  // currentDateTime: string;
+  timeZone: string;
   homeLocationId: number | null;
   setHomeLocationId: (homeLocationId: number | null) => void;
   cityLat: number;
   cityLng: number;
   weeklyWeather: WeatherDataForForecast[];
-  twentyFourHoursWeather: WeatherDataForForecast[];
+  // twentyFourHoursWeather: WeatherDataForForecast[];
+  todaysWeather: WeatherDataForForecast[];
+  tomorrowsWeather: WeatherDataForForecast[];
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
@@ -175,7 +174,8 @@ export type FavoriteCityCardPropsType = {
   cityPlaceId: string;
   currentTemp: number;
   currentWeather: WeatherIconType;
-  currentDateTime: string;
+  // currentDateTime: string;
+  timeZone: string;
   homeLocationId: number | null;
   setHomeLocationId: (homeLocationId: number | null) => void;
   cityLat: number;
@@ -184,7 +184,9 @@ export type FavoriteCityCardPropsType = {
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
   setIsDeleteModalOpen: Dispatch<SetStateAction<boolean>>;
   weeklyWeather: WeatherDataForForecast[];
-  twentyFourHoursWeather: WeatherDataForForecast[];
+  // twentyFourHoursWeather: WeatherDataForForecast[];
+  todaysWeather: WeatherDataForForecast[];
+  tomorrowsWeather: WeatherDataForForecast[];
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
@@ -239,9 +241,14 @@ export type HomeLocationContextType = {
 
 export type UserFavoriteCity = {
   id: number;
-  customName: string | null;
-  isDefault: boolean;
-  favoriteCity: FavoriteCity;
+  customName: string;
+  isDefaultCity: boolean;
+  displayOrder: number;
+  favoriteCityId: number;
+  placeId: string;
+  address: string;
+  latitude: number;
+  longitude: number;
 };
 
 export type TodaysWeatherOverviewType = {
