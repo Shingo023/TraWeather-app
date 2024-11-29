@@ -1,6 +1,6 @@
 import { WeatherDataForForecast, WeatherDay } from "@/types";
 import styles from "./TodaysForecast.module.scss";
-import WeatherForecast from "@/features/favoritesList/favoriteCityCard/weatherForecast/WeatherForecast";
+import WeatherForecast from "@/features/favoritesList/favoriteCityContainer/favoriteCityCard/weatherForecast/WeatherForecast";
 import { formatDate } from "@/utils/dateUtils";
 import TodaysForecastSkeleton from "./TodaysForecastSkeleton";
 

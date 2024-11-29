@@ -9,7 +9,7 @@ import {
 } from "@/types";
 import FavoriteCityContainer from "@/features/favoritesList/favoriteCityContainer/FavoriteCityContainer";
 import styles from "./page.module.scss";
-import FavoriteCityCardSkeleton from "@/features/favoritesList/favoriteCityCard/FavoriteCityCardSkeleton";
+import FavoriteCityCardSkeleton from "@/features/favoritesList/favoriteCityContainer/favoriteCityCard/FavoriteCityCardSkeleton";
 import { RotateCw, Trash2 } from "lucide-react";
 import Button from "../components/elements/button/Button";
 import { toast } from "react-toastify";
@@ -54,7 +54,6 @@ const FavoriteList = () => {
 
   const fetchWeatherData = async (cities: UserFavoriteCity[]) => {
     try {
-      // Fetch weather data for each favorite city
       const favoriteCitiesWithWeatherData = await Promise.all(
         cities.map(async (userFavoriteCity: UserFavoriteCity) => {
           if (userFavoriteCity.isDefaultCity) {

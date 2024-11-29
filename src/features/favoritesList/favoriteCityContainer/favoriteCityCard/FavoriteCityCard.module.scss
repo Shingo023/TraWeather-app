@@ -1,5 +1,6 @@
+@import "@/style/base/variables.scss";
+
 .cityCard {
-  
   &__card {
     border-radius: 10px;
     height: 230px;
@@ -197,5 +198,77 @@
         font-weight: 600;
       }
     }
+  }
+}
+
+// Skeleton
+.cityCard {
+  &__homeIconSkeleton,
+  &__cityNameSkeleton,
+  &__cityAddressSkeleton,
+  &__currentDateTimeSkeleton,
+  &__currentWeatherIconSkeleton,
+  &__currentTempSkeleton,
+  &__buttonSkeleton  {
+    background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+
+  &__homeIconSkeleton {
+    height: 30px;
+    width: 25px;
+    margin-right: 5px;
+    border-radius: 180px;
+  }
+
+  &__cityNameSkeleton {
+    width: 150px;
+    height: 34px;
+    border-radius: 8px;
+  }
+
+  &__cityAddressSkeleton {
+    width: 130px;
+    height: 20px;
+    border-radius: 8px;
+    margin-left: 8px;
+    margin-top: 5px;
+  }
+
+  &__currentDateTimeSkeleton {
+    width: 150px;
+    height: 20px;
+    border-radius: 8px;
+    margin-top: 10px;
+  }
+
+  &__currentWeatherIconSkeleton {
+    width: 45px;
+    height: 45px;
+    margin: 5px;
+    border-radius: 8px;
+  }
+
+    &__currentTempSkeleton {
+    width: 70px;
+    height: 50px;
+    margin: 5px;
+    border-radius: 8px;
+  }
+
+    &__buttonSkeleton {
+    width: 127px;
+    height: 32px;
+    border-radius: 194px;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
   }
 }

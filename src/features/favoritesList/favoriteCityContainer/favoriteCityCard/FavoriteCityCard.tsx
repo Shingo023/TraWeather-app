@@ -1,7 +1,7 @@
 "use client";
 
-import { FavoriteCityWithWeather, WeatherIconType } from "@/types";
-import styles from "./CityCard.module.scss";
+import { FavoriteCityCardPropsType, WeatherIconType } from "@/types";
+import styles from "./FavoriteCityCard.module.scss";
 import { backgroundMapping, iconMapping } from "@/utils/weatherIconMapping";
 import { ExternalLink, Pencil } from "lucide-react";
 import { toast } from "react-toastify";
@@ -10,34 +10,19 @@ import { useMemo, useState } from "react";
 import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import Button from "@/app/components/elements/button/Button";
-import WeatherForecast from "../favoriteCityCard/weatherForecast/WeatherForecast";
+import WeatherForecast from "./weatherForecast/WeatherForecast";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 import { useRouter } from "next/navigation";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 
-const CityCard = ({
+const FavoriteCityCard = ({
   userId,
   favoriteCityWithWeather,
   homeLocationId,
   setHomeLocationId,
-  // placeNameToDisplay,
   setIsEditModalOpen,
   setPlaceInfoToEdit,
-}: {
-  userId: string | undefined;
-  favoriteCityWithWeather: FavoriteCityWithWeather;
-  homeLocationId: number | null;
-  setHomeLocationId: (homeLocationId: number | null) => void;
-  // placeNameToDisplay: string;
-  setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setPlaceInfoToEdit: React.Dispatch<
-    React.SetStateAction<{
-      cityName: string;
-      userFavoriteCityId: number;
-      cityAddress: string;
-    } | null>
-  >;
-}) => {
+}: FavoriteCityCardPropsType) => {
   const [showTodaysWeather, setShowTodaysWeather] = useState(true);
 
   const currentWeather = favoriteCityWithWeather.weather.currentConditions
@@ -73,7 +58,6 @@ const CityCard = ({
   const router = useRouter();
 
   // Functions
-
   const updateHomeLocationApi = async (body: any) => {
     const response = await fetch(`/api/users/${userId}/default-city`, {
       method: "PUT",
@@ -176,7 +160,6 @@ const CityCard = ({
                 : "Set as home location"}
             </span>
           </div>
-          {/* <div className={styles.cityCard__cityName}>{placeNameToDisplay}</div> */}
           <div className={styles.cityCard__cityName}>{cityName}</div>
           <div
             className={styles.cityCard__edit}
@@ -282,4 +265,4 @@ const CityCard = ({
   );
 };
 
-export default CityCard;
+export default FavoriteCityCard;

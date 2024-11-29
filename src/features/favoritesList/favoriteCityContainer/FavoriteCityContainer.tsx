@@ -1,9 +1,8 @@
 import { FavoriteCityContainerPropsType } from "@/types";
-import EditPlaceNameModal from "../editPlaceNameModal/EditPlaceNameModal";
 import { useState } from "react";
 import styles from "./FavoriteCityContainer.module.scss";
-import FavoriteCityDeletionSelector from "../favoriteCityDeletionSelector/FavoriteCityDeletionSelector";
-import CityCard from "../cityCard/CityCard";
+import FavoriteCityDeletionSelector from "./favoriteCityDeletionSelector/FavoriteCityDeletionSelector";
+import FavoriteCityCard from "./favoriteCityCard/FavoriteCityCard";
 
 const FavoriteCityContainer = ({
   userId,
@@ -19,11 +18,6 @@ const FavoriteCityContainer = ({
   setPlaceInfoToEdit,
 }: FavoriteCityContainerPropsType) => {
   const [isDragging, setIsDragging] = useState(false);
-  // const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [placeNameToDisplay, setPlaceNameToDisplay] = useState(
-    favoriteCityWithWeather.customName
-  );
-
   const userFavoriteCityId = favoriteCityWithWeather.id;
 
   return (
@@ -50,26 +44,15 @@ const FavoriteCityContainer = ({
           favoriteCityId={favoriteCityWithWeather.favoriteCityId}
         />
 
-        <CityCard
+        <FavoriteCityCard
           userId={userId}
           favoriteCityWithWeather={favoriteCityWithWeather}
           homeLocationId={homeLocationId}
           setHomeLocationId={setHomeLocationId}
-          // placeNameToDisplay={placeNameToDisplay}
           setIsEditModalOpen={setIsEditModalOpen}
           setPlaceInfoToEdit={setPlaceInfoToEdit}
         />
       </div>
-
-      {/* use Modal component here */}
-      {/* <EditPlaceNameModal
-        cityName={favoriteCityWithWeather.customName}
-        isModalOpen={isEditModalOpen}
-        setIsModalOpen={setIsEditModalOpen}
-        setPlaceNameToDisplay={setPlaceNameToDisplay}
-        userFavoriteCityId={favoriteCityWithWeather.id}
-        cityAddress={favoriteCityWithWeather.address}
-      /> */}
     </div>
   );
 };

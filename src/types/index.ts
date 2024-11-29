@@ -159,6 +159,21 @@ export type FavoriteCityContainerPropsType = {
   >;
 };
 
+export type FavoriteCityCardPropsType = {
+  userId: string | undefined;
+  favoriteCityWithWeather: FavoriteCityWithWeather;
+  homeLocationId: number | null;
+  setHomeLocationId: (homeLocationId: number | null) => void;
+  setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setPlaceInfoToEdit: React.Dispatch<
+    React.SetStateAction<{
+      cityName: string;
+      userFavoriteCityId: number;
+      cityAddress: string;
+    } | null>
+  >;
+};
+
 export type EditPlaceNameModalPropsType = {
   cityName: string;
   isModalOpen: boolean;

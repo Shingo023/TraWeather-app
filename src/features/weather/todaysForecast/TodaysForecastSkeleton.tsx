@@ -1,4 +1,4 @@
-import WeatherForecastSkeleton from "@/features/favoritesList/favoriteCityCard/weatherForecast/WeatherForecastSkeleton";
+import WeatherForecastSkeleton from "@/features/favoritesList/favoriteCityContainer/favoriteCityCard/weatherForecast/WeatherForecastSkeleton";
 import styles from "./TodaysForecast.module.scss";
 
 const TodaysForecastSkeleton = () => {
