@@ -15,6 +15,8 @@ import Button from "../components/elements/button/Button";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { deleteCity } from "@/utils/apiHelper";
+import Modal from "../components/elements/modal/Modal";
+import EditPlaceNameModal from "@/features/favoritesList/editPlaceNameModal/EditPlaceNameModal";
 
 const FavoriteList = () => {
   const [favoriteCities, setFavoriteCities] = useState<UserFavoriteCity[]>([]);
@@ -28,6 +30,12 @@ const FavoriteList = () => {
   const [favoriteCitiesToDelete, setFavoriteCitiesToDelete] = useState<
     number[]
   >([]); // favoriteCityIds
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [placeInfoToEdit, setPlaceInfoToEdit] = useState<{
+    cityName: string;
+    userFavoriteCityId: number;
+    cityAddress: string;
+  } | null>(null);
 
   const { data: session } = useSession();
 
@@ -249,10 +257,32 @@ const FavoriteList = () => {
               handleDragOver={handleDragOver}
               deleteActive={deleteActive}
               setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
+              setIsEditModalOpen={setIsEditModalOpen}
+              setPlaceInfoToEdit={setPlaceInfoToEdit}
             />
           );
         })}
       </div>
+
+      {placeInfoToEdit ? (
+        <Modal
+          isModalOpen={isEditModalOpen}
+          setIsModalOpen={setIsEditModalOpen}
+          content={
+            <EditPlaceNameModal
+              cityName={placeInfoToEdit.cityName}
+              cityAddress={placeInfoToEdit.cityAddress}
+              userFavoriteCityId={placeInfoToEdit.userFavoriteCityId}
+              isModalOpen={isEditModalOpen}
+              setIsModalOpen={setIsEditModalOpen}
+              setFavoriteCitiesWithWeather={setFavoriteCitiesWithWeather}
+              setPlaceInfoToEdit={setPlaceInfoToEdit}
+            />
+          }
+        />
+      ) : (
+        ""
+      )}
     </div>
   );
 };

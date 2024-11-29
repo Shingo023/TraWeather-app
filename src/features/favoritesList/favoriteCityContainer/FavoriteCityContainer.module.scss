@@ -1,3 +1,41 @@
+@import "@/style/base/variables.scss";
+
 .cityCardContainer {
   overflow-x: hidden;
+}
+
+.dragging {
+  background-color: #e0e0e0; 
+  opacity: 0.7; 
+}
+
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-80px);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-80px);
+  }
+}
+
+.cityCard {
+  display: flex;
+  margin-bottom: 15px;
+  width: calc(100% + 80px);
+  transform: translateX(-80px); /* Initial hidden state */
+  padding: 0 5px;
+  &.deleteActive {
+    animation: slideInFromLeft 0.3s forwards;
+   }
+  &.deleteInactive {
+     animation: slideOutToLeft 0.3s forwards;
+   } 
 }

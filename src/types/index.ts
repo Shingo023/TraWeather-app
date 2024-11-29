@@ -149,29 +149,33 @@ export type FavoriteCityContainerPropsType = {
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
   deleteActive: boolean;
   setFavoriteCitiesToDelete: Dispatch<SetStateAction<number[]>>;
-};
-
-export type FavoriteCityCardPropsType = {
-  userId: string | undefined;
-  favoriteCityWithWeather: FavoriteCityWithWeather;
-  homeLocationId: number | null;
-  setHomeLocationId: (homeLocationId: number | null) => void;
-  placeNameToDisplay: string;
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
-  handleDragStart: (cityId: number) => void;
-  handleDrop: (targetCityId: number) => Promise<void>;
-  handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
-  deleteActive: boolean;
-  setFavoriteCitiesToDelete: Dispatch<SetStateAction<number[]>>;
+  setPlaceInfoToEdit: Dispatch<
+    SetStateAction<{
+      cityName: string;
+      userFavoriteCityId: number;
+      cityAddress: string;
+    } | null>
+  >;
 };
 
 export type EditPlaceNameModalPropsType = {
   cityName: string;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  setPlaceNameToDisplay: (name: string) => void;
+  // setPlaceNameToDisplay: (name: string) => void;
   userFavoriteCityId: number;
   cityAddress: string;
+  setFavoriteCitiesWithWeather: Dispatch<
+    SetStateAction<FavoriteCityWithWeather[]>
+  >;
+  setPlaceInfoToEdit: Dispatch<
+    SetStateAction<{
+      cityName: string;
+      userFavoriteCityId: number;
+      cityAddress: string;
+    } | null>
+  >;
 };
 
 export type CurrentWeatherPropsType = {

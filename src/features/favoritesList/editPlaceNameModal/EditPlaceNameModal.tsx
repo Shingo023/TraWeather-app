@@ -9,9 +9,11 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
   cityName,
   isModalOpen,
   setIsModalOpen,
-  setPlaceNameToDisplay,
+  // setPlaceNameToDisplay,
   userFavoriteCityId,
   cityAddress,
+  setFavoriteCitiesWithWeather,
+  setPlaceInfoToEdit,
 }) => {
   const [editedCityName, setEditedCityName] = useState(cityName);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -42,8 +44,16 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
       }
 
       toast.success(`City name updated to ${updatedCityName}`);
-      setPlaceNameToDisplay(updatedCityName);
+      // setPlaceNameToDisplay(updatedCityName);
+      setFavoriteCitiesWithWeather((prev) => {
+        return prev.map((city) =>
+          city.id === userFavoriteCityId
+            ? { ...city, customName: updatedCityName }
+            : city
+        );
+      });
       setEditedCityName(updatedCityName);
+      setPlaceInfoToEdit(null);
       setIsModalOpen(false);
     } catch (error) {
       console.error(error);
@@ -52,32 +62,38 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
   };
 
   return (
-    <div className={styles.modal}>
-      <div className={styles.modal__contentContainer}>
-        <div className={styles.modal__content}>
-          <h2>Edit Place Name</h2>
-          <form onSubmit={handleUpdatePlaceName}>
-            <input
-              type="text"
-              defaultValue={editedCityName}
-              ref={inputRef}
-              placeholder="Enter a custom place name"
-              required
-            />
-            <div className={styles.modal__address}>
-              <MapPin className={styles.modal__mapPinIcon} />
-              <p>{cityAddress}</p>
-            </div>
-            <div className={styles.modal__buttons}>
-              <button type="button" onClick={() => setIsModalOpen(false)}>
-                Cancel
-              </button>
-              <button type="submit">Edit</button>
-            </div>
-          </form>
+    // <div className={styles.modal}>
+    //   <div className={styles.modal__contentContainer}>
+    <div className={styles.modal__content}>
+      <h2>Edit Place Name</h2>
+      <form onSubmit={handleUpdatePlaceName}>
+        <input
+          type="text"
+          defaultValue={editedCityName}
+          ref={inputRef}
+          placeholder="Enter a custom place name"
+          required
+        />
+        <div className={styles.modal__address}>
+          <MapPin className={styles.modal__mapPinIcon} />
+          <p>{cityAddress}</p>
         </div>
-      </div>
+        <div className={styles.modal__buttons}>
+          <button
+            type="button"
+            onClick={() => {
+              setPlaceInfoToEdit(null);
+              setIsModalOpen(false);
+            }}
+          >
+            Cancel
+          </button>
+          <button type="submit">Edit</button>
+        </div>
+      </form>
     </div>
+    //   </div>
+    // </div>
   );
 };
 
