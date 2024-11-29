@@ -193,7 +193,7 @@ const FavoriteCityCard = ({
           </div>
           <div
             className={`${styles.cityCard__selectedForecast} ${
-              showTodaysWeather === false ? styles.active : ""
+              showTodaysWeather === false ? styles.forecastActive : ""
             } `}
             onClick={() => {
               if (showTodaysWeather === true) {

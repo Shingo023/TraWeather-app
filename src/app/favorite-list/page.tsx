@@ -4,19 +4,17 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import {
   FavoriteCityWithWeather,
+  PlaceInfoToEditType,
   UserFavoriteCity,
   WeatherDataForFavoritesList,
 } from "@/types";
 import FavoriteCityContainer from "@/features/favoritesList/favoriteCityContainer/FavoriteCityContainer";
 import styles from "./page.module.scss";
 import FavoriteCityCardSkeleton from "@/features/favoritesList/favoriteCityContainer/favoriteCityCard/FavoriteCityCardSkeleton";
-import { RotateCw, Trash2 } from "lucide-react";
-import Button from "../components/elements/button/Button";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { deleteCity } from "@/utils/apiHelper";
 import Modal from "../components/elements/modal/Modal";
 import EditPlaceNameModal from "@/features/favoritesList/editPlaceNameModal/EditPlaceNameModal";
+import FavoritesListHeader from "@/features/favoritesList/favoritesListHeader/FavoritesListHeader";
+import DeleteActionPanel from "@/features/favoritesList/deleteActionPanel/DeleteActionPanel";
 
 const FavoriteList = () => {
   const [favoriteCities, setFavoriteCities] = useState<UserFavoriteCity[]>([]);
@@ -31,11 +29,8 @@ const FavoriteList = () => {
     number[]
   >([]); // favoriteCityIds
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [placeInfoToEdit, setPlaceInfoToEdit] = useState<{
-    cityName: string;
-    userFavoriteCityId: number;
-    cityAddress: string;
-  } | null>(null);
+  const [placeInfoToEdit, setPlaceInfoToEdit] =
+    useState<PlaceInfoToEditType | null>(null);
 
   const { data: session } = useSession();
 
@@ -147,40 +142,6 @@ const FavoriteList = () => {
     }
   };
 
-  // Button actions
-  const deleteSelectedCities = async () => {
-    if (!session?.user?.id) return;
-
-    setLoading(true);
-    try {
-      await Promise.all(
-        favoriteCitiesToDelete.map((favoriteCityId) => {
-          deleteCity(session.user.id, favoriteCityId);
-        })
-      );
-
-      setFavoriteCities((prev) => {
-        return prev.filter(
-          (item) => !favoriteCitiesToDelete.includes(item.favoriteCityId)
-        );
-      });
-
-      setFavoriteCitiesWithWeather((prev) => {
-        return prev.filter(
-          (item) => !favoriteCitiesToDelete.includes(item.favoriteCityId)
-        );
-      });
-      setFavoriteCitiesToDelete([]);
-      setDeleteActive(false);
-      toast.success("Selected cities have been removed from your favorites.");
-    } catch (error) {
-      console.error("Error deleting favorite cities:", error);
-      toast.error("Failed to remove selected cities from favorites.");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   // Render skeletons while loading
   if (loading) {
     const skeletons = Array(4).fill(null);
@@ -196,51 +157,13 @@ const FavoriteList = () => {
 
   return (
     <div className={styles.favoritesList}>
-      <div className={styles.favoritesList__header}>
-        <div
-          className={`${styles.favoritesList__iconContainer} ${
-            deleteActive ? styles.deleteActive : ""
-          }`}
-          onClick={() => setDeleteActive((prev) => !prev)}
-        >
-          <Trash2 className={styles.favoritesList__icon} />
-        </div>
-        <div className={styles.favoritesList__headerTitle}>Favorite List</div>
-        <div
-          className={styles.favoritesList__iconContainer}
-          onClick={() => {
-            if (!session?.user?.id) return;
-
-            setLoading(true);
-            fetchWeatherData(favoriteCities);
-          }}
-        >
-          <RotateCw className={styles.favoritesList__icon} />
-        </div>
-      </div>
-
-      <div
-        className={`${styles.favoritesList__deleteButtons} ${
-          deleteActive ? styles.deleteActive : styles.deleteInactive
-        }`}
-      >
-        <Button
-          className="deleteCancel"
-          onClick={() => {
-            setDeleteActive(false);
-            setFavoriteCitiesToDelete([]);
-          }}
-          text="Cancel"
-          type="button"
-        />
-        <Button
-          className="delete"
-          onClick={deleteSelectedCities}
-          text={`Delete(${favoriteCitiesToDelete.length})`}
-          type="button"
-          isDisabled={!favoriteCitiesToDelete.length}
-        />
-      </div>
+      <FavoritesListHeader
+        deleteActive={deleteActive}
+        setDeleteActive={setDeleteActive}
+        setLoading={setLoading}
+        fetchWeatherData={fetchWeatherData}
+        favoriteCities={favoriteCities}
+      />
 
       <div className={styles.favoritesList__favoritesContainer}>
         {favoriteCitiesWithWeather.map((favoriteCityWithWeather) => {
@@ -262,6 +185,16 @@ const FavoriteList = () => {
           );
         })}
       </div>
+
+      <DeleteActionPanel
+        deleteActive={deleteActive}
+        setDeleteActive={setDeleteActive}
+        setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
+        favoriteCitiesToDelete={favoriteCitiesToDelete}
+        setLoading={setLoading}
+        setFavoriteCities={setFavoriteCities}
+        setFavoriteCitiesWithWeather={setFavoriteCitiesWithWeather}
+      />
 
       {placeInfoToEdit ? (
         <Modal

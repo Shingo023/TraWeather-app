@@ -1,0 +1,38 @@
+.favoritesList { 
+  @keyframes slideInFromBottom {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideOutToBottom {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(100%);
+    }
+  }
+  
+  &__deleteButtons {
+    display: flex;
+    gap: 24px;
+    width: calc(100% - 160px);
+    height: 120px;
+    position: fixed;
+    z-index: 1000;
+    bottom: 0;
+    background-color: rgba(white, 0.95);
+    padding: 18px 0 36px 20px;
+    transform: translateY(100%); /* Initial hidden state */
+    &.deleteActive {
+      animation: slideInFromBottom 0.3s forwards;
+     }
+    &.deleteInactive {
+       animation: slideOutToBottom 0.3s forwards;
+     } 
+  }
+}

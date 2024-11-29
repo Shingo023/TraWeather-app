@@ -178,7 +178,6 @@ export type EditPlaceNameModalPropsType = {
   cityName: string;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  // setPlaceNameToDisplay: (name: string) => void;
   userFavoriteCityId: number;
   cityAddress: string;
   setFavoriteCitiesWithWeather: Dispatch<
@@ -248,4 +247,22 @@ export type TodaysWeatherOverviewType = {
   visibility: number;
   feelsLikeTempMax: number;
   feelsLikeTempMin: number;
+};
+
+export type PlaceInfoToEditType = {
+  cityName: string;
+  userFavoriteCityId: number;
+  cityAddress: string;
+};
+
+export type DeleteActionPanelType = {
+  deleteActive: boolean;
+  setDeleteActive: Dispatch<SetStateAction<boolean>>;
+  setFavoriteCitiesToDelete: Dispatch<SetStateAction<number[]>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  favoriteCitiesToDelete: number[];
+  setFavoriteCities: Dispatch<SetStateAction<UserFavoriteCity[]>>;
+  setFavoriteCitiesWithWeather: Dispatch<
+    SetStateAction<FavoriteCityWithWeather[]>
+  >;
 };
