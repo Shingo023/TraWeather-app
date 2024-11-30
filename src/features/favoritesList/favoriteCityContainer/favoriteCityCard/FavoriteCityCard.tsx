@@ -14,6 +14,7 @@ import WeatherForecast from "./weatherForecast/WeatherForecast";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 import { useRouter } from "next/navigation";
 import { MapPinIcon } from "@heroicons/react/24/solid";
+import ToolTip from "@/app/components/elements/toolTip/ToolTip";
 
 const FavoriteCityCard = ({
   userId,
@@ -154,15 +155,21 @@ const FavoriteCityCard = ({
               }`}
               onClick={handleIconClick}
             />
-            <span className={styles.cityCard__homeIconTooltip}>
-              {userFavoriteCityId === homeLocationId
-                ? "Unset home location"
-                : "Set as home location"}
-            </span>
+            <div className={styles.cityCard__tooltip}>
+              <ToolTip
+                message={
+                  userFavoriteCityId === homeLocationId
+                    ? "Unset home location"
+                    : "Set as home location"
+                }
+                width={110}
+              />
+            </div>
           </div>
           <div className={styles.cityCard__cityName}>{cityName}</div>
+
           <div
-            className={styles.cityCard__edit}
+            className={styles.cityCard__editIconContainer}
             onClick={(event) => {
               event.stopPropagation();
               const placeInfoToEdit = {
@@ -174,7 +181,12 @@ const FavoriteCityCard = ({
               setIsEditModalOpen(true);
             }}
           >
-            <Pencil width={20} height={20} />
+            <div className={styles.cityCard__editIcon}>
+              <Pencil width={20} height={20} />
+            </div>
+            <div className={styles.cityCard__tooltip}>
+              <ToolTip message="Edit Place Name" width={130} />
+            </div>
           </div>
         </div>
 
