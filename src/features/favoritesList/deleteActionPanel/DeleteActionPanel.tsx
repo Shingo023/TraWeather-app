@@ -7,6 +7,7 @@ import { deleteCity } from "@/utils/apiHelper";
 import { DeleteActionPanelType } from "@/types";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import React from "react";
 
 const DeleteActionPanel = ({
   deleteActive,

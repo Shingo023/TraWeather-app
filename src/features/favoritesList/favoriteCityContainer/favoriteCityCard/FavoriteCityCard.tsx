@@ -47,13 +47,15 @@ const FavoriteCityCard = ({
     currentWeather !== undefined ? backgroundMapping[currentWeather] : null;
   const currentWeatherIcon =
     currentWeather !== undefined ? iconMapping[currentWeather] : null;
-  const currentDateTime = useMemo(
-    () => getCurrentTimeAndDate(timeZone),
-    [timeZone]
-  );
-  const twentyFourHoursWeather = useMemo(
-    () => getWeatherForNext24Hours(todaysWeather, tomorrowsWeather, timeZone),
-    [todaysWeather, tomorrowsWeather, timeZone]
+  const currentDateTime = getCurrentTimeAndDate(timeZone);
+  // const twentyFourHoursWeather = useMemo(
+  //   () => getWeatherForNext24Hours(todaysWeather, tomorrowsWeather, timeZone),
+  //   [todaysWeather, tomorrowsWeather, timeZone]
+  // );
+  const twentyFourHoursWeather = getWeatherForNext24Hours(
+    todaysWeather,
+    tomorrowsWeather,
+    timeZone
   );
 
   const router = useRouter();

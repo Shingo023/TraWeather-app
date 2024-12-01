@@ -2,6 +2,7 @@ import { CloudHail, Umbrella, Wind } from "lucide-react";
 import styles from "./WeatherCard.module.scss";
 import { getPrecipIntensity, getWindStrength } from "@/utils/weatherUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
+import React from "react";
 
 const WeatherCard = ({
   dateTime,
@@ -20,9 +21,9 @@ const WeatherCard = ({
   weatherIconSrc: string;
   iconWidth: number;
   iconHeight: number;
-  temp: number;
-  tempMax: number;
-  tempMin: number;
+  temp?: number;
+  tempMax?: number;
+  tempMin?: number;
   precipProb: number;
   precipAmount?: number | null;
   windSpeed?: number | null;
@@ -42,7 +43,7 @@ const WeatherCard = ({
             height={iconHeight}
           />
         </div>
-        {temp ? (
+        {!isNaN(temp ?? NaN) ? (
           <div className={styles.weatherCard__temp}>{temp}°</div>
         ) : (
           <div className={styles.weatherCard__temp}>
@@ -94,4 +95,4 @@ const WeatherCard = ({
   );
 };
 
-export default WeatherCard;
+export default React.memo(WeatherCard);

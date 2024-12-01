@@ -3,6 +3,7 @@ import { useState } from "react";
 import styles from "./FavoriteCityContainer.module.scss";
 import FavoriteCityDeletionSelector from "./favoriteCityDeletionSelector/FavoriteCityDeletionSelector";
 import FavoriteCityCard from "./favoriteCityCard/FavoriteCityCard";
+import React from "react";
 
 const FavoriteCityContainer = ({
   userId,
@@ -57,4 +58,4 @@ const FavoriteCityContainer = ({
   );
 };
 
-export default FavoriteCityContainer;
+export default React.memo(FavoriteCityContainer);

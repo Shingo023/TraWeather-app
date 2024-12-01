@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import {
   FavoriteCityWithWeather,
@@ -68,11 +68,12 @@ const FavoriteList = () => {
         })
       );
 
-      favoriteCitiesWithWeatherData.sort(
-        (a, b) => a.displayOrder - b.displayOrder
-      );
+      const sortedFavoriteCitiesWithWeather =
+        favoriteCitiesWithWeatherData.sort(
+          (a, b) => a.displayOrder - b.displayOrder
+        );
 
-      setFavoriteCitiesWithWeather(favoriteCitiesWithWeatherData);
+      setFavoriteCitiesWithWeather(sortedFavoriteCitiesWithWeather);
     } catch (error) {
       console.error("Error fetching weather data of favorite cities:", error);
     } finally {
@@ -93,54 +94,57 @@ const FavoriteList = () => {
   }, [session?.user?.id]);
 
   // Handle drag events
-  const handleDragStart = (userFavoriteCityId: number) => {
+  const handleDragStart = useCallback((userFavoriteCityId: number) => {
     setDraggedCityId(userFavoriteCityId);
-  };
+  }, []);
 
-  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
-  };
+  }, []);
 
-  const handleDrop = async (targetUserFavoriteCityId: number) => {
-    if (draggedCityId === null) return;
+  const handleDrop = useCallback(
+    async (targetUserFavoriteCityId: number) => {
+      if (draggedCityId === null) return;
 
-    const updatedCities = [...favoriteCitiesWithWeather];
-    const draggedCityIndex = updatedCities.findIndex(
-      (city) => city.id === draggedCityId
-    );
-    const targetCityIndex = updatedCities.findIndex(
-      (city) => city.id === targetUserFavoriteCityId
-    );
+      const updatedCities = [...favoriteCitiesWithWeather];
+      const draggedCityIndex = updatedCities.findIndex(
+        (city) => city.id === draggedCityId
+      );
+      const targetCityIndex = updatedCities.findIndex(
+        (city) => city.id === targetUserFavoriteCityId
+      );
 
-    // Reorder the cities
-    const [draggedCity] = updatedCities.splice(draggedCityIndex, 1);
-    updatedCities.splice(targetCityIndex, 0, draggedCity);
+      // Reorder the cities
+      const [draggedCity] = updatedCities.splice(draggedCityIndex, 1);
+      updatedCities.splice(targetCityIndex, 0, draggedCity);
 
-    setFavoriteCitiesWithWeather(updatedCities);
-    setDraggedCityId(null);
+      setFavoriteCitiesWithWeather(updatedCities);
+      setDraggedCityId(null);
 
-    // Save the new order to the database
-    const response = await fetch(`/api/update-favorite-cities-order`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: session?.user.id,
-        cityOrder: updatedCities.map((city) => city.id),
-      }),
-    });
+      // Save the new order to the database
+      const response = await fetch(`/api/update-favorite-cities-order`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: session?.user.id,
+          cityOrder: updatedCities.map((city) => city.id),
+        }),
+      });
 
-    if (!response.ok) {
-      console.error("Request failed with status:", response.status);
-    } else {
-      try {
-        const data = await response.json();
-      } catch (error) {
-        console.error("Error parsing JSON:", error);
+      if (!response.ok) {
+        console.error("Request failed with status:", response.status);
+      } else {
+        try {
+          const data = await response.json();
+        } catch (error) {
+          console.error("Error parsing JSON:", error);
+        }
       }
-    }
-  };
+    },
+    [draggedCityId, favoriteCitiesWithWeather, session?.user.id]
+  );
 
   // Render skeletons while loading
   if (loading) {

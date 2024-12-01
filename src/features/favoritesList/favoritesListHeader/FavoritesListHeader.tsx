@@ -5,6 +5,7 @@ import styles from "./FavoritesListHeader.module.scss";
 import { RotateCw, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { UserFavoriteCity } from "@/types";
+import React from "react";
 
 const FavoritesListHeader = ({
   deleteActive,

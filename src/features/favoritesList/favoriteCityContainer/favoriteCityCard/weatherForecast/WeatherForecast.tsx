@@ -79,6 +79,7 @@ const WeatherForecast = ({
             : formatDate(weather.datetime);
           const weatherIcon = weather.icon as WeatherIconType;
           const weatherIconSrc = iconMapping[weatherIcon];
+
           const temp = Math.round(weather.temp);
           const tempMax = Math.round(weather.tempmax);
           const tempMin = Math.round(weather.tempmin);
