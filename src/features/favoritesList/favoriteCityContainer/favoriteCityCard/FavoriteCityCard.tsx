@@ -47,15 +47,13 @@ const FavoriteCityCard = ({
     currentWeather !== undefined ? backgroundMapping[currentWeather] : null;
   const currentWeatherIcon =
     currentWeather !== undefined ? iconMapping[currentWeather] : null;
-  const currentDateTime = getCurrentTimeAndDate(timeZone);
-  // const twentyFourHoursWeather = useMemo(
-  //   () => getWeatherForNext24Hours(todaysWeather, tomorrowsWeather, timeZone),
-  //   [todaysWeather, tomorrowsWeather, timeZone]
-  // );
-  const twentyFourHoursWeather = getWeatherForNext24Hours(
-    todaysWeather,
-    tomorrowsWeather,
-    timeZone
+  const currentDateTime = useMemo(
+    () => getCurrentTimeAndDate(timeZone),
+    [timeZone]
+  );
+  const twentyFourHoursWeather = useMemo(
+    () => getWeatherForNext24Hours(todaysWeather, tomorrowsWeather, timeZone),
+    [todaysWeather, tomorrowsWeather, timeZone]
   );
 
   const router = useRouter();
@@ -114,7 +112,6 @@ const FavoriteCityCard = ({
 
   const handleWeatherInfoClick = () => {
     router.push(
-      // `/weather/${cityLat}/${cityLng}?place=${placeNameToDisplay}&address=${cityAddress}&id=${cityPlaceId}`
       `/weather/${cityLat}/${cityLng}?place=${cityName}&address=${cityAddress}&id=${cityPlaceId}`
     );
   };
@@ -252,14 +249,16 @@ const FavoriteCityCard = ({
                 dailyOrWeeklyWeather={twentyFourHoursWeather}
                 iconHeight={50}
                 iconWidth={50}
-                cardWidth={110}
+                cardWidth={100}
+                cardColor="rgba(255, 255, 255, 0.3)"
               />
             ) : (
               <WeatherForecast
                 dailyOrWeeklyWeather={weeklyWeather}
                 iconHeight={50}
                 iconWidth={50}
-                cardWidth={110}
+                cardWidth={100}
+                cardColor="rgba(255, 255, 255, 0.3)"
               />
             )}
           </div>

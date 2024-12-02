@@ -124,6 +124,7 @@
   // Weather section
   &__weather {
     display: flex;
+    justify-content: space-between;
     height: calc(100% - 44px);
     margin-top: 8px;
     margin-left: 29px;
@@ -166,7 +167,7 @@
     overflow: hidden;
   }
   &__weatherForecast {
-    height: 80%;
+    height: 83%;
     overflow-y: hidden;
   }
   &__placeInfoLinks {
@@ -200,6 +201,9 @@
   &__currentDateTimeSkeleton,
   &__currentWeatherIconSkeleton,
   &__currentTempSkeleton,
+  &__selectedForecastSkeleton,
+  &__placeInfoSkeleton1,
+  &__placeInfoSkeleton2,
   &__buttonSkeleton  {
     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
     background-size: 200% 100%;
@@ -219,12 +223,10 @@
     border-radius: 8px;
   }
 
-  &__cityAddressSkeleton {
-    width: 130px;
-    height: 20px;
-    border-radius: 8px;
-    margin-left: 8px;
-    margin-top: 5px;
+  &__selectedForecastSkeleton {
+    width: 62px;
+    height: 27px;
+    border-radius: 18px;
   }
 
   &__currentDateTimeSkeleton {
@@ -252,6 +254,17 @@
     width: 127px;
     height: 32px;
     border-radius: 194px;
+  }
+
+  &__placeInfoSkeleton1 {
+    width: 155px;
+    height: 20px;
+    border-radius: 8px;
+  }
+  &__placeInfoSkeleton2 {
+    width: 71px;
+    height: 20px;
+    border-radius: 8px;
   }
 }
 

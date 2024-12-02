@@ -31,7 +31,7 @@ const DeleteFavoriteModal = ({
           }}
         />
         <Button
-          className="modal"
+          className="modalDelete"
           text="Delete"
           type="button"
           onClick={deleteFavorite}

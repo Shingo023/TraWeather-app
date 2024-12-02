@@ -18,17 +18,28 @@
   }
 }
 
-.modal,
+.modalEdit,
+.modalDelete,
 .modalCancel {
-  width: 140px;
+  width: 120px;
   height: 40px;
   padding: 10px 30px 10px 30px;
-  font-size: 1.25rem;  
+  font-size: 1.1rem;  
   font-weight: 500;
   border-radius: 10px;
 }
 
-.modal,
+.modalEdit {
+  color: #F9F9F9;
+  background-color: rgba(#007bff, 0.8) ;
+  border: 1px solid;  
+  &:hover {
+    background-color: rgba(#007bff, 1); 
+    color: #FFFFFF;
+  }
+}
+
+.modalDelete,
 .delete {
   color: #F9F9F9;
   background-color: #D75C3A ;
@@ -49,11 +60,11 @@
 .modalCancel,
 .deleteCancel {
   color: #878787;
-  background-color: white;
+  background-color: rgba(#C0C0C0, 0.1);
   border: 1px solid #878787 ;
   &:hover {
-    background-color: #C0C0C0;
-    border: 1px solid #C0C0C0;
+    background-color: rgba(#C0C0C0, 0.6);
+    border: 1px solid rgba(#C0C0C0, 0.6);
     color: #5A5A5A;
   }
 }

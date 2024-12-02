@@ -4,6 +4,7 @@ import { EditPlaceNameModalPropsType } from "@/types";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MapPin } from "lucide-react";
+import Button from "@/app/components/elements/button/Button";
 
 const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
   cityName,
@@ -44,7 +45,6 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
       }
 
       toast.success(`City name updated to ${updatedCityName}`);
-      // setPlaceNameToDisplay(updatedCityName);
       setFavoriteCitiesWithWeather((prev) => {
         return prev.map((city) =>
           city.id === userFavoriteCityId
@@ -62,8 +62,6 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
   };
 
   return (
-    // <div className={styles.modal}>
-    //   <div className={styles.modal__contentContainer}>
     <div className={styles.modal__content}>
       <h2>Edit Place Name</h2>
       <form onSubmit={handleUpdatePlaceName}>
@@ -79,21 +77,19 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
           <p>{cityAddress}</p>
         </div>
         <div className={styles.modal__buttons}>
-          <button
-            type="button"
+          <Button
+            text="Cancel"
             onClick={() => {
               setPlaceInfoToEdit(null);
               setIsModalOpen(false);
             }}
-          >
-            Cancel
-          </button>
-          <button type="submit">Edit</button>
+            type="button"
+            className="modalCancel"
+          />
+          <Button text="Edit" type="submit" className="modalEdit" />
         </div>
       </form>
     </div>
-    //   </div>
-    // </div>
   );
 };
 

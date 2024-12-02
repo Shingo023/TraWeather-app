@@ -146,19 +146,6 @@ const FavoriteList = () => {
     [draggedCityId, favoriteCitiesWithWeather, session?.user.id]
   );
 
-  // Render skeletons while loading
-  if (loading) {
-    const skeletons = Array(4).fill(null);
-
-    return (
-      <div className={styles.favoritesList}>
-        {skeletons.map((_, index) => (
-          <FavoriteCityCardSkeleton key={index} />
-        ))}
-      </div>
-    );
-  }
-
   return (
     <div className={styles.favoritesList}>
       <FavoritesListHeader
@@ -170,24 +157,34 @@ const FavoriteList = () => {
       />
 
       <div className={styles.favoritesList__favoritesContainer}>
-        {favoriteCitiesWithWeather.map((favoriteCityWithWeather) => {
-          return (
-            <FavoriteCityContainer
-              key={favoriteCityWithWeather.id}
-              userId={session?.user.id}
-              favoriteCityWithWeather={favoriteCityWithWeather}
-              homeLocationId={homeLocationId}
-              setHomeLocationId={setHomeLocationId}
-              handleDragStart={handleDragStart}
-              handleDrop={handleDrop}
-              handleDragOver={handleDragOver}
-              deleteActive={deleteActive}
-              setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
-              setIsEditModalOpen={setIsEditModalOpen}
-              setPlaceInfoToEdit={setPlaceInfoToEdit}
-            />
-          );
-        })}
+        {loading ? (
+          <div className={styles.favoritesList}>
+            {Array(4)
+              .fill(null)
+              .map((_, index) => (
+                <FavoriteCityCardSkeleton key={index} />
+              ))}
+          </div>
+        ) : (
+          favoriteCitiesWithWeather.map((favoriteCityWithWeather) => {
+            return (
+              <FavoriteCityContainer
+                key={favoriteCityWithWeather.id}
+                userId={session?.user.id}
+                favoriteCityWithWeather={favoriteCityWithWeather}
+                homeLocationId={homeLocationId}
+                setHomeLocationId={setHomeLocationId}
+                handleDragStart={handleDragStart}
+                handleDrop={handleDrop}
+                handleDragOver={handleDragOver}
+                deleteActive={deleteActive}
+                setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
+                setIsEditModalOpen={setIsEditModalOpen}
+                setPlaceInfoToEdit={setPlaceInfoToEdit}
+              />
+            );
+          })
+        )}
       </div>
 
       <DeleteActionPanel

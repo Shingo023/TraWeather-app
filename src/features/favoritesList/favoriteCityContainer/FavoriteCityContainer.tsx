@@ -1,3 +1,5 @@
+"use client";
+
 import { FavoriteCityContainerPropsType } from "@/types";
 import { useState } from "react";
 import styles from "./FavoriteCityContainer.module.scss";

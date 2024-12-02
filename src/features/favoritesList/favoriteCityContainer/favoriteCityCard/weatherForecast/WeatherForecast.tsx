@@ -11,11 +11,13 @@ const WeatherForecast = ({
   iconWidth,
   iconHeight,
   cardWidth,
+  cardColor,
 }: {
   dailyOrWeeklyWeather: WeatherDataForForecast[] | null;
   iconWidth: number;
   iconHeight: number;
   cardWidth: number;
+  cardColor: string;
 }) => {
   const [hovered, setHovered] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -107,6 +109,7 @@ const WeatherForecast = ({
               precipAmount={precipAmount}
               windSpeed={windSpeed}
               cardWidth={cardWidth}
+              cardColor={cardColor}
             />
           );
         })}

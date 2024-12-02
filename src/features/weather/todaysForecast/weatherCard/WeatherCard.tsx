@@ -16,6 +16,7 @@ const WeatherCard = ({
   precipAmount,
   windSpeed,
   cardWidth,
+  cardColor,
 }: {
   dateTime: string;
   weatherIconSrc: string;
@@ -28,11 +29,16 @@ const WeatherCard = ({
   precipAmount?: number | null;
   windSpeed?: number | null;
   cardWidth: number;
+  cardColor: string;
 }) => {
   return (
     <div
       className={styles.weatherCard}
-      style={{ width: `${cardWidth}px`, minWidth: `${cardWidth}px` }}
+      style={{
+        width: `${cardWidth}px`,
+        minWidth: `${cardWidth}px`,
+        backgroundColor: `${cardColor}`,
+      }}
     >
       <div className={styles.weatherCard__top}>
         <p className={styles.weatherCard__time}>{dateTime}</p>
@@ -47,7 +53,7 @@ const WeatherCard = ({
           <div className={styles.weatherCard__temp}>{temp}°</div>
         ) : (
           <div className={styles.weatherCard__temp}>
-            {tempMax}° / {tempMin}°
+            {tempMax}°<span>/</span> {tempMin}°
           </div>
         )}
       </div>

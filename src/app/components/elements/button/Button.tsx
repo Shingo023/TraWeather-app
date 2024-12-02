@@ -8,7 +8,7 @@ const Button = ({
   isDisabled = false,
 }: {
   className: string;
-  onClick: () => void;
+  onClick?: () => void;
   type: "button" | "submit" | "reset";
   text: string;
   isDisabled?: boolean;

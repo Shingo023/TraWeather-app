@@ -3,14 +3,18 @@ import styles from "./FavoriteCityCard.module.scss";
 
 const FavoriteCityCardSkeleton = () => {
   return (
-    <div className={styles.cityCard}>
-      <div className={styles.cityCard__cityInfo}>
-        <div className={styles.cityCard__homeIconContainer}>
-          <div className={styles.cityCard__homeIconSkeleton} />
+    <div className={styles.cityCard__card} style={{ marginBottom: "15px" }}>
+      <div className={styles.cityCard__header}>
+        <div className={styles.cityCard__cityInfo}>
+          <div className={styles.cityCard__homeIconContainer}>
+            <div className={styles.cityCard__homeIconSkeleton} />
+          </div>
+          <div className={styles.cityCard__cityNameSkeleton} />
         </div>
-        <div className={styles.cityCard__cityNameSkeleton} />
-
-        <div className={styles.cityCard__cityAddressSkeleton} />
+        <div className={styles.cityCard__forecastToggle}>
+          <div className={styles.cityCard__selectedForecastSkeleton} />
+          <div className={styles.cityCard__selectedForecastSkeleton} />
+        </div>
       </div>
 
       <div className={styles.cityCard__weather}>
@@ -26,7 +30,22 @@ const FavoriteCityCardSkeleton = () => {
             <div className={styles.cityCard__buttonSkeleton} />
           </div>
         </div>
-        <WeatherForecastSkeleton iconHeight={30} iconWidth={30} />
+
+        <div className={styles.cityCard__contentRight}>
+          <div className={styles.cityCard__weatherForecast}>
+            <WeatherForecastSkeleton
+              iconHeight={30}
+              iconWidth={30}
+              weatherCardWidth={100}
+              weatherCardColor="rgba(255, 255, 255, 0.3)"
+              isForFavoriteCityCard={true}
+            />
+          </div>
+          <div className={styles.cityCard__placeInfoLinks}>
+            <div className={styles.cityCard__placeInfoSkeleton1} />
+            <div className={styles.cityCard__placeInfoSkeleton2} />
+          </div>
+        </div>
       </div>
     </div>
   );
