@@ -1,15 +1,80 @@
 .button {
   cursor: pointer;
-  padding: 8px 14px;
   font-size: 14px;
   font-weight: normal;
+  transition:all 0.3s ease;
+}
+
+.primary {
+  padding: 8px 14px;
+  font-size: 1rem;  
   color: white;
   background-color: #1d1d1d ;
   border-radius: 194px;
-  border: none;
-  transition:all 0.3s ease;
+  border: none;  
   &:hover {
     background-color: #8c8aff ;
     color: #1d1d1d;
   }
+}
+
+.modalEdit,
+.modalDelete,
+.modalCancel {
+  width: 120px;
+  height: 40px;
+  padding: 10px 30px 10px 30px;
+  font-size: 1.1rem;  
+  font-weight: 500;
+  border-radius: 10px;
+}
+
+.modalEdit {
+  color: #F9F9F9;
+  background-color: rgba(#007bff, 0.8) ;
+  border: 1px solid;  
+  &:hover {
+    background-color: rgba(#007bff, 1); 
+    color: #FFFFFF;
+  }
+}
+
+.modalDelete,
+.delete {
+  color: #F9F9F9;
+  background-color: #D75C3A ;
+  border: 1px solid #D75C3A ;  
+  &:hover {
+    background-color: #943827; 
+    border: 1px solid #943827;
+    color: #FFFFFF;
+  }
+  &:disabled {
+    background-color: #ccc; 
+    color: #666; 
+    cursor: not-allowed; 
+    opacity: 0.6; 
+  }
+}
+
+.modalCancel,
+.deleteCancel {
+  color: #878787;
+  background-color: rgba(#C0C0C0, 0.1);
+  border: 1px solid #878787 ;
+  &:hover {
+    background-color: rgba(#C0C0C0, 0.6);
+    border: 1px solid rgba(#C0C0C0, 0.6);
+    color: #5A5A5A;
+  }
+}
+
+.delete,
+.deleteCancel {
+  width: 240px;
+  height: 50px;
+  padding: 15px 80px 15px 80px;
+  font-size: 1.25rem;  
+  font-weight: 500;
+  border-radius: 10px;
 }

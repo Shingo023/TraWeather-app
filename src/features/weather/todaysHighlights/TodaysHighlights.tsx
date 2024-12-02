@@ -9,9 +9,11 @@ import TodaysHighlightsSkeleton from "./TodaysHighlightsSkeleton";
 const TodaysHighlights = ({
   todaysWeather,
   timeZone,
+  currentDateTime,
 }: {
   todaysWeather: WeatherDay | null;
   timeZone: string | undefined;
+  currentDateTime: string | null;
 }) => {
   if (!todaysWeather) {
     return <TodaysHighlightsSkeleton />;
@@ -28,6 +30,7 @@ const TodaysHighlights = ({
 
   const sunrise = todaysWeather.sunrise;
   const sunset = todaysWeather.sunset;
+  const selectedDate = todaysWeather.datetime;
 
   const uvIndexData = (180 * todaysWeather.uvindex * 10) / 100;
 
@@ -60,6 +63,8 @@ const TodaysHighlights = ({
             timeZone={timeZone}
             sunrise={sunrise}
             sunset={sunset}
+            selectedDate={selectedDate}
+            currentDateTime={currentDateTime}
           />
         </div>
       </div>

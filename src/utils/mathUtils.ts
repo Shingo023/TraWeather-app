@@ -65,45 +65,80 @@ export function getBackgroundPercentage(sunDegrees: number): number | null {
 
 // sunrise and sunset
 export function daylightPercentage(
-  timezone: string,
-  date: string,
+  currentDateTime: string,
   sunrise: string,
   sunset: string
 ): number | boolean {
-  // Parse the target date, sunrise, and sunset times in the specified timezone
-  const sunriseTime = DateTime.fromFormat(
-    `${date} ${sunrise}`,
-    "yyyy-MM-dd HH:mm:ss",
-    { zone: timezone }
-  );
+  // Extract the time part from currentDateTime
+  const currentTime = DateTime.fromFormat(
+    currentDateTime,
+    "EEE, MMM dd, h:mm a"
+  ).toFormat("HH:mm:ss");
 
-  const sunsetTime = DateTime.fromFormat(
-    `${date} ${sunset}`,
-    "yyyy-MM-dd HH:mm:ss",
-    { zone: timezone }
-  );
+  // Parse the current, sunrise, and sunset times to DateTime objects in the same day
+  const current = DateTime.fromFormat(currentTime, "HH:mm:ss");
+  const sunriseTime = DateTime.fromFormat(sunrise, "HH:mm:ss");
+  const sunsetTime = DateTime.fromFormat(sunset, "HH:mm:ss");
 
-  // Check if the dates are valid
-  if (!sunriseTime.isValid || !sunsetTime.isValid) {
+  // Ensure the times are valid
+  if (!current.isValid || !sunriseTime.isValid || !sunsetTime.isValid) {
     return false;
   }
 
-  // Get the current time in the specified timezone
-  const currentTime = DateTime.now().setZone(timezone);
-
-  // Check if current time is within the sunrise-sunset range
-  if (currentTime < sunriseTime || currentTime > sunsetTime) {
+  // Check if the current time is within the daylight period
+  if (current < sunriseTime || current > sunsetTime) {
     return false;
   }
 
-  // Calculate the percentage of daylight time that has passed
+  // Calculate the percentage of daylight passed
   const totalDaylightDuration = sunsetTime.diff(sunriseTime, "seconds").seconds;
-  const timePassedSinceSunrise = currentTime.diff(
-    sunriseTime,
-    "seconds"
-  ).seconds;
+  const timePassedSinceSunrise = current.diff(sunriseTime, "seconds").seconds;
   const percentagePassed =
     (timePassedSinceSunrise / totalDaylightDuration) * 100;
 
   return Math.round(percentagePassed * 100) / 100;
 }
+
+// export function daylightPercentage(
+//   timezone: string,
+//   date: string,
+//   sunrise: string,
+//   sunset: string
+// ): number | boolean {
+//   // Parse the target date, sunrise, and sunset times in the specified timezone
+//   const sunriseTime = DateTime.fromFormat(
+//     `${date} ${sunrise}`,
+//     "yyyy-MM-dd HH:mm:ss",
+//     { zone: timezone }
+//   );
+
+//   const sunsetTime = DateTime.fromFormat(
+//     `${date} ${sunset}`,
+//     "yyyy-MM-dd HH:mm:ss",
+//     { zone: timezone }
+//   );
+
+//   // Check if the dates are valid
+//   if (!sunriseTime.isValid || !sunsetTime.isValid) {
+//     return false;
+//   }
+
+//   // Get the current time in the specified timezone
+//   const currentTime = DateTime.now().setZone(timezone);
+
+//   // Check if current time is within the sunrise-sunset range
+//   if (currentTime < sunriseTime || currentTime > sunsetTime) {
+//     return false;
+//   }
+
+//   // Calculate the percentage of daylight time that has passed
+//   const totalDaylightDuration = sunsetTime.diff(sunriseTime, "seconds").seconds;
+//   const timePassedSinceSunrise = currentTime.diff(
+//     sunriseTime,
+//     "seconds"
+//   ).seconds;
+//   const percentagePassed =
+//     (timePassedSinceSunrise / totalDaylightDuration) * 100;
+
+//   return Math.round(percentagePassed * 100) / 100;
+// }

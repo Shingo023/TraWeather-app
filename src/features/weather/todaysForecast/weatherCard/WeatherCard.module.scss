@@ -1,12 +1,12 @@
-.hourlyWeather {
+.weatherCard {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   height: 100%;
-  width: 130px;
-  min-width: 130px;
-  border-right: rgb(188, 188, 188) 1px solid;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  padding: 8px 0;
   p {
     font-size: 14px;
   }
@@ -31,7 +31,11 @@
   }
   &__temp {
     font-size: 16px;
-    font-weight: bold;  
+    font-weight: 700;  
+    span {
+      font-size: 14px;
+      font-weight: 300;
+    }
   }
 
   // card bottom
@@ -43,7 +47,7 @@
       color: #191970;
       font-weight: 600;
   
-      .hourlyWeather__icon {
+      .weatherCard__icon {
         fill: #191970;
       }
     }
@@ -72,7 +76,7 @@
 }
 
 // Skeleton
-.hourlyWeather {
+.weatherCard {
   &__timeSkeleton,
   &__weatherIconSkeleton,
   &__tempSkeleton,
@@ -91,8 +95,6 @@
   }
 
   &__weatherIconSkeleton {
-    // width: 30px;
-    // height: 30px;
     margin-top: 10px;
     margin-bottom: 10px;
   }

@@ -29,7 +29,7 @@ export const formatDate = (dateStr: string) => {
   const date = parseISO(dateStr);
 
   // Format the date to "Sat, Oct 19"
-  return format(date, "EEE, MMM dd");
+  return format(date, "EEE, MMM d");
 };
 
 export const getCurrentHourInTimeZone = (timeZone: string): number => {

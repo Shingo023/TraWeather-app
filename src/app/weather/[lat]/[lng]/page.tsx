@@ -28,6 +28,7 @@ export default function WeatherPage() {
   const [twentyFourHoursWeather, setTwentyFourHoursWeather] = useState<
     WeatherHour[] | null
   >(null);
+  const [currentDateTime, setCurrentDateTime] = useState<string | null>(null);
 
   const router = useRouter();
   const { data: session, status } = useSession();
@@ -102,6 +103,7 @@ export default function WeatherPage() {
           setFavoriteCitiesPlaceIds={setFavoriteCitiesPlaceIds}
           latitude={lat as string}
           longitude={lng as string}
+          setCurrentDateTime={setCurrentDateTime}
         />
         <TodaysForecast
           twentyFourHoursWeather={twentyFourHoursWeather}
@@ -110,6 +112,7 @@ export default function WeatherPage() {
         <TodaysHighlights
           todaysWeather={todaysWeather}
           timeZone={displayedCityWeather?.timezone}
+          currentDateTime={currentDateTime}
         />
       </div>
       <div className={styles.weatherPage__rightContent}>

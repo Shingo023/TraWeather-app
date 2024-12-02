@@ -1,17 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { DefaultSession } from "next-auth";
 
-export type DisplayedCityWeatherContextType = {
-  displayedCityWeather: WeatherData | null;
-  setDisplayedCityWeather: Dispatch<SetStateAction<WeatherData | null>>;
-  cityToDisplay: string | null;
-  setCityToDisplay: React.Dispatch<React.SetStateAction<string | null>>;
-  address: string | null;
-  setAddress: (state: string | null) => void;
-  placeId: string | null;
-  setPlaceId: (state: string | null) => void;
-};
-
 // Formatted types of the weather data so that unnecessary fields will not be fetched
 export type WeatherData = {
   latitude: number;
@@ -38,70 +27,51 @@ export type WeatherDay = {
   humidity: number;
   precip: number | null;
   precipprob: number;
-  precipcover: number;
   snow: number | null;
   snowdepth: number | null;
-  windgust: number;
   windspeed: number;
-  winddir: number;
   description: string;
   uvindex: number;
   sunrise: string;
   sunset: string;
   conditions: string;
   icon: string;
-  hours: WeatherHour[];
+  hours: WeatherDataForForecast[];
   visibility: number;
 };
 
 export type WeatherHour = {
   datetime: string;
   temp: number;
-  feelslike: number;
-  humidity: number;
-  precip: number | null;
+  precip?: number | null;
   precipprob: number;
-  snow: number | null;
-  snowdepth: number | null;
-  windgust: number;
-  windspeed: number;
-  winddir: number;
-  uvindex: number;
-  conditions: string;
+  windspeed?: number;
   icon: string;
-  visibility: number;
 };
 
 // Weather types for the favorites list
 export type WeatherDataForFavoritesList = {
-  latitude: number;
-  longitude: number;
-  address: string;
   timezone: string;
-  description: string;
+  weeklyWeather: WeatherDataForForecast[];
   days: WeatherDay[];
   currentConditions: {
     datetime: string;
-    feelslike: number;
     icon: string;
     temp: number;
   };
 };
 
-export type WeatherDayForFavoritesList = {
-  hours: WeatherHour[];
-};
-
-export type WeatherHourForFavoritesList = {
+export type WeatherDataForForecast = {
   datetime: string;
+  tempmax: number;
+  tempmin: number;
   temp: number;
-  feelslike: number;
-  humidity: number;
   precip: number | null;
   precipprob: number;
-  icon: string;
   windspeed: number;
+  icon: string;
 };
+
 export type WeatherIconType =
   | "clear-day"
   | "clear-night"
@@ -141,9 +111,14 @@ export type FavoriteCity = {
 export type FavoriteCityWithWeather = {
   id: number;
   customName: string;
-  isDefault: boolean;
-  favoriteCity: FavoriteCity;
-  weather: WeatherData;
+  isDefaultCity: boolean;
+  displayOrder: number;
+  favoriteCityId: number;
+  placeId: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  weather: WeatherDataForFavoritesList;
 };
 
 export type LocationDetails = {
@@ -165,52 +140,56 @@ export type autocompleteSuggestion = {
 };
 
 export type FavoriteCityContainerPropsType = {
-  userFavoriteCityId: number;
   userId: string | undefined;
-  cityName: string;
-  cityAddress: string;
-  cityPlaceId: string;
-  currentTemp: number;
-  currentWeather: WeatherIconType;
-  currentDateTime: string;
+  favoriteCityWithWeather: FavoriteCityWithWeather;
   homeLocationId: number | null;
   setHomeLocationId: (homeLocationId: number | null) => void;
-  cityLat: number;
-  cityLng: number;
-  twentyFourHoursWeather: WeatherHour[];
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
+  deleteActive: boolean;
+  setFavoriteCitiesToDelete: Dispatch<SetStateAction<number[]>>;
+  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
+  setPlaceInfoToEdit: Dispatch<
+    SetStateAction<{
+      cityName: string;
+      userFavoriteCityId: number;
+      cityAddress: string;
+    } | null>
+  >;
 };
 
 export type FavoriteCityCardPropsType = {
-  userFavoriteCityId: number;
   userId: string | undefined;
-  cityName: string;
-  cityAddress: string;
-  cityPlaceId: string;
-  currentTemp: number;
-  currentWeather: WeatherIconType;
-  currentDateTime: string;
+  favoriteCityWithWeather: FavoriteCityWithWeather;
   homeLocationId: number | null;
   setHomeLocationId: (homeLocationId: number | null) => void;
-  cityLat: number;
-  cityLng: number;
-  placeNameToDisplay: string;
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  twentyFourHoursWeather: WeatherHour[];
-  handleDragStart: (cityId: number) => void;
-  handleDrop: (targetCityId: number) => Promise<void>;
-  handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
+  setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setPlaceInfoToEdit: React.Dispatch<
+    React.SetStateAction<{
+      cityName: string;
+      userFavoriteCityId: number;
+      cityAddress: string;
+    } | null>
+  >;
 };
 
 export type EditPlaceNameModalPropsType = {
   cityName: string;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  setPlaceNameToDisplay: (name: string) => void;
   userFavoriteCityId: number;
   cityAddress: string;
+  setFavoriteCitiesWithWeather: Dispatch<
+    SetStateAction<FavoriteCityWithWeather[]>
+  >;
+  setPlaceInfoToEdit: Dispatch<
+    SetStateAction<{
+      cityName: string;
+      userFavoriteCityId: number;
+      cityAddress: string;
+    } | null>
+  >;
 };
 
 export type CurrentWeatherPropsType = {
@@ -223,6 +202,7 @@ export type CurrentWeatherPropsType = {
   setFavoriteCitiesPlaceIds: React.Dispatch<React.SetStateAction<string[]>>;
   latitude: string;
   longitude: string;
+  setCurrentDateTime: Dispatch<SetStateAction<string | null>>;
 };
 
 export type CurrentDateAndTimePropsType = {
@@ -231,6 +211,7 @@ export type CurrentDateAndTimePropsType = {
   latitude: string;
   longitude: string;
   setLoading: Dispatch<SetStateAction<boolean>>;
+  setCurrentDateTime: Dispatch<SetStateAction<string | null>>;
 };
 
 export type StarIconPropsType = {
@@ -249,9 +230,14 @@ export type HomeLocationContextType = {
 
 export type UserFavoriteCity = {
   id: number;
-  customName: string | null;
-  isDefault: boolean;
-  favoriteCity: FavoriteCity;
+  customName: string;
+  isDefaultCity: boolean;
+  displayOrder: number;
+  favoriteCityId: number;
+  placeId: string;
+  address: string;
+  latitude: number;
+  longitude: number;
 };
 
 export type TodaysWeatherOverviewType = {
@@ -261,4 +247,22 @@ export type TodaysWeatherOverviewType = {
   visibility: number;
   feelsLikeTempMax: number;
   feelsLikeTempMin: number;
+};
+
+export type PlaceInfoToEditType = {
+  cityName: string;
+  userFavoriteCityId: number;
+  cityAddress: string;
+};
+
+export type DeleteActionPanelType = {
+  deleteActive: boolean;
+  setDeleteActive: Dispatch<SetStateAction<boolean>>;
+  setFavoriteCitiesToDelete: Dispatch<SetStateAction<number[]>>;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  favoriteCitiesToDelete: number[];
+  setFavoriteCities: Dispatch<SetStateAction<UserFavoriteCity[]>>;
+  setFavoriteCitiesWithWeather: Dispatch<
+    SetStateAction<FavoriteCityWithWeather[]>
+  >;
 };

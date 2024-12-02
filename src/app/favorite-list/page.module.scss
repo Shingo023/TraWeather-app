@@ -1,3 +1,5 @@
 .favoritesList {
-  padding-right: 30px;
+  &__favoritesContainer {
+    margin: 0 30px 30px 15px;
+  }
 }

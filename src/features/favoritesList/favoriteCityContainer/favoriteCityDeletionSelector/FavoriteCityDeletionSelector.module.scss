@@ -1,0 +1,38 @@
+.cityCard {
+  &__deleteSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+  }
+  &__iconContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 180px;
+    border: rgba(#999, 0.8) solid 2px;
+    color: rgba(#999, 0.8);
+    padding: 5px;
+    transition: all ease 0.3s;
+    &:hover {
+      cursor: pointer;
+      // border: 2px solid #F1A98C;
+      // background: #F1A98C;
+      // color: white;
+    }
+    &.isChecked {
+      border: 2px solid #D75C3A;
+      background: #D75C3A;
+      color: white;
+    }
+  }
+  &__deleteCheckIcon {
+    width: 30px;
+    height: 30px;
+    stroke-width: 3px;
+  }
+}
+  
+  

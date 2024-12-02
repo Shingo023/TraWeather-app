@@ -1,19 +1,23 @@
-import { WeatherHour, WeatherIconType } from "@/types";
-import styles from "./DailyForecast.module.scss";
-import { formatTimeTo12Hour } from "@/utils/dateUtils";
-import HourlyWeatherCard from "@/features/weather/todaysForecast/hourlyWeatherCard/HourlyWeatherCard";
+import { WeatherDataForForecast, WeatherIconType } from "@/types";
+import styles from "./WeatherForecast.module.scss";
+import { formatDate, formatTimeTo12Hour } from "@/utils/dateUtils";
+import WeatherCard from "@/features/weather/todaysForecast/weatherCard/WeatherCard";
 import { iconMapping } from "@/utils/weatherIconMapping";
 import { useEffect, useRef, useState } from "react";
 import { ChevronsLeft, ChevronsRight } from "lucide-react";
 
-const DailyForecast = ({
-  twentyFourHoursWeather,
+const WeatherForecast = ({
+  dailyOrWeeklyWeather,
   iconWidth,
   iconHeight,
+  cardWidth,
+  cardColor,
 }: {
-  twentyFourHoursWeather: WeatherHour[] | null;
+  dailyOrWeeklyWeather: WeatherDataForForecast[] | null;
   iconWidth: number;
   iconHeight: number;
+  cardWidth: number;
+  cardColor: string;
 }) => {
   const [hovered, setHovered] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -60,7 +64,7 @@ const DailyForecast = ({
 
   return (
     <div
-      className={styles.dailyForecastWrapper}
+      className={styles.weatherForecastWrapper}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
@@ -70,29 +74,42 @@ const DailyForecast = ({
         </div>
       )}
 
-      <div className={styles.dailyForecast} ref={scrollContainer}>
-        {twentyFourHoursWeather?.map((hourlyWeather: WeatherHour, index) => {
-          const hour = formatTimeTo12Hour(hourlyWeather.datetime);
-          const weatherIcon = hourlyWeather.icon as WeatherIconType;
+      <div className={styles.weatherForecast} ref={scrollContainer}>
+        {dailyOrWeeklyWeather?.map((weather, index) => {
+          const dateTime = weather.datetime.includes(":")
+            ? formatTimeTo12Hour(weather.datetime)
+            : formatDate(weather.datetime);
+          const weatherIcon = weather.icon as WeatherIconType;
           const weatherIconSrc = iconMapping[weatherIcon];
-          const temp = Math.round(hourlyWeather.temp);
-          const precipProb = Math.round(hourlyWeather.precipprob / 5) * 5;
 
-          const rawPrecipAmount = hourlyWeather.precip ?? 0;
-          const precipAmount = Number(rawPrecipAmount.toFixed(1));
-          const windSpeed = Math.round(hourlyWeather.windspeed);
+          const temp = Math.round(weather.temp);
+          const tempMax = Math.round(weather.tempmax);
+          const tempMin = Math.round(weather.tempmin);
+
+          const precipProb = Math.round(weather.precipprob / 5) * 5;
+
+          const rawPrecipAmount = weather.precip === null ? 0 : weather.precip;
+          const precipAmount =
+            typeof rawPrecipAmount === "number"
+              ? Number(rawPrecipAmount.toFixed(1))
+              : null;
+          const windSpeed = Math.round(weather.windspeed);
 
           return (
-            <HourlyWeatherCard
+            <WeatherCard
               key={index}
-              hour={hour}
+              dateTime={dateTime}
               weatherIconSrc={weatherIconSrc}
               iconWidth={iconWidth}
               iconHeight={iconHeight}
               temp={temp}
+              tempMax={tempMax}
+              tempMin={tempMin}
               precipProb={precipProb}
               precipAmount={precipAmount}
               windSpeed={windSpeed}
+              cardWidth={cardWidth}
+              cardColor={cardColor}
             />
           );
         })}
@@ -107,4 +124,4 @@ const DailyForecast = ({
   );
 };
 
-export default DailyForecast;
+export default WeatherForecast;

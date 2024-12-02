@@ -1,62 +1,63 @@
+"use client";
+
 import { FavoriteCityContainerPropsType } from "@/types";
-import EditPlaceNameModal from "../editPlaceNameModal/EditPlaceNameModal";
-import FavoriteCityCard from "../favoriteCityCard/FavoriteCityCard";
 import { useState } from "react";
+import styles from "./FavoriteCityContainer.module.scss";
+import FavoriteCityDeletionSelector from "./favoriteCityDeletionSelector/FavoriteCityDeletionSelector";
+import FavoriteCityCard from "./favoriteCityCard/FavoriteCityCard";
+import React from "react";
 
 const FavoriteCityContainer = ({
-  userFavoriteCityId,
   userId,
-  cityName,
-  cityAddress,
-  cityPlaceId,
-  currentTemp,
-  currentWeather,
-  currentDateTime,
+  favoriteCityWithWeather,
   homeLocationId,
   setHomeLocationId,
-  cityLat,
-  cityLng,
-  twentyFourHoursWeather,
   handleDragStart,
   handleDrop,
   handleDragOver,
+  deleteActive,
+  setFavoriteCitiesToDelete,
+  setIsEditModalOpen,
+  setPlaceInfoToEdit,
 }: FavoriteCityContainerPropsType) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [placeNameToDisplay, setPlaceNameToDisplay] = useState(cityName);
+  const [isDragging, setIsDragging] = useState(false);
+  const userFavoriteCityId = favoriteCityWithWeather.id;
 
   return (
-    <div>
-      <FavoriteCityCard
-        userId={userId}
-        userFavoriteCityId={userFavoriteCityId}
-        cityName={cityName}
-        cityAddress={cityAddress}
-        cityPlaceId={cityPlaceId}
-        currentTemp={currentTemp}
-        currentWeather={currentWeather}
-        currentDateTime={currentDateTime}
-        homeLocationId={homeLocationId}
-        setHomeLocationId={setHomeLocationId}
-        cityLat={cityLat}
-        cityLng={cityLng}
-        placeNameToDisplay={placeNameToDisplay}
-        setIsModalOpen={setIsModalOpen}
-        twentyFourHoursWeather={twentyFourHoursWeather}
-        handleDragStart={handleDragStart}
-        handleDrop={handleDrop}
-        handleDragOver={handleDragOver}
-      />
+    <div className={styles.cityCardContainer}>
+      <div
+        className={`${styles.cityCard} ${isDragging ? styles.dragging : ""} ${
+          deleteActive ? styles.deleteActive : styles.deleteInactive
+        }`}
+        draggable
+        onDragStart={() => {
+          setIsDragging(true);
+          handleDragStart(userFavoriteCityId);
+        }}
+        onDragEnd={() => setIsDragging(false)}
+        onDragOver={handleDragOver}
+        onDrop={() => {
+          setIsDragging(false);
+          handleDrop(userFavoriteCityId);
+        }}
+      >
+        <FavoriteCityDeletionSelector
+          deleteActive={deleteActive}
+          setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
+          favoriteCityId={favoriteCityWithWeather.favoriteCityId}
+        />
 
-      <EditPlaceNameModal
-        cityName={cityName}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        setPlaceNameToDisplay={setPlaceNameToDisplay}
-        userFavoriteCityId={userFavoriteCityId}
-        cityAddress={cityAddress}
-      />
+        <FavoriteCityCard
+          userId={userId}
+          favoriteCityWithWeather={favoriteCityWithWeather}
+          homeLocationId={homeLocationId}
+          setHomeLocationId={setHomeLocationId}
+          setIsEditModalOpen={setIsEditModalOpen}
+          setPlaceInfoToEdit={setPlaceInfoToEdit}
+        />
+      </div>
     </div>
   );
 };
 
-export default FavoriteCityContainer;
+export default React.memo(FavoriteCityContainer);

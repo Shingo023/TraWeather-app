@@ -1,0 +1,29 @@
+@import "@/style/base/variables.scss";
+
+.cityCardContainer {
+  overflow-x: hidden;
+}
+
+.dragging {
+  background-color: #e0e0e0; 
+  opacity: 0.7; 
+}
+
+.cityCard {
+  display: flex;
+  margin-bottom: 15px;
+  width: calc(100% + 80px);
+  transform: translateX(-80px); /* Initial hidden state */
+  padding: 0 5px;
+
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+
+  &.deleteActive {
+    transform: translateX(0); /* Slide in */
+
+   }
+  &.deleteInactive {
+    transform: translateX(-80px); /* Slide out */
+
+   } 
+}

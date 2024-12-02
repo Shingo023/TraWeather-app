@@ -18,6 +18,7 @@ const CurrentWeather = ({
   setFavoriteCitiesPlaceIds,
   latitude,
   longitude,
+  setCurrentDateTime,
 }: CurrentWeatherPropsType) => {
   const [loading, setLoading] = useState(true);
 
@@ -92,6 +93,7 @@ const CurrentWeather = ({
               latitude={latitude}
               longitude={longitude}
               setLoading={setLoading}
+              setCurrentDateTime={setCurrentDateTime}
             />
           )}
         </div>

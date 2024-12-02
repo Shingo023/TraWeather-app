@@ -21,10 +21,25 @@ export async function GET(request: Request) {
         id: true,
         customName: true,
         isDefault: true,
+        displayOrder: true,
         favoriteCity: true,
       },
     });
-    return NextResponse.json(userFavoriteCities);
+
+    const userFavoriteCitiesData = userFavoriteCities.map((city) => ({
+      id: city.id,
+      customName: city.customName,
+      isDefaultCity: city.isDefault,
+      displayOrder: city.displayOrder,
+      favoriteCityId: city.favoriteCity.id,
+      placeId: city.favoriteCity.placeId,
+      address: city.favoriteCity.address,
+      latitude: city.favoriteCity.latitude,
+      longitude: city.favoriteCity.longitude,
+    }));
+
+    // return NextResponse.json(userFavoriteCities);
+    return NextResponse.json(userFavoriteCitiesData);
   } catch (error) {
     console.error("Error fetching favorite cities:", error);
     return NextResponse.json(

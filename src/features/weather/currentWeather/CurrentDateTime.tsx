@@ -12,11 +12,14 @@ const CurrentDateTime = ({
   latitude,
   longitude,
   setLoading,
+  setCurrentDateTime,
 }: CurrentDateAndTimePropsType) => {
   const currentTimeAndDate =
     placeTimeZone !== undefined
       ? getCurrentTimeAndDate(placeTimeZone)
       : undefined;
+
+  setCurrentDateTime(currentTimeAndDate ?? "N/A");
 
   const updateWeatherInfo = async () => {
     setLoading(true);
