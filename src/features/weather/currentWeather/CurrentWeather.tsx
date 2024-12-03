@@ -1,69 +1,59 @@
 "use client";
 
-import { CurrentWeatherPropsType, WeatherIconType } from "@/types";
-import { iconMapping } from "@/utils/weatherIconMapping";
+import { CurrentWeatherPropsType } from "@/types";
 import styles from "./CurrentWeather.module.scss";
 import StarIcon from "./StarIcon";
 import CurrentDateTime from "./CurrentDateTime";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
+import CurrentWeatherSkelton from "./CurrentWeatherSkelton";
 
 const CurrentWeather = ({
-  displayedCityWeather,
-  setDisplayedCityWeather,
-  cityToDisplay,
-  address,
-  placeId,
-  favoriteCitiesPlaceIds,
-  setFavoriteCitiesPlaceIds,
+  fetchWeatherData,
+  currentWeather,
   latitude,
   longitude,
-  setCurrentDateTime,
+  currentDateTime,
+  timezone,
 }: CurrentWeatherPropsType) => {
+  const [favoriteCitiesPlaceIds, setFavoriteCitiesPlaceIds] = useState<
+    string[]
+  >([]);
   const [loading, setLoading] = useState(true);
+  const { data: session } = useSession();
 
-  const currentTemp = displayedCityWeather?.currentConditions.temp
-    ? Math.round(displayedCityWeather.currentConditions.temp)
-    : undefined;
-
-  const currentFeelslikeTemp = displayedCityWeather?.currentConditions.feelslike
-    ? Math.round(displayedCityWeather.currentConditions.feelslike)
-    : undefined;
-
-  const currentWeather = displayedCityWeather?.currentConditions.icon as
-    | WeatherIconType
-    | undefined;
-
-  const placeTimeZone = displayedCityWeather?.timezone;
-
-  const currentWeatherIcon =
-    currentWeather !== undefined ? iconMapping[currentWeather] : null;
+  const searchParams = useSearchParams();
+  const cityToDisplay = searchParams.get("place");
+  const address = searchParams.get("address");
+  const placeId = searchParams.get("id");
 
   useEffect(() => {
-    if (displayedCityWeather && favoriteCitiesPlaceIds) {
+    if (!session?.user?.id) return;
+    const fetchFavoriteCitiesPlaceIds = async () => {
+      try {
+        const response = await fetch(
+          `/api/users/${session.user.id}/favorite-cities/placeIds`
+        );
+        const favoriteCitiesPlaceIdsData = await response.json();
+        setFavoriteCitiesPlaceIds(favoriteCitiesPlaceIdsData);
+      } catch (error) {
+        console.error("Error fetching favorite cities place IDs:", error);
+      }
+    };
+    fetchFavoriteCitiesPlaceIds();
+  }, [session?.user?.id]);
+
+  useEffect(() => {
+    if (currentWeather && favoriteCitiesPlaceIds) {
       setLoading(false);
     }
-  }, [displayedCityWeather]);
+  }, [currentWeather, favoriteCitiesPlaceIds]);
 
   // Render skeletons while loading
   if (loading) {
-    return (
-      <div className={styles.currentWeather}>
-        <div className={styles.currentWeather__info}>
-          <div className={styles.currentWeather__infoTop}>
-            <div className={styles.currentWeather__skeletonCityName} />
-            <div className={styles.currentWeather__skeletonAddress} />
-            <div className={styles.currentWeather__skeletonDateTime} />
-          </div>
-          <div className={styles.currentWeather__infoTop}>
-            <div className={styles.currentWeather__skeletonTemp} />
-            <div className={styles.currentWeather__skeletonFeelslikeTemp} />
-          </div>
-        </div>
-
-        <div className={styles.currentWeather__skeletonWeatherIcon} />
-      </div>
-    );
+    return <CurrentWeatherSkelton />;
   }
 
   return (
@@ -75,7 +65,9 @@ const CurrentWeather = ({
               {cityToDisplay}
             </div>
             <StarIcon
-              displayedCityWeather={displayedCityWeather}
+              latitude={latitude}
+              longitude={longitude}
+              timezone={timezone}
               cityToDisplay={cityToDisplay}
               address={address}
               placeId={placeId}
@@ -86,29 +78,31 @@ const CurrentWeather = ({
           <div className={styles.currentWeather__stateAndCountry}>
             <div className={styles.currentWeather__stateName}>{address}</div>
           </div>
-          {displayedCityWeather && (
+          {currentWeather && timezone && (
             <CurrentDateTime
-              placeTimeZone={placeTimeZone}
-              setDisplayedCityWeather={setDisplayedCityWeather}
+              placeTimeZone={timezone}
+              fetchWeatherData={fetchWeatherData}
               latitude={latitude}
               longitude={longitude}
               setLoading={setLoading}
-              setCurrentDateTime={setCurrentDateTime}
+              currentDateTime={currentDateTime}
             />
           )}
         </div>
 
         <div className={styles.currentWeather__infoBottom}>
-          <div className={styles.currentWeather__temp}>{currentTemp}°</div>
+          <div className={styles.currentWeather__temp}>
+            {currentWeather?.currentTemp}°
+          </div>
           <div className={styles.currentWeather__feelslikeTemp}>
-            Feels like {currentFeelslikeTemp}°
+            Feels like {currentWeather?.currentFeelslikeTemp}°
           </div>
         </div>
       </div>
 
       <div className={styles.currentWeather__weatherIconContainer}>
         <WeatherIcon
-          weatherIcon={currentWeatherIcon}
+          weatherIcon={currentWeather?.currentWeatherIcon ?? null}
           width={150}
           height={150}
         />

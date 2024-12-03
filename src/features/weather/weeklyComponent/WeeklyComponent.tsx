@@ -1,6 +1,12 @@
 "use client";
 
-import { WeatherData, WeatherDay, WeatherHour, WeatherIconType } from "@/types";
+import {
+  TodaysWeatherType,
+  WeatherData,
+  WeatherDataForForecast,
+  WeatherDay,
+  WeatherIconType,
+} from "@/types";
 import styles from "./WeeklyComponent.module.scss";
 import { iconMapping } from "@/utils/weatherIconMapping";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -16,8 +22,10 @@ export const WeeklyComponent = ({
   setTwentyFourHoursWeather,
 }: {
   displayedCityWeather: WeatherData | null;
-  setTodaysWeather: Dispatch<SetStateAction<WeatherDay | null>>;
-  setTwentyFourHoursWeather: Dispatch<SetStateAction<WeatherHour[] | null>>;
+  setTodaysWeather: Dispatch<SetStateAction<TodaysWeatherType | null>>;
+  setTwentyFourHoursWeather: Dispatch<
+    SetStateAction<WeatherDataForForecast[] | null>
+  >;
 }) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -52,7 +60,19 @@ export const WeeklyComponent = ({
       setTwentyFourHoursWeather(selectedDateWeather.hours);
     }
     setSelectedDate(date);
-    setTodaysWeather(selectedDateWeather);
+    const selectedDateWeatherHighlights: TodaysWeatherType = {
+      datetime: selectedDateWeather.datetime,
+      humidity: Math.round(selectedDateWeather.humidity),
+      snowDepth: selectedDateWeather.snowdepth ?? 0,
+      weatherOverview: selectedDateWeather.description,
+      visibility: selectedDateWeather.visibility,
+      feelsLikeTempMax: Math.round(selectedDateWeather.feelslikemax),
+      feelsLikeTempMin: Math.round(selectedDateWeather.feelslikemin),
+      sunrise: selectedDateWeather.sunrise,
+      sunset: selectedDateWeather.sunset,
+      uvIndexData: (180 * selectedDateWeather.uvindex * 10) / 100,
+    };
+    setTodaysWeather(selectedDateWeatherHighlights);
   };
 
   // Render skeletons while loading

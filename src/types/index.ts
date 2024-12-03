@@ -2,10 +2,15 @@ import { Dispatch, SetStateAction } from "react";
 import { DefaultSession } from "next-auth";
 
 // Formatted types of the weather data so that unnecessary fields will not be fetched
+export type CurrentWeatherType = {
+  currentTemp: number | null;
+  currentFeelslikeTemp: number | null;
+  currentWeatherIcon: string | null;
+};
+
 export type WeatherData = {
   latitude: number;
   longitude: number;
-  address: string;
   timezone: string;
   days: WeatherDay[];
   currentConditions: {
@@ -20,16 +25,12 @@ export type WeatherDay = {
   datetime: string;
   tempmax: number;
   tempmin: number;
-  temp: number;
-  feelslike: number;
   feelslikemax: number;
   feelslikemin: number;
   humidity: number;
-  precip: number | null;
   precipprob: number;
   snow: number | null;
   snowdepth: number | null;
-  windspeed: number;
   description: string;
   uvindex: number;
   sunrise: string;
@@ -41,12 +42,26 @@ export type WeatherDay = {
 };
 
 export type WeatherHour = {
+  conditions: string;
   datetime: string;
   temp: number;
   precip?: number | null;
   precipprob: number;
   windspeed?: number;
   icon: string;
+};
+
+export type TodaysWeatherType = {
+  datetime: string;
+  humidity: number;
+  snowDepth: number;
+  weatherOverview: string;
+  visibility: number;
+  feelsLikeTempMax: number;
+  feelsLikeTempMin: number;
+  sunrise: string;
+  sunset: string;
+  uvIndexData: number;
 };
 
 // Weather types for the favorites list
@@ -193,29 +208,35 @@ export type EditPlaceNameModalPropsType = {
 };
 
 export type CurrentWeatherPropsType = {
-  displayedCityWeather: WeatherData | null;
-  setDisplayedCityWeather: (weatherData: WeatherData | null) => void;
-  cityToDisplay: string | null;
-  address: string | null;
-  placeId: string | null;
-  favoriteCitiesPlaceIds: string[];
-  setFavoriteCitiesPlaceIds: React.Dispatch<React.SetStateAction<string[]>>;
+  fetchWeatherData: (latitude: number, longitude: number) => Promise<void>;
+  currentWeather: CurrentWeatherType | null;
+  // displayedCityWeather: WeatherData | null;
+  // setDisplayedCityWeather: (weatherData: WeatherData | null) => void;
+  // cityToDisplay: string | null;
+  // address: string | null;
+  // placeId: string | null;
+  // favoriteCitiesPlaceIds: string[];
+  // setFavoriteCitiesPlaceIds: React.Dispatch<React.SetStateAction<string[]>>;
   latitude: string;
   longitude: string;
-  setCurrentDateTime: Dispatch<SetStateAction<string | null>>;
+  // setCurrentDateTime: Dispatch<SetStateAction<string | null>>;
+  currentDateTime: string | null;
+  timezone: string | null;
 };
 
 export type CurrentDateAndTimePropsType = {
+  fetchWeatherData: (latitude: number, longitude: number) => Promise<void>;
   placeTimeZone: string | undefined;
-  setDisplayedCityWeather: (weatherData: WeatherData | null) => void;
   latitude: string;
   longitude: string;
   setLoading: Dispatch<SetStateAction<boolean>>;
-  setCurrentDateTime: Dispatch<SetStateAction<string | null>>;
+  currentDateTime: string | null;
 };
 
 export type StarIconPropsType = {
-  displayedCityWeather: WeatherData | null;
+  latitude: string | null;
+  longitude: string | null;
+  timezone: string | null;
   cityToDisplay: string | null;
   address: string | null;
   placeId: string | null;

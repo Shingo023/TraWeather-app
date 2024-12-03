@@ -8,7 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { StarIconPropsType } from "@/types";
 
 const StarIcon = ({
-  displayedCityWeather,
+  latitude,
+  longitude,
+  timezone,
   cityToDisplay,
   address,
   placeId,
@@ -43,11 +45,11 @@ const StarIcon = ({
 
     const newCity = {
       cityName: cityToDisplay,
-      latitude: displayedCityWeather?.latitude,
-      longitude: displayedCityWeather?.longitude,
+      latitude: Number(latitude),
+      longitude: Number(longitude),
       placeId,
       address,
-      timeZone: displayedCityWeather?.timezone,
+      timeZone: timezone,
     };
 
     try {

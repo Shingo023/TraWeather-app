@@ -72,7 +72,7 @@ export function daylightPercentage(
   // Extract the time part from currentDateTime
   const currentTime = DateTime.fromFormat(
     currentDateTime,
-    "EEE, MMM dd, h:mm a"
+    "EEE, MMM d, h:mm a"
   ).toFormat("HH:mm:ss");
 
   // Parse the current, sunrise, and sunset times to DateTime objects in the same day
