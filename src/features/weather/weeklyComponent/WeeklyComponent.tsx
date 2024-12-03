@@ -1,34 +1,29 @@
 "use client";
 
 import {
-  TodaysWeatherType,
-  WeatherData,
-  WeatherDataForForecast,
+  DailyWeatherHighlightsType,
   WeatherDay,
   WeatherIconType,
 } from "@/types";
 import styles from "./WeeklyComponent.module.scss";
 import { iconMapping } from "@/utils/weatherIconMapping";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import { Umbrella } from "lucide-react";
 import { formatDate } from "@/utils/dateUtils";
 import WeeklyComponentSkeleton from "./WeeklyComponentSkeleton";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
+import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
-export const WeeklyComponent = ({
-  displayedCityWeather,
-  setTodaysWeather,
-  setTwentyFourHoursWeather,
-}: {
-  displayedCityWeather: WeatherData | null;
-  setTodaysWeather: Dispatch<SetStateAction<TodaysWeatherType | null>>;
-  setTwentyFourHoursWeather: Dispatch<
-    SetStateAction<WeatherDataForForecast[] | null>
-  >;
-}) => {
+export const WeeklyComponent = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const {
+    displayedCityWeather,
+    setTwentyFourHoursWeather,
+    setDailyWeatherHighlights,
+  } = useDisplayedCityWeather();
 
   const weeklyWeather: WeatherDay[] | undefined = displayedCityWeather?.days;
 
@@ -60,7 +55,7 @@ export const WeeklyComponent = ({
       setTwentyFourHoursWeather(selectedDateWeather.hours);
     }
     setSelectedDate(date);
-    const selectedDateWeatherHighlights: TodaysWeatherType = {
+    const selectedDateWeatherHighlights: DailyWeatherHighlightsType = {
       datetime: selectedDateWeather.datetime,
       humidity: Math.round(selectedDateWeather.humidity),
       snowDepth: selectedDateWeather.snowdepth ?? 0,
@@ -72,7 +67,7 @@ export const WeeklyComponent = ({
       sunset: selectedDateWeather.sunset,
       uvIndexData: (180 * selectedDateWeather.uvindex * 10) / 100,
     };
-    setTodaysWeather(selectedDateWeatherHighlights);
+    setDailyWeatherHighlights(selectedDateWeatherHighlights);
   };
 
   // Render skeletons while loading

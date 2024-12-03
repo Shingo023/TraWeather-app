@@ -12,7 +12,7 @@ const SunsetAndSunrise = ({
   selectedDate,
   currentDateTime,
 }: {
-  timeZone: string | undefined;
+  timeZone: string | null;
   sunrise: string;
   sunset: string;
   selectedDate: string;

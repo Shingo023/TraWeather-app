@@ -25,6 +25,7 @@ export default function RootLayout({
             <div className={styles.sidebar}>
               <Sidebar />
             </div>
+
             <div className={styles.content}>{children}</div>
           </div>
         </SessionLayout>

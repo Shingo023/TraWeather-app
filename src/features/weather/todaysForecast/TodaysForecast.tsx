@@ -1,19 +1,18 @@
-import { TodaysWeatherType, WeatherDataForForecast } from "@/types";
 import styles from "./TodaysForecast.module.scss";
 import WeatherForecast from "@/features/favoritesList/favoriteCityContainer/favoriteCityCard/weatherForecast/WeatherForecast";
 import { formatDate } from "@/utils/dateUtils";
 import TodaysForecastSkeleton from "./TodaysForecastSkeleton";
+import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
-const TodaysForecast = ({
-  twentyFourHoursWeather,
-  todaysWeather,
-}: {
-  twentyFourHoursWeather: WeatherDataForForecast[] | null;
-  todaysWeather: TodaysWeatherType | null;
-}) => {
-  const date = todaysWeather ? formatDate(todaysWeather.datetime) : "";
+const TodaysForecast = () => {
+  const { dailyWeatherHighlights, twentyFourHoursWeather } =
+    useDisplayedCityWeather();
 
-  if (!twentyFourHoursWeather || !todaysWeather) {
+  const date = dailyWeatherHighlights
+    ? formatDate(dailyWeatherHighlights.datetime)
+    : "";
+
+  if (!twentyFourHoursWeather || !dailyWeatherHighlights) {
     return <TodaysForecastSkeleton />;
   }
 

@@ -1,6 +1,5 @@
 "use client";
 
-import { CurrentWeatherPropsType } from "@/types";
 import styles from "./CurrentWeather.module.scss";
 import StarIcon from "./StarIcon";
 import CurrentDateTime from "./CurrentDateTime";
@@ -9,47 +8,22 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import CurrentWeatherSkelton from "./CurrentWeatherSkelton";
+import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
-const CurrentWeather = ({
-  fetchWeatherData,
-  currentWeather,
-  latitude,
-  longitude,
-  currentDateTime,
-  timezone,
-}: CurrentWeatherPropsType) => {
-  const [favoriteCitiesPlaceIds, setFavoriteCitiesPlaceIds] = useState<
-    string[]
-  >([]);
+const CurrentWeather = () => {
   const [loading, setLoading] = useState(true);
-  const { data: session } = useSession();
 
   const searchParams = useSearchParams();
   const cityToDisplay = searchParams.get("place");
   const address = searchParams.get("address");
-  const placeId = searchParams.get("id");
+
+  const { currentWeather, timezone } = useDisplayedCityWeather();
 
   useEffect(() => {
-    if (!session?.user?.id) return;
-    const fetchFavoriteCitiesPlaceIds = async () => {
-      try {
-        const response = await fetch(
-          `/api/users/${session.user.id}/favorite-cities/placeIds`
-        );
-        const favoriteCitiesPlaceIdsData = await response.json();
-        setFavoriteCitiesPlaceIds(favoriteCitiesPlaceIdsData);
-      } catch (error) {
-        console.error("Error fetching favorite cities place IDs:", error);
-      }
-    };
-    fetchFavoriteCitiesPlaceIds();
-  }, [session?.user?.id]);
-
-  useEffect(() => {
-    if (currentWeather && favoriteCitiesPlaceIds) {
+    if (currentWeather) {
       setLoading(false);
     }
-  }, [currentWeather, favoriteCitiesPlaceIds]);
+  }, [currentWeather]);
 
   // Render skeletons while loading
   if (loading) {
@@ -64,30 +38,12 @@ const CurrentWeather = ({
             <div className={styles.currentWeather__cityName}>
               {cityToDisplay}
             </div>
-            <StarIcon
-              latitude={latitude}
-              longitude={longitude}
-              timezone={timezone}
-              cityToDisplay={cityToDisplay}
-              address={address}
-              placeId={placeId}
-              favoriteCitiesPlaceIds={favoriteCitiesPlaceIds}
-              setFavoriteCitiesPlaceIds={setFavoriteCitiesPlaceIds}
-            />
+            <StarIcon />
           </div>
           <div className={styles.currentWeather__stateAndCountry}>
             <div className={styles.currentWeather__stateName}>{address}</div>
           </div>
-          {currentWeather && timezone && (
-            <CurrentDateTime
-              placeTimeZone={timezone}
-              fetchWeatherData={fetchWeatherData}
-              latitude={latitude}
-              longitude={longitude}
-              setLoading={setLoading}
-              currentDateTime={currentDateTime}
-            />
-          )}
+          {currentWeather && timezone && <CurrentDateTime />}
         </div>
 
         <div className={styles.currentWeather__infoBottom}>

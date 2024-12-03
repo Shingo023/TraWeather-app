@@ -1,38 +1,20 @@
 import SunsetAndSunrise from "./sunsetAndSunrise/SunsetAndSunrise";
 import UVIndex from "./uvIndex/UVIndex";
 import styles from "./TodaysHighlights.module.scss";
-import { TodaysWeatherType } from "@/types";
 import Overview from "./overview/Overview";
 import { formatDate } from "@/utils/dateUtils";
 import TodaysHighlightsSkeleton from "./TodaysHighlightsSkeleton";
+import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
-const TodaysHighlights = ({
-  todaysWeather,
-  timeZone,
-  currentDateTime,
-}: {
-  todaysWeather: TodaysWeatherType | null;
-  timeZone: string | undefined;
-  currentDateTime: string | null;
-}) => {
-  if (!todaysWeather) {
+const TodaysHighlights = () => {
+  const { dailyWeatherHighlights, timezone, currentDateTime } =
+    useDisplayedCityWeather();
+
+  if (!dailyWeatherHighlights) {
     return <TodaysHighlightsSkeleton />;
   }
 
-  const date = formatDate(todaysWeather.datetime);
-
-  // const humidity = Math.round(todaysWeather.humidity);
-  // const snowDepth = todaysWeather.snowdepth ?? 0;
-  // const weatherOverview = todaysWeather.description;
-  // const visibility = todaysWeather.visibility;
-  // const feelsLikeTempMax = Math.round(todaysWeather.feelslikemax);
-  // const feelsLikeTempMin = Math.round(todaysWeather.feelslikemin);
-
-  // const sunrise = todaysWeather.sunrise;
-  // const sunset = todaysWeather.sunset;
-  // const selectedDate = todaysWeather.datetime;
-
-  // const uvIndexData = (180 * todaysWeather.uvindex * 10) / 100;
+  const date = formatDate(dailyWeatherHighlights.datetime);
 
   return (
     <div className={styles.todaysHighlights}>
@@ -51,19 +33,19 @@ const TodaysHighlights = ({
         </h2>
         <div className={styles.todaysHighlights__contents}>
           <Overview
-            humidity={todaysWeather.humidity}
-            snowDepth={todaysWeather.snowDepth}
-            weatherOverview={todaysWeather.weatherOverview}
-            visibility={todaysWeather.visibility}
-            feelsLikeTempMax={todaysWeather.feelsLikeTempMax}
-            feelsLikeTempMin={todaysWeather.feelsLikeTempMin}
+            humidity={dailyWeatherHighlights.humidity}
+            snowDepth={dailyWeatherHighlights.snowDepth}
+            weatherOverview={dailyWeatherHighlights.weatherOverview}
+            visibility={dailyWeatherHighlights.visibility}
+            feelsLikeTempMax={dailyWeatherHighlights.feelsLikeTempMax}
+            feelsLikeTempMin={dailyWeatherHighlights.feelsLikeTempMin}
           />
-          <UVIndex uvIndex={todaysWeather.uvIndexData} />
+          <UVIndex uvIndex={dailyWeatherHighlights.uvIndexData} />
           <SunsetAndSunrise
-            timeZone={timeZone}
-            sunrise={todaysWeather.sunrise}
-            sunset={todaysWeather.sunset}
-            selectedDate={todaysWeather.datetime}
+            timeZone={timezone}
+            sunrise={dailyWeatherHighlights.sunrise}
+            sunset={dailyWeatherHighlights.sunset}
+            selectedDate={dailyWeatherHighlights.datetime}
             currentDateTime={currentDateTime}
           />
         </div>

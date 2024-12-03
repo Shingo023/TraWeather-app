@@ -51,7 +51,7 @@ export type WeatherHour = {
   icon: string;
 };
 
-export type TodaysWeatherType = {
+export type DailyWeatherHighlightsType = {
   datetime: string;
   humidity: number;
   snowDepth: number;
