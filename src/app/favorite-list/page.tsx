@@ -2,11 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import {
-  PlaceInfoToEditType,
-  UserFavoriteCity,
-  WeatherDataForFavoritesList,
-} from "@/types";
 import FavoriteCityContainer from "@/features/favoritesList/favoriteCityContainer/FavoriteCityContainer";
 import styles from "./page.module.scss";
 import FavoriteCityCardSkeleton from "@/features/favoritesList/favoriteCityContainer/favoriteCityCard/FavoriteCityCardSkeleton";
@@ -23,7 +18,6 @@ const FavoriteList = () => {
     favoriteCitiesData,
     favoriteCitiesWithWeather,
     setFavoriteCitiesWithWeather,
-    homeLocationId,
     setHomeLocationId,
     fetchWeatherData,
     loading,
@@ -92,13 +86,7 @@ const FavoriteList = () => {
 
   return (
     <div className={styles.favoritesList}>
-      <FavoritesListHeader
-      // deleteActive={deleteActive}
-      // setDeleteActive={setDeleteActive}
-      // setLoading={setLoading}
-      // fetchWeatherData={fetchWeatherData}
-      // favoriteCities={favoriteCitiesData}
-      />
+      <FavoritesListHeader />
 
       <div className={styles.favoritesList__favoritesContainer}>
         {loading ? (
@@ -116,43 +104,24 @@ const FavoriteList = () => {
                 key={favoriteCityWithWeather.id}
                 userId={session?.user.id}
                 favoriteCityWithWeather={favoriteCityWithWeather}
-                // homeLocationId={homeLocationId}
-                // setHomeLocationId={setHomeLocationId}
                 handleDragStart={handleDragStart}
                 handleDrop={handleDrop}
                 handleDragOver={handleDragOver}
-                // deleteActive={deleteActive}
-                // setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
-                // setIsEditModalOpen={setIsEditModalOpen}
-                // setPlaceInfoToEdit={setPlaceInfoToEdit}
               />
             );
           })
         )}
       </div>
 
-      <DeleteActionPanel
-      // deleteActive={deleteActive}
-      // setDeleteActive={setDeleteActive}
-      // setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
-      // favoriteCitiesToDelete={favoriteCitiesToDelete}
-      // setLoading={setLoading}
-      // setFavoriteCities={favoriteCitiesData}
-      // setFavoriteCitiesWithWeather={setFavoriteCitiesWithWeather}
-      />
+      <DeleteActionPanel />
 
       <Modal
         isModalOpen={isEditModalOpen}
         setIsModalOpen={setIsEditModalOpen}
         content={
           <EditPlaceNameModal
-            // cityName={placeInfoToEdit.cityName}
-            // cityAddress={placeInfoToEdit.cityAddress}
-            // userFavoriteCityId={placeInfoToEdit.userFavoriteCityId}
             isModalOpen={isEditModalOpen}
             setIsModalOpen={setIsEditModalOpen}
-            // setFavoriteCitiesWithWeather={setFavoriteCitiesWithWeather}
-            // setPlaceInfoToEdit={setPlaceInfoToEdit}
           />
         }
       />

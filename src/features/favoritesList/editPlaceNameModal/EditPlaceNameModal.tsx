@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import styles from "./EditPlaceNameModal.module.scss";
 import { EditPlaceNameModalPropsType } from "@/types";
 import { toast } from "react-toastify";
@@ -8,16 +8,9 @@ import Button from "@/app/components/elements/button/Button";
 import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
 const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
-  // cityName,
   isModalOpen,
   setIsModalOpen,
-  // // setPlaceNameToDisplay,
-  // userFavoriteCityId,
-  // cityAddress,
-  // setFavoriteCitiesWithWeather,
-  // setPlaceInfoToEdit,
 }) => {
-  // const [editedCityName, setEditedCityName] = useState(cityName);
   const { placeInfoToEdit, setFavoriteCitiesWithWeather, setPlaceInfoToEdit } =
     useUserFavoriteCities();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -55,7 +48,6 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
             : city
         );
       });
-      // setEditedCityName(updatedCityName);
       setPlaceInfoToEdit(null);
       setIsModalOpen(false);
     } catch (error) {
