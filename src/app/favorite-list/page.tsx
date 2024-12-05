@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import {
-  FavoriteCityWithWeather,
   PlaceInfoToEditType,
   UserFavoriteCity,
   WeatherDataForFavoritesList,
@@ -15,83 +14,28 @@ import Modal from "../components/elements/modal/Modal";
 import EditPlaceNameModal from "@/features/favoritesList/editPlaceNameModal/EditPlaceNameModal";
 import FavoritesListHeader from "@/features/favoritesList/favoritesListHeader/FavoritesListHeader";
 import DeleteActionPanel from "@/features/favoritesList/deleteActionPanel/DeleteActionPanel";
+import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
 const FavoriteList = () => {
-  const [favoriteCities, setFavoriteCities] = useState<UserFavoriteCity[]>([]);
-  const [favoriteCitiesWithWeather, setFavoriteCitiesWithWeather] = useState<
-    FavoriteCityWithWeather[]
-  >([]);
-  const [homeLocationId, setHomeLocationId] = useState<number | null>(null);
-  const [loading, setLoading] = useState(true);
   const [draggedCityId, setDraggedCityId] = useState<number | null>(null);
-  const [deleteActive, setDeleteActive] = useState(false);
-  const [favoriteCitiesToDelete, setFavoriteCitiesToDelete] = useState<
-    number[]
-  >([]); // favoriteCityIds
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [placeInfoToEdit, setPlaceInfoToEdit] =
-    useState<PlaceInfoToEditType | null>(null);
 
+  const {
+    favoriteCitiesData,
+    favoriteCitiesWithWeather,
+    setFavoriteCitiesWithWeather,
+    homeLocationId,
+    setHomeLocationId,
+    fetchWeatherData,
+    loading,
+    isEditModalOpen,
+    setIsEditModalOpen,
+  } = useUserFavoriteCities();
   const { data: session } = useSession();
 
-  const fetchFavoriteCities = async () => {
-    try {
-      const response = await fetch(
-        `/api/user-favorite-cities?userId=${session?.user?.id}`
-      );
-      const userFavoriteCitiesData = await response.json();
-      setFavoriteCities(userFavoriteCitiesData);
-      return userFavoriteCitiesData;
-    } catch (error) {
-      console.error("Error fetching favorite cities:", error);
-    }
-  };
-
-  const fetchWeatherData = async (cities: UserFavoriteCity[]) => {
-    try {
-      const favoriteCitiesWithWeatherData = await Promise.all(
-        cities.map(async (userFavoriteCity: UserFavoriteCity) => {
-          if (userFavoriteCity.isDefaultCity) {
-            setHomeLocationId(userFavoriteCity.id);
-          }
-
-          const weatherResponse = await fetch(
-            `/api/weather/favorite-cities?lat=${userFavoriteCity.latitude}&lng=${userFavoriteCity.longitude}`
-          );
-          const weatherData: WeatherDataForFavoritesList =
-            await weatherResponse.json();
-
-          return {
-            ...userFavoriteCity,
-            weather: weatherData,
-          };
-        })
-      );
-
-      const sortedFavoriteCitiesWithWeather =
-        favoriteCitiesWithWeatherData.sort(
-          (a, b) => a.displayOrder - b.displayOrder
-        );
-
-      setFavoriteCitiesWithWeather(sortedFavoriteCitiesWithWeather);
-    } catch (error) {
-      console.error("Error fetching weather data of favorite cities:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    if (!session?.user?.id) return;
-    const fetchAllData = async () => {
-      const cities = await fetchFavoriteCities();
-      if (cities.length > 0) {
-        await fetchWeatherData(cities);
-      }
-    };
-
-    fetchAllData();
-  }, [session?.user?.id]);
+    if (!session?.user?.id || !favoriteCitiesData) return;
+    fetchWeatherData();
+  }, [session?.user?.id, favoriteCitiesData]);
 
   // Handle drag events
   const handleDragStart = useCallback((userFavoriteCityId: number) => {
@@ -149,11 +93,11 @@ const FavoriteList = () => {
   return (
     <div className={styles.favoritesList}>
       <FavoritesListHeader
-        deleteActive={deleteActive}
-        setDeleteActive={setDeleteActive}
-        setLoading={setLoading}
-        fetchWeatherData={fetchWeatherData}
-        favoriteCities={favoriteCities}
+      // deleteActive={deleteActive}
+      // setDeleteActive={setDeleteActive}
+      // setLoading={setLoading}
+      // fetchWeatherData={fetchWeatherData}
+      // favoriteCities={favoriteCitiesData}
       />
 
       <div className={styles.favoritesList__favoritesContainer}>
@@ -172,15 +116,15 @@ const FavoriteList = () => {
                 key={favoriteCityWithWeather.id}
                 userId={session?.user.id}
                 favoriteCityWithWeather={favoriteCityWithWeather}
-                homeLocationId={homeLocationId}
-                setHomeLocationId={setHomeLocationId}
+                // homeLocationId={homeLocationId}
+                // setHomeLocationId={setHomeLocationId}
                 handleDragStart={handleDragStart}
                 handleDrop={handleDrop}
                 handleDragOver={handleDragOver}
-                deleteActive={deleteActive}
-                setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
-                setIsEditModalOpen={setIsEditModalOpen}
-                setPlaceInfoToEdit={setPlaceInfoToEdit}
+                // deleteActive={deleteActive}
+                // setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
+                // setIsEditModalOpen={setIsEditModalOpen}
+                // setPlaceInfoToEdit={setPlaceInfoToEdit}
               />
             );
           })
@@ -188,34 +132,30 @@ const FavoriteList = () => {
       </div>
 
       <DeleteActionPanel
-        deleteActive={deleteActive}
-        setDeleteActive={setDeleteActive}
-        setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
-        favoriteCitiesToDelete={favoriteCitiesToDelete}
-        setLoading={setLoading}
-        setFavoriteCities={setFavoriteCities}
-        setFavoriteCitiesWithWeather={setFavoriteCitiesWithWeather}
+      // deleteActive={deleteActive}
+      // setDeleteActive={setDeleteActive}
+      // setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
+      // favoriteCitiesToDelete={favoriteCitiesToDelete}
+      // setLoading={setLoading}
+      // setFavoriteCities={favoriteCitiesData}
+      // setFavoriteCitiesWithWeather={setFavoriteCitiesWithWeather}
       />
 
-      {placeInfoToEdit ? (
-        <Modal
-          isModalOpen={isEditModalOpen}
-          setIsModalOpen={setIsEditModalOpen}
-          content={
-            <EditPlaceNameModal
-              cityName={placeInfoToEdit.cityName}
-              cityAddress={placeInfoToEdit.cityAddress}
-              userFavoriteCityId={placeInfoToEdit.userFavoriteCityId}
-              isModalOpen={isEditModalOpen}
-              setIsModalOpen={setIsEditModalOpen}
-              setFavoriteCitiesWithWeather={setFavoriteCitiesWithWeather}
-              setPlaceInfoToEdit={setPlaceInfoToEdit}
-            />
-          }
-        />
-      ) : (
-        ""
-      )}
+      <Modal
+        isModalOpen={isEditModalOpen}
+        setIsModalOpen={setIsEditModalOpen}
+        content={
+          <EditPlaceNameModal
+            // cityName={placeInfoToEdit.cityName}
+            // cityAddress={placeInfoToEdit.cityAddress}
+            // userFavoriteCityId={placeInfoToEdit.userFavoriteCityId}
+            isModalOpen={isEditModalOpen}
+            setIsModalOpen={setIsEditModalOpen}
+            // setFavoriteCitiesWithWeather={setFavoriteCitiesWithWeather}
+            // setPlaceInfoToEdit={setPlaceInfoToEdit}
+          />
+        }
+      />
     </div>
   );
 };

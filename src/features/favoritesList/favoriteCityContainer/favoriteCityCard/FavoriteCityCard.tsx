@@ -15,16 +15,23 @@ import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 import { useRouter } from "next/navigation";
 import { MapPinIcon } from "@heroicons/react/24/solid";
 import ToolTip from "@/app/components/elements/toolTip/ToolTip";
+import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
 const FavoriteCityCard = ({
   userId,
   favoriteCityWithWeather,
-  homeLocationId,
-  setHomeLocationId,
-  setIsEditModalOpen,
-  setPlaceInfoToEdit,
-}: FavoriteCityCardPropsType) => {
+}: // homeLocationId,
+// setHomeLocationId,
+// setIsEditModalOpen,
+// setPlaceInfoToEdit,
+FavoriteCityCardPropsType) => {
   const [showTodaysWeather, setShowTodaysWeather] = useState(true);
+  const {
+    homeLocationId,
+    setHomeLocationId,
+    setPlaceInfoToEdit,
+    setIsEditModalOpen,
+  } = useUserFavoriteCities();
 
   const currentWeather = favoriteCityWithWeather.weather.currentConditions
     .icon as WeatherIconType;

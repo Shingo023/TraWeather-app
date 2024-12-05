@@ -6,22 +6,24 @@ import styles from "./FavoriteCityContainer.module.scss";
 import FavoriteCityDeletionSelector from "./favoriteCityDeletionSelector/FavoriteCityDeletionSelector";
 import FavoriteCityCard from "./favoriteCityCard/FavoriteCityCard";
 import React from "react";
+import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
 const FavoriteCityContainer = ({
   userId,
   favoriteCityWithWeather,
-  homeLocationId,
-  setHomeLocationId,
+  // homeLocationId,
+  // setHomeLocationId,
   handleDragStart,
   handleDrop,
   handleDragOver,
-  deleteActive,
-  setFavoriteCitiesToDelete,
-  setIsEditModalOpen,
-  setPlaceInfoToEdit,
-}: FavoriteCityContainerPropsType) => {
+}: // deleteActive,
+// setFavoriteCitiesToDelete,
+// setIsEditModalOpen,
+// setPlaceInfoToEdit,
+FavoriteCityContainerPropsType) => {
   const [isDragging, setIsDragging] = useState(false);
   const userFavoriteCityId = favoriteCityWithWeather.id;
+  const { deleteActive } = useUserFavoriteCities();
 
   return (
     <div className={styles.cityCardContainer}>
@@ -42,18 +44,18 @@ const FavoriteCityContainer = ({
         }}
       >
         <FavoriteCityDeletionSelector
-          deleteActive={deleteActive}
-          setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
+          // deleteActive={deleteActive}
+          // setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
           favoriteCityId={favoriteCityWithWeather.favoriteCityId}
         />
 
         <FavoriteCityCard
           userId={userId}
           favoriteCityWithWeather={favoriteCityWithWeather}
-          homeLocationId={homeLocationId}
-          setHomeLocationId={setHomeLocationId}
-          setIsEditModalOpen={setIsEditModalOpen}
-          setPlaceInfoToEdit={setPlaceInfoToEdit}
+          // homeLocationId={homeLocationId}
+          // setHomeLocationId={setHomeLocationId}
+          // setIsEditModalOpen={setIsEditModalOpen}
+          // setPlaceInfoToEdit={setPlaceInfoToEdit}
         />
       </div>
     </div>

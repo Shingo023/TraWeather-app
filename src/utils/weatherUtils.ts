@@ -1,4 +1,4 @@
-import { WeatherDataForForecast, WeatherHour } from "@/types";
+import { WeatherDataForForecast } from "@/types";
 import { getCurrentHourInTimeZone } from "./dateUtils";
 
 // wind speed(kph)

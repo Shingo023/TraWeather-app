@@ -157,54 +157,54 @@ export type autocompleteSuggestion = {
 export type FavoriteCityContainerPropsType = {
   userId: string | undefined;
   favoriteCityWithWeather: FavoriteCityWithWeather;
-  homeLocationId: number | null;
-  setHomeLocationId: (homeLocationId: number | null) => void;
+  // homeLocationId: number | null;
+  // setHomeLocationId: (homeLocationId: number | null) => void;
   handleDragStart: (cityId: number) => void;
   handleDrop: (targetCityId: number) => Promise<void>;
   handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
-  deleteActive: boolean;
-  setFavoriteCitiesToDelete: Dispatch<SetStateAction<number[]>>;
-  setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
-  setPlaceInfoToEdit: Dispatch<
-    SetStateAction<{
-      cityName: string;
-      userFavoriteCityId: number;
-      cityAddress: string;
-    } | null>
-  >;
+  // deleteActive: boolean;
+  // setFavoriteCitiesToDelete: Dispatch<SetStateAction<number[]>>;
+  // setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
+  // setPlaceInfoToEdit: Dispatch<
+  //   SetStateAction<{
+  //     cityName: string;
+  //     userFavoriteCityId: number;
+  //     cityAddress: string;
+  //   } | null>
+  // >;
 };
 
 export type FavoriteCityCardPropsType = {
   userId: string | undefined;
   favoriteCityWithWeather: FavoriteCityWithWeather;
-  homeLocationId: number | null;
-  setHomeLocationId: (homeLocationId: number | null) => void;
-  setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setPlaceInfoToEdit: React.Dispatch<
-    React.SetStateAction<{
-      cityName: string;
-      userFavoriteCityId: number;
-      cityAddress: string;
-    } | null>
-  >;
+  // homeLocationId: number | null;
+  // setHomeLocationId: (homeLocationId: number | null) => void;
+  // setIsEditModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  // setPlaceInfoToEdit: React.Dispatch<
+  //   React.SetStateAction<{
+  //     cityName: string;
+  //     userFavoriteCityId: number;
+  //     cityAddress: string;
+  //   } | null>
+  // >;
 };
 
 export type EditPlaceNameModalPropsType = {
-  cityName: string;
+  // cityName: string;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  userFavoriteCityId: number;
-  cityAddress: string;
-  setFavoriteCitiesWithWeather: Dispatch<
-    SetStateAction<FavoriteCityWithWeather[]>
-  >;
-  setPlaceInfoToEdit: Dispatch<
-    SetStateAction<{
-      cityName: string;
-      userFavoriteCityId: number;
-      cityAddress: string;
-    } | null>
-  >;
+  // userFavoriteCityId: number;
+  // cityAddress: string;
+  // setFavoriteCitiesWithWeather: Dispatch<
+  //   SetStateAction<FavoriteCityWithWeather[]>
+  // >;
+  // setPlaceInfoToEdit: Dispatch<
+  //   SetStateAction<{
+  //     cityName: string;
+  //     userFavoriteCityId: number;
+  //     cityAddress: string;
+  //   } | null>
+  // >;
 };
 
 export type CurrentWeatherPropsType = {

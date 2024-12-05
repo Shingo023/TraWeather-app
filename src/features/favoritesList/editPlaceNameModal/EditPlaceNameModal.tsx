@@ -5,18 +5,21 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MapPin } from "lucide-react";
 import Button from "@/app/components/elements/button/Button";
+import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
 const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
-  cityName,
+  // cityName,
   isModalOpen,
   setIsModalOpen,
-  // setPlaceNameToDisplay,
-  userFavoriteCityId,
-  cityAddress,
-  setFavoriteCitiesWithWeather,
-  setPlaceInfoToEdit,
+  // // setPlaceNameToDisplay,
+  // userFavoriteCityId,
+  // cityAddress,
+  // setFavoriteCitiesWithWeather,
+  // setPlaceInfoToEdit,
 }) => {
-  const [editedCityName, setEditedCityName] = useState(cityName);
+  // const [editedCityName, setEditedCityName] = useState(cityName);
+  const { placeInfoToEdit, setFavoriteCitiesWithWeather, setPlaceInfoToEdit } =
+    useUserFavoriteCities();
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (!isModalOpen) return null;
@@ -30,7 +33,7 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
 
     try {
       const response = await fetch(
-        `/api/user-favorite-cities?id=${userFavoriteCityId}`,
+        `/api/user-favorite-cities?id=${placeInfoToEdit?.userFavoriteCityId}`,
         {
           method: "PUT",
           headers: {
@@ -47,12 +50,12 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
       toast.success(`City name updated to ${updatedCityName}`);
       setFavoriteCitiesWithWeather((prev) => {
         return prev.map((city) =>
-          city.id === userFavoriteCityId
+          city.id === placeInfoToEdit?.userFavoriteCityId
             ? { ...city, customName: updatedCityName }
             : city
         );
       });
-      setEditedCityName(updatedCityName);
+      // setEditedCityName(updatedCityName);
       setPlaceInfoToEdit(null);
       setIsModalOpen(false);
     } catch (error) {
@@ -67,14 +70,14 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
       <form onSubmit={handleUpdatePlaceName}>
         <input
           type="text"
-          defaultValue={editedCityName}
+          defaultValue={placeInfoToEdit?.cityName}
           ref={inputRef}
           placeholder="Enter a custom place name"
           required
         />
         <div className={styles.modal__address}>
           <MapPin className={styles.modal__mapPinIcon} />
-          <p>{cityAddress}</p>
+          <p>{placeInfoToEdit?.cityAddress}</p>
         </div>
         <div className={styles.modal__buttons}>
           <Button

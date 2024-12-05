@@ -8,75 +8,87 @@ import { DeleteActionPanelType } from "@/types";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import React from "react";
+import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
-const DeleteActionPanel = ({
-  deleteActive,
-  setDeleteActive,
-  favoriteCitiesToDelete,
-  setFavoriteCitiesToDelete,
-  setLoading,
-  setFavoriteCities,
-  setFavoriteCitiesWithWeather,
-}: DeleteActionPanelType) => {
-  const { data: session } = useSession();
+const DeleteActionPanel = () =>
+  //   {
+  //   deleteActive,
+  //   setDeleteActive,
+  //   favoriteCitiesToDelete,
+  //   setFavoriteCitiesToDelete,
+  //   setLoading,
+  //   setFavoriteCities,
+  //   setFavoriteCitiesWithWeather,
+  // }: DeleteActionPanelType
+  {
+    const { data: session } = useSession();
+    const {
+      setLoading,
+      favoriteCitiesToDelete,
+      setFavoriteCitiesData,
+      setFavoriteCitiesWithWeather,
+      setFavoriteCitiesToDelete,
+      setDeleteActive,
+      deleteActive,
+    } = useUserFavoriteCities();
 
-  const deleteSelectedCities = async () => {
-    if (!session?.user?.id) return;
+    const deleteSelectedCities = async () => {
+      if (!session?.user?.id) return;
 
-    setLoading(true);
-    try {
-      await Promise.all(
-        favoriteCitiesToDelete.map((favoriteCityId) => {
-          deleteCity(session.user.id, favoriteCityId);
-        })
-      );
-
-      setFavoriteCities((prev) => {
-        return prev.filter(
-          (item) => !favoriteCitiesToDelete.includes(item.favoriteCityId)
+      setLoading(true);
+      try {
+        await Promise.all(
+          favoriteCitiesToDelete.map((favoriteCityId) => {
+            deleteCity(session.user.id, favoriteCityId);
+          })
         );
-      });
 
-      setFavoriteCitiesWithWeather((prev) => {
-        return prev.filter(
-          (item) => !favoriteCitiesToDelete.includes(item.favoriteCityId)
-        );
-      });
-      setFavoriteCitiesToDelete([]);
-      setDeleteActive(false);
-      toast.success("Selected cities have been removed from your favorites.");
-    } catch (error) {
-      console.error("Error deleting favorite cities:", error);
-      toast.error("Failed to remove selected cities from favorites.");
-    } finally {
-      setLoading(false);
-    }
+        setFavoriteCitiesData((prev) => {
+          return prev.filter(
+            (item) => !favoriteCitiesToDelete.includes(item.favoriteCityId)
+          );
+        });
+
+        setFavoriteCitiesWithWeather((prev) => {
+          return prev.filter(
+            (item) => !favoriteCitiesToDelete.includes(item.favoriteCityId)
+          );
+        });
+        setFavoriteCitiesToDelete([]);
+        setDeleteActive(false);
+        toast.success("Selected cities have been removed from your favorites.");
+      } catch (error) {
+        console.error("Error deleting favorite cities:", error);
+        toast.error("Failed to remove selected cities from favorites.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    return (
+      <div
+        className={`${styles.favoritesList__deleteButtons} ${
+          deleteActive ? styles.deleteActive : styles.deleteInactive
+        }`}
+      >
+        <Button
+          className="deleteCancel"
+          onClick={() => {
+            setDeleteActive(false);
+            setFavoriteCitiesToDelete([]);
+          }}
+          text="Cancel"
+          type="button"
+        />
+        <Button
+          className="delete"
+          onClick={deleteSelectedCities}
+          text={`Delete(${favoriteCitiesToDelete.length})`}
+          type="button"
+          isDisabled={!favoriteCitiesToDelete.length}
+        />
+      </div>
+    );
   };
-
-  return (
-    <div
-      className={`${styles.favoritesList__deleteButtons} ${
-        deleteActive ? styles.deleteActive : styles.deleteInactive
-      }`}
-    >
-      <Button
-        className="deleteCancel"
-        onClick={() => {
-          setDeleteActive(false);
-          setFavoriteCitiesToDelete([]);
-        }}
-        text="Cancel"
-        type="button"
-      />
-      <Button
-        className="delete"
-        onClick={deleteSelectedCities}
-        text={`Delete(${favoriteCitiesToDelete.length})`}
-        type="button"
-        isDisabled={!favoriteCitiesToDelete.length}
-      />
-    </div>
-  );
-};
 
 export default DeleteActionPanel;

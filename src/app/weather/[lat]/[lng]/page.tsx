@@ -10,32 +10,48 @@ import styles from "./page.module.scss";
 import TodaysHighlights from "@/features/weather/todaysHighlights/TodaysHighlights";
 import TodaysForecast from "@/features/weather/todaysForecast/TodaysForecast";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
-import { fetchDisplayedCityWeatherData } from "@/utils/apiHelper";
+import {
+  fetchDisplayedCityWeatherData,
+  fetchFavoriteCities,
+} from "@/utils/apiHelper";
 import ErrorMessage from "@/app/components/elements/errorMessage/ErrorMessage";
+import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
 export default function WeatherPage() {
   const { lat, lng } = useParams();
+  const latitude = Number(lat);
+  const longitude = Number(lng);
   const { updateWeatherStates } = useDisplayedCityWeather();
+  const { setFavoriteCitiesData } = useUserFavoriteCities();
   const router = useRouter();
   const { data: session } = useSession();
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
 
+  const fetchWeatherData = async (lat: number, lng: number) => {
+    try {
+      const weatherData = await fetchDisplayedCityWeatherData(lat, lng);
+      updateWeatherStates(weatherData);
+      console.log(weatherData);
+    } catch (error) {
+      setErrorMessage("Failed to load weather data for the displayed city");
+    }
+  };
+
+  const fetchFavoriteCitiesData = async (userId: string) => {
+    try {
+      const favoriteCitiesData = await fetchFavoriteCities(userId);
+      setFavoriteCitiesData(favoriteCitiesData);
+    } catch (error) {
+      console.error("Error fetching favorite cities:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchWeatherData = async () => {
-      if (!session?.user.id || !lat || !lng) return;
-      try {
-        const weatherData = await fetchDisplayedCityWeatherData(
-          Number(lat),
-          Number(lng)
-        );
-        updateWeatherStates(weatherData);
-      } catch (error) {
-        setErrorMessage("Failed to load weather data for the displayed city");
-      }
-    };
-    fetchWeatherData();
+    if (!latitude || !longitude || !session?.user.id) return;
+    fetchWeatherData(latitude, longitude);
+    fetchFavoriteCitiesData(session?.user.id);
   }, [lat, lng, session?.user.id]);
 
   useEffect(() => {
