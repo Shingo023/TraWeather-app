@@ -13,16 +13,23 @@ import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 const StarIcon = () => {
   const { data: session } = useSession();
   const { lat, lng } = useParams();
+  const latitude = Number(lat);
+  const longitude = Number(lng);
   const searchParams = useSearchParams();
   const cityToDisplay = searchParams.get("place");
   const address = searchParams.get("address");
   const placeId = searchParams.get("id");
 
-  const { favoriteCitiesPlaceIds, setFavoriteCitiesPlaceIds } =
-    useUserFavoriteCities();
+  const {
+    favoriteCitiesPlaceIds,
+    setFavoriteCitiesPlaceIds,
+    setFavoriteCitiesData,
+  } = useUserFavoriteCities();
   const { timezone } = useDisplayedCityWeather();
 
-  const updateFavoriteCities = (placeId: string, add: boolean) => {
+  const updateFavoriteCities = (add: boolean) => {
+    if (!placeId || !cityToDisplay || !address) return;
+
     setFavoriteCitiesPlaceIds((prev) =>
       add ? [...prev, placeId] : prev.filter((id) => id !== placeId)
     );
@@ -36,7 +43,7 @@ const StarIcon = () => {
 
     if (!placeId) return;
 
-    updateFavoriteCities(placeId, true);
+    updateFavoriteCities(true);
 
     const newCity = {
       cityName: cityToDisplay,
@@ -82,14 +89,20 @@ const StarIcon = () => {
       );
 
       if (!addUserFavoriteCityResponse.ok) {
-        updateFavoriteCities(placeId, false);
+        updateFavoriteCities(false);
         throw new Error("Failed to add city to favorites");
       }
 
       toast.success(`${cityToDisplay} has been added to your favorite cities!`);
+      const { userFavoriteCity } = await addUserFavoriteCityResponse.json();
+      setFavoriteCitiesData((prev) => [
+        ...prev,
+        { ...userFavoriteCity, address, latitude, longitude },
+      ]);
+      console.log(userFavoriteCity);
     } catch (error) {
       console.error("Error bookmarking the city:", error);
-      updateFavoriteCities(placeId, false);
+      updateFavoriteCities(false);
       toast.error(`Failed to add ${cityToDisplay} to favorites.`);
     }
   };
@@ -102,7 +115,7 @@ const StarIcon = () => {
 
     if (!placeId) return;
 
-    updateFavoriteCities(placeId, false);
+    updateFavoriteCities(false);
 
     try {
       // First, get the favoriteCityId for the current city (using placeId)
@@ -122,14 +135,18 @@ const StarIcon = () => {
       });
 
       if (!response.ok) {
-        updateFavoriteCities(placeId, true);
+        updateFavoriteCities(true);
         throw new Error("Failed to remove city from favorites");
       }
 
       toast.success(`${cityToDisplay} has been removed from your favorites.`);
+      setFavoriteCitiesData((prev) =>
+        prev.filter((city) => city.favoriteCityId !== Number(favoriteCityId))
+      );
+      console.log(favoriteCityId);
     } catch (error) {
       console.error("Error unbookmarking the city:", error);
-      updateFavoriteCities(placeId, true);
+      updateFavoriteCities(true);
       toast.error(`Failed to remove ${cityToDisplay} from favorites.`);
     }
   };

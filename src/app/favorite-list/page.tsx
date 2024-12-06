@@ -18,9 +18,9 @@ const FavoriteList = () => {
     favoriteCitiesData,
     favoriteCitiesWithWeather,
     setFavoriteCitiesWithWeather,
-    setHomeLocationId,
     fetchWeatherData,
     loading,
+    setLoading,
     isEditModalOpen,
     setIsEditModalOpen,
   } = useUserFavoriteCities();
@@ -28,7 +28,8 @@ const FavoriteList = () => {
 
   useEffect(() => {
     if (!session?.user?.id || !favoriteCitiesData) return;
-    fetchWeatherData();
+    setLoading(true);
+    fetchWeatherData(favoriteCitiesData);
   }, [session?.user?.id, favoriteCitiesData]);
 
   // Handle drag events

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import styles from "./page.module.scss";
 import { fetchDefaultCity, fetchLocationDetails } from "@/utils/apiHelper";
+import { DefaultCityType, LocationDetailsType } from "@/types";
 
 export default function Home() {
   const router = useRouter();
@@ -25,10 +26,8 @@ export default function Home() {
         const { latitude, longitude } = position.coords;
 
         try {
-          const locationDetails = await fetchLocationDetails(
-            latitude,
-            longitude
-          );
+          const locationDetails: LocationDetailsType =
+            await fetchLocationDetails(latitude, longitude);
           router.push(
             `/weather/${latitude}/${longitude}?place=${encodeURIComponent(
               locationDetails.cityName
@@ -64,7 +63,7 @@ export default function Home() {
 
   const fetchDefaultCityAndRedirect = async (userId: string) => {
     try {
-      const defaultCityData = await fetchDefaultCity(userId);
+      const defaultCityData: DefaultCityType = await fetchDefaultCity(userId);
 
       if (defaultCityData) {
         const { latitude, longitude, customName, address, placeId } =

@@ -22,7 +22,6 @@ export default function WeatherPage() {
   const latitude = Number(lat);
   const longitude = Number(lng);
   const { updateWeatherStates } = useDisplayedCityWeather();
-  const { setFavoriteCitiesData } = useUserFavoriteCities();
   const router = useRouter();
   const { data: session } = useSession();
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
@@ -39,20 +38,10 @@ export default function WeatherPage() {
     }
   };
 
-  const fetchFavoriteCitiesData = async (userId: string) => {
-    try {
-      const favoriteCitiesData = await fetchFavoriteCities(userId);
-      setFavoriteCitiesData(favoriteCitiesData);
-    } catch (error) {
-      console.error("Error fetching favorite cities:", error);
-    }
-  };
-
   useEffect(() => {
-    if (!latitude || !longitude || !session?.user.id) return;
+    if (!latitude || !longitude) return;
     fetchWeatherData(latitude, longitude);
-    fetchFavoriteCitiesData(session?.user.id);
-  }, [lat, lng, session?.user.id]);
+  }, [lat, lng]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

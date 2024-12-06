@@ -6,6 +6,8 @@ import {
   UserFavoriteCity,
   WeatherDataForFavoritesList,
 } from "@/types";
+import { fetchFavoriteCities } from "@/utils/apiHelper";
+import { useSession } from "next-auth/react";
 import {
   createContext,
   Dispatch,
@@ -42,7 +44,7 @@ interface UserFavoriteCitiesContextType {
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
 
-  fetchWeatherData: () => Promise<void>;
+  fetchWeatherData: (favoriteCities: UserFavoriteCity[]) => Promise<void>;
 }
 
 // Create the context with default values
@@ -73,12 +75,16 @@ export const UserFavoriteCitiesProvider = ({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [placeInfoToEdit, setPlaceInfoToEdit] =
     useState<PlaceInfoToEditType | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
-  const fetchWeatherData = async () => {
+  const { data: session } = useSession();
+
+  const fetchWeatherData = async (favoriteCities: UserFavoriteCity[]) => {
     try {
+      setLoading(true);
+
       const favoriteCitiesWithWeatherData = await Promise.all(
-        favoriteCitiesData.map(async (userFavoriteCity: UserFavoriteCity) => {
+        favoriteCities.map(async (userFavoriteCity: UserFavoriteCity) => {
           if (userFavoriteCity.isDefaultCity) {
             setHomeLocationId(userFavoriteCity.id);
           }
@@ -110,9 +116,23 @@ export const UserFavoriteCitiesProvider = ({
   };
 
   useEffect(() => {
-    const placeIds = favoriteCitiesData.map((city) => city.placeId);
-    setFavoriteCitiesPlaceIds(placeIds);
-  }, [favoriteCitiesData]);
+    const fetchAndSetFavoriteCities = async () => {
+      if (!session?.user?.id) return;
+      try {
+        const userFavoriteCities = await fetchFavoriteCities(session.user.id);
+        setFavoriteCitiesData(userFavoriteCities);
+        console.log(userFavoriteCities);
+        const placeIds = userFavoriteCities.map(
+          (city: UserFavoriteCity) => city.placeId
+        );
+        setFavoriteCitiesPlaceIds(placeIds);
+      } catch (error) {
+        console.error("Error fetching favorite cities:", error);
+      }
+    };
+
+    fetchAndSetFavoriteCities();
+  }, [session?.user?.id]);
 
   return (
     <UserFavoriteCitiesContext.Provider

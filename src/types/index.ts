@@ -146,6 +146,12 @@ export type LocationDetails = {
   place_id: string;
 };
 
+export type LocationDetailsType = {
+  cityName: string;
+  address: string;
+  placeId: string;
+};
+
 export type autocompleteSuggestion = {
   place_id: string;
   description: string;
@@ -243,4 +249,12 @@ export type DeleteActionPanelType = {
   setFavoriteCitiesWithWeather: Dispatch<
     SetStateAction<FavoriteCityWithWeather[]>
   >;
+};
+
+export type DefaultCityType = {
+  customName: string;
+  latitude: number;
+  longitude: number;
+  address: string;
+  placeId: string;
 };
