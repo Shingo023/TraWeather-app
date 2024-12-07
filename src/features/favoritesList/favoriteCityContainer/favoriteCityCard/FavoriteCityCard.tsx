@@ -3,8 +3,7 @@
 import { FavoriteCityCardPropsType, WeatherIconType } from "@/types";
 import styles from "./FavoriteCityCard.module.scss";
 import { backgroundMapping, iconMapping } from "@/utils/weatherIconMapping";
-import { ExternalLink, Pencil } from "lucide-react";
-
+import { ExternalLink } from "lucide-react";
 import { useMemo, useState } from "react";
 import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
@@ -12,21 +11,15 @@ import Button from "@/app/components/elements/button/Button";
 import WeatherForecast from "./weatherForecast/WeatherForecast";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 import { useRouter } from "next/navigation";
-import ToolTip from "@/app/components/elements/toolTip/ToolTip";
 import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 import HomeLocationIcon from "./homeLocationIcon/HomeLocationIcon";
+import PlaceNameEditor from "./placeNameEditor/PlaceNameEditor";
 
 const FavoriteCityCard = ({
   userId,
   favoriteCityWithWeather,
 }: FavoriteCityCardPropsType) => {
   const [showTodaysWeather, setShowTodaysWeather] = useState(true);
-  const {
-    homeLocationId,
-    setHomeLocationId,
-    setPlaceInfoToEdit,
-    setIsEditModalOpen,
-  } = useUserFavoriteCities();
 
   const currentWeather = favoriteCityWithWeather.weather.currentConditions
     .icon as WeatherIconType;
@@ -103,26 +96,11 @@ const FavoriteCityCard = ({
           />
           <div className={styles.cityCard__cityName}>{cityName}</div>
 
-          <div
-            className={styles.cityCard__editIconContainer}
-            onClick={(event) => {
-              event.stopPropagation();
-              const placeInfoToEdit = {
-                cityName,
-                userFavoriteCityId,
-                cityAddress,
-              };
-              setPlaceInfoToEdit(placeInfoToEdit);
-              setIsEditModalOpen(true);
-            }}
-          >
-            <div className={styles.cityCard__editIcon}>
-              <Pencil width={20} height={20} />
-            </div>
-            <div className={styles.cityCard__tooltip}>
-              <ToolTip message="Edit Place Name" width={130} />
-            </div>
-          </div>
+          <PlaceNameEditor
+            cityName={cityName}
+            userFavoriteCityId={userFavoriteCityId}
+            cityAddress={cityAddress}
+          />
         </div>
 
         <div className={styles.cityCard__forecastToggle}>

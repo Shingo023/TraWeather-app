@@ -11,8 +11,12 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
   isModalOpen,
   setIsModalOpen,
 }) => {
-  const { placeInfoToEdit, setFavoriteCitiesWithWeather, setPlaceInfoToEdit } =
-    useUserFavoriteCities();
+  const {
+    placeInfoToEdit,
+    setFavoriteCitiesWithWeather,
+    setPlaceInfoToEdit,
+    setFavoriteCitiesData,
+  } = useUserFavoriteCities();
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (!isModalOpen) return null;
@@ -42,6 +46,13 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
 
       toast.success(`City name updated to ${updatedCityName}`);
       setFavoriteCitiesWithWeather((prev) => {
+        return prev.map((city) =>
+          city.id === placeInfoToEdit?.userFavoriteCityId
+            ? { ...city, customName: updatedCityName }
+            : city
+        );
+      });
+      setFavoriteCitiesData((prev) => {
         return prev.map((city) =>
           city.id === placeInfoToEdit?.userFavoriteCityId
             ? { ...city, customName: updatedCityName }
