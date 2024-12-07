@@ -44,7 +44,6 @@ interface UserFavoriteCitiesContextType {
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
 
-  // fetchWeatherData: (favoriteCities: UserFavoriteCity[]) => Promise<void>;
   fetchWeatherData: () => Promise<void>;
 
   favoriteCitiesReady: boolean;
@@ -52,6 +51,8 @@ interface UserFavoriteCitiesContextType {
 
   weatherFetched: boolean;
   setWeatherFetched: Dispatch<SetStateAction<boolean>>;
+  draggedCityId: number | null;
+  setDraggedCityId: Dispatch<SetStateAction<number | null>>;
 }
 
 // Create the context with default values
@@ -84,6 +85,7 @@ export const UserFavoriteCitiesProvider = ({
     useState<PlaceInfoToEditType | null>(null);
   const [favoriteCitiesReady, setFavoriteCitiesReady] = useState(false);
   const [weatherFetched, setWeatherFetched] = useState(false);
+  const [draggedCityId, setDraggedCityId] = useState<number | null>(null);
 
   const [loading, setLoading] = useState(true);
 
@@ -120,6 +122,7 @@ export const UserFavoriteCitiesProvider = ({
         );
 
       setFavoriteCitiesWithWeather(sortedFavoriteCitiesWithWeather);
+      setWeatherFetched(true);
     } catch (error) {
       console.error("Error fetching weather data of favorite cities:", error);
     } finally {
@@ -178,6 +181,8 @@ export const UserFavoriteCitiesProvider = ({
         setFavoriteCitiesReady,
         weatherFetched,
         setWeatherFetched,
+        draggedCityId,
+        setDraggedCityId,
       }}
     >
       {children}

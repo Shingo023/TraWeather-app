@@ -30,7 +30,7 @@ const FavoritesListHeader = () => {
       <div
         className={styles.favoritesList__iconContainer}
         onClick={() => {
-          if (!session?.user?.id) return;
+          if (!session?.user?.id || !Array.isArray(favoriteCitiesData)) return;
 
           setLoading(true);
           fetchWeatherData();

@@ -66,3 +66,26 @@ export const fetchLocationDetails = async (
   }
   return data;
 };
+
+// Save the new order to the database
+export const saveNewFavoriteCitiesOrder = async (
+  userId: string | undefined,
+  cityOrder: number[]
+) => {
+  const response = await fetch(`/api/update-favorite-cities-order`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+      cityOrder,
+    }),
+  });
+  if (!response.ok) {
+    throw new Error("Failed to save new order of favorite cities.");
+    console.error("Request failed with status:", response.status);
+  }
+  const data = await response.json();
+  return data;
+};
