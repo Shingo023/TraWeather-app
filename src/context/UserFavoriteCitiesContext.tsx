@@ -44,7 +44,14 @@ interface UserFavoriteCitiesContextType {
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
 
-  fetchWeatherData: (favoriteCities: UserFavoriteCity[]) => Promise<void>;
+  // fetchWeatherData: (favoriteCities: UserFavoriteCity[]) => Promise<void>;
+  fetchWeatherData: () => Promise<void>;
+
+  favoriteCitiesReady: boolean;
+  setFavoriteCitiesReady: Dispatch<SetStateAction<boolean>>;
+
+  weatherFetched: boolean;
+  setWeatherFetched: Dispatch<SetStateAction<boolean>>;
 }
 
 // Create the context with default values
@@ -75,16 +82,21 @@ export const UserFavoriteCitiesProvider = ({
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [placeInfoToEdit, setPlaceInfoToEdit] =
     useState<PlaceInfoToEditType | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [favoriteCitiesReady, setFavoriteCitiesReady] = useState(false);
+  const [weatherFetched, setWeatherFetched] = useState(false);
+
+  const [loading, setLoading] = useState(true);
 
   const { data: session } = useSession();
 
-  const fetchWeatherData = async (favoriteCities: UserFavoriteCity[]) => {
+  const fetchWeatherData = async () => {
+    if (!Array.isArray(favoriteCitiesData)) {
+      console.error("favoriteCitiesData is not an array");
+      return;
+    }
     try {
-      setLoading(true);
-
       const favoriteCitiesWithWeatherData = await Promise.all(
-        favoriteCities.map(async (userFavoriteCity: UserFavoriteCity) => {
+        favoriteCitiesData.map(async (userFavoriteCity: UserFavoriteCity) => {
           if (userFavoriteCity.isDefaultCity) {
             setHomeLocationId(userFavoriteCity.id);
           }
@@ -120,7 +132,13 @@ export const UserFavoriteCitiesProvider = ({
       if (!session?.user?.id) return;
       try {
         const userFavoriteCities = await fetchFavoriteCities(session.user.id);
+
+        if (!Array.isArray(userFavoriteCities)) {
+          console.error("There are no favorite cities.");
+          return;
+        }
         setFavoriteCitiesData(userFavoriteCities);
+        setFavoriteCitiesReady(true);
         console.log(userFavoriteCities);
         const placeIds = userFavoriteCities.map(
           (city: UserFavoriteCity) => city.placeId
@@ -156,6 +174,10 @@ export const UserFavoriteCitiesProvider = ({
         loading,
         setLoading,
         fetchWeatherData,
+        favoriteCitiesReady,
+        setFavoriteCitiesReady,
+        weatherFetched,
+        setWeatherFetched,
       }}
     >
       {children}

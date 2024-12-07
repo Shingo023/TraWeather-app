@@ -99,7 +99,6 @@ const StarIcon = () => {
         ...prev,
         { ...userFavoriteCity, address, latitude, longitude },
       ]);
-      console.log(userFavoriteCity);
     } catch (error) {
       console.error("Error bookmarking the city:", error);
       updateFavoriteCities(false);
@@ -143,7 +142,6 @@ const StarIcon = () => {
       setFavoriteCitiesData((prev) =>
         prev.filter((city) => city.favoriteCityId !== Number(favoriteCityId))
       );
-      console.log(favoriteCityId);
     } catch (error) {
       console.error("Error unbookmarking the city:", error);
       updateFavoriteCities(true);

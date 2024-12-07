@@ -1,0 +1,29 @@
+.cityCard {
+  &__homeIconContainer {
+    position: relative;
+  }
+  &__homeIcon {
+    height: 30px;
+    width: 30px;
+    transition: all 0.3s ease; 
+    color: #e2e2ed;
+    &:hover {
+      cursor: pointer; 
+      color: rgba(0, 0, 255, 0.4);
+      /* Make the tooltip visible when the icon is hovered */
+      + .cityCard__tooltip {
+        visibility: visible;
+        opacity: 1; 
+      }
+    }
+    &.homeIconActive {
+      color: rgba(0, 0, 255, 1);
+    }
+  }
+  &__tooltip {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+}
+

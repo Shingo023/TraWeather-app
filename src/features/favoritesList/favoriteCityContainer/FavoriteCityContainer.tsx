@@ -11,16 +11,10 @@ import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 const FavoriteCityContainer = ({
   userId,
   favoriteCityWithWeather,
-  // homeLocationId,
-  // setHomeLocationId,
   handleDragStart,
   handleDrop,
   handleDragOver,
-}: // deleteActive,
-// setFavoriteCitiesToDelete,
-// setIsEditModalOpen,
-// setPlaceInfoToEdit,
-FavoriteCityContainerPropsType) => {
+}: FavoriteCityContainerPropsType) => {
   const [isDragging, setIsDragging] = useState(false);
   const userFavoriteCityId = favoriteCityWithWeather.id;
   const { deleteActive } = useUserFavoriteCities();
@@ -44,18 +38,12 @@ FavoriteCityContainerPropsType) => {
         }}
       >
         <FavoriteCityDeletionSelector
-          // deleteActive={deleteActive}
-          // setFavoriteCitiesToDelete={setFavoriteCitiesToDelete}
           favoriteCityId={favoriteCityWithWeather.favoriteCityId}
         />
 
         <FavoriteCityCard
           userId={userId}
           favoriteCityWithWeather={favoriteCityWithWeather}
-          // homeLocationId={homeLocationId}
-          // setHomeLocationId={setHomeLocationId}
-          // setIsEditModalOpen={setIsEditModalOpen}
-          // setPlaceInfoToEdit={setPlaceInfoToEdit}
         />
       </div>
     </div>

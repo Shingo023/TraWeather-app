@@ -10,12 +10,8 @@ import styles from "./page.module.scss";
 import TodaysHighlights from "@/features/weather/todaysHighlights/TodaysHighlights";
 import TodaysForecast from "@/features/weather/todaysForecast/TodaysForecast";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
-import {
-  fetchDisplayedCityWeatherData,
-  fetchFavoriteCities,
-} from "@/utils/apiHelper";
+import { fetchDisplayedCityWeatherData } from "@/utils/apiHelper";
 import ErrorMessage from "@/app/components/elements/errorMessage/ErrorMessage";
-import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
 export default function WeatherPage() {
   const { lat, lng } = useParams();

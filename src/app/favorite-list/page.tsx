@@ -16,6 +16,7 @@ const FavoriteList = () => {
 
   const {
     favoriteCitiesData,
+    setFavoriteCitiesData,
     favoriteCitiesWithWeather,
     setFavoriteCitiesWithWeather,
     fetchWeatherData,
@@ -23,14 +24,24 @@ const FavoriteList = () => {
     setLoading,
     isEditModalOpen,
     setIsEditModalOpen,
+    favoriteCitiesReady,
+    weatherFetched,
+    setWeatherFetched,
   } = useUserFavoriteCities();
   const { data: session } = useSession();
 
   useEffect(() => {
-    if (!session?.user?.id || !favoriteCitiesData) return;
-    setLoading(true);
-    fetchWeatherData(favoriteCitiesData);
-  }, [session?.user?.id, favoriteCitiesData]);
+    // setLoading(true);
+    if (
+      !session?.user?.id ||
+      !Array.isArray(favoriteCitiesData) ||
+      weatherFetched
+    )
+      return;
+
+    fetchWeatherData();
+    setWeatherFetched(true);
+  }, [session?.user?.id, favoriteCitiesReady]);
 
   // Handle drag events
   const handleDragStart = useCallback((userFavoriteCityId: number) => {
@@ -45,19 +56,22 @@ const FavoriteList = () => {
     async (targetUserFavoriteCityId: number) => {
       if (draggedCityId === null) return;
 
-      const updatedCities = [...favoriteCitiesWithWeather];
-      const draggedCityIndex = updatedCities.findIndex(
+      const updatedCitiesWithWeather = [...favoriteCitiesWithWeather];
+      const draggedCityIndex = updatedCitiesWithWeather.findIndex(
         (city) => city.id === draggedCityId
       );
-      const targetCityIndex = updatedCities.findIndex(
+      const targetCityIndex = updatedCitiesWithWeather.findIndex(
         (city) => city.id === targetUserFavoriteCityId
       );
 
       // Reorder the cities
-      const [draggedCity] = updatedCities.splice(draggedCityIndex, 1);
-      updatedCities.splice(targetCityIndex, 0, draggedCity);
+      const [draggedCity] = updatedCitiesWithWeather.splice(
+        draggedCityIndex,
+        1
+      );
+      updatedCitiesWithWeather.splice(targetCityIndex, 0, draggedCity);
 
-      setFavoriteCitiesWithWeather(updatedCities);
+      setFavoriteCitiesWithWeather(updatedCitiesWithWeather);
       setDraggedCityId(null);
 
       // Save the new order to the database
@@ -68,7 +82,7 @@ const FavoriteList = () => {
         },
         body: JSON.stringify({
           userId: session?.user.id,
-          cityOrder: updatedCities.map((city) => city.id),
+          cityOrder: updatedCitiesWithWeather.map((city) => city.id),
         }),
       });
 
@@ -77,6 +91,7 @@ const FavoriteList = () => {
       } else {
         try {
           const data = await response.json();
+          setFavoriteCitiesData(data);
         } catch (error) {
           console.error("Error parsing JSON:", error);
         }

@@ -86,7 +86,9 @@ export async function PUT(req: Request) {
     });
 
     return NextResponse.json(
-      { message: "Default city updated successfully" },
+      {
+        message: "Default city updated successfully",
+      },
       { status: 200 }
     );
   } catch (error) {

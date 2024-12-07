@@ -4,8 +4,7 @@ import { FavoriteCityCardPropsType, WeatherIconType } from "@/types";
 import styles from "./FavoriteCityCard.module.scss";
 import { backgroundMapping, iconMapping } from "@/utils/weatherIconMapping";
 import { ExternalLink, Pencil } from "lucide-react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import { useMemo, useState } from "react";
 import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
@@ -13,18 +12,14 @@ import Button from "@/app/components/elements/button/Button";
 import WeatherForecast from "./weatherForecast/WeatherForecast";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 import { useRouter } from "next/navigation";
-import { MapPinIcon } from "@heroicons/react/24/solid";
 import ToolTip from "@/app/components/elements/toolTip/ToolTip";
 import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
+import HomeLocationIcon from "./homeLocationIcon/HomeLocationIcon";
 
 const FavoriteCityCard = ({
   userId,
   favoriteCityWithWeather,
-}: // homeLocationId,
-// setHomeLocationId,
-// setIsEditModalOpen,
-// setPlaceInfoToEdit,
-FavoriteCityCardPropsType) => {
+}: FavoriteCityCardPropsType) => {
   const [showTodaysWeather, setShowTodaysWeather] = useState(true);
   const {
     homeLocationId,
@@ -46,6 +41,7 @@ FavoriteCityCardPropsType) => {
   const cityLng = favoriteCityWithWeather.longitude;
   const cityAddress = favoriteCityWithWeather.address;
   const cityPlaceId = favoriteCityWithWeather.placeId;
+
   const todaysWeather = favoriteCityWithWeather.weather.days[0].hours;
   const tomorrowsWeather = favoriteCityWithWeather.weather.days[1].hours;
   const weeklyWeather = favoriteCityWithWeather.weather.weeklyWeather;
@@ -64,58 +60,6 @@ FavoriteCityCardPropsType) => {
   );
 
   const router = useRouter();
-
-  // Functions
-  const updateHomeLocationApi = async (body: any) => {
-    const response = await fetch(`/api/users/${userId}/default-city`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to update default city");
-    }
-    return response;
-  };
-
-  const updateHomeLocation = async (newHomeLocationId: number | null) => {
-    try {
-      await updateHomeLocationApi({
-        currentHomeLocationId: homeLocationId,
-        newHomeLocationId,
-      });
-      setHomeLocationId(newHomeLocationId);
-      toast.success(
-        `${cityName} has been successfully set as the home location.`
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const unsetHomeLocation = async () => {
-    try {
-      await updateHomeLocationApi({
-        currentHomeLocationId: homeLocationId,
-      });
-      setHomeLocationId(null);
-      toast.success(`${cityName} has been unset as the home location.`);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleIconClick = (event: React.MouseEvent<SVGSVGElement>) => {
-    event.stopPropagation();
-    if (userFavoriteCityId === homeLocationId) {
-      unsetHomeLocation();
-    } else {
-      updateHomeLocation(userFavoriteCityId);
-    }
-  };
 
   const handleWeatherInfoClick = () => {
     router.push(
@@ -152,26 +96,11 @@ FavoriteCityCardPropsType) => {
     >
       <div className={styles.cityCard__header}>
         <div className={styles.cityCard__cityInfo}>
-          <div className={styles.cityCard__homeIconContainer}>
-            <MapPinIcon
-              className={`${styles.cityCard__homeIcon} ${
-                userFavoriteCityId === homeLocationId
-                  ? styles.homeIconActive
-                  : ""
-              }`}
-              onClick={handleIconClick}
-            />
-            <div className={styles.cityCard__tooltip}>
-              <ToolTip
-                message={
-                  userFavoriteCityId === homeLocationId
-                    ? "Unset home location"
-                    : "Set as home location"
-                }
-                width={110}
-              />
-            </div>
-          </div>
+          <HomeLocationIcon
+            cityName={cityName}
+            userFavoriteCityId={userFavoriteCityId}
+            userId={userId}
+          />
           <div className={styles.cityCard__cityName}>{cityName}</div>
 
           <div

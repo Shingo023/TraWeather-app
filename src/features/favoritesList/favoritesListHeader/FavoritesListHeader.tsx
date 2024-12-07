@@ -1,10 +1,8 @@
 "use client";
 
-import { Dispatch, SetStateAction } from "react";
 import styles from "./FavoritesListHeader.module.scss";
 import { RotateCw, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { UserFavoriteCity } from "@/types";
 import React from "react";
 import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
@@ -35,7 +33,7 @@ const FavoritesListHeader = () => {
           if (!session?.user?.id) return;
 
           setLoading(true);
-          fetchWeatherData(favoriteCitiesData!);
+          fetchWeatherData();
         }}
       >
         <RotateCw className={styles.favoritesList__icon} />
