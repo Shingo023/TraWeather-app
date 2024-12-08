@@ -163,9 +163,6 @@ export type autocompleteSuggestion = {
 export type FavoriteCityContainerPropsType = {
   userId: string | undefined;
   favoriteCityWithWeather: FavoriteCityWithWeather;
-  // handleDragStart: (cityId: number) => void;
-  // handleDrop: (targetCityId: number) => Promise<void>;
-  // handleDragOver: (e: React.DragEvent<HTMLDivElement>) => void;
 };
 
 export type FavoriteCityCardPropsType = {

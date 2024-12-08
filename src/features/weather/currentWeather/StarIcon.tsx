@@ -24,8 +24,9 @@ const StarIcon = () => {
     favoriteCitiesPlaceIds,
     setFavoriteCitiesPlaceIds,
     setFavoriteCitiesData,
+    setFavoriteCitiesWithWeather,
   } = useUserFavoriteCities();
-  const { timezone } = useDisplayedCityWeather();
+  const { timezone, displayedCityWeather } = useDisplayedCityWeather();
 
   const updateFavoriteCities = (add: boolean) => {
     if (!placeId || !cityToDisplay || !address) return;
@@ -33,6 +34,7 @@ const StarIcon = () => {
     setFavoriteCitiesPlaceIds((prev) =>
       add ? [...prev, placeId] : prev.filter((id) => id !== placeId)
     );
+    console.log(favoriteCitiesPlaceIds);
   };
 
   const bookmarkCity = async () => {
@@ -95,10 +97,23 @@ const StarIcon = () => {
 
       toast.success(`${cityToDisplay} has been added to your favorite cities!`);
       const { userFavoriteCity } = await addUserFavoriteCityResponse.json();
-      setFavoriteCitiesData((prev) => [
+      const newUserFavoriteCity = {
+        ...userFavoriteCity,
+        address,
+        latitude,
+        longitude,
+        placeId,
+      };
+      setFavoriteCitiesData((prev) => [...prev, newUserFavoriteCity]);
+      const newUserFavoriteCityWithWeather = {
+        ...newUserFavoriteCity,
+        weather: displayedCityWeather,
+      };
+      setFavoriteCitiesWithWeather((prev) => [
         ...prev,
-        { ...userFavoriteCity, address, latitude, longitude },
+        newUserFavoriteCityWithWeather,
       ]);
+      console.log(newUserFavoriteCityWithWeather);
     } catch (error) {
       console.error("Error bookmarking the city:", error);
       updateFavoriteCities(false);
@@ -140,6 +155,9 @@ const StarIcon = () => {
 
       toast.success(`${cityToDisplay} has been removed from your favorites.`);
       setFavoriteCitiesData((prev) =>
+        prev.filter((city) => city.favoriteCityId !== Number(favoriteCityId))
+      );
+      setFavoriteCitiesWithWeather((prev) =>
         prev.filter((city) => city.favoriteCityId !== Number(favoriteCityId))
       );
     } catch (error) {

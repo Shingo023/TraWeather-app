@@ -64,8 +64,15 @@ export async function POST(request: Request) {
         displayOrder: userFavoriteCitiesCount + 1,
       },
     });
+
+    // Destructure to exclude `userId`
+    const { userId: _, ...filteredUserFavoriteCity } = userFavoriteCity;
+
     return NextResponse.json(
-      { userFavoriteCity, message: "City has been added to your favorites!" },
+      {
+        userFavoriteCity: filteredUserFavoriteCity,
+        message: "City has been added to your favorites!",
+      },
       { status: 200 }
     );
   } catch (error) {
