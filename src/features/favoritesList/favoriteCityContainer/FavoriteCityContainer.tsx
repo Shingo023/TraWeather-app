@@ -91,6 +91,7 @@ const FavoriteCityContainer = ({
       >
         <FavoriteCityDeletionSelector
           favoriteCityId={favoriteCityWithWeather.favoriteCityId}
+          // userFavoriteCityId={favoriteCityWithWeather.id}
         />
 
         <FavoriteCityCard

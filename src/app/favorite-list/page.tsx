@@ -43,7 +43,7 @@ const FavoriteList = () => {
       <div className={styles.favoritesList__favoritesContainer}>
         {loading ? (
           <div className={styles.favoritesList}>
-            {Array(4)
+            {Array(favoriteCitiesData?.length ?? 0)
               .fill(null)
               .map((_, index) => (
                 <FavoriteCityCardSkeleton key={index} />

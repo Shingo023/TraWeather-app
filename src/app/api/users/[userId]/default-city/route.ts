@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { PrismaClient } from "@prisma/client";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { Prisma } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -70,10 +71,23 @@ export async function PUT(req: Request) {
     await prisma.$transaction(async (prisma) => {
       // Step 1: Set the old default city to isDefault: false (if provided)
       if (currentHomeLocationId) {
-        await prisma.userFavoriteCity.update({
-          where: { id: Number(currentHomeLocationId) },
-          data: { isDefault: false },
-        });
+        try {
+          await prisma.userFavoriteCity.update({
+            where: { id: Number(currentHomeLocationId) },
+            data: { isDefault: false },
+          });
+        } catch (error) {
+          if (
+            error instanceof Prisma.PrismaClientKnownRequestError &&
+            error.code !== "P2025"
+          ) {
+            // 'P2025' is the code for "Record not found"
+            throw error; // If it's a different error, rethrow it
+          }
+          console.error(
+            `City with ID ${currentHomeLocationId} not found; skipping update.`
+          );
+        }
       }
 
       // Step 2: Set the new default city to isDefault: true

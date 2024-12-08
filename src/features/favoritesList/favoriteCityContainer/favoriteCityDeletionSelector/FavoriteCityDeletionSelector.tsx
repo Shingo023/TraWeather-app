@@ -6,12 +6,8 @@ import { useEffect, useState } from "react";
 import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
 const FavoriteCityDeletionSelector = ({
-  //   deleteActive,
-  //   setFavoriteCitiesToDelete,
   favoriteCityId,
 }: {
-  //   deleteActive: boolean;
-  //   setFavoriteCitiesToDelete: React.Dispatch<React.SetStateAction<number[]>>;
   favoriteCityId: number;
 }) => {
   const [isChecked, setIsChecked] = useState(false);

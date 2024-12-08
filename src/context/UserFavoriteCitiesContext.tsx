@@ -35,8 +35,10 @@ interface UserFavoriteCitiesContextType {
 
   deleteActive: boolean;
   setDeleteActive: Dispatch<SetStateAction<boolean>>;
+
   favoriteCitiesToDelete: number[];
   setFavoriteCitiesToDelete: Dispatch<SetStateAction<number[]>>;
+
   isEditModalOpen: boolean;
   setIsEditModalOpen: Dispatch<SetStateAction<boolean>>;
   placeInfoToEdit: PlaceInfoToEditType | null;
@@ -80,6 +82,7 @@ export const UserFavoriteCitiesProvider = ({
   const [favoriteCitiesToDelete, setFavoriteCitiesToDelete] = useState<
     number[]
   >([]); // favoriteCityIds
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [placeInfoToEdit, setPlaceInfoToEdit] =
     useState<PlaceInfoToEditType | null>(null);
