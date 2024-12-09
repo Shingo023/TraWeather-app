@@ -3,7 +3,6 @@
 import { FavoriteCityCardPropsType, WeatherIconType } from "@/types";
 import styles from "./FavoriteCityCard.module.scss";
 import { backgroundMapping, iconMapping } from "@/utils/weatherIconMapping";
-import { ExternalLink } from "lucide-react";
 import { useMemo, useState } from "react";
 import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
@@ -11,9 +10,9 @@ import Button from "@/app/components/elements/button/Button";
 import WeatherForecast from "./weatherForecast/WeatherForecast";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 import { useRouter } from "next/navigation";
-import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 import HomeLocationIcon from "./homeLocationIcon/HomeLocationIcon";
 import PlaceNameEditor from "./placeNameEditor/PlaceNameEditor";
+import ExternalLinkComponent from "./externalLink/ExternalLink";
 
 const FavoriteCityCard = ({
   userId,
@@ -58,28 +57,6 @@ const FavoriteCityCard = ({
     router.push(
       `/weather/${cityLat}/${cityLng}?place=${cityName}&address=${cityAddress}&id=${cityPlaceId}`
     );
-  };
-
-  const handleAttractionInfoClick = async () => {
-    const zoomLevel = 15;
-    const searchQuery = encodeURIComponent("tourist attraction");
-    const googleMapsUrl = `https://www.google.com/maps/search/${searchQuery}/@${cityLat},${cityLng},${zoomLevel}z`;
-
-    window.open(googleMapsUrl, "_blank");
-  };
-
-  const handleEventInfoClick = async () => {
-    // Construct the search query using city name and address
-    const searchQuery = encodeURIComponent(`${cityAddress}, ${cityName}`);
-
-    // Construct the Eventbrite URL
-    const googleMapsUrl = `https://www.eventbrite.com/d/nearby--${searchQuery}/?page=1&sort=best`;
-
-    // Construct the Facebook events URL
-    // const googleMapsUrl = `https://www.facebook.com/events/search/?q=${searchQuery}`;
-
-    // Open the constructed URL in a new tab
-    window.open(googleMapsUrl, "_blank");
   };
 
   return (
@@ -177,14 +154,19 @@ const FavoriteCityCard = ({
             )}
           </div>
           <div className={styles.cityCard__placeInfoLinks}>
-            <div onClick={handleAttractionInfoClick}>
-              Tourist Attractions
-              <ExternalLink width={20} height={20} />
-            </div>
-            <div onClick={handleEventInfoClick}>
-              Events
-              <ExternalLink width={20} height={20} />
-            </div>
+            <ExternalLinkComponent
+              linkName="Tourist Attractions"
+              url={`https://www.google.com/maps/search/${encodeURIComponent(
+                "tourist attraction"
+              )}/@${cityLat},${cityLng},15z`}
+            />
+
+            <ExternalLinkComponent
+              linkName="Events"
+              url={`https://www.eventbrite.com/d/nearby--${encodeURIComponent(
+                `${cityAddress}, ${cityName}`
+              )}/?page=1&sort=best`}
+            />
           </div>
         </div>
       </div>
@@ -193,3 +175,6 @@ const FavoriteCityCard = ({
 };
 
 export default FavoriteCityCard;
+
+// Construct the Eventbrite URL
+// Construct the Facebook events URL: {`https://www.facebook.com/events/search/?q=${encodeURIComponent(`${cityAddress}, ${cityName}`)}`};
