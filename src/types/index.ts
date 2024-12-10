@@ -134,6 +134,7 @@ export type FavoriteCityWithWeather = {
   latitude: number;
   longitude: number;
   weather: WeatherDataForFavoritesList;
+  lastWeatherFetchDateTime: string;
 };
 
 export type LocationDetails = {

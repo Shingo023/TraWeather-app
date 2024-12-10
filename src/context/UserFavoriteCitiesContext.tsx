@@ -7,6 +7,7 @@ import {
   WeatherDataForFavoritesList,
 } from "@/types";
 import { fetchFavoriteCities } from "@/utils/apiHelper";
+import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import { useSession } from "next-auth/react";
 import {
   createContext,
@@ -112,9 +113,14 @@ export const UserFavoriteCitiesProvider = ({
           const weatherData: WeatherDataForFavoritesList =
             await weatherResponse.json();
 
+          const lastWeatherFetchDateTime: string = getCurrentTimeAndDate(
+            weatherData.timezone
+          );
+
           return {
             ...userFavoriteCity,
             weather: weatherData,
+            lastWeatherFetchDateTime,
           };
         })
       );

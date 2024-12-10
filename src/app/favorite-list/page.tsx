@@ -17,6 +17,7 @@ const FavoriteList = () => {
     favoriteCitiesWithWeather,
     fetchWeatherData,
     loading,
+    setLoading,
     isEditModalOpen,
     setIsEditModalOpen,
     weatherFetched,

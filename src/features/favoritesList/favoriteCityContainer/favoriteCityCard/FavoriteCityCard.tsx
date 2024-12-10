@@ -4,7 +4,6 @@ import { FavoriteCityCardPropsType, WeatherIconType } from "@/types";
 import styles from "./FavoriteCityCard.module.scss";
 import { backgroundMapping, iconMapping } from "@/utils/weatherIconMapping";
 import { useMemo, useState } from "react";
-import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import Button from "@/app/components/elements/button/Button";
 import WeatherForecast from "./weatherForecast/WeatherForecast";
@@ -42,10 +41,8 @@ const FavoriteCityCard = ({
     currentWeather !== undefined ? backgroundMapping[currentWeather] : null;
   const currentWeatherIcon =
     currentWeather !== undefined ? iconMapping[currentWeather] : null;
-  const currentDateTime = useMemo(
-    () => getCurrentTimeAndDate(timeZone),
-    [timeZone]
-  );
+  const lastWeatherFetchDateTime =
+    favoriteCityWithWeather.lastWeatherFetchDateTime;
   const twentyFourHoursWeather = useMemo(
     () => getWeatherForNext24Hours(todaysWeather, tomorrowsWeather, timeZone),
     [todaysWeather, tomorrowsWeather, timeZone]
@@ -111,7 +108,7 @@ const FavoriteCityCard = ({
       <div className={styles.cityCard__weather}>
         <div className={styles.cityCard__currentInfo}>
           <div className={styles.cityCard__currentDateTime}>
-            {currentDateTime}
+            {lastWeatherFetchDateTime}
           </div>
           <div className={styles.cityCard__currentWeather}>
             <div className={styles.cityCard__currentWeatherIconContainer}>
