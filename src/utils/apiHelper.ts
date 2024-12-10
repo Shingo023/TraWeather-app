@@ -1,3 +1,5 @@
+import { PlaceInfoToEditType } from "@/types";
+
 const handleResponse = async (response: Response) => {
   if (!response.ok) {
     const errorMessage = await response.text();
@@ -85,6 +87,44 @@ export const saveNewFavoriteCitiesOrder = async (
   if (!response.ok) {
     throw new Error("Failed to save new order of favorite cities.");
     console.error("Request failed with status:", response.status);
+  }
+  const data = await response.json();
+  return data;
+};
+
+export const updateHomeLocationApi = async (body: any, userId: string) => {
+  const response = await fetch(`/api/users/${userId}/default-city`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update default city");
+  }
+  const data = await response.json();
+  return data;
+};
+
+export const updatePlaceName = async (
+  placeInfoToEdit: PlaceInfoToEditType,
+  newPlaceName: string
+) => {
+  const response = await fetch(
+    `/api/user-favorite-cities?id=${placeInfoToEdit?.userFavoriteCityId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ customName: newPlaceName }),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to update city name");
   }
   const data = await response.json();
   return data;

@@ -255,3 +255,18 @@ export type DefaultCityType = {
   address: string;
   placeId: string;
 };
+
+export type WeatherCardType = {
+  dateTime: string;
+  weatherIconSrc: string;
+  iconWidth: number;
+  iconHeight: number;
+  temp?: number;
+  tempMax?: number;
+  tempMin?: number;
+  precipProb: number;
+  precipAmount?: number | null;
+  windSpeed?: number | null;
+  cardWidth: number;
+  cardColor: string;
+};

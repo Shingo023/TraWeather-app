@@ -3,6 +3,7 @@ import styles from "./WeatherCard.module.scss";
 import { getPrecipIntensity, getWindStrength } from "@/utils/weatherUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import React from "react";
+import { WeatherCardType } from "@/types";
 
 const WeatherCard = ({
   dateTime,
@@ -17,20 +18,7 @@ const WeatherCard = ({
   windSpeed,
   cardWidth,
   cardColor,
-}: {
-  dateTime: string;
-  weatherIconSrc: string;
-  iconWidth: number;
-  iconHeight: number;
-  temp?: number;
-  tempMax?: number;
-  tempMin?: number;
-  precipProb: number;
-  precipAmount?: number | null;
-  windSpeed?: number | null;
-  cardWidth: number;
-  cardColor: string;
-}) => {
+}: WeatherCardType) => {
   return (
     <div
       className={styles.weatherCard}

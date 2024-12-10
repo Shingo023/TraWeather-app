@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { MapPin } from "lucide-react";
 import Button from "@/app/components/elements/button/Button";
 import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
+import { updatePlaceName } from "@/utils/apiHelper";
 
 const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
   isModalOpen,
@@ -26,24 +27,10 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
 
     const updatedCityName = inputRef.current?.value.trim();
 
-    if (!updatedCityName) return;
+    if (!updatedCityName || !placeInfoToEdit) return;
 
     try {
-      const response = await fetch(
-        `/api/user-favorite-cities?id=${placeInfoToEdit?.userFavoriteCityId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ customName: updatedCityName }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to update city name");
-      }
-
+      updatePlaceName(placeInfoToEdit, updatedCityName);
       toast.success(`City name updated to ${updatedCityName}`);
       setFavoriteCitiesWithWeather((prev) => {
         return prev.map((city) =>

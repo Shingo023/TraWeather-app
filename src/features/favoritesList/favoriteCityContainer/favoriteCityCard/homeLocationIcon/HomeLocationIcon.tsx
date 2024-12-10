@@ -4,6 +4,7 @@ import { MapPinIcon } from "@heroicons/react/24/solid";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ToolTip from "@/app/components/elements/toolTip/ToolTip";
+import { updateHomeLocationApi } from "@/utils/apiHelper";
 
 const HomeLocationIcon = ({
   userId,
@@ -21,27 +22,16 @@ const HomeLocationIcon = ({
     setFavoriteCitiesData,
   } = useUserFavoriteCities();
 
-  const updateHomeLocationApi = async (body: any) => {
-    const response = await fetch(`/api/users/${userId}/default-city`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    if (!response.ok) {
-      throw new Error("Failed to update default city");
-    }
-    return response;
-  };
-
   const updateHomeLocation = async (newHomeLocationId: number | null) => {
+    if (!userId) return;
     try {
-      await updateHomeLocationApi({
-        currentHomeLocationId: homeLocationId,
-        newHomeLocationId,
-      });
+      await updateHomeLocationApi(
+        {
+          currentHomeLocationId: homeLocationId,
+          newHomeLocationId,
+        },
+        userId
+      );
       setHomeLocationId(newHomeLocationId);
       toast.success(
         `${cityName} has been successfully set as the home location.`
@@ -63,10 +53,15 @@ const HomeLocationIcon = ({
   };
 
   const unsetHomeLocation = async () => {
+    if (!userId) return;
+
     try {
-      await updateHomeLocationApi({
-        currentHomeLocationId: homeLocationId,
-      });
+      await updateHomeLocationApi(
+        {
+          currentHomeLocationId: homeLocationId,
+        },
+        userId
+      );
       setHomeLocationId(null);
       toast.success(`${cityName} has been unset as the home location.`);
       setFavoriteCitiesData((prev) =>
