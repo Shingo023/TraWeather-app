@@ -7,6 +7,7 @@ import {
   WeatherDataForForecast,
   WeatherIconType,
 } from "@/types";
+import { fetchDisplayedCityWeatherData } from "@/utils/apiHelper";
 import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import { iconMapping } from "@/utils/weatherIconMapping";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
@@ -26,7 +27,7 @@ interface WeatherDataContextType {
   >;
   currentDateTime: string | null;
   timezone: string | null;
-  updateWeatherStates: (weatherData: WeatherData) => void;
+  updateWeatherStates: (lat: number, long: number) => void;
 }
 
 // Create the context with default values
@@ -52,7 +53,8 @@ export const DisplayedCityWeatherProvider = ({
   const [currentDateTime, setCurrentDateTime] = useState<string | null>(null);
   const [timezone, setTimezone] = useState<string | null>(null);
 
-  const updateWeatherStates = (weatherData: WeatherData) => {
+  const updateWeatherStates = async (lat: number, lng: number) => {
+    const weatherData = await fetchDisplayedCityWeatherData(lat, lng);
     setDisplayedCityWeather(weatherData);
 
     setCurrentWeather({

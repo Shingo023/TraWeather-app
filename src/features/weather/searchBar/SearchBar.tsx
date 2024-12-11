@@ -7,6 +7,7 @@ import styles from "./SearchBar.module.scss";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { Search, TriangleAlert } from "lucide-react";
+import { fetchPlaceCoordinate, fetchPlacePredictions } from "@/utils/apiHelper";
 
 // "places" library: necessary for autocomplete for addresses and places
 const SearchBar = React.memo(() => {
@@ -40,13 +41,10 @@ const SearchBar = React.memo(() => {
     setError(null);
 
     try {
-      const response = await fetch(
-        `/api/autocomplete?input=${encodeURIComponent(input)}`
-      );
-      const data = await response.json();
+      const placePredictions = await fetchPlacePredictions(input);
 
-      if (data.predictions) {
-        setAutocompleteSuggestions(data.predictions);
+      if (placePredictions) {
+        setAutocompleteSuggestions(placePredictions);
       } else {
         setAutocompleteSuggestions([]);
       }
@@ -70,10 +68,7 @@ const SearchBar = React.memo(() => {
     }
 
     try {
-      const coordinateResponse = await fetch(
-        `/api/place-coordinate?placeId=${placeId}`
-      );
-      const coordinateData = await coordinateResponse.json();
+      const coordinateData = await fetchPlaceCoordinate(placeId);
       const { latitude, longitude } = coordinateData;
 
       if (latitude && longitude && placeName && description && placeId) {

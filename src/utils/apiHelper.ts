@@ -129,3 +129,27 @@ export const updatePlaceName = async (
   const data = await response.json();
   return data;
 };
+
+export const fetchPlacePredictions = async (input: string) => {
+  const response = await fetch(
+    `/api/autocomplete?input=${encodeURIComponent(input)}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch place predictions");
+  }
+
+  const data = await response.json();
+  return data.predictions;
+};
+
+export const fetchPlaceCoordinate = async (placeId: string) => {
+  const response = await fetch(`/api/place-coordinate?placeId=${placeId}`);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch place coordinate");
+  }
+
+  const data = await response.json();
+  return data;
+};
