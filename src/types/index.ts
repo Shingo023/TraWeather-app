@@ -25,7 +25,7 @@ export type WeatherData = {
 export type WeatherDataForFavoritesList = {
   timezone: string;
   weeklyWeather: WeatherDataForForecast[];
-  days: WeatherDay[];
+  days: { hours: WeatherDataForForecast[] }[];
   currentConditions: {
     datetime: string;
     icon: string;
@@ -78,12 +78,12 @@ export type DailyWeatherHighlightsType = {
 
 export type WeatherDataForForecast = {
   datetime: string;
-  tempmax: number;
-  tempmin: number;
-  temp: number;
-  precip: number | null;
+  tempmax?: number;
+  tempmin?: number;
+  temp?: number;
+  precip?: number | null;
   precipprob: number;
-  windspeed: number;
+  windspeed?: number;
   icon: string;
 };
 
@@ -244,8 +244,8 @@ export type UserFavoriteCity = {
 export type UserFavoriteCityType = {
   id: number;
   favoriteCityId: number;
-  customName: string | null;
-  isDefault: boolean;
+  customName: string;
+  isDefaultCity: boolean;
   displayOrder: number;
 };
 

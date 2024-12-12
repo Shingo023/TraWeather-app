@@ -1,4 +1,9 @@
-import { CityToCreateType, CityType, PlaceInfoToEditType } from "@/types";
+import {
+  CityToCreateType,
+  CityType,
+  PlaceInfoToEditType,
+  UserFavoriteCityType,
+} from "@/types";
 
 const handleResponse = async (response: Response) => {
   if (!response.ok) {
@@ -180,7 +185,7 @@ export const addUserFavoriteCity = async (
   userId: string,
   customName: string,
   favoriteCityId: number
-) => {
+): Promise<UserFavoriteCityType> => {
   const response = await fetch(`/api/user-favorite-cities`, {
     method: "POST",
     headers: {

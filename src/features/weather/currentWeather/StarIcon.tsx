@@ -35,15 +35,6 @@ const StarIcon = () => {
   const { timezone, displayedCityWeather, lastWeatherFetchDateTime } =
     useDisplayedCityWeather();
 
-  const updateFavoriteCities = (add: boolean) => {
-    if (!placeId || !cityToDisplay || !address) return;
-
-    setFavoriteCitiesPlaceIds((prev) =>
-      add ? [...prev, placeId] : prev.filter((id) => id !== placeId)
-    );
-    console.log(favoriteCitiesPlaceIds);
-  };
-
   const bookmarkCity = async () => {
     if (!session) {
       alert("You need to log in to use the favorites feature.");
@@ -52,7 +43,7 @@ const StarIcon = () => {
 
     if (!placeId || !cityToDisplay || !address || !timezone) return;
 
-    updateFavoriteCities(true);
+    setFavoriteCitiesPlaceIds((prev) => [...prev, placeId]);
 
     try {
       // First, check if the city already exists in the FavoriteCity table
@@ -91,7 +82,7 @@ const StarIcon = () => {
       setFavoriteCitiesData((prev) => [...prev, newUserFavoriteCity]);
 
       // use ErrorMessage component here
-      if (displayedCityWeather) {
+      if (displayedCityWeather && lastWeatherFetchDateTime) {
         const weather = formatWeatherDataForFavoriteList(displayedCityWeather);
         const newUserFavoriteCityWithWeather = {
           ...newUserFavoriteCity,
@@ -106,7 +97,7 @@ const StarIcon = () => {
       }
     } catch (error) {
       console.error("Error bookmarking the city:", error);
-      updateFavoriteCities(false);
+      setFavoriteCitiesPlaceIds((prev) => prev.filter((id) => id !== placeId));
       toast.error(`Failed to add ${cityToDisplay} to favorites.`);
     }
   };
@@ -119,7 +110,7 @@ const StarIcon = () => {
 
     if (!placeId) return;
 
-    updateFavoriteCities(false);
+    setFavoriteCitiesPlaceIds((prev) => prev.filter((id) => id !== placeId));
 
     try {
       // First, get the favoriteCityId for the current city (using placeId)
@@ -138,7 +129,7 @@ const StarIcon = () => {
       );
     } catch (error) {
       console.error("Error unbookmarking the city:", error);
-      updateFavoriteCities(true);
+      setFavoriteCitiesPlaceIds((prev) => [...prev, placeId]);
       toast.error(`Failed to remove ${cityToDisplay} from favorites.`);
     }
   };
