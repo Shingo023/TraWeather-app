@@ -10,14 +10,12 @@ const WeatherForecast = ({
   dailyOrWeeklyWeather,
   iconWidth,
   iconHeight,
-  cardWidth,
-  cardColor,
+  className,
 }: {
   dailyOrWeeklyWeather: WeatherDataForForecast[] | null;
-  iconWidth: number;
-  iconHeight: number;
-  cardWidth: number;
-  cardColor: string;
+  iconWidth?: number;
+  iconHeight?: number;
+  className: string;
 }) => {
   const [hovered, setHovered] = useState(false);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -82,9 +80,13 @@ const WeatherForecast = ({
           const weatherIcon = weather.icon as WeatherIconType;
           const weatherIconSrc = iconMapping[weatherIcon];
 
-          const temp = Math.round(weather.temp);
-          const tempMax = Math.round(weather.tempmax);
-          const tempMin = Math.round(weather.tempmin);
+          const temp = weather.temp ? Math.round(weather.temp) : undefined;
+          const tempMax = weather.tempmax
+            ? Math.round(weather.tempmax)
+            : undefined;
+          const tempMin = weather.tempmin
+            ? Math.round(weather.tempmin)
+            : undefined;
 
           const precipProb = Math.round(weather.precipprob / 5) * 5;
 
@@ -93,7 +95,9 @@ const WeatherForecast = ({
             typeof rawPrecipAmount === "number"
               ? Number(rawPrecipAmount.toFixed(1))
               : null;
-          const windSpeed = Math.round(weather.windspeed);
+          const windSpeed = weather.windspeed
+            ? Math.round(weather.windspeed)
+            : undefined;
 
           return (
             <WeatherCard
@@ -108,8 +112,7 @@ const WeatherForecast = ({
               precipProb={precipProb}
               precipAmount={precipAmount}
               windSpeed={windSpeed}
-              cardWidth={cardWidth}
-              cardColor={cardColor}
+              className={className}
             />
           );
         })}

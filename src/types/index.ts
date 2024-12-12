@@ -287,14 +287,20 @@ export type DefaultCityType = {
 export type WeatherCardType = {
   dateTime: string;
   weatherIconSrc: string;
-  iconWidth: number;
-  iconHeight: number;
+  iconWidth: number | undefined;
+  iconHeight: number | undefined;
   temp?: number;
   tempMax?: number;
   tempMin?: number;
   precipProb: number;
   precipAmount?: number | null;
   windSpeed?: number | null;
-  cardWidth: number;
-  cardColor: string;
+  className: string;
+};
+
+export type WeatherIconProps = {
+  weatherIcon: string | null;
+  width?: number;
+  height?: number;
+  priority?: boolean;
 };

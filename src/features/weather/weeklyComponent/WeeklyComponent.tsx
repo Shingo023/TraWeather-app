@@ -103,11 +103,7 @@ export const WeeklyComponent = () => {
                       className={styles.WeeklyComponentItem__weatherInfoLeft}
                     >
                       <div>
-                        <WeatherIcon
-                          weatherIcon={dailyWeatherIcon}
-                          width={60}
-                          height={60}
-                        />
+                        <WeatherIcon weatherIcon={dailyWeatherIcon} />
                       </div>
                     </div>
                     <div

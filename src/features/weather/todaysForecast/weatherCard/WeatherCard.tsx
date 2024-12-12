@@ -16,17 +16,11 @@ const WeatherCard = ({
   precipProb,
   precipAmount,
   windSpeed,
-  cardWidth,
-  cardColor,
+  className,
 }: WeatherCardType) => {
   return (
     <div
-      className={styles.weatherCard}
-      style={{
-        width: `${cardWidth}px`,
-        minWidth: `${cardWidth}px`,
-        backgroundColor: `${cardColor}`,
-      }}
+      className={`${styles.weatherCard} ${className ? styles[className] : ""}`}
     >
       <div className={styles.weatherCard__top}>
         <p className={styles.weatherCard__time}>{dateTime}</p>

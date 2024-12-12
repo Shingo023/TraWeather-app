@@ -5,14 +5,14 @@ import TodaysForecastSkeleton from "./TodaysForecastSkeleton";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
 const TodaysForecast = () => {
-  const { dailyWeatherHighlights, twentyFourHoursWeather } =
+  const { dailyWeatherHighlights, twentyFourHoursWeather, loading } =
     useDisplayedCityWeather();
 
   const date = dailyWeatherHighlights
     ? formatDate(dailyWeatherHighlights.datetime)
     : "";
 
-  if (!twentyFourHoursWeather || !dailyWeatherHighlights) {
+  if (loading) {
     return <TodaysForecastSkeleton />;
   }
 
@@ -34,9 +34,7 @@ const TodaysForecast = () => {
         <div className={styles.todaysForecast__hourlyWeatherCards}>
           <WeatherForecast
             dailyOrWeeklyWeather={twentyFourHoursWeather}
-            iconHeight={60}
-            iconWidth={60}
-            cardWidth={130}
+            className="dailyForecast"
           />
         </div>
       </div>

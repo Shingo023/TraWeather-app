@@ -1,11 +1,5 @@
 import Image from "next/image";
-
-interface WeatherIconProps {
-  weatherIcon: string | null;
-  width: number;
-  height: number;
-  priority?: boolean;
-}
+import { WeatherIconProps } from "@/types";
 
 const WeatherIcon = ({
   weatherIcon,
@@ -21,8 +15,8 @@ const WeatherIcon = ({
     <Image
       src={weatherIcon}
       alt="Weather icon"
-      width={width}
-      height={height}
+      width={width ?? 60}
+      height={height ?? 60}
       priority={priority}
     />
   );

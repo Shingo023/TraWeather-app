@@ -132,23 +132,14 @@ const FavoriteCityCard = ({
 
         <div className={styles.cityCard__contentRight}>
           <div className={styles.cityCard__weatherForecast}>
-            {showTodaysWeather === true ? (
-              <WeatherForecast
-                dailyOrWeeklyWeather={twentyFourHoursWeather}
-                iconHeight={50}
-                iconWidth={50}
-                cardWidth={100}
-                cardColor="rgba(255, 255, 255, 0.3)"
-              />
-            ) : (
-              <WeatherForecast
-                dailyOrWeeklyWeather={weeklyWeather}
-                iconHeight={50}
-                iconWidth={50}
-                cardWidth={100}
-                cardColor="rgba(255, 255, 255, 0.3)"
-              />
-            )}
+            <WeatherForecast
+              dailyOrWeeklyWeather={
+                showTodaysWeather ? twentyFourHoursWeather : weeklyWeather
+              }
+              iconHeight={50}
+              iconWidth={50}
+              className="favoriteCityCard"
+            />
           </div>
           <div className={styles.cityCard__placeInfoLinks}>
             <ExternalLinkComponent
