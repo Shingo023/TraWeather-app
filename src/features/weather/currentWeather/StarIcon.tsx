@@ -14,7 +14,6 @@ import {
 import { useParams, useSearchParams } from "next/navigation";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
-import { CityType, WeatherDay, WeatherHour } from "@/types";
 import { formatWeatherDataForFavoriteList } from "@/utils/weatherUtils";
 
 const StarIcon = () => {

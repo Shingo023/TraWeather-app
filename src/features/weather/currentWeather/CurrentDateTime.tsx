@@ -1,11 +1,8 @@
 "use client";
 
-import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import styles from "./CurrentWeather.module.scss";
 import { RotateCw } from "lucide-react";
-import { CurrentDateAndTimePropsType, WeatherData } from "@/types";
-import React, { useEffect } from "react";
-import { fetchDisplayedCityWeatherData } from "@/utils/apiHelper";
+import React from "react";
 import { useParams } from "next/navigation";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
