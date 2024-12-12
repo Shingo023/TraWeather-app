@@ -8,21 +8,22 @@ import {
 import styles from "./WeeklyComponent.module.scss";
 import { iconMapping } from "@/utils/weatherIconMapping";
 import React, { useEffect, useState } from "react";
-import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
-import { Umbrella } from "lucide-react";
-import { formatDate } from "@/utils/dateUtils";
 import WeeklyComponentSkeleton from "./WeeklyComponentSkeleton";
-import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
+import {
+  extractDailyHighlights,
+  getWeatherForNext24Hours,
+} from "@/utils/weatherUtils";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
+import WeeklyForecastWeatherCard from "./weeklyForecastWeatherCard/WeeklyForecastWeatherCard";
 
 export const WeeklyComponent = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
 
   const {
     displayedCityWeather,
     setTwentyFourHoursWeather,
     setDailyWeatherHighlights,
+    loading,
   } = useDisplayedCityWeather();
 
   const weeklyWeather: WeatherDay[] | undefined = displayedCityWeather?.days;
@@ -32,12 +33,6 @@ export const WeeklyComponent = () => {
     const today = displayedCityWeather.days[0].datetime;
     setSelectedDate(today);
   }, [displayedCityWeather]);
-
-  useEffect(() => {
-    if (weeklyWeather && weeklyWeather.length > 0) {
-      setLoading(false);
-    }
-  }, [weeklyWeather]);
 
   const handleClick = (date: string, selectedDateWeather: WeatherDay) => {
     if (!displayedCityWeather) return;
@@ -55,18 +50,8 @@ export const WeeklyComponent = () => {
       setTwentyFourHoursWeather(selectedDateWeather.hours);
     }
     setSelectedDate(date);
-    const selectedDateWeatherHighlights: DailyWeatherHighlightsType = {
-      datetime: selectedDateWeather.datetime,
-      humidity: Math.round(selectedDateWeather.humidity),
-      snowDepth: selectedDateWeather.snowdepth ?? 0,
-      weatherOverview: selectedDateWeather.description,
-      visibility: selectedDateWeather.visibility,
-      feelsLikeTempMax: Math.round(selectedDateWeather.feelslikemax),
-      feelsLikeTempMin: Math.round(selectedDateWeather.feelslikemin),
-      sunrise: selectedDateWeather.sunrise,
-      sunset: selectedDateWeather.sunset,
-      uvIndexData: (180 * selectedDateWeather.uvindex * 10) / 100,
-    };
+    const selectedDateWeatherHighlights: DailyWeatherHighlightsType =
+      extractDailyHighlights(selectedDateWeather);
     setDailyWeatherHighlights(selectedDateWeatherHighlights);
   };
 
@@ -86,40 +71,13 @@ export const WeeklyComponent = () => {
                 iconMapping[dailyWeather.icon as WeatherIconType];
 
               return (
-                <li
-                  className={`${styles.WeeklyComponentItem} ${
-                    dailyWeather.datetime === selectedDate && styles.active
-                  }`}
+                <WeeklyForecastWeatherCard
                   key={index}
-                  onClick={() =>
-                    handleClick(dailyWeather.datetime, dailyWeather)
-                  }
-                >
-                  <p className={styles.WeeklyComponentItem__date}>
-                    {formatDate(dailyWeather.datetime)}
-                  </p>
-                  <div className={styles.WeeklyComponentItem__weatherInfo}>
-                    <div
-                      className={styles.WeeklyComponentItem__weatherInfoLeft}
-                    >
-                      <div>
-                        <WeatherIcon weatherIcon={dailyWeatherIcon} />
-                      </div>
-                    </div>
-                    <div
-                      className={styles.WeeklyComponentItem__weatherInfoRight}
-                    >
-                      <p>
-                        {Math.round(dailyWeather.tempmax)}°/
-                        {Math.round(dailyWeather.tempmin)}°
-                      </p>
-                      <div className={styles.chanceOfRain}>
-                        <Umbrella className={styles.chanceOfRain__icon} />
-                        <p>{Math.round(dailyWeather.precipprob / 5) * 5}%</p>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                  dailyWeather={dailyWeather}
+                  dailyWeatherIcon={dailyWeatherIcon}
+                  handleClick={handleClick}
+                  selectedDate={selectedDate}
+                />
               );
             })
           ) : (

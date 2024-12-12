@@ -10,19 +10,19 @@ const SunsetAndSunrise = ({
   sunrise,
   sunset,
   selectedDate,
-  currentDateTime,
+  lastWeatherFetchDateTime,
 }: {
   timeZone: string | null;
   sunrise: string;
   sunset: string;
   selectedDate: string;
-  currentDateTime: string | null;
+  lastWeatherFetchDateTime: string | null;
 }) => {
   const todayDate = timeZone ? getTodayDateInTimeZone(timeZone) : null;
 
   const sunCurrentLocation =
-    selectedDate === todayDate && currentDateTime
-      ? daylightPercentage(currentDateTime, sunrise, sunset)
+    selectedDate === todayDate && lastWeatherFetchDateTime
+      ? daylightPercentage(lastWeatherFetchDateTime, sunrise, sunset)
       : null;
 
   const sunDegrees =

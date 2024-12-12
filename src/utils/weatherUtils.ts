@@ -82,7 +82,7 @@ export const formatWeatherDataForFavoriteList = (weatherData: WeatherData) => {
       tempmin: day.tempmin,
     })),
     days: weatherData.days.slice(0, 2).map((day: WeatherDay) => ({
-      hours: day.hours.map((hour: WeatherHour) => ({
+      hours: day.hours.map((hour: WeatherDataForForecast) => ({
         datetime: hour.datetime,
         temp: hour.temp,
         precipprob: hour.precipprob,
@@ -94,5 +94,20 @@ export const formatWeatherDataForFavoriteList = (weatherData: WeatherData) => {
       icon: weatherData.currentConditions.icon,
       temp: weatherData.currentConditions.temp,
     },
+  };
+};
+
+export const extractDailyHighlights = (selectedDateWeather: WeatherDay) => {
+  return {
+    datetime: selectedDateWeather.datetime,
+    humidity: Math.round(selectedDateWeather.humidity),
+    snowDepth: selectedDateWeather.snowdepth ?? 0,
+    weatherOverview: selectedDateWeather.description,
+    visibility: selectedDateWeather.visibility,
+    feelsLikeTempMax: Math.round(selectedDateWeather.feelslikemax),
+    feelsLikeTempMin: Math.round(selectedDateWeather.feelslikemin),
+    sunrise: selectedDateWeather.sunrise,
+    sunset: selectedDateWeather.sunset,
+    uvIndexData: (180 * selectedDateWeather.uvindex * 10) / 100,
   };
 };

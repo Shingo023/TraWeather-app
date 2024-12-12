@@ -7,12 +7,18 @@ import TodaysHighlightsSkeleton from "./TodaysHighlightsSkeleton";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
 const TodaysHighlights = () => {
-  const { dailyWeatherHighlights, timezone, currentDateTime } =
-    useDisplayedCityWeather();
+  const {
+    dailyWeatherHighlights,
+    timezone,
+    lastWeatherFetchDateTime,
+    loading,
+  } = useDisplayedCityWeather();
 
-  if (!dailyWeatherHighlights) {
+  if (loading) {
     return <TodaysHighlightsSkeleton />;
   }
+
+  if (!dailyWeatherHighlights) return;
 
   const date = formatDate(dailyWeatherHighlights.datetime);
 
@@ -46,7 +52,7 @@ const TodaysHighlights = () => {
             sunrise={dailyWeatherHighlights.sunrise}
             sunset={dailyWeatherHighlights.sunset}
             selectedDate={dailyWeatherHighlights.datetime}
-            currentDateTime={currentDateTime}
+            lastWeatherFetchDateTime={lastWeatherFetchDateTime}
           />
         </div>
       </div>
