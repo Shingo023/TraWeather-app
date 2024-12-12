@@ -1,4 +1,4 @@
-import { PlaceInfoToEditType } from "@/types";
+import { CityToCreateType, CityType, PlaceInfoToEditType } from "@/types";
 
 const handleResponse = async (response: Response) => {
   if (!response.ok) {
@@ -32,8 +32,13 @@ export const fetchDisplayedCityWeatherData = async (
 };
 
 export const fetchCityData = async (placeId: string) => {
-  const res = await fetch(`/api/favorite-cities?placeId=${placeId}`);
-  return handleResponse(res);
+  const response = await fetch(`/api/favorite-cities?placeId=${placeId}`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch place data");
+  }
+
+  const data: CityType = await response.json();
+  return data;
 };
 
 export const fetchFavoriteCitiesPlaceIds = async (userId: string) => {
@@ -151,5 +156,70 @@ export const fetchPlaceCoordinate = async (placeId: string) => {
   }
 
   const data = await response.json();
+  return data;
+};
+
+export const createCity = async (newCity: CityToCreateType) => {
+  const response = await fetch(`/api/favorite-cities`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newCity),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create new city");
+  }
+
+  const data: CityType = await response.json();
+  return data;
+};
+
+export const addUserFavoriteCity = async (
+  userId: string,
+  customName: string,
+  favoriteCityId: number
+) => {
+  const response = await fetch(`/api/user-favorite-cities`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+      customName,
+      favoriteCityId,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to add new user favorite city");
+  }
+
+  const { userFavoriteCity } = await response.json();
+  return userFavoriteCity;
+};
+
+export const deleteUserFavoriteCity = async (
+  userId: string,
+  favoriteCityId: number
+) => {
+  const response = await fetch(`/api/user-favorite-cities`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId,
+      favoriteCityId,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to remove city from favorites");
+  }
+
+  const data = response.json();
   return data;
 };

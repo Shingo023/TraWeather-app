@@ -1,4 +1,9 @@
-import { WeatherDataForForecast } from "@/types";
+import {
+  WeatherData,
+  WeatherDataForForecast,
+  WeatherDay,
+  WeatherHour,
+} from "@/types";
 import { getCurrentHourInTimeZone } from "./dateUtils";
 
 // wind speed(kph)
@@ -64,4 +69,30 @@ export const getWeatherForNext24Hours = (
   const fortyEightHoursWeather = [...todaysWeather, ...tomorrowsWeather];
   const currentHour = getCurrentHourInTimeZone(timeZone);
   return fortyEightHoursWeather.slice(currentHour, currentHour + 24);
+};
+
+export const formatWeatherDataForFavoriteList = (weatherData: WeatherData) => {
+  return {
+    timezone: weatherData.timezone,
+    weeklyWeather: weatherData.days.slice(0, 7).map((day: WeatherDay) => ({
+      datetime: day.datetime,
+      icon: day.icon,
+      precipprob: day.precipprob,
+      tempmax: day.tempmax,
+      tempmin: day.tempmin,
+    })),
+    days: weatherData.days.slice(0, 2).map((day: WeatherDay) => ({
+      hours: day.hours.map((hour: WeatherHour) => ({
+        datetime: hour.datetime,
+        temp: hour.temp,
+        precipprob: hour.precipprob,
+        icon: hour.icon,
+      })),
+    })),
+    currentConditions: {
+      datetime: weatherData.currentConditions.datetime,
+      icon: weatherData.currentConditions.icon,
+      temp: weatherData.currentConditions.temp,
+    },
+  };
 };

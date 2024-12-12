@@ -4,28 +4,17 @@ import styles from "./CurrentWeather.module.scss";
 import StarIcon from "./StarIcon";
 import CurrentDateTime from "./CurrentDateTime";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import CurrentWeatherSkelton from "./CurrentWeatherSkelton";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
 const CurrentWeather = () => {
-  const [loading, setLoading] = useState(true);
-
   const searchParams = useSearchParams();
   const cityToDisplay = searchParams.get("place");
   const address = searchParams.get("address");
 
-  const { currentWeather, timezone } = useDisplayedCityWeather();
+  const { currentWeather, timezone, loading } = useDisplayedCityWeather();
 
-  useEffect(() => {
-    if (currentWeather) {
-      setLoading(false);
-    }
-  }, [currentWeather]);
-
-  // Render skeletons while loading
   if (loading) {
     return <CurrentWeatherSkelton />;
   }

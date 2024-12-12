@@ -12,6 +12,8 @@ import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import { iconMapping } from "@/utils/weatherIconMapping";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Define the types for the weather data
 interface WeatherDataContextType {
@@ -25,9 +27,11 @@ interface WeatherDataContextType {
   setTwentyFourHoursWeather: React.Dispatch<
     React.SetStateAction<WeatherDataForForecast[] | null>
   >;
-  currentDateTime: string | null;
+  lastWeatherFetchDateTime: string | null;
   timezone: string | null;
   updateWeatherStates: (lat: number, long: number) => void;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // Create the context with default values
@@ -50,47 +54,67 @@ export const DisplayedCityWeatherProvider = ({
   const [twentyFourHoursWeather, setTwentyFourHoursWeather] = useState<
     WeatherDataForForecast[] | null
   >(null);
-  const [currentDateTime, setCurrentDateTime] = useState<string | null>(null);
+  const [lastWeatherFetchDateTime, setLastWeatherFetchDateTime] = useState<
+    string | null
+  >(null);
   const [timezone, setTimezone] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const updateWeatherStates = async (lat: number, lng: number) => {
-    const weatherData = await fetchDisplayedCityWeatherData(lat, lng);
-    setDisplayedCityWeather(weatherData);
+    setLoading(true);
+    try {
+      const weatherData = await fetchDisplayedCityWeatherData(lat, lng);
+      setDisplayedCityWeather(weatherData);
 
-    setCurrentWeather({
-      currentTemp: Math.round(weatherData.currentConditions.temp),
-      currentFeelslikeTemp: Math.round(weatherData.currentConditions.feelslike),
-      currentWeatherIcon:
-        iconMapping[weatherData.currentConditions.icon as WeatherIconType],
-    });
+      setCurrentWeather({
+        currentTemp: Math.round(weatherData.currentConditions.temp),
+        currentFeelslikeTemp: Math.round(
+          weatherData.currentConditions.feelslike
+        ),
+        currentWeatherIcon:
+          iconMapping[weatherData.currentConditions.icon as WeatherIconType],
+      });
 
-    setTimezone(weatherData.timezone);
+      setTimezone(weatherData.timezone);
 
-    const todaysWeatherData = {
-      datetime: weatherData.days[0].datetime,
-      humidity: Math.round(weatherData.days[0].humidity),
-      snowDepth: weatherData.days[0].snowdepth ?? 0,
-      weatherOverview: weatherData.days[0].description,
-      visibility: weatherData.days[0].visibility,
-      feelsLikeTempMax: Math.round(weatherData.days[0].feelslikemax),
-      feelsLikeTempMin: Math.round(weatherData.days[0].feelslikemin),
-      sunrise: weatherData.days[0].sunrise,
-      sunset: weatherData.days[0].sunset,
-      uvIndexData: (180 * weatherData.days[0].uvindex * 10) / 100,
-    };
-    setDailyWeatherHighlights(todaysWeatherData);
+      const todaysWeatherData = {
+        datetime: weatherData.days[0].datetime,
+        humidity: Math.round(weatherData.days[0].humidity),
+        snowDepth: weatherData.days[0].snowdepth ?? 0,
+        weatherOverview: weatherData.days[0].description,
+        visibility: weatherData.days[0].visibility,
+        feelsLikeTempMax: Math.round(weatherData.days[0].feelslikemax),
+        feelsLikeTempMin: Math.round(weatherData.days[0].feelslikemin),
+        sunrise: weatherData.days[0].sunrise,
+        sunset: weatherData.days[0].sunset,
+        uvIndexData: (180 * weatherData.days[0].uvindex * 10) / 100,
+      };
+      setDailyWeatherHighlights(todaysWeatherData);
 
-    const todaysHourlyWeather = weatherData.days[0].hours;
-    const tomorrowsHourlyWeather = weatherData.days[1].hours;
-    setTwentyFourHoursWeather(
-      getWeatherForNext24Hours(
-        todaysHourlyWeather,
-        tomorrowsHourlyWeather,
-        weatherData.timezone
-      )
-    );
+      try {
+        const next24HoursWeather = getWeatherForNext24Hours(
+          weatherData.days[0].hours,
+          weatherData.days[1].hours,
+          weatherData.timezone
+        );
+        setTwentyFourHoursWeather(next24HoursWeather);
+      } catch (weatherProcessError) {
+        console.error(
+          `Failed to process hourly weather data for coordinates (${lat}, ${lng}):`,
+          weatherProcessError
+        );
+      }
 
-    setCurrentDateTime(getCurrentTimeAndDate(weatherData.timezone));
+      setLastWeatherFetchDateTime(getCurrentTimeAndDate(weatherData.timezone));
+    } catch (fetchError) {
+      console.error(
+        `Failed to fetch weather data for coordinates (${lat}, ${lng}):`,
+        fetchError instanceof Error ? fetchError.message : fetchError
+      );
+      toast.error("Failed to load weather data. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -102,9 +126,11 @@ export const DisplayedCityWeatherProvider = ({
         setDailyWeatherHighlights,
         twentyFourHoursWeather,
         setTwentyFourHoursWeather,
-        currentDateTime,
+        lastWeatherFetchDateTime,
         timezone,
         updateWeatherStates,
+        loading,
+        setLoading,
       }}
     >
       {children}

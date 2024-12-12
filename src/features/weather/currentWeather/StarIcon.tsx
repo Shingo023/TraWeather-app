@@ -5,10 +5,17 @@ import { Star } from "lucide-react";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { fetchCityData, fetchFavoriteCitiesPlaceIds } from "@/utils/apiHelper";
+import {
+  addUserFavoriteCity,
+  createCity,
+  deleteUserFavoriteCity,
+  fetchCityData,
+} from "@/utils/apiHelper";
 import { useParams, useSearchParams } from "next/navigation";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
+import { CityType, WeatherDay, WeatherHour } from "@/types";
+import { formatWeatherDataForFavoriteList } from "@/utils/weatherUtils";
 
 const StarIcon = () => {
   const { data: session } = useSession();
@@ -26,7 +33,8 @@ const StarIcon = () => {
     setFavoriteCitiesData,
     setFavoriteCitiesWithWeather,
   } = useUserFavoriteCities();
-  const { timezone, displayedCityWeather } = useDisplayedCityWeather();
+  const { timezone, displayedCityWeather, lastWeatherFetchDateTime } =
+    useDisplayedCityWeather();
 
   const updateFavoriteCities = (add: boolean) => {
     if (!placeId || !cityToDisplay || !address) return;
@@ -43,18 +51,9 @@ const StarIcon = () => {
       return;
     }
 
-    if (!placeId) return;
+    if (!placeId || !cityToDisplay || !address || !timezone) return;
 
     updateFavoriteCities(true);
-
-    const newCity = {
-      cityName: cityToDisplay,
-      latitude: Number(lat),
-      longitude: Number(lng),
-      placeId,
-      address,
-      timeZone: timezone,
-    };
 
     try {
       // First, check if the city already exists in the FavoriteCity table
@@ -63,57 +62,49 @@ const StarIcon = () => {
 
       if (!city) {
         // If the city does not exist, create a new city in the FavoriteCity table
-        const createCityResponse = await fetch(`/api/favorite-cities`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newCity),
-        });
-        const createdCity = await createCityResponse.json();
+        const newCity = {
+          cityName: cityToDisplay,
+          latitude: Number(lat),
+          longitude: Number(lng),
+          placeId,
+          address,
+          timeZone: timezone,
+        };
+        const createdCity = await createCity(newCity);
         cityId = createdCity.id;
       }
 
       // Now, add the city to the UserFavoriteCity table for the current user
-      const addUserFavoriteCityResponse = await fetch(
-        `/api/user-favorite-cities`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: session?.user?.id,
-            customName: cityToDisplay,
-            favoriteCityId: cityId,
-          }),
-        }
+      const newlyAddedUserFavoriteCity = await addUserFavoriteCity(
+        session.user.id,
+        cityToDisplay,
+        cityId
       );
 
-      if (!addUserFavoriteCityResponse.ok) {
-        updateFavoriteCities(false);
-        throw new Error("Failed to add city to favorites");
-      }
-
       toast.success(`${cityToDisplay} has been added to your favorite cities!`);
-      const { userFavoriteCity } = await addUserFavoriteCityResponse.json();
       const newUserFavoriteCity = {
-        ...userFavoriteCity,
+        ...newlyAddedUserFavoriteCity,
         address,
         latitude,
         longitude,
         placeId,
       };
       setFavoriteCitiesData((prev) => [...prev, newUserFavoriteCity]);
-      const newUserFavoriteCityWithWeather = {
-        ...newUserFavoriteCity,
-        weather: displayedCityWeather,
-      };
-      setFavoriteCitiesWithWeather((prev) => [
-        ...prev,
-        newUserFavoriteCityWithWeather,
-      ]);
-      console.log(newUserFavoriteCityWithWeather);
+
+      // use ErrorMessage component here
+      if (displayedCityWeather) {
+        const weather = formatWeatherDataForFavoriteList(displayedCityWeather);
+        const newUserFavoriteCityWithWeather = {
+          ...newUserFavoriteCity,
+          weather,
+          lastWeatherFetchDateTime,
+        };
+        setFavoriteCitiesWithWeather((prev) => [
+          ...prev,
+          newUserFavoriteCityWithWeather,
+        ]);
+        console.log(newUserFavoriteCityWithWeather);
+      }
     } catch (error) {
       console.error("Error bookmarking the city:", error);
       updateFavoriteCities(false);
@@ -137,21 +128,7 @@ const StarIcon = () => {
       const favoriteCityId = city.id;
 
       // Delete the city from the UserFavoriteCity table using favoriteCityId
-      const response = await fetch(`/api/user-favorite-cities`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: session?.user?.id,
-          favoriteCityId,
-        }),
-      });
-
-      if (!response.ok) {
-        updateFavoriteCities(true);
-        throw new Error("Failed to remove city from favorites");
-      }
+      await deleteUserFavoriteCity(session.user.id, favoriteCityId);
 
       toast.success(`${cityToDisplay} has been removed from your favorites.`);
       setFavoriteCitiesData((prev) =>

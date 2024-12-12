@@ -10,6 +10,7 @@ import TodaysHighlights from "@/features/weather/todaysHighlights/TodaysHighligh
 import TodaysForecast from "@/features/weather/todaysForecast/TodaysForecast";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 import ErrorMessage from "@/app/components/elements/errorMessage/ErrorMessage";
+import LoadingSpinner from "@/app/components/elements/loadingSpinner/LoadingSpinner";
 
 export default function WeatherPage() {
   const { lat, lng } = useParams();
@@ -18,10 +19,12 @@ export default function WeatherPage() {
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (!lat || !lng) return;
     updateWeatherStates(Number(lat), Number(lng));
+    setLoading(false);
   }, [lat, lng]);
 
   useEffect(() => {
@@ -30,8 +33,8 @@ export default function WeatherPage() {
 
   return (
     <div className={styles.weatherPage}>
-      {errorMessage ? (
-        <ErrorMessage message={errorMessage} />
+      {loading ? (
+        <LoadingSpinner message="Loading weather data..." />
       ) : (
         <>
           <div className={styles.weatherPage__leftContent}>
@@ -47,4 +50,23 @@ export default function WeatherPage() {
       )}
     </div>
   );
+  // return (
+  //   <div className={styles.weatherPage}>
+  //     {errorMessage ? (
+  //       <ErrorMessage message={errorMessage} />
+  //     ) : (
+  //       <>
+  //         <div className={styles.weatherPage__leftContent}>
+  //           <SearchBar />
+  //           <CurrentWeather />
+  //           <TodaysForecast />
+  //           <TodaysHighlights />
+  //         </div>
+  //         <div className={styles.weatherPage__rightContent}>
+  //           <WeeklyComponent />
+  //         </div>
+  //       </>
+  //     )}
+  //   </div>
+  // );
 }

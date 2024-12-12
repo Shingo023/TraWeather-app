@@ -21,6 +21,18 @@ export type WeatherData = {
   };
 };
 
+// Weather types for the favorites list
+export type WeatherDataForFavoritesList = {
+  timezone: string;
+  weeklyWeather: WeatherDataForForecast[];
+  days: WeatherDay[];
+  currentConditions: {
+    datetime: string;
+    icon: string;
+    temp: number;
+  };
+};
+
 export type WeatherDay = {
   datetime: string;
   tempmax: number;
@@ -42,7 +54,7 @@ export type WeatherDay = {
 };
 
 export type WeatherHour = {
-  conditions: string;
+  conditions?: string;
   datetime: string;
   temp: number;
   precip?: number | null;
@@ -62,18 +74,6 @@ export type DailyWeatherHighlightsType = {
   sunrise: string;
   sunset: string;
   uvIndexData: number;
-};
-
-// Weather types for the favorites list
-export type WeatherDataForFavoritesList = {
-  timezone: string;
-  weeklyWeather: WeatherDataForForecast[];
-  days: WeatherDay[];
-  currentConditions: {
-    datetime: string;
-    icon: string;
-    temp: number;
-  };
 };
 
 export type WeatherDataForForecast = {
@@ -110,6 +110,25 @@ declare module "next-auth" {
     id: string; // Add the id field to the User object
   }
 }
+
+export type CityToCreateType = {
+  cityName: string;
+  placeId: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  timeZone: string;
+};
+
+export type CityType = {
+  id: number;
+  cityName: string;
+  placeId: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  timeZone: string;
+};
 
 export type FavoriteCity = {
   id: number;
@@ -220,6 +239,14 @@ export type UserFavoriteCity = {
   address: string;
   latitude: number;
   longitude: number;
+};
+
+export type UserFavoriteCityType = {
+  id: number;
+  favoriteCityId: number;
+  customName: string | null;
+  isDefault: boolean;
+  displayOrder: number;
 };
 
 export type TodaysWeatherOverviewType = {

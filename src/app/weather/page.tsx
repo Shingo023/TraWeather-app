@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import styles from "./page.module.scss";
 import { fetchDefaultCity, fetchLocationDetails } from "@/utils/apiHelper";
 import { DefaultCityType, LocationDetailsType } from "@/types";
+import LoadingSpinner from "../components/elements/loadingSpinner/LoadingSpinner";
 
 export default function Home() {
   const router = useRouter();
@@ -96,12 +96,7 @@ export default function Home() {
   }, [router, session, status]);
 
   if (loading) {
-    return (
-      <div className={styles.loadingContainer}>
-        <div className={styles.spinner}></div>
-        <p className={styles.loadingMessage}>Loading weather data...</p>
-      </div>
-    );
+    return <LoadingSpinner message="Loading weather data..." />;
   }
   return null;
 }
