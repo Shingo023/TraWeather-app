@@ -7,6 +7,7 @@ import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import { useSearchParams } from "next/navigation";
 import CurrentWeatherSkelton from "./CurrentWeatherSkelton";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
+import ToolTip from "@/app/components/elements/toolTip/ToolTip";
 
 const CurrentWeather = () => {
   const searchParams = useSearchParams();
@@ -21,21 +22,19 @@ const CurrentWeather = () => {
 
   return (
     <div className={styles.currentWeather}>
-      <div className={styles.currentWeather__info}>
-        <div className={styles.currentWeather__infoTop}>
-          <div className={styles.currentWeather__citySection}>
-            <div className={styles.currentWeather__cityName}>
-              {cityToDisplay}
-            </div>
-            <StarIcon />
+      <div className={styles.currentWeather__citySection}>
+        <div className={styles.currentWeather__cityNameContainer}>
+          <div className={styles.currentWeather__cityName}>{cityToDisplay}</div>
+          <div className={styles.currentWeather__cityNameTooltip}>
+            <ToolTip message={address!} width={160} />
           </div>
-          <div className={styles.currentWeather__stateAndCountry}>
-            <div className={styles.currentWeather__stateName}>{address}</div>
-          </div>
-          {currentWeather && timezone && <CurrentDateTime />}
         </div>
+        <StarIcon />
+      </div>
 
-        <div className={styles.currentWeather__infoBottom}>
+      <div className={styles.currentWeather__infoSection}>
+        <div className={styles.currentWeather__info}>
+          {currentWeather && timezone && <CurrentDateTime />}
           <div className={styles.currentWeather__temp}>
             {currentWeather?.currentTemp}°
           </div>
@@ -43,15 +42,14 @@ const CurrentWeather = () => {
             Feels like {currentWeather?.currentFeelslikeTemp}°
           </div>
         </div>
-      </div>
-
-      <div className={styles.currentWeather__weatherIconContainer}>
-        <WeatherIcon
-          weatherIcon={currentWeather?.currentWeatherIcon ?? null}
-          width={150}
-          height={150}
-          priority={true}
-        />
+        <div className={styles.currentWeather__weatherIconContainer}>
+          <WeatherIcon
+            weatherIcon={currentWeather?.currentWeatherIcon ?? null}
+            width={115}
+            height={115}
+            priority={true}
+          />
+        </div>
       </div>
     </div>
   );
