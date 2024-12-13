@@ -7,7 +7,7 @@ import {
 } from "@/types";
 import styles from "./WeeklyComponent.module.scss";
 import { iconMapping } from "@/utils/weatherIconMapping";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import WeeklyComponentSkeleton from "./WeeklyComponentSkeleton";
 import {
   extractDailyHighlights,
@@ -17,27 +17,21 @@ import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 import WeeklyForecastWeatherCard from "./weeklyForecastWeatherCard/WeeklyForecastWeatherCard";
 
 export const WeeklyComponent = () => {
-  const [selectedDate, setSelectedDate] = useState<string | null>(null);
-
   const {
     displayedCityWeather,
     setTwentyFourHoursWeather,
     setDailyWeatherHighlights,
+    todaysDate,
     loading,
   } = useDisplayedCityWeather();
+  const [selectedDate, setSelectedDate] = useState<string | null>(todaysDate);
 
   const weeklyWeather: WeatherDay[] | undefined = displayedCityWeather?.days;
 
-  useEffect(() => {
-    if (!displayedCityWeather) return;
-    const today = displayedCityWeather.days[0].datetime;
-    setSelectedDate(today);
-  }, [displayedCityWeather]);
-
   const handleClick = (date: string, selectedDateWeather: WeatherDay) => {
     if (!displayedCityWeather) return;
-    const today = displayedCityWeather.days[0].datetime;
-    if (date === today) {
+
+    if (date === todaysDate) {
       const todaysHourlyWeather = displayedCityWeather.days[0].hours;
       const tomorrowsHourlyWeather = displayedCityWeather.days[1].hours;
       const twentyFourHoursWeatherData = getWeatherForNext24Hours(

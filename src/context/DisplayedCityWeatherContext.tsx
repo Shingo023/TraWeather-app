@@ -30,6 +30,7 @@ interface WeatherDataContextType {
   lastWeatherFetchDateTime: string | null;
   timezone: string | null;
   updateWeatherStates: (lat: number, long: number) => void;
+  todaysDate: string | null;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -58,6 +59,7 @@ export const DisplayedCityWeatherProvider = ({
     string | null
   >(null);
   const [timezone, setTimezone] = useState<string | null>(null);
+  const [todaysDate, setTodaysDate] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const updateWeatherStates = async (lat: number, lng: number) => {
@@ -90,6 +92,7 @@ export const DisplayedCityWeatherProvider = ({
         uvIndexData: (180 * weatherData.days[0].uvindex * 10) / 100,
       };
       setDailyWeatherHighlights(todaysWeatherData);
+      setTodaysDate(weatherData.days[0].datetime);
 
       try {
         const next24HoursWeather = getWeatherForNext24Hours(
@@ -131,6 +134,7 @@ export const DisplayedCityWeatherProvider = ({
         updateWeatherStates,
         loading,
         setLoading,
+        todaysDate,
       }}
     >
       {children}
