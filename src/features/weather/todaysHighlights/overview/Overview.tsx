@@ -22,7 +22,7 @@ const Overview = ({
         </div>
 
         <div className={styles.overview__feelsLikeTemps}>
-          <h5>Feels-like temp</h5>
+          <h6>Feels-like temp</h6>
           <div>
             <Thermometer className={styles.overview__icon} />
             <p>
@@ -40,7 +40,7 @@ const Overview = ({
 
         {snowDepth > 0 && (
           <div className={styles.overview__snowDepth}>
-            <h5>Snow Depth</h5>
+            <h6>Snow Depth</h6>
             <div>
               <ArrowUpToLine className={styles.overview__icon} />
               <p>
@@ -52,7 +52,7 @@ const Overview = ({
         )}
 
         <div className={styles.overview__humidity}>
-          <h5>Humidity</h5>
+          <h6>Humidity</h6>
           <div>
             <Droplet className={styles.overview__icon} />
             <p>
@@ -63,7 +63,7 @@ const Overview = ({
 
         {visibility < 4 && (
           <div className={styles.overview__visibility}>
-            <h5>Visibility</h5>
+            <h6>Visibility</h6>
             <div>
               <Eye className={styles.overview__icon} />
               <p>

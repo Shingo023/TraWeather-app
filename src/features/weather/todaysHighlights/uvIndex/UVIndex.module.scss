@@ -1,7 +1,7 @@
 .uvIndex {
   display: flex;
   flex-direction: column;
-  padding: 15px 10px 10px 10px;
+  padding: 15px;
   background-color: #f9f9f9;
   border-radius: 10px;
   flex: 1;
@@ -9,6 +9,7 @@
   &__title {
     font-size: 14px;
     font-weight: 500;
+    color: #878787;
   }
 
   &__contents {

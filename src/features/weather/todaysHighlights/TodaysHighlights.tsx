@@ -11,6 +11,7 @@ const TodaysHighlights = () => {
     dailyWeatherHighlights,
     timezone,
     lastWeatherFetchDateTime,
+    todaysDate,
     loading,
   } = useDisplayedCityWeather();
 
@@ -26,17 +27,14 @@ const TodaysHighlights = () => {
     <div className={styles.todaysHighlights}>
       <div className={styles.todaysHighlights__container}>
         <h2>
-          Daily Highlights
-          <span
-            style={{
-              fontSize: "12px",
-              fontWeight: "normal",
-              marginLeft: "8px",
-            }}
-          >
-            {date}
-          </span>
+          Highlights{" "}
+          {dailyWeatherHighlights.datetime === todaysDate ? (
+            ""
+          ) : (
+            <span>{date}</span>
+          )}
         </h2>
+
         <div className={styles.todaysHighlights__contents}>
           <Overview
             humidity={dailyWeatherHighlights.humidity}
