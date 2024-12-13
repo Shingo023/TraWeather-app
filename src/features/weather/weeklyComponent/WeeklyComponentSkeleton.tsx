@@ -10,7 +10,7 @@ const WeeklyComponentSkeleton = () => {
         <h2 className={styles.WeeklyComponent__headerSkeleton} />
         <ul className={styles.WeeklyComponentList}>
           {items.map((_, index) => (
-            <WeeklyForecastWeatherCardSkeleton index={index} />
+            <WeeklyForecastWeatherCardSkeleton key={index} />
           ))}
         </ul>
       </div>

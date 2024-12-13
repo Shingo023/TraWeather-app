@@ -28,7 +28,11 @@ const WeeklyForecastWeatherCard = ({
       <div className={styles.WeeklyComponentItem__weatherInfo}>
         <div className={styles.WeeklyComponentItem__weatherInfoLeft}>
           <div>
-            <WeatherIcon weatherIcon={dailyWeatherIcon} />
+            <WeatherIcon
+              weatherIcon={dailyWeatherIcon}
+              height={35}
+              width={35}
+            />
           </div>
         </div>
         <div className={styles.WeeklyComponentItem__weatherInfoRight}>

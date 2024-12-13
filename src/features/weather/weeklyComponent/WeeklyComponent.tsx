@@ -56,8 +56,8 @@ export const WeeklyComponent = () => {
 
   return (
     <div className={styles.WeeklyComponent}>
+      <h2>Weekly Forecast</h2>
       <div className={styles.WeeklyComponent__content}>
-        <h2>Weekly Forecast</h2>
         <ul className={styles.WeeklyComponentList}>
           {weeklyWeather ? (
             weeklyWeather.map((dailyWeather, index) => {

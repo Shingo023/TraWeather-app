@@ -1,8 +1,8 @@
 import styles from "./WeeklyForecastWeatherCard.module.scss";
 
-const WeeklyForecastWeatherCardSkeleton = ({ index }: { index: number }) => {
+const WeeklyForecastWeatherCardSkeleton = () => {
   return (
-    <li className={styles.WeeklyComponentItem} key={index}>
+    <li className={styles.WeeklyComponentItem}>
       <p className={styles.WeeklyComponentItem__dateSkeleton} />
       <div className={styles.WeeklyComponentItem__weatherInfo}>
         <div className={styles.WeeklyComponentItem__weatherInfoLeft}>

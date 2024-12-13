@@ -80,7 +80,10 @@ const WeatherForecast = ({
           const weatherIcon = weather.icon as WeatherIconType;
           const weatherIconSrc = iconMapping[weatherIcon];
 
-          const temp = weather.temp ? Math.round(weather.temp) : undefined;
+          const temp =
+            weather.temp || weather.temp === 0
+              ? Math.round(weather.temp)
+              : undefined;
           const tempMax = weather.tempmax
             ? Math.round(weather.tempmax)
             : undefined;

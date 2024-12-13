@@ -37,8 +37,8 @@ const TodaysForecast = () => {
           <WeatherForecast
             dailyOrWeeklyWeather={twentyFourHoursWeather}
             className="dailyForecast"
-            iconHeight={45}
-            iconWidth={45}
+            iconHeight={40}
+            iconWidth={40}
           />
         </div>
       </div>

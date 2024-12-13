@@ -1,19 +1,19 @@
 @import "@/style/base/variables.scss";
 
 .WeeklyComponent {
-  background-color: #D9D9D9;
   width: 100%;
   min-height: 672px;
   height: 100%;
-  padding: 28px 34px 20px 34px;
   border-radius: 10px;
 
   &__content {
-    height: 100%;
+    height: calc(100% - 34px);
+    background-color: #F9F9F9;
+    border-radius: 10px;
   }
   h2 {
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     font-size: 20px;
   }
   p {
@@ -25,7 +25,8 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  height: calc(100% - 44px);
+  height: 100%;
+  padding: 10px 20px;
 }
 
 // Skeletons

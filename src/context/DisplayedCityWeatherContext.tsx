@@ -67,6 +67,7 @@ export const DisplayedCityWeatherProvider = ({
     try {
       const weatherData = await fetchDisplayedCityWeatherData(lat, lng);
       setDisplayedCityWeather(weatherData);
+      console.log(weatherData);
 
       setCurrentWeather({
         currentTemp: Math.round(weatherData.currentConditions.temp),
