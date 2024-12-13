@@ -50,6 +50,7 @@ const CurrentWeather = () => {
           weatherIcon={currentWeather?.currentWeatherIcon ?? null}
           width={150}
           height={150}
+          priority={true}
         />
       </div>
     </div>

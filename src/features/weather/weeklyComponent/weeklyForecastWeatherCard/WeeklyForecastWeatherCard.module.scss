@@ -66,3 +66,54 @@
     }
   }
 }
+
+// skeleton
+.WeeklyComponentItem {
+  &__dateSkeleton,
+  &__weatherIconSkeleton,
+  &__tempsSkeleton,
+  &__chanceOfRainSkeleton {
+    background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+
+  &__dateSkeleton {
+    height: 14px;
+    width: 80px;
+    margin-left: 8px;
+    border-radius: 6px;
+  }
+
+  &__weatherIconSkeleton {
+    height: 30px;
+    width: 30px;
+    margin: 15px;
+    border-radius: 6px;    
+  }
+
+  &__tempsSkeletonWrapper,
+  &__chanceOfRainSkeletonSkeletonWrapper {
+    min-width: 60px;
+  }
+  &__tempsSkeleton {
+    height: 14px;
+    width: 45px;
+    border-radius: 6px;   
+  }
+
+  &__chanceOfRainSkeleton {
+    height: 14px;
+    width: 55px;
+    border-radius: 6px;    
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: 200px 0;
+  }
+}
