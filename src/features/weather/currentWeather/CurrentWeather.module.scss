@@ -31,6 +31,7 @@
   &__cityName {
     font-size: 28px;
     font-weight: 600;
+    letter-spacing: 0.56px;
     &:hover {
       cursor: default;
       + .currentWeather__cityNameTooltip {
@@ -70,6 +71,7 @@
   &__dateTime {
     font-size: 12px;
     font-weight: 500;
+    letter-spacing: 0.12px;
   }
   &__updateIconContainer {
     height: 15px;
@@ -88,6 +90,7 @@
     font-size: 14px;
     font-weight: 500;
     color: #878787;
+    letter-spacing: 0.21px;
   }
 }
 

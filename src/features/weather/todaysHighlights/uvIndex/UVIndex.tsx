@@ -49,7 +49,7 @@ const UVIndex = ({ uvIndex }: { uvIndex: number }) => {
           </div>
         </div>
         <div className={styles.uvIndex__indicator}>
-          {getUvMessage((uvIndex * 100) / 10 / 180)}
+          <p>{getUvMessage((uvIndex * 100) / 10 / 180)}</p>
         </div>
       </div>
     </div>

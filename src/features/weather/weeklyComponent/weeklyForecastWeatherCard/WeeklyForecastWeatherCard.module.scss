@@ -21,11 +21,13 @@
   &__weatherInfo {
     display: flex;
     justify-content: space-around;
+    gap: 12px;
   }
   &__weatherInfoLeft {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 8px;
     div {
       display: flex;
     }
@@ -35,6 +37,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
+    gap: 8px;
     p {
       min-width: 60px;
     }
