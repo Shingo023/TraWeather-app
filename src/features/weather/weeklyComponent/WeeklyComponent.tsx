@@ -2,12 +2,13 @@
 
 import {
   DailyWeatherHighlightsType,
+  WeatherData,
   WeatherDay,
   WeatherIconType,
 } from "@/types";
 import styles from "./WeeklyComponent.module.scss";
 import { iconMapping } from "@/utils/weatherIconMapping";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import WeeklyComponentSkeleton from "./WeeklyComponentSkeleton";
 import {
   extractDailyHighlights,
@@ -24,7 +25,14 @@ export const WeeklyComponent = () => {
     todaysDate,
     loading,
   } = useDisplayedCityWeather();
-  const [selectedDate, setSelectedDate] = useState<string | null>(todaysDate);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  // Synchronize selectedDate with todaysDate
+  useEffect(() => {
+    if (todaysDate) {
+      setSelectedDate(todaysDate);
+    }
+  }, [todaysDate]);
 
   const weeklyWeather: WeatherDay[] | undefined = displayedCityWeather?.days;
 

@@ -46,11 +46,11 @@ const TodaysHighlights = () => {
           />
           <UVIndex uvIndex={dailyWeatherHighlights.uvIndexData} />
           <SunsetAndSunrise
-            timeZone={timezone}
             sunrise={dailyWeatherHighlights.sunrise}
             sunset={dailyWeatherHighlights.sunset}
             selectedDate={dailyWeatherHighlights.datetime}
             lastWeatherFetchDateTime={lastWeatherFetchDateTime}
+            todaysDate={todaysDate}
           />
         </div>
       </div>

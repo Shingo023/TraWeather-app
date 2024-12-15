@@ -99,46 +99,27 @@ export function daylightPercentage(
   return Math.round(percentagePassed * 100) / 100;
 }
 
-// export function daylightPercentage(
-//   timezone: string,
-//   date: string,
-//   sunrise: string,
-//   sunset: string
-// ): number | boolean {
-//   // Parse the target date, sunrise, and sunset times in the specified timezone
-//   const sunriseTime = DateTime.fromFormat(
-//     `${date} ${sunrise}`,
-//     "yyyy-MM-dd HH:mm:ss",
-//     { zone: timezone }
-//   );
+export function getDaytimePeriod(
+  sunrise: string,
+  sunset: string,
+  targetTime: string
+) {
+  // Parse the target time into a Date object
+  const targetDate = new Date(targetTime);
 
-//   const sunsetTime = DateTime.fromFormat(
-//     `${date} ${sunset}`,
-//     "yyyy-MM-dd HH:mm:ss",
-//     { zone: timezone }
-//   );
+  // Extract the date part from the target time
+  const targetDateOnly = targetDate.toDateString(); // E.g., "Sun Dec 15 2024"
 
-//   // Check if the dates are valid
-//   if (!sunriseTime.isValid || !sunsetTime.isValid) {
-//     return false;
-//   }
+  // Combine the date part with sunrise and sunset times
+  const sunriseDate = new Date(`${targetDateOnly} ${sunrise}`);
+  const sunsetDate = new Date(`${targetDateOnly} ${sunset}`);
 
-//   // Get the current time in the specified timezone
-//   const currentTime = DateTime.now().setZone(timezone);
-
-//   // Check if current time is within the sunrise-sunset range
-//   if (currentTime < sunriseTime || currentTime > sunsetTime) {
-//     return false;
-//   }
-
-//   // Calculate the percentage of daylight time that has passed
-//   const totalDaylightDuration = sunsetTime.diff(sunriseTime, "seconds").seconds;
-//   const timePassedSinceSunrise = currentTime.diff(
-//     sunriseTime,
-//     "seconds"
-//   ).seconds;
-//   const percentagePassed =
-//     (timePassedSinceSunrise / totalDaylightDuration) * 100;
-
-//   return Math.round(percentagePassed * 100) / 100;
-// }
+  // Compare target time with sunrise and sunset
+  if (targetDate < sunriseDate) {
+    return "before";
+  } else if (targetDate >= sunriseDate && targetDate <= sunsetDate) {
+    return "middle";
+  } else {
+    return "after";
+  }
+}
