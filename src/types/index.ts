@@ -23,6 +23,8 @@ export type WeatherData = {
 
 // Weather types for the favorites list
 export type WeatherDataForFavoritesList = {
+  sunrise: string;
+  sunset: string;
   timezone: string;
   weeklyWeather: WeatherDataForForecast[];
   days: { hours: WeatherDataForForecast[] }[];
@@ -97,6 +99,22 @@ export type WeatherIconType =
   | "cloudy"
   | "partly-cloudy-day"
   | "partly-cloudy-night";
+
+export type BackgroundWeatherType =
+  | "clear-day"
+  | "partly-cloudy-day"
+  | "cloudy"
+  | "rain"
+  | "snow"
+  | "wind"
+  | "fog"
+  | "clear-night"
+  | "partly-cloudy-night"
+  | "cloudy-night"
+  | "rain-night"
+  | "snow-night"
+  | "wind-night"
+  | "fog-night";
 
 // Extend the User object returned by NextAuth to include an ID
 declare module "next-auth" {

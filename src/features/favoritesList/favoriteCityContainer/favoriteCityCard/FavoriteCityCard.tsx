@@ -2,7 +2,7 @@
 
 import { FavoriteCityCardPropsType, WeatherIconType } from "@/types";
 import styles from "./FavoriteCityCard.module.scss";
-import { backgroundMapping, iconMapping } from "@/utils/weatherIconMapping";
+import { getBackgroundWeather, iconMapping } from "@/utils/weatherIconMapping";
 import { useMemo, useState } from "react";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import Button from "@/app/components/elements/button/Button";
@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import HomeLocationIcon from "./homeLocationIcon/HomeLocationIcon";
 import PlaceNameEditor from "./placeNameEditor/PlaceNameEditor";
 import ExternalLinkComponent from "./externalLink/ExternalLink";
+import { isOutsideDaytime } from "@/utils/mathUtils";
 
 const FavoriteCityCard = ({
   userId,
@@ -37,12 +38,18 @@ const FavoriteCityCard = ({
   const tomorrowsWeather = favoriteCityWithWeather.weather.days[1].hours;
   const weeklyWeather = favoriteCityWithWeather.weather.weeklyWeather;
 
-  const backgroundWeather =
-    currentWeather !== undefined ? backgroundMapping[currentWeather] : null;
-  const currentWeatherIcon =
-    currentWeather !== undefined ? iconMapping[currentWeather] : null;
+  const sunrise = favoriteCityWithWeather.weather.sunrise;
+  const sunset = favoriteCityWithWeather.weather.sunset;
   const lastWeatherFetchDateTime =
     favoriteCityWithWeather.lastWeatherFetchDateTime;
+
+  const isNight = isOutsideDaytime(sunrise, sunset, lastWeatherFetchDateTime);
+
+  const backgroundWeather = getBackgroundWeather(isNight, currentWeather);
+
+  const currentWeatherIcon =
+    currentWeather !== undefined ? iconMapping[currentWeather] : null;
+
   const twentyFourHoursWeather = useMemo(
     () => getWeatherForNext24Hours(todaysWeather, tomorrowsWeather, timeZone),
     [todaysWeather, tomorrowsWeather, timeZone]
@@ -58,7 +65,7 @@ const FavoriteCityCard = ({
 
   return (
     <div
-      className={styles.cityCard__card}
+      className={`${styles.cityCard__card} ${isNight ? styles.nightMode : ""}`}
       style={{ backgroundImage: `url(${backgroundWeather})` }}
     >
       <div className={styles.cityCard__header}>
@@ -68,12 +75,13 @@ const FavoriteCityCard = ({
             userFavoriteCityId={userFavoriteCityId}
             userId={userId}
           />
-          <div className={styles.cityCard__cityName}>{cityName}</div>
+          <h5 className={styles.cityCard__cityName}>{cityName}</h5>
 
           <PlaceNameEditor
             cityName={cityName}
             userFavoriteCityId={userFavoriteCityId}
             cityAddress={cityAddress}
+            isNight={isNight}
           />
         </div>
 
@@ -107,9 +115,9 @@ const FavoriteCityCard = ({
 
       <div className={styles.cityCard__weather}>
         <div className={styles.cityCard__currentInfo}>
-          <div className={styles.cityCard__currentDateTime}>
+          <h5 className={styles.cityCard__currentDateTime}>
             {lastWeatherFetchDateTime}
-          </div>
+          </h5>
           <div className={styles.cityCard__currentWeather}>
             <div className={styles.cityCard__currentWeatherIconContainer}>
               <WeatherIcon
@@ -118,7 +126,7 @@ const FavoriteCityCard = ({
                 height={70}
               />
             </div>
-            <div className={styles.cityCard__currentTemp}>{currentTemp}°</div>
+            <h5 className={styles.cityCard__currentTemp}>{currentTemp}°</h5>
           </div>
           <div className={styles.cityCard__buttons}>
             <Button
@@ -136,9 +144,11 @@ const FavoriteCityCard = ({
               dailyOrWeeklyWeather={
                 showTodaysWeather ? twentyFourHoursWeather : weeklyWeather
               }
-              iconHeight={50}
-              iconWidth={50}
-              className="favoriteCityCard"
+              iconHeight={40}
+              iconWidth={40}
+              className={
+                isNight ? "favoriteCityCardNightMode" : "favoriteCityCard"
+              }
             />
           </div>
           <div className={styles.cityCard__placeInfoLinks}>

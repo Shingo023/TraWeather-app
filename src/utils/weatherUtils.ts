@@ -73,6 +73,8 @@ export const getWeatherForNext24Hours = (
 
 export const formatWeatherDataForFavoriteList = (weatherData: WeatherData) => {
   return {
+    sunrise: weatherData.days[0].sunrise,
+    sunset: weatherData.days[0].sunset,
     timezone: weatherData.timezone,
     weeklyWeather: weatherData.days.slice(0, 7).map((day: WeatherDay) => ({
       datetime: day.datetime,

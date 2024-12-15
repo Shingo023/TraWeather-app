@@ -91,6 +91,7 @@
   &__currentWeather {
     display: flex;
     align-items: center;
+    gap: 16px;
   }
   &__currentWeatherIconContainer {
     display: flex;
@@ -100,6 +101,7 @@
   &__currentTemp {
     font-size: 58px;
     font-weight: 500;
+    letter-spacing: -1.2px;
   }
   // Button
   &__buttons {
@@ -125,6 +127,10 @@
     align-items: flex-end;
     gap: 25px;
   }
+  
+}
+.nightMode h5 {
+  color: #F9F9F9CC;
 }
 
 // Skeleton

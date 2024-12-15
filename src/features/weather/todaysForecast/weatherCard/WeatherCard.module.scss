@@ -77,9 +77,16 @@
   }
 }
 
-.favoriteCityCard {
+.favoriteCityCard,
+.favoriteCityCardNightMode {
   width: 100px;
   min-width: 100px;
+  .weatherCard__weatherIcon {
+    margin: 8px 0 3px 0;
+  }
+}
+.favoriteCityCardNightMode {
+  background-color: rgba(white, 0.6);
 }
 
 .dailyForecast {

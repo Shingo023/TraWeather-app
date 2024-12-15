@@ -123,3 +123,15 @@ export function getDaytimePeriod(
     return "after";
   }
 }
+
+export function isOutsideDaytime(
+  sunrise: string,
+  sunset: string,
+  targetTime: string
+): boolean {
+  // Extract the time portion from the target time
+  const targetTimeString = new Date(targetTime).toTimeString().split(" ")[0]; // Format: "HH:MM:SS"
+
+  // Compare the times as strings
+  return targetTimeString < sunrise || targetTimeString > sunset;
+}

@@ -9,7 +9,7 @@
     color: #e2e2ed;
     &:hover {
       cursor: pointer; 
-      color: rgba(0, 0, 255, 0.4);
+      color: #60A8FF;
       /* Make the tooltip visible when the icon is hovered */
       + .cityCard__tooltip {
         visibility: visible;
@@ -17,7 +17,7 @@
       }
     }
     &.homeIconActive {
-      color: rgba(0, 0, 255, 1);
+      color: #5592FF;
     }
   }
   &__tooltip {
