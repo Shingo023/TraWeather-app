@@ -14,6 +14,12 @@
   &:hover {
     background-color: rgba(180, 180, 180, 0.5);
   }
+
+  @media (max-width: 768px) {
+    margin-bottom: 0; 
+    padding: 5px 5px;
+    gap: 3px;
+  }
 }
 
 .link.disabled {
@@ -30,4 +36,14 @@
   font-size: 12px;
   white-space: nowrap;
   opacity: 0.3;
+}
+
+.image {
+  width: 50px;
+  height: 50px;
+
+  @media (max-width: 768px) {
+    width: 34px; 
+    height: 25px;
+  }
 }

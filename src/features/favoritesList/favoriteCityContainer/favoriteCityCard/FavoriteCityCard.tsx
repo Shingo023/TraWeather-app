@@ -121,6 +121,7 @@ const FavoriteCityCard = ({
           <div className={styles.cityCard__currentWeather}>
             <div className={styles.cityCard__currentWeatherIconContainer}>
               <WeatherIcon
+                className="favoriteCityCardCurrent"
                 weatherIcon={currentWeatherIcon}
                 width={70}
                 height={70}

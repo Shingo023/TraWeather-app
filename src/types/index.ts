@@ -317,6 +317,7 @@ export type WeatherCardType = {
 };
 
 export type WeatherIconProps = {
+  className?: string;
   weatherIcon: string | null;
   width?: number;
   height?: number;

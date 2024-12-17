@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { WeatherIconProps } from "@/types";
+import styles from "./WeatherIcon.module.scss";
 
 const WeatherIcon = ({
+  className,
   weatherIcon,
   width,
   height,
@@ -13,6 +15,7 @@ const WeatherIcon = ({
 
   return (
     <Image
+      className={`${styles.weatherIcon} ${className ? styles[className] : ""}`}
       src={weatherIcon}
       alt="Weather icon"
       width={width ?? 60}

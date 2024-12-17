@@ -1,14 +1,18 @@
 .externalLink {
   font-size: 15px;
-      font-weight: 500;
-      display: flex;
-      gap: 3px;
-      align-items: flex-end;
-      color: #5592FF;
-      transition: all 0.3s ease; 
-      &:hover {
-       cursor: pointer;
-        color: #4299E1; 
-        text-decoration: underline;
-      }
+  font-weight: 500;
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+  color: #5592FF;
+  transition: all 0.3s ease; 
+  &:hover {
+    cursor: pointer;
+    color: #4299E1; 
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 }

@@ -16,6 +16,11 @@
     background-color: #8c8aff ;
     color: #1d1d1d;
   }
+
+  @media (max-width: 768px) {
+    font-size: 12px;
+    letter-spacing: 0.25px;
+  }
 }
 
 .modalEdit,

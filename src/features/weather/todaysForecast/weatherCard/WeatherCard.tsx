@@ -26,6 +26,7 @@ const WeatherCard = ({
         <p className={styles.weatherCard__time}>{dateTime}</p>
         <div className={styles.weatherCard__weatherIcon}>
           <WeatherIcon
+            className={className}
             weatherIcon={weatherIconSrc}
             width={iconWidth}
             height={iconHeight}

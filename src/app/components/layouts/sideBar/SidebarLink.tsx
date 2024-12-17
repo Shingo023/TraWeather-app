@@ -35,6 +35,7 @@ const SidebarLink = ({
   return (
     <Link className={styles.link} href={path} onClick={handleClick}>
       <Image
+        className={styles.image}
         src={isActive ? icon : iconPale}
         alt={alt}
         width={50}
