@@ -11,8 +11,15 @@
     padding: 18px 0 36px 20px;
 
     transform: translateY(100%); /* Initial hidden state */
-
     transition: transform 0.3s ease-in-out; /* Smooth transition */
+
+    @media (max-width: 768px) {
+      bottom: 0;
+      width: 100%;
+      padding: 18px 0 0 0;
+      justify-content: center;
+      height: 138px;
+    }
 
     &.deleteActive {
       transform: translateY(0)

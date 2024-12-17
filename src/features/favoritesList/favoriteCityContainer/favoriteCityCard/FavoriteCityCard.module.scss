@@ -22,6 +22,11 @@
     &:hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     }
+
+    @media (max-width: 768px) {
+      padding: 5px 10px;
+      height: 185px;
+    }
   }
 
   // header 
@@ -50,6 +55,14 @@
     display: flex;
     gap: 25px;
     align-items: flex-start;
+
+    @media (max-width: 768px) {
+      position: absolute;
+      left: 205px;
+      top: 38px;
+      gap: 12px;
+      z-index: 1000;
+    }
   }
 
   &__selectedForecast {
@@ -86,6 +99,14 @@
     height: calc(100% - 44px);
     margin-top: 8px;
     margin-left: 29px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      height:unset;
+      margin-top: unset;
+      margin-left: unset;
+      position: relative;
+    }
   }
 
   &__currentInfo {
@@ -93,15 +114,27 @@
     flex-direction: column;
     justify-content: space-between;
     min-width: 200px;
+
+    @media (max-width: 768px) {
+      flex-direction: unset;
+      justify-content: unset;
+      align-items: center;
+      min-width: 110px;
+      gap: 12px;
+      margin-left: 10px;
+    }
   }
   &__currentDateTime {
     font-weight: 400; 
-    color: #878787;
+    // color: #878787;
     letter-spacing: 0.2px;
 
     @media (max-width: 768px) {
       font-size: 10px;
       letter-spacing: 0.15px;
+      position: absolute;
+      top: -20px;
+      right: 0;
     }
   }
   &__currentWeather {
@@ -127,6 +160,13 @@
   &__buttons {
     margin-left: 12px;
     margin-bottom: 10px;
+
+    @media (max-width: 768px) {
+      margin: 0;
+      position: absolute;
+      top: 1px;
+      right: 0;
+    }
   }
 
   // Right side content
@@ -146,6 +186,13 @@
     justify-content: flex-end;
     align-items: flex-end;
     gap: 25px;
+
+    @media (max-width: 768px) {
+      gap: 12px;
+      position: absolute;
+      bottom: -18px;
+      right: 0;
+    }
   }
   
 }

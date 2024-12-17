@@ -1,5 +1,9 @@
 .favoritesList {
   &__favoritesContainer {
     margin: 0 30px 30px 15px;
+
+    @media (max-width: 768px) {
+      margin: 30px 10px;
+    }
   }
 }

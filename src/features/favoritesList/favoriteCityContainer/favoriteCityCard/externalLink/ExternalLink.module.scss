@@ -13,6 +13,13 @@
   }
 
   @media (max-width: 768px) {
-    font-size: 12px;
+    font-size: 10px;
+  }
+}
+
+.icon {
+  @media (max-width: 768px) {
+    width: 14px;
+    height: 14px;
   }
 }

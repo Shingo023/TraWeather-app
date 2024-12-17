@@ -13,12 +13,14 @@ import HomeLocationIcon from "./homeLocationIcon/HomeLocationIcon";
 import PlaceNameEditor from "./placeNameEditor/PlaceNameEditor";
 import ExternalLinkComponent from "./externalLink/ExternalLink";
 import { isOutsideDaytime } from "@/utils/mathUtils";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 const FavoriteCityCard = ({
   userId,
   favoriteCityWithWeather,
 }: FavoriteCityCardPropsType) => {
   const [showTodaysWeather, setShowTodaysWeather] = useState(true);
+  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const currentWeather = favoriteCityWithWeather.weather.currentConditions
     .icon as WeatherIconType;
@@ -132,7 +134,7 @@ const FavoriteCityCard = ({
           <div className={styles.cityCard__buttons}>
             <Button
               className="primary"
-              text="Weather Details"
+              text={isMobile ? "More" : "Weather Details"}
               type="button"
               onClick={handleWeatherInfoClick}
             />
@@ -154,7 +156,7 @@ const FavoriteCityCard = ({
           </div>
           <div className={styles.cityCard__placeInfoLinks}>
             <ExternalLinkComponent
-              linkName="Tourist Attractions"
+              linkName="Tourist Spots"
               url={`https://www.google.com/maps/search/${encodeURIComponent(
                 "tourist attraction"
               )}/@${cityLat},${cityLng},15z`}

@@ -15,17 +15,30 @@
   padding: 2px;
   overflow-x: auto;
   scroll-behavior: smooth;
+
+  @media (max-width: 768px) {
+    gap: 8px;
+  }
 }
 
 .arrowLeft, .arrowRight {
   position: absolute; 
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255, 255, 255, 0.5);
-  padding: 10px;
+  background: rgba(#040219CC, 0.3);
+  padding: 6px;
   border-radius: 50%;
   cursor: pointer;
   z-index: 10; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 3px;
+    width: 28px;
+    height: 28px;
+  }
 }
 
 .arrowLeft {
@@ -37,18 +50,22 @@
 }
 
 .arrowLeft:hover, .arrowRight:hover {
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(#040219CC, 0.5);
 }
 
 .arrowIcon {
   width: 45px;
   height: 45px;
-  fill: rgba(255, 255, 255, 0.5);
   stroke-width: 2px;
-  color: rgba(29, 29, 29, 0.5);
+  color: rgba(255, 255, 255, 0.7);
   transition: color 0.3s ease;
+
+  @media (max-width: 768px) {
+    width: 24px;
+    height: 24px;
+  }
 }
 
 .arrowIcon:hover {
-  color: rgba(29, 29, 29, 0.8);
+  color: rgba(255, 255, 255, 0.9);
 }
