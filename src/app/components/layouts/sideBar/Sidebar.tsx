@@ -10,26 +10,13 @@ import {
   ArrowRightStartOnRectangleIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
+import SidebarSkeleton from "./SidebarSkeleton";
 
 const Sidebar = () => {
   const { data: session, status } = useSession();
 
-  // Render nothing while the session status is "loading"
   if (status === "loading") {
-    return (
-      <div className={styles.skeleton}>
-        <>
-          <div className={styles.sidebar__links}>
-            <div className={styles.skeleton__link} />
-            <div className={styles.skeleton__link} />
-          </div>
-
-          <div className={styles.sidebar__bottom}>
-            <div className={styles.skeleton__log} />
-          </div>
-        </>
-      </div>
-    );
+    return <SidebarSkeleton />;
   }
 
   const handleSignOut = () => {

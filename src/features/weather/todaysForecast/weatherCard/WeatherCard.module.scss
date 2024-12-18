@@ -132,6 +132,7 @@
   background-color: #F9F9F9;
 }
 
+
 // Skeleton
 .weatherCard {
   &__timeSkeleton,
@@ -149,34 +150,67 @@
   &__timeSkeleton {
     width: 62px;
     height: 17px;
+    @media (max-width: 768px) {
+      width: 40px;
+      height: 12px;
+    }
   }
 
   &__weatherIconSkeleton {
     margin-top: 10px;
     margin-bottom: 10px;
+    @media (max-width: 768px) {
+      margin-top: unset;
+      margin-bottom: unset;
+    }
   }
 
   &__tempSkeleton {
     width: 28px;
     height: 17px;
     margin-bottom: 3px;
+    @media (max-width: 768px) {
+      width: 18px;
+      height: 13px;
+    }
   }
 
   &__precipProbSkeleton {
     width: 50px;
     height: 14px;
     margin-bottom: 3px;
+    @media (max-width: 768px) {
+      width: 25px;
+      height: 12px;
+    }
   }
 
   &__precipSkeleton {
     width: 70px;
     height: 14px;
     margin-bottom: 3px;
+    @media (max-width: 768px) {
+      width: 35px;
+      height: 12px;
+    }
   }
 
   &__windSkeleton {
     width: 90px;
     height: 14px;
+    @media (max-width: 768px) {
+      width: 45px;
+      height: 12px;
+    }
+  }
+}
+
+.favoriteCityCard .weatherCard__weatherIconSkeleton {
+  width: 40px;
+  height: 40px;
+  @media (max-width: 768px) {
+    width: 20px;
+    height: 20px;
   }
 }
 

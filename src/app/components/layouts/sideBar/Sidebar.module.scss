@@ -98,41 +98,39 @@
       margin-bottom: 3px;
     }
   }
+
+  
 }
 
 // Skeletons
-.skeleton {
-  padding: 24px 10px;
-  width: 115px;
-  height: 100%;
-  border-radius: 10px;
-  background-color: #e0e0e0;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  gap: 24px;
-
-  &__link,
-  &__log {
+.sidebar {
+  &__linkSkeleton,
+  &__logIconSkeleton {
     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
   }
 
-  &__link {
+  &__linkSkeleton {
     width: 69px;
     height: 65px;
     margin-bottom: 20px;
     border-radius: 10px;
+    @media (max-width: 768px) {
+      width: 53px;
+      height: 48px;
+      margin-bottom: unset;
+    }
   }
 
-  &__log {
+  &__logIconSkeleton {
     width: 90px;
     height: 25px;
     border-radius: 6px;
+    @media (max-width: 768px) {
+      width: 50px;
+      height: 49px;
+    }
   }
 }
 

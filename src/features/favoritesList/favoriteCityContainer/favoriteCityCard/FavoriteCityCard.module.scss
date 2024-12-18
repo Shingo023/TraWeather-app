@@ -26,6 +26,7 @@
     @media (max-width: 768px) {
       padding: 5px 10px;
       height: 185px;
+      position: relative;
     }
   }
 
@@ -58,7 +59,7 @@
 
     @media (max-width: 768px) {
       position: absolute;
-      left: 205px;
+      left: 115px;
       top: 38px;
       gap: 12px;
       z-index: 1000;
@@ -88,7 +89,6 @@
       color: rgba(white, 1);
       background-color: rgb(black, 0.7);
       cursor: pointer;
-
     }
   }
 
@@ -105,7 +105,7 @@
       height:unset;
       margin-top: unset;
       margin-left: unset;
-      position: relative;
+      // position: relative;
     }
   }
 
@@ -126,15 +126,14 @@
   }
   &__currentDateTime {
     font-weight: 400; 
-    // color: #878787;
     letter-spacing: 0.2px;
 
     @media (max-width: 768px) {
       font-size: 10px;
       letter-spacing: 0.15px;
       position: absolute;
-      top: -20px;
-      right: 0;
+      top: 12px;
+      right: 10px;
     }
   }
   &__currentWeather {
@@ -164,8 +163,8 @@
     @media (max-width: 768px) {
       margin: 0;
       position: absolute;
-      top: 1px;
-      right: 0;
+      top: 30px;
+      right: 10px;
     }
   }
 
@@ -190,8 +189,8 @@
     @media (max-width: 768px) {
       gap: 12px;
       position: absolute;
-      bottom: -18px;
-      right: 0;
+      bottom: 8px;
+      right: 10px;
     }
   }
   
@@ -199,6 +198,22 @@
 .nightMode h5 {
   color: #F9F9F9CC;
 }
+.nightMode .cityCard__selectedForecast {
+  color: #F9F9F9CC;
+  border: rgba(#F9F9F9CC, 0.7) solid 0.5px;
+  &.forecastActive {
+    border: black solid 1px;
+    color: white;
+    // font-weight: 600;
+    // background-color: rgba(#F9F9F9CC, 1);
+  }
+    //   &:hover {
+    //     color: #040219CC;
+    //     font-weight: 600;
+    //     background-color: rgba(#F9F9F9CC, 1);
+    //   }
+}
+
 
 // Skeleton
 .cityCard {
@@ -222,18 +237,30 @@
     width: 25px;
     margin-right: 5px;
     border-radius: 180px;
+    @media (max-width: 768px) {
+      height: 13px;
+      width: 10px;
+    }
   }
 
   &__cityNameSkeleton {
     width: 150px;
     height: 34px;
     border-radius: 8px;
+    @media (max-width: 768px) {
+      height: 17px;
+      width: 65px;
+    }
   }
 
   &__selectedForecastSkeleton {
     width: 62px;
     height: 27px;
     border-radius: 18px;
+    @media (max-width: 768px) {
+      height: 22px;
+      width: 52px;
+    }
   }
 
   &__currentDateTimeSkeleton {
@@ -241,6 +268,11 @@
     height: 20px;
     border-radius: 8px;
     margin-top: 10px;
+    @media (max-width: 768px) {
+      height: 12px;
+      width: 100px;
+      margin-top: unset;
+    }
   }
 
   &__currentWeatherIconSkeleton {
@@ -248,6 +280,11 @@
     height: 45px;
     margin: 5px;
     border-radius: 8px;
+    @media (max-width: 768px) {
+      height: 30px;
+      width: 30px;
+      margin: unset;
+    }
   }
 
     &__currentTempSkeleton {
@@ -255,23 +292,39 @@
     height: 50px;
     margin: 5px;
     border-radius: 8px;
+    @media (max-width: 768px) {
+      height: 36px;
+      width: 34px;
+    }
   }
 
     &__buttonSkeleton {
     width: 127px;
     height: 32px;
     border-radius: 194px;
+    @media (max-width: 768px) {
+      height: 30px;
+      width: 56px;
+    }
   }
 
   &__placeInfoSkeleton1 {
     width: 155px;
     height: 20px;
     border-radius: 8px;
+    @media (max-width: 768px) {
+      height: 14px;
+      width: 80px;
+    }
   }
   &__placeInfoSkeleton2 {
     width: 71px;
     height: 20px;
     border-radius: 8px;
+    @media (max-width: 768px) {
+      height: 14px;
+      width: 49px;
+    }
   }
 }
 
