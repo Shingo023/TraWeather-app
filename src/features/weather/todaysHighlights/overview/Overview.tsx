@@ -21,64 +21,68 @@ const Overview = ({
           </div>
         </div>
 
-        <div className={styles.overview__feelsLikeTemps}>
-          <h6>Feels-like temp</h6>
-          <div>
-            <Thermometer className={styles.overview__icon} />
-            <p>
-              <span className={styles.overview__numberData}>
-                {feelsLikeTempMax}
-              </span>
-              ° /{" "}
-              <span className={styles.overview__numberData}>
-                {feelsLikeTempMin}
-              </span>
-              °
-            </p>
-          </div>
-        </div>
-
-        {snowDepth > 0 && (
-          <div className={styles.overview__snowDepth}>
-            <h6>Snow Depth</h6>
+        <div className={styles.overview__bottomContents}>
+          <div className={styles.overview__feelsLikeTemps}>
+            <h6>Feels-like temp</h6>
             <div>
-              <ArrowUpToLine className={styles.overview__icon} />
-              <p>
-                <span className={styles.overview__numberData}>{snowDepth}</span>
-                cm
-              </p>
-            </div>
-          </div>
-        )}
-
-        <div className={styles.overview__humidity}>
-          <h6>Humidity</h6>
-          <div>
-            <Droplet className={styles.overview__icon} />
-            <p>
-              <span className={styles.overview__numberData}>{humidity}</span>%
-            </p>
-          </div>
-        </div>
-
-        {visibility < 4 && (
-          <div className={styles.overview__visibility}>
-            <h6>Visibility</h6>
-            <div>
-              <Eye className={styles.overview__icon} />
+              <Thermometer className={styles.overview__icon} />
               <p>
                 <span className={styles.overview__numberData}>
-                  {visibility}
+                  {feelsLikeTempMax}
                 </span>
-                km
+                ° /{" "}
+                <span className={styles.overview__numberData}>
+                  {feelsLikeTempMin}
+                </span>
+                °
               </p>
             </div>
-
-            <p className={styles.overview__weatherIndex}>
-              {getVisibilityIndex(visibility)}
-            </p>
           </div>
-        )}
+
+          {snowDepth > 0 && (
+            <div className={styles.overview__snowDepth}>
+              <h6>Snow Depth</h6>
+              <div>
+                <ArrowUpToLine className={styles.overview__icon} />
+                <p>
+                  <span className={styles.overview__numberData}>
+                    {snowDepth}
+                  </span>
+                  cm
+                </p>
+              </div>
+            </div>
+          )}
+
+          <div className={styles.overview__humidity}>
+            <h6>Humidity</h6>
+            <div>
+              <Droplet className={styles.overview__icon} />
+              <p>
+                <span className={styles.overview__numberData}>{humidity}</span>%
+              </p>
+            </div>
+          </div>
+
+          {visibility < 4 && (
+            <div className={styles.overview__visibility}>
+              <h6>Visibility</h6>
+              <div>
+                <Eye className={styles.overview__icon} />
+                <p>
+                  <span className={styles.overview__numberData}>
+                    {visibility}
+                  </span>
+                  km
+                </p>
+              </div>
+
+              <p className={styles.overview__weatherIndex}>
+                {getVisibilityIndex(visibility)}
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

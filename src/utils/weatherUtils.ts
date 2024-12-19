@@ -8,26 +8,18 @@ import { getCurrentHourInTimeZone } from "./dateUtils";
 
 // wind speed(kph)
 export const getWindStrength = (windspeed: number) => {
-  if (windspeed >= 0 && windspeed <= 5) {
-    return "Calm"; // 0–5 kph
-  } else if (windspeed >= 6 && windspeed <= 10) {
-    return "Still"; // 6–10 kph
-  } else if (windspeed >= 11 && windspeed <= 19) {
-    return "Gentle"; // 11–19 kph
-  } else if (windspeed >= 20 && windspeed <= 29) {
-    return "Mild"; // 20–29 kph
-  } else if (windspeed >= 30 && windspeed <= 39) {
-    return "Brisk"; // 30–39 kph
-  } else if (windspeed >= 40 && windspeed <= 50) {
-    return "Breezy"; // 40–50 kph
-  } else if (windspeed >= 51 && windspeed <= 61) {
-    return "Blustery"; // 51-61 kph
-  } else if (windspeed >= 62 && windspeed <= 74) {
-    return "Windy"; // 62–74 kph
-  } else if (windspeed >= 75 && windspeed <= 88) {
-    return "Gale"; // 75–88 kph
-  } else if (windspeed >= 89 && windspeed <= 102) {
-    return "Stormy"; // 89–102 kph
+  if (windspeed >= 0 && windspeed <= 8) {
+    return "Calm"; // 0–8 kph
+  } else if (windspeed >= 9 && windspeed <= 23) {
+    return "Gentle"; // 9–23 kph
+  } else if (windspeed >= 24 && windspeed <= 32) {
+    return "Breezy"; // 24–32 kph
+  } else if (windspeed >= 33 && windspeed <= 48) {
+    return "Windy"; // 33–48 kph
+  } else if (windspeed >= 49 && windspeed <= 64) {
+    return "Gusty"; // 49–64 kph
+  } else if (windspeed >= 65 && windspeed <= 102) {
+    return "Stormy"; // 65–102 kph
   } else if (windspeed >= 103) {
     return "Fierce"; // 103+ kph
   } else {

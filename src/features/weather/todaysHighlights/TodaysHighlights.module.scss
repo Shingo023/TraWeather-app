@@ -3,6 +3,11 @@
   min-height: 252px;
   padding-top: 10px;
 
+  @media (max-width: 768px) {
+    height: unset;
+    min-height: 210px;
+  }
+
   &__container {
     display: flex;
     flex-direction: column;
@@ -13,6 +18,12 @@
       font-size: 20px;
       font-weight: 600;
       letter-spacing: 0.4px;
+
+      @media (max-width: 768px) {
+        font-size: 16px;
+        letter-spacing: 0.32px;
+      }
+
       span {
         font-size: 12px;
         font-weight: 500;
@@ -25,8 +36,11 @@
   &__contents {
     display: flex;
     gap: 30px;
-    height: calc(100% - 20px);
+    height: calc(100% - 24px);
     padding-top: 10px;
+    @media (max-width: 1015px) { 
+      gap: 14px; 
+    }
   }
   
 }

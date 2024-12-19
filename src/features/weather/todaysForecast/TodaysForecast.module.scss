@@ -2,6 +2,11 @@
   height: 34%;
   min-height: 242px;
 
+  @media (max-width: 768px) {
+    height: unset;
+    min-height: 210px;
+  }
+
   &__container {
     height: 100%;
     padding: 15px 0 15px 0;
@@ -11,6 +16,12 @@
       font-weight: 600;
       margin-bottom: 10px;
       letter-spacing: 0.4px;
+
+      @media (max-width: 768px) {
+        font-size: 16px;
+        letter-spacing: 0.32px;
+      }
+      
       span {
         font-size: 12px;
         font-weight: 500;

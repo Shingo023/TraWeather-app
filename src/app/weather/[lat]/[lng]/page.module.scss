@@ -2,6 +2,13 @@
   display: flex;
   height: 100%;
   padding: 18px 30px 18px 15px;
+  @media (max-width: 1015px) { 
+    padding: 18px 30px 18px 5px; 
+  }
+  @media (max-width: 768px) { 
+    padding: 18px 15px 18px 15px;
+    margin-bottom: 60px;
+  }
 
   &__leftContent {
   width: 65%;
@@ -11,5 +18,8 @@
   &__rightContent {
   width: 35%;
   padding: 69px 0 0 26px;
+  @media (max-width: 1015px) { 
+    padding: 69px 0 0 20px; 
+  }
   }
 }

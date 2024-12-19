@@ -39,11 +39,20 @@
         opacity: 1;
       }
     }
+
+    @media (max-width: 768px) { 
+      font-size: 24px; 
+      letter-spacing: 0.48px;
+    }
   }
   &__cityNameTooltip {
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  &__weatherIconContainer {
+    margin: auto 0;
   }
 
   // info section
@@ -85,12 +94,21 @@
     font-size: 60px;
     font-weight: 500;
     margin-top: 8px;
+
+    @media (max-width: 768px) {
+      font-size: 50px;
+    }
   }
   &__feelslikeTemp {
     font-size: 14px;
     font-weight: 500;
     color: #878787;
     letter-spacing: 0.21px;
+
+    @media (max-width: 768px) {
+      font-size: 12px;
+      letter-spacing: 0.18px;
+    }
   }
 }
 

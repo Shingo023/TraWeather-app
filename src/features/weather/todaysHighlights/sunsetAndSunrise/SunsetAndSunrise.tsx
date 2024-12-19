@@ -29,10 +29,6 @@ const SunsetAndSunrise = ({
     sunset,
     lastWeatherFetchDateTime!
   );
-  console.log(sunrise);
-  console.log(sunset);
-  console.log(lastWeatherFetchDateTime);
-  console.log(daytimePeriod);
 
   const sunCurrentLocation =
     selectedDate === todaysDate && lastWeatherFetchDateTime
@@ -48,82 +44,88 @@ const SunsetAndSunrise = ({
 
   return (
     <div className={styles.sunsetAndSunrise}>
-      <p className={styles.sunsetAndSunrise__title}>Sunrise & Sunset</p>
-      <div className={styles.sunsetAndSunrise__container}>
-        {selectedDate === todaysDate ? (
-          <>
-            {/* sun orbit */}
-            <div className={styles.sunsetAndSunrise__sunOrbitContainer}>
-              <div
-                className={styles.sunsetAndSunrise__sunOrbitLeft}
-                style={{
-                  clipPath: `polygon(0 0, ${backgroundPercentage}% 0, ${backgroundPercentage}% 100%, 0 100%)`,
-                }}
-              />{" "}
-              <div
-                className={`${styles.sunsetAndSunrise__sunOrbitRight} ${
-                  daytimePeriod !== "middle" ? styles.night : ""
-                }`}
-                style={{
-                  clipPath: `polygon(${backgroundPercentage}% 0, 100% 0, 100% 100%, ${backgroundPercentage}% 100%)`,
-                }}
-              />
-              <div
-                className={styles.sunsetAndSunrise__clockHandWrapper}
-                style={{ transform: `rotate(${sunDegrees}deg)` }}
-              >
-                <Image
-                  className={styles.sunsetAndSunrise__sunIcon}
-                  src="/heroicons_sun-solid.svg"
-                  alt="sun-icon"
-                  width={30}
-                  height={30}
+      <div className={styles.sunsetAndSunrise__wrapper}>
+        <p className={styles.sunsetAndSunrise__title}>Sunrise & Sunset</p>
+        <div className={styles.sunsetAndSunrise__container}>
+          {selectedDate === todaysDate ? (
+            <>
+              {/* sun orbit */}
+              <div className={styles.sunsetAndSunrise__sunOrbitContainer}>
+                <div
+                  className={styles.sunsetAndSunrise__sunOrbitLeft}
+                  style={{
+                    clipPath: `polygon(0 0, ${backgroundPercentage}% 0, ${backgroundPercentage}% 100%, 0 100%)`,
+                  }}
+                />{" "}
+                <div
+                  className={`${styles.sunsetAndSunrise__sunOrbitRight} ${
+                    daytimePeriod !== "middle" ? styles.night : ""
+                  }`}
+                  style={{
+                    clipPath: `polygon(${backgroundPercentage}% 0, 100% 0, 100% 100%, ${backgroundPercentage}% 100%)`,
+                  }}
                 />
+                <div
+                  className={styles.sunsetAndSunrise__clockHandWrapper}
+                  style={{ transform: `rotate(${sunDegrees}deg)` }}
+                >
+                  <Image
+                    className={styles.sunsetAndSunrise__sunIcon}
+                    src="/heroicons_sun-solid.svg"
+                    alt="sun-icon"
+                    width={30}
+                    height={30}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* hours container */}
-            <div
-              className={`${styles.sunsetAndSunrise__hoursContainer} ${
-                daytimePeriod !== "middle" ? styles.nightHorizon : ""
-              }`}
-            >
-              <div className={`${styles.dayTime} ${styles.sunrise}`}>
-                <Sunrise
-                  className={`${styles.dayTime__icon} ${
-                    daytimePeriod === "before" ? styles.active : ""
-                  }`}
-                />
-                {/* <span>sunrise</span> */}
-                <p>{sunriseTime}</p>
+              {/* hours container */}
+              <div
+                className={`${styles.sunsetAndSunrise__hoursContainer} ${
+                  daytimePeriod !== "middle" ? styles.nightHorizon : ""
+                }`}
+              >
+                <div className={`${styles.dayTime} ${styles.sunrise}`}>
+                  <Sunrise
+                    className={`${styles.dayTime__icon} ${
+                      daytimePeriod === "before" ? styles.active : ""
+                    }`}
+                  />
+                  {/* <span>sunrise</span> */}
+                  <p>{sunriseTime}</p>
+                </div>
+                <div className={`${styles.dayTime} ${styles.sunset}`}>
+                  <Sunset
+                    className={`${styles.dayTime__icon} ${
+                      daytimePeriod === "after" ? styles.active : ""
+                    }`}
+                  />
+                  {/* <span>sunset</span> */}
+                  <p>{sunsetTime}</p>
+                </div>
               </div>
-              <div className={`${styles.dayTime} ${styles.sunset}`}>
-                <Sunset
-                  className={`${styles.dayTime__icon} ${
-                    daytimePeriod === "after" ? styles.active : ""
-                  }`}
-                />
-                {/* <span>sunset</span> */}
-                <p>{sunsetTime}</p>
+            </>
+          ) : (
+            <div className={styles.sunsetAndSunrise__timesWrapper}>
+              <div className={styles.sunsetAndSunrise__iconAndTime}>
+                <div className={styles.sunsetAndSunrise__iconContainer}>
+                  <Sunrise width={30} height={30} />
+                </div>
+                <div className={styles.sunsetAndSunrise__time}>
+                  {sunriseTime}
+                </div>
+              </div>
+              <div className={styles.sunsetAndSunrise__iconAndTime}>
+                <div className={styles.sunsetAndSunrise__iconContainer}>
+                  <Sunset width={30} height={30} />
+                </div>
+                <div className={styles.sunsetAndSunrise__time}>
+                  {sunsetTime}
+                </div>
               </div>
             </div>
-          </>
-        ) : (
-          <div className={styles.sunsetAndSunrise__timesWrapper}>
-            <div className={styles.sunsetAndSunrise__iconAndTime}>
-              <div className={styles.sunsetAndSunrise__iconContainer}>
-                <Sunrise width={30} height={30} />
-              </div>
-              <div className={styles.sunsetAndSunrise__time}>{sunriseTime}</div>
-            </div>
-            <div className={styles.sunsetAndSunrise__iconAndTime}>
-              <div className={styles.sunsetAndSunrise__iconContainer}>
-                <Sunset width={30} height={30} />
-              </div>
-              <div className={styles.sunsetAndSunrise__time}>{sunsetTime}</div>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );
