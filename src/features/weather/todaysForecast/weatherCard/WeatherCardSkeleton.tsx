@@ -2,16 +2,10 @@ import styles from "./WeatherCard.module.scss";
 
 const WeatherCardSkeleton = ({
   className,
-  // iconHeight,
-  // iconWidth,
-  // weatherCardWidth,
   weatherCardColor,
   isForFavoriteCityCard,
 }: {
   className?: string;
-  // iconHeight: number;
-  // iconWidth: number;
-  // weatherCardWidth: number;
   weatherCardColor: string;
   isForFavoriteCityCard: boolean;
 }) => {
@@ -19,30 +13,39 @@ const WeatherCardSkeleton = ({
     <div
       className={`${styles.weatherCard} ${className ? styles[className] : ""}`}
       style={{
-        // width: `${weatherCardWidth}px`,
-        // minWidth: `${weatherCardWidth}px`,
         backgroundColor: `${weatherCardColor}`,
       }}
     >
       <div className={styles.weatherCard__top}>
-        <p className={styles.weatherCard__timeSkeleton} />
+        <p className={styles.weatherCard__time}>
+          <p className={styles.weatherCard__timeSkeleton} />
+        </p>
         <div className={styles.weatherCard__weatherIcon}>
-          <div
-            className={styles.weatherCard__weatherIconSkeleton}
-            // style={{ width: `${iconWidth}px`, height: `${iconHeight}px` }}
-          />
+          <div className={styles.weatherCard__weatherIconSkeleton} />
         </div>
-        <div className={styles.weatherCard__tempSkeleton} />
+        <div className={styles.weatherCard__temp}>
+          <div className={styles.weatherCard__tempSkeleton} />
+        </div>
       </div>
 
       <div className={styles.weatherCard__bottom}>
-        <div className={styles.weatherCard__precipProbSkeleton} />
+        <div className={styles.weatherCard__precipProb}>
+          <div className={styles.weatherCard__precipProbSkeleton} />
+        </div>
+
         {!isForFavoriteCityCard && (
-          <div className={styles.weatherCard__precipSkeleton} />
+          <>
+            <div className={styles.weatherCard__precip}>
+              <div className={styles.weatherCard__precipSkeleton} />
+            </div>
+            <div className={styles.weatherCard__wind}>
+              <div className={styles.weatherCard__windSkeleton} />
+            </div>
+          </>
         )}
-        {!isForFavoriteCityCard && (
+        {/* {!isForFavoriteCityCard && (
           <div className={styles.weatherCard__windSkeleton} />
-        )}
+        )} */}
       </div>
     </div>
   );

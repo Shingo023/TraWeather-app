@@ -8,10 +8,8 @@ const TodaysForecastSkeleton = () => {
         <h2 className={styles.todaysForecast__titleSkeleton} />
         <div className={styles.todaysForecast__hourlyWeatherCards}>
           <WeatherForecastSkeleton
-            iconHeight={40}
-            iconWidth={40}
+            className="dailyForecast"
             isForFavoriteCityCard={false}
-            weatherCardWidth={120}
             weatherCardColor="rgba(255, 255, 255, 0.3)"
           />
         </div>

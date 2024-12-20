@@ -1,9 +1,7 @@
-@import "@/style/base/variables.scss";
-
 .searchBar {
   position: relative;
   height: 6%;
-  min-height: 44px;
+  min-height: 40px;
 
   &__searchIcon {
     position: absolute;

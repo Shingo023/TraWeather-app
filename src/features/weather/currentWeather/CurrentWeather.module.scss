@@ -1,11 +1,14 @@
-@import "@/style/base/variables.scss";
-
 .currentWeather {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   padding: 20px 0 10px 12px;
   height: 26%;
-  min-height: 192px;
+  min-height: 159px;
+
+  @media (max-height: 780px) {
+    height: 24%;
+  }
 
   // city section
   &__citySection {
@@ -53,12 +56,13 @@
 
   &__weatherIconContainer {
     margin: auto 0;
+    width: 7.2rem;
+    height: 7.2rem;
   }
 
   // info section
   &__infoSection {
     display: flex;
-    height: 100%;
     justify-content: space-between;
     padding: 0 30px 0 0;
   }
@@ -116,72 +120,42 @@
 // Skeletons
 .currentWeather {
 
-  &__skeletonCityName {
-    height: 28px;
+  &__skeletonCityName,
+  &__skeletonDateTime,
+  &__skeletonTemp,
+  &__skeletonFeelslikeTemp,
+  &__skeletonWeatherIcon {
     border-radius: 8px;
-    margin-bottom: 3px;
-    width: 120px;
-    background-color: #ddd;
-    background-image: linear-gradient(90deg, #ddd 25%, #eee 50%, #ddd 75%);
+    background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
     background-size: 200% 100%;
-    border-radius: 4px;
     animation: shimmer 1.5s infinite linear;
   }
 
-  &__skeletonAddress {
-    height: 14px;
-    border-radius: 8px;
-    margin-bottom: 3px;
-    width: 150px;
-    background-color: #ddd;
-    background-image: linear-gradient(90deg, #ddd 25%, #eee 50%, #ddd 75%);
-    background-size: 200% 100%;
-    border-radius: 4px;
-    animation: shimmer 1.5s infinite linear;
+  &__skeletonCityName {
+    height: 2.125rem;
+    width: 7.5rem;
   }
 
   &__skeletonDateTime {
-    height: 12px;
-    border-radius: 8px;
-    width: 100px;
-    background-color: #ddd;
-    background-image: linear-gradient(90deg, #ddd 25%, #eee 50%, #ddd 75%);
-    background-size: 200% 100%;
-    border-radius: 4px;
-    animation: shimmer 1.5s infinite linear;
+    height: 0.9375rem;
+    width: 6.25rem;
   }
 
   &__skeletonTemp {
-    height: 65px;
-    border-radius: 8px;
-    margin-bottom: 3px;
-    width: 75px;
-    background-color: #ddd;
-    background-image: linear-gradient(90deg, #ddd 25%, #eee 50%, #ddd 75%);
-    background-size: 200% 100%;
-    border-radius: 4px;
-    animation: shimmer 1.5s infinite linear;
+    height: 4.0625rem;
+    width: 4.7rem;
+    margin-top: 8px;
+    margin-bottom: 5px;
   }
 
   &__skeletonFeelslikeTemp {
-    height: 14px;
-    width: 80px;
-    border-radius: 8px;
-    background-color: #ddd;
-    background-image: linear-gradient(90deg, #ddd 25%, #eee 50%, #ddd 75%);
-    background-size: 200% 100%;
-    border-radius: 4px;
-    animation: shimmer 1.5s infinite linear;
+    height: 1.0625rem;
+    width: 5rem;
   }
 
   &__skeletonWeatherIcon {
-    height: 115px;
-    width: 115px;
-    border-radius: 8px;
-    background-color: #ddd;
-    background-image: linear-gradient(90deg, #ddd 25%, #eee 50%, #ddd 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite linear;
+    height: 100%;
+    width: 100%;
   }
 }
 
@@ -193,3 +167,83 @@
     background-position: 200px 0;
   }
 }
+
+
+// .currentWeather {
+//   &__skeletonCityName {
+//     height: 28px;
+//     border-radius: 8px;
+//     margin-bottom: 3px;
+//     width: 120px;
+//     background-color: #ddd;
+//     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+//     background-size: 200% 100%;
+//     border-radius: 4px;
+//     animation: shimmer 1.5s infinite linear;
+//   }
+
+//   &__skeletonAddress {
+//     height: 14px;
+//     border-radius: 8px;
+//     margin-bottom: 3px;
+//     width: 150px;
+//     background-color: #ddd;
+//     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+//     background-size: 200% 100%;
+//     border-radius: 4px;
+//     animation: shimmer 1.5s infinite linear;
+//   }
+
+//   &__skeletonDateTime {
+//     height: 12px;
+//     border-radius: 8px;
+//     width: 100px;
+//     background-color: #ddd;
+//     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+//     background-size: 200% 100%;
+//     border-radius: 4px;
+//     animation: shimmer 1.5s infinite linear;
+//   }
+
+//   &__skeletonTemp {
+//     height: 65px;
+//     border-radius: 8px;
+//     margin-bottom: 3px;
+//     width: 75px;
+//     background-color: #ddd;
+//     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+//     background-size: 200% 100%;
+//     border-radius: 4px;
+//     animation: shimmer 1.5s infinite linear;
+//   }
+
+//   &__skeletonFeelslikeTemp {
+//     height: 14px;
+//     width: 80px;
+//     border-radius: 8px;
+//     background-color: #ddd;
+//     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+//     background-size: 200% 100%;
+//     border-radius: 4px;
+//     animation: shimmer 1.5s infinite linear;
+//   }
+
+//   &__skeletonWeatherIcon {
+//     height: 115px;
+//     width: 115px;
+//     border-radius: 8px;
+//     background-color: #ddd;
+//     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
+//     background-size: 200% 100%;
+//     animation: shimmer 1.5s infinite linear;
+//   }
+// }
+
+// @keyframes shimmer {
+//   0% {
+//     background-position: -200px 0;
+//   }
+//   100% {
+//     background-position: 200px 0;
+//   }
+// }

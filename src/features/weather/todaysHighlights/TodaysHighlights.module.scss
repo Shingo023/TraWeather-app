@@ -1,10 +1,10 @@
 .todaysHighlights {
   height: 34%;
-  min-height: 252px;
+  min-height: 225px;
   padding-top: 10px;
 
   @media (max-width: 768px) {
-    height: unset;
+    // height: unset;
     min-height: 210px;
   }
 
@@ -42,33 +42,26 @@
       gap: 14px; 
     }
   }
-  
 }
 
 // skeleton
 .todaysHighlights {
   &__titleSkeleton,
-  &__overviewSkeleton,
-  &__uvIndexSkeleton,
-  &__sunsetAndSunriseSkeleton {
+  &__contentSkeleton {
     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
   }
 
   &__titleSkeleton {
-    height: 24px;
-    width: 200px;
+    height: 1.5rem;
+    width: 7.5rem;
     border-radius: 6px;
   }
 
-  &__overviewSkeleton,
-  &__uvIndexSkeleton,
-  &__sunsetAndSunriseSkeleton {
+  &__contentSkeleton {
     border-radius: 10px;
-    flex: 1;
-    height: 100%;
-    min-width: 0;
+    flex: 1 1;
   }
 }
 

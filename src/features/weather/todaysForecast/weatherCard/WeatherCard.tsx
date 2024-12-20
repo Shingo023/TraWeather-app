@@ -25,12 +25,7 @@ const WeatherCard = ({
       <div className={styles.weatherCard__top}>
         <p className={styles.weatherCard__time}>{dateTime}</p>
         <div className={styles.weatherCard__weatherIcon}>
-          <WeatherIcon
-            className={className}
-            weatherIcon={weatherIconSrc}
-            width={iconWidth}
-            height={iconHeight}
-          />
+          <WeatherIcon className={className} weatherIcon={weatherIconSrc} />
         </div>
         {!isNaN(temp ?? NaN) ? (
           <div className={styles.weatherCard__temp}>{temp}°</div>

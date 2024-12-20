@@ -8,13 +8,11 @@ import { useSearchParams } from "next/navigation";
 import CurrentWeatherSkelton from "./CurrentWeatherSkelton";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 import ToolTip from "@/app/components/elements/toolTip/ToolTip";
-import useMediaQuery from "@/hooks/useMediaQuery";
 
 const CurrentWeather = () => {
   const searchParams = useSearchParams();
   const cityToDisplay = searchParams.get("place");
   const address = searchParams.get("address");
-  const isMobile = useMediaQuery("(max-width: 768px)");
 
   const { currentWeather, timezone, loading } = useDisplayedCityWeather();
 
@@ -47,8 +45,6 @@ const CurrentWeather = () => {
         <div className={styles.currentWeather__weatherIconContainer}>
           <WeatherIcon
             weatherIcon={currentWeather?.currentWeatherIcon ?? null}
-            width={isMobile ? 85 : 115}
-            height={isMobile ? 85 : 115}
             priority={true}
           />
         </div>

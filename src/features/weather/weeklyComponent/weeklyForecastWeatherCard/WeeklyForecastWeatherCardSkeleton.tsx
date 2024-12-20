@@ -2,22 +2,22 @@ import styles from "./WeeklyForecastWeatherCard.module.scss";
 
 const WeeklyForecastWeatherCardSkeleton = () => {
   return (
-    <li className={styles.WeeklyComponentItem}>
-      <p className={styles.WeeklyComponentItem__dateSkeleton} />
-      <div className={styles.WeeklyComponentItem__weatherInfo}>
-        <div className={styles.WeeklyComponentItem__weatherInfoLeft}>
-          <div className={styles.WeeklyComponentItem__weatherIconSkeleton} />
-        </div>
-        <div className={styles.WeeklyComponentItem__weatherInfoRight}>
-          <div className={styles.WeeklyComponentItem__tempsSkeletonWrapper}>
-            <div className={styles.WeeklyComponentItem__tempsSkeleton} />
+    <li className={styles.weeklyForecast__item}>
+      <h3 className={styles.weeklyForecast__date}>
+        <p className={styles.weeklyForecast__dateSkeleton} />
+      </h3>
+      <div className={styles.weeklyForecast__weatherInfo}>
+        <div className={styles.weeklyForecast__weatherIcon}>
+          <div className={styles.weeklyForecast__weatherIconContainer}>
+            <div className={styles.weeklyForecast__weatherIconSkeleton} />
           </div>
-          <div
-            className={
-              styles.WeeklyComponentItem__chanceOfRainSkeletonSkeletonWrapper
-            }
-          >
-            <div className={styles.WeeklyComponentItem__chanceOfRainSkeleton} />
+        </div>
+        <div className={styles.weeklyForecast__stats}>
+          <div className={styles.weeklyForecast__weatherTemperature}>
+            <div className={styles.weeklyForecast__tempsSkeleton} />
+          </div>
+          <div className={styles.weeklyForecast__chanceOfRain}>
+            <div className={styles.weeklyForecast__chanceOfRainSkeleton} />
           </div>
         </div>
       </div>

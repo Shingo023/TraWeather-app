@@ -18,8 +18,9 @@ const WeatherIcon = ({
       className={`${styles.weatherIcon} ${className ? styles[className] : ""}`}
       src={weatherIcon}
       alt="Weather icon"
-      width={width ?? 60}
-      height={height ?? 60}
+      layout="responsive"
+      width={1}
+      height={1}
       priority={priority}
     />
   );

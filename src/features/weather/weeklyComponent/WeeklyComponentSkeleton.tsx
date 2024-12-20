@@ -5,10 +5,10 @@ const WeeklyComponentSkeleton = () => {
   const items = Array(7).fill(null);
 
   return (
-    <div className={styles.WeeklyComponent}>
-      <h2 className={styles.WeeklyComponent__headerSkeleton} />
-      <div className={styles.WeeklyComponent__content}>
-        <ul className={styles.WeeklyComponentList}>
+    <div className={styles.weeklyForecast}>
+      <h2 className={styles.weeklyForecast__headerSkeleton} />
+      <div className={styles.weeklyForecast__content}>
+        <ul className={styles.weeklyForecast__list}>
           {items.map((_, index) => (
             <WeeklyForecastWeatherCardSkeleton key={index} />
           ))}

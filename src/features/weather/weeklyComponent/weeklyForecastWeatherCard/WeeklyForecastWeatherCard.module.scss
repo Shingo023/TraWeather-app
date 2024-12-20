@@ -1,79 +1,96 @@
-.WeeklyComponentItem {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  border-bottom: 1px solid #00000033;
-  // border-top-left-radius: 10px;
-  // border-top-right-radius: 10px;
+.weeklyForecast {
 
-  transition: all 0.3s ease;
-  &:last-child {
-    border-bottom: none;
-  }
-  &:hover {
-    cursor: pointer;
-    background-color: #E0E0E0; 
+  &__item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-bottom: 1px solid #00000033;
+    transition: all 0.3s ease;
+
+    h3,
+    p {
+      font-size: 0.875rem;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: #E0E0E0; 
+    }
+
+    &.active {
+      background-color: #E0E0E0; 
+    }
   }
 
   &__date {
-    margin-left: 8px;
-    margin-bottom: 8px;
+    margin-left: 0.5rem;
+    margin-bottom: 12px;
+    font-weight: normal;
   }
 
   &__weatherInfo {
     display: flex;
     justify-content: space-around;
-    gap: 12px;
+    gap: 0.75rem;
   }
-  &__weatherInfoLeft {
+
+  &__weatherIcon {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-left: 8px;
-    div {
-      display: flex;
-    }
+    margin-left: 0.5rem;
   }
-  &__weatherInfoRight {
+
+  &__weatherIconContainer {
+    display: flex;
+    align-items: center; 
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+
+  &__stats {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
-    gap: 8px;
-    p {
-      min-width: 60px;
+    gap: 0.5rem;
+  }
+
+  &__weatherTemperature {
+    min-width: 3.75rem;
+  }
+
+  &__chanceOfRain {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 3.75rem;
+    
+    &.active {
+      color: #191970;
+      font-weight: 600;
+  
+      .weeklyForecast__icon {
+        fill: #191970;
+      }
     }
   }
-}
-.active {
-  background-color: #E0E0E0; 
-}
 
-.chanceOfRain {
-  display: flex;
-  align-items: center;
-  gap: 1px;
-  min-width: 60px;
   &__icon {
-    width: 18px;
-    height: 18px;
-  }
-  p {
-    min-width: 0;
-  }
-  &.chanceOfRainActive {
-    color: #191970;
-    font-weight: 600;
-
-    .chanceOfRain__icon {
-      fill: #191970;
-    }
+    width: 1.125rem;
+    height: 1.125rem;
   }
 }
+
 
 // skeleton
-.WeeklyComponentItem {
+.weeklyForecast {
   &__dateSkeleton,
   &__weatherIconSkeleton,
   &__tempsSkeleton,
@@ -81,36 +98,25 @@
     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
+    border-radius: 6px;
+    height: 1.0625rem;
   }
 
   &__dateSkeleton {
-    height: 14px;
-    width: 80px;
-    margin-left: 8px;
-    border-radius: 6px;
+    width: 5rem;
   }
 
   &__weatherIconSkeleton {
-    height: 30px;
-    width: 30px;
-    margin: 15px;
-    border-radius: 6px;    
+    height: 100%;
+    width: 100%;
   }
 
-  &__tempsSkeletonWrapper,
-  &__chanceOfRainSkeletonSkeletonWrapper {
-    min-width: 60px;
-  }
   &__tempsSkeleton {
-    height: 14px;
-    width: 45px;
-    border-radius: 6px;   
+    width: 2.8rem;
   }
 
   &__chanceOfRainSkeleton {
-    height: 14px;
-    width: 55px;
-    border-radius: 6px;    
+    width: 3.4rem;
   }
 }
 

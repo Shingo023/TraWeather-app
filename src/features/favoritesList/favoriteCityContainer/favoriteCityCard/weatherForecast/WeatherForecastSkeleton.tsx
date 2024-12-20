@@ -3,16 +3,10 @@ import styles from "./WeatherForecast.module.scss";
 
 const WeatherForecastSkeleton = ({
   className,
-  // iconHeight,
-  // iconWidth,
-  // weatherCardWidth,
   weatherCardColor,
   isForFavoriteCityCard,
 }: {
   className?: string;
-  // iconHeight: number;
-  // iconWidth: number;
-  // weatherCardWidth: number;
   weatherCardColor: string;
   isForFavoriteCityCard: boolean;
 }) => {
@@ -24,9 +18,6 @@ const WeatherForecastSkeleton = ({
           <WeatherCardSkeleton
             key={index}
             className={className}
-            // iconHeight={iconHeight}
-            // iconWidth={iconWidth}
-            // weatherCardWidth={weatherCardWidth}
             weatherCardColor={weatherCardColor}
             isForFavoriteCityCard={isForFavoriteCityCard}
           />

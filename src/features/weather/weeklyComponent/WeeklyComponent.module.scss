@@ -1,34 +1,19 @@
-@import "@/style/base/variables.scss";
-
-.WeeklyComponent {
+.weeklyForecast {
   width: 100%;
-  min-height: 672px;
+  min-height: 590px;
   height: 100%;
   border-radius: 10px;
-
-  &__content {
-    height: calc(100% - 34px);
-    background-color: #F9F9F9;
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  }
-  h2 {
-    font-weight: 600;
-    margin-bottom: 10px;
-    font-size: 20px;
-    letter-spacing: 0.4px;
-
-    @media (max-width: 768px) {
-      font-size: 16px;
-      letter-spacing: 0.32px;
-    }
-  }
-  p {
-    font-size: 14px;
-  }
 }
 
-.WeeklyComponentList {
+.weeklyForecast__content {
+  height: calc(100% - 34px);
+  background-color: #F9F9F9;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  margin-top: 10px;
+}
+
+.weeklyForecast__list {
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -37,55 +22,13 @@
 }
 
 // Skeletons
-.WeeklyComponent__headerSkeleton {
-  height: 20px;
-  width: 150px;
+.weeklyForecast__headerSkeleton {
+  height: 1.5rem;
+  width: 9.4rem;
   border-radius: 6px;
-  margin-bottom: 20px;
   background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite linear;
-}
-
-.WeeklyComponentItem {
-  &__dateSkeleton,
-  &__weatherIconSkeleton,
-  &__tempsSkeleton,
-  &__chanceOfRainSkeleton {
-    background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: shimmer 1.5s infinite linear;
-  }
-
-  &__dateSkeleton {
-    height: 14px;
-    width: 80px;
-    margin-left: 8px;
-    border-radius: 6px;
-  }
-
-  &__weatherIconSkeleton {
-    height: 30px;
-    width: 30px;
-    margin: 15px;
-    border-radius: 6px;    
-  }
-
-  &__tempsSkeletonWrapper,
-  &__chanceOfRainSkeletonSkeletonWrapper {
-    min-width: 60px;
-  }
-  &__tempsSkeleton {
-    height: 14px;
-    width: 45px;
-    border-radius: 6px;   
-  }
-
-  &__chanceOfRainSkeleton {
-    height: 14px;
-    width: 55px;
-    border-radius: 6px;    
-  }
 }
 
 @keyframes shimmer {

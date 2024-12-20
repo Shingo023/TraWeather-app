@@ -17,38 +17,35 @@ const WeeklyForecastWeatherCard = ({
 }) => {
   return (
     <li
-      className={`${styles.WeeklyComponentItem} ${
+      className={`${styles.weeklyForecast__item} ${
         dailyWeather.datetime === selectedDate && styles.active
       }`}
       onClick={() => handleClick(dailyWeather.datetime, dailyWeather)}
     >
-      <p className={styles.WeeklyComponentItem__date}>
+      <h3 className={styles.weeklyForecast__date}>
         {formatDate(dailyWeather.datetime)}
-      </p>
-      <div className={styles.WeeklyComponentItem__weatherInfo}>
-        <div className={styles.WeeklyComponentItem__weatherInfoLeft}>
-          <div>
-            <WeatherIcon
-              weatherIcon={dailyWeatherIcon}
-              height={35}
-              width={35}
-            />
+      </h3>
+      <div className={styles.weeklyForecast__weatherInfo}>
+        <div className={styles.weeklyForecast__weatherIcon}>
+          <div className={styles.weeklyForecast__weatherIconContainer}>
+            <WeatherIcon weatherIcon={dailyWeatherIcon} />
           </div>
         </div>
-        <div className={styles.WeeklyComponentItem__weatherInfoRight}>
-          <p>
-            {Math.round(dailyWeather.tempmax)}°/
-            {Math.round(dailyWeather.tempmin)}°
-          </p>
-
+        <div className={styles.weeklyForecast__stats}>
+          <div className={styles.weeklyForecast__weatherTemperature}>
+            <p>
+              {Math.round(dailyWeather.tempmax)}°/
+              {Math.round(dailyWeather.tempmin)}°
+            </p>
+          </div>
           <div
-            className={`${styles.chanceOfRain} ${
+            className={`${styles.weeklyForecast__chanceOfRain} ${
               Math.round(dailyWeather.precipprob / 5) * 5 > 0
-                ? styles.chanceOfRainActive
+                ? styles.active
                 : ""
             }`}
           >
-            <Umbrella className={styles.chanceOfRain__icon} />
+            <Umbrella className={styles.weeklyForecast__icon} />
             <p>{Math.round(dailyWeather.precipprob / 5) * 5}%</p>
           </div>
         </div>

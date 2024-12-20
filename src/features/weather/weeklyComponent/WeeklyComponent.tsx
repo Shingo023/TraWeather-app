@@ -63,15 +63,14 @@ export const WeeklyComponent = () => {
   }
 
   return (
-    <div className={styles.WeeklyComponent}>
+    <section className={styles.weeklyForecast}>
       <h2>Weekly Forecast</h2>
-      <div className={styles.WeeklyComponent__content}>
-        <ul className={styles.WeeklyComponentList}>
+      <div className={styles.weeklyForecast__content}>
+        <ul className={styles.weeklyForecast__list}>
           {weeklyWeather ? (
             weeklyWeather.map((dailyWeather, index) => {
               const dailyWeatherIcon =
                 iconMapping[dailyWeather.icon as WeatherIconType];
-
               return (
                 <WeeklyForecastWeatherCard
                   key={index}
@@ -87,6 +86,6 @@ export const WeeklyComponent = () => {
           )}
         </ul>
       </div>
-    </div>
+    </section>
   );
 };
