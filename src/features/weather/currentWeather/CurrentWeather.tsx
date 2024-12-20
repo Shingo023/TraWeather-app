@@ -22,25 +22,25 @@ const CurrentWeather = () => {
 
   return (
     <div className={styles.currentWeather}>
-      <div className={styles.currentWeather__citySection}>
+      <header className={styles.currentWeather__city}>
         <div className={styles.currentWeather__cityNameContainer}>
-          <div className={styles.currentWeather__cityName}>{cityToDisplay}</div>
+          <h1 className={styles.currentWeather__cityName}>{cityToDisplay}</h1>
           <div className={styles.currentWeather__cityNameTooltip}>
             <ToolTip message={address!} width={160} />
           </div>
         </div>
-        <StarIcon />
-      </div>
+        <StarIcon aria-label="Mark city as favorite" />
+      </header>
 
-      <div className={styles.currentWeather__infoSection}>
+      <section className={styles.currentWeather__weather}>
         <div className={styles.currentWeather__info}>
           {currentWeather && timezone && <CurrentDateTime />}
-          <div className={styles.currentWeather__temp}>
+          <p className={styles.currentWeather__temp}>
             {currentWeather?.currentTemp}°
-          </div>
-          <div className={styles.currentWeather__feelslikeTemp}>
+          </p>
+          <p className={styles.currentWeather__feelslikeTemp}>
             Feels like {currentWeather?.currentFeelslikeTemp}°
-          </div>
+          </p>
         </div>
         <div className={styles.currentWeather__weatherIconContainer}>
           <WeatherIcon
@@ -48,7 +48,7 @@ const CurrentWeather = () => {
             priority={true}
           />
         </div>
-      </div>
+      </section>
     </div>
   );
 };

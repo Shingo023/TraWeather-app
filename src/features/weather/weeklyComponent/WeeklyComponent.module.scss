@@ -1,8 +1,12 @@
 .weeklyForecast {
   width: 100%;
-  min-height: 590px;
+  // min-height: 590px;
   height: 100%;
   border-radius: 10px;
+
+  // @media (max-width: 768px) { 
+  //   min-height: 500px; 
+  // }
 }
 
 .weeklyForecast__content {

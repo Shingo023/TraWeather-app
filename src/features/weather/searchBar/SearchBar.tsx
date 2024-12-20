@@ -96,7 +96,6 @@ const SearchBar = React.memo(() => {
 
   return (
     <div className={styles.searchBar}>
-      <Search className={styles.searchBar__searchIcon} />
       <input
         ref={inputRef}
         type="text"
@@ -104,6 +103,9 @@ const SearchBar = React.memo(() => {
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
       />
+      <div className={styles.searchBar__iconContainer}>
+        <Search className={styles.searchBar__searchIcon} />
+      </div>
 
       {autocompleteSuggestions.length > 0 && (
         <ul className={styles.searchBar__suggestionsList} role="listbox">

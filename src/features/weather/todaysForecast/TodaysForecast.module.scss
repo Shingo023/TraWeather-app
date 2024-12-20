@@ -1,11 +1,5 @@
 .todaysForecast {
   height: 34%;
-  min-height: 239px;
-
-  @media (max-width: 768px) {
-    // height: unset;
-    min-height: 210px;
-  }
 
   @media (max-height: 780px) {
     height: 36%;

@@ -1,12 +1,14 @@
 .todaysHighlights {
   height: 34%;
-  min-height: 225px;
   padding-top: 10px;
 
-  @media (max-width: 768px) {
-    // height: unset;
-    min-height: 210px;
+  @media (max-height: 780px) {
+    height: 36%;
   }
+
+  // @media (max-width: 768px) {
+  //   min-height: 210px;
+  // }
 
   &__container {
     display: flex;
