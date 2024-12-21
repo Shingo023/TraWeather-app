@@ -29,6 +29,8 @@ const SunsetAndSunrise = ({
     sunset,
     lastWeatherFetchDateTime!
   );
+  const [sunriseTimePart, sunriseSuffix] = sunriseTime.split(" ");
+  const [sunsetTimePart, sunsetSuffix] = sunsetTime.split(" ");
 
   const sunCurrentLocation =
     selectedDate === todaysDate && lastWeatherFetchDateTime
@@ -45,7 +47,7 @@ const SunsetAndSunrise = ({
   return (
     <div className={styles.sunsetAndSunrise}>
       <div className={styles.sunsetAndSunrise__wrapper}>
-        <p className={styles.sunsetAndSunrise__title}>Sunrise & Sunset</p>
+        <h3 className={styles.sunsetAndSunrise__title}>Sunrise & Sunset</h3>
         <div className={styles.sunsetAndSunrise__container}>
           {selectedDate === todaysDate ? (
             <>
@@ -112,7 +114,12 @@ const SunsetAndSunrise = ({
                   <Sunrise width={30} height={30} />
                 </div>
                 <div className={styles.sunsetAndSunrise__time}>
-                  {sunriseTime}
+                  <p className={styles.sunsetAndSunrise__timePart}>
+                    {sunriseTimePart}
+                  </p>
+                  <p className={styles.sunsetAndSunrise__suffix}>
+                    {sunriseSuffix}
+                  </p>
                 </div>
               </div>
               <div className={styles.sunsetAndSunrise__iconAndTime}>
@@ -120,7 +127,12 @@ const SunsetAndSunrise = ({
                   <Sunset width={30} height={30} />
                 </div>
                 <div className={styles.sunsetAndSunrise__time}>
-                  {sunsetTime}
+                  <p className={styles.sunsetAndSunrise__timePart}>
+                    {sunsetTimePart}
+                  </p>
+                  <p className={styles.sunsetAndSunrise__suffix}>
+                    {sunsetSuffix}
+                  </p>
                 </div>
               </div>
             </div>

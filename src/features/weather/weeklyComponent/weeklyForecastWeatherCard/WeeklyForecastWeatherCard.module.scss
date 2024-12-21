@@ -30,7 +30,8 @@
   &__date {
     margin-left: 0.5rem;
     margin-bottom: 12px;
-    font-weight: normal;
+    font-weight: 500;
+    letter-spacing: 0.0175rem;
   }
 
   &__weatherInfo {
@@ -64,6 +65,7 @@
 
   &__weatherTemperature {
     min-width: 3.75rem;
+    font-weight: 700;
   }
 
   &__chanceOfRain {
@@ -83,8 +85,8 @@
   }
 
   &__icon {
-    width: 1.125rem;
-    height: 1.125rem;
+    width: 0.875rem;
+    height: 0.875rem;
   }
 }
 

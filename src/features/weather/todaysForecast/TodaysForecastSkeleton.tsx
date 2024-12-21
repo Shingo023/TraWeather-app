@@ -6,7 +6,7 @@ const TodaysForecastSkeleton = () => {
     <div className={styles.todaysForecast}>
       <div className={styles.todaysForecast__container}>
         <h2 className={styles.todaysForecast__titleSkeleton} />
-        <div className={styles.todaysForecast__hourlyWeatherCards}>
+        <div className={styles.todaysForecast__content}>
           <WeatherForecastSkeleton
             className="dailyForecast"
             isForFavoriteCityCard={false}

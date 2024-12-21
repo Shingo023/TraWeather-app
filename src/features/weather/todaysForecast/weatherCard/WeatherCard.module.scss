@@ -8,23 +8,11 @@
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
   padding: 8px 0 12px 0;
   background-color: rgba(255, 255, 255, 0.3);
-  p {
-    font-size: 14px;
-    letter-spacing: -0.25px;
 
-    @media (max-width: 768px) {
-      font-size: 10px;
-      letter-spacing: -0.5px;
-    }
-  }
   span {
-    font-size: 12px;
+    font-size: 0.75rem;
     margin-left: 1px;
-    letter-spacing: -0.25px;
-
-    @media (max-width: 768px) {
-      font-size: 10px;
-    }
+    letter-spacing: -0.015rem;
   }
 
   // card top
@@ -33,48 +21,40 @@
     flex-direction: column;
     align-items: center;
   }
-  &__time {
-    font-size: 14px;
 
-    @media (max-width: 768px) {
-      font-size: 10px;
-    }
+  &__time {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.013125rem;
   }
+
   &__weatherIcon {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 8px 0 12px 0;
-
-    @media (max-width: 768px) {
-      margin: 6px 0 6px 0;
-    }
+    margin: 0.625rem 0 0.625rem 0;
   }
-  &__temp {
-    font-size: 18px;
-    font-weight: 700;  
-    span {
-      font-size: 14px;
-      font-weight: 300;
-    }
 
-    @media (max-width: 768px) {
-      font-size: 12px;
-      span {
-        font-size: 10px;
-        font-weight: 300;
-      }
-    }
+  &__temp {
+    font-size: 1.125rem;
+    font-weight: 700;  
+    letter-spacing: 0.017rem;
   }
 
   // card bottom
-  &__precipProb {
+  &__precipProb,
+  &__precip,
+  &__wind {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.01125rem;
     display: flex;
     align-items: flex-end;
-    height: 17px;
-    &.precipProbActive {
+  }
+
+  &__precipProb {
+    &.active {
       color: #191970;
-      font-weight: 600;
   
       .weatherCard__icon {
         fill: #191970;
@@ -84,37 +64,21 @@
 
   &__precip,
   &__wind {
-    display: flex;
-    align-items: flex-end;
-    margin-top: 5px;
-    height: 17px;
-
-    @media (max-width: 768px) {
-      margin-top: unset;
-    }
+    margin-top: 0.3125rem;
   }
   
   &__icon {
-    width: 15px;
-    height: 15px;
+    width: 0.875rem;
+    height: 0.875rem;
     margin-right: 2px;
-
-    @media (max-width: 768px) {
-      width: 11px;
-      height: 11px;
-    }
   }
 
   &__weatherIndex {
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: 500;
     color: #4F4F4F;
     margin-left: 4px;
-    letter-spacing: -0.25px;
-
-    @media (max-width: 768px) {
-      font-size: 10px;
-    }
+    letter-spacing: -0.0156rem;
   }
 }
 
@@ -139,25 +103,18 @@
 .dailyForecast {
   width: 120px;
   min-width: 120px;
-  height: 190px;
+  height: 11.875rem;
   background-color: #F9F9F9;
-  padding: 12px 0 12px 0;
+  padding: 0.75rem 0 0.75rem 0;
 
   @media (max-width: 768px) {
     width: 90px;
     min-width: 90px;
-    height: 140px;
   }
 
   .weatherCard__weatherIcon {
     width: 2.5rem;
     height: 2.5rem;
-  }
-
-  p {
-    @media (max-width: 768px) {
-      letter-spacing: 0;
-    }
   }
 }
 

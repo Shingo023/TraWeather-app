@@ -23,8 +23,8 @@ const TodaysForecast = () => {
     : "";
 
   return (
-    <div className={styles.todaysForecast}>
-      <div className={styles.todaysForecast__container}>
+    <section className={styles.todaysForecast}>
+      <div className={styles.todaysForecast__forecastWrapper}>
         {dailyWeatherHighlights.datetime === todaysDate ? (
           <h2>Today's Forecast</h2>
         ) : (
@@ -33,16 +33,14 @@ const TodaysForecast = () => {
             <span>{date}</span>
           </h2>
         )}
-        <div className={styles.todaysForecast__hourlyWeatherCards}>
+        <div className={styles.todaysForecast__forecastDetails}>
           <WeatherForecast
             dailyOrWeeklyWeather={twentyFourHoursWeather}
             className="dailyForecast"
-            // iconHeight={40}
-            // iconWidth={40}
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

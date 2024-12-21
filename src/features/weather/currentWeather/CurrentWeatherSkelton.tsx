@@ -3,15 +3,13 @@ import styles from "./CurrentWeather.module.scss";
 const CurrentWeatherSkelton = () => {
   return (
     <div className={styles.currentWeather}>
-      <div className={styles.currentWeather__citySection}>
+      <div className={styles.currentWeather__city}>
         <div className={styles.currentWeather__cityNameContainer}>
-          {/* <div className={styles.currentWeather__cityName}> */}
           <div className={styles.currentWeather__skeletonCityName} />
-          {/* </div> */}
         </div>
       </div>
 
-      <div className={styles.currentWeather__infoSection}>
+      <div className={styles.currentWeather__weather}>
         <div className={styles.currentWeather__info}>
           <div className={styles.currentWeather__skeletonDateTime} />
           <div className={styles.currentWeather__skeletonTemp} />

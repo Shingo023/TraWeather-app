@@ -24,7 +24,7 @@ const TodaysHighlights = () => {
   const date = formatDate(dailyWeatherHighlights.datetime);
 
   return (
-    <div className={styles.todaysHighlights}>
+    <section className={styles.todaysHighlights}>
       <div className={styles.todaysHighlights__container}>
         <h2>
           Highlights{" "}
@@ -54,7 +54,7 @@ const TodaysHighlights = () => {
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

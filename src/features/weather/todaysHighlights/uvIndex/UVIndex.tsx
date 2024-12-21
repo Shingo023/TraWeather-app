@@ -35,7 +35,7 @@ const UVIndex = ({ uvIndex }: { uvIndex: number }) => {
   return (
     <div className={styles.uvIndex}>
       <div className={styles.uvIndex__wrapper}>
-        <div className={styles.uvIndex__title}>UV index</div>
+        <h3 className={styles.uvIndex__title}>UV index</h3>
         <div className={styles.uvIndex__contents}>
           <div className={styles.uvIndex__gaugeContainer}>
             <div className={styles.uvIndex__gauge}>

@@ -15,15 +15,13 @@ const Overview = ({
     <div className={styles.overview}>
       <div className={styles.overview__container}>
         <div className={styles.overview__weatherOverview}>
-          <h5>Overview</h5>
-          <div>
-            <p>{weatherOverview}</p>
-          </div>
+          <h3 className={styles.overview__title}>Overview</h3>
+          <p>{weatherOverview}</p>
         </div>
 
-        <div className={styles.overview__bottomContents}>
-          <div className={styles.overview__feelsLikeTemps}>
-            <h6>Feels-like temp</h6>
+        <ul className={styles.overview__bottomContents}>
+          <li className={styles.overview__feelsLikeTemps}>
+            <h3 className={styles.overview__title}>Feels-like temp</h3>
             <div>
               <Thermometer className={styles.overview__icon} />
               <p>
@@ -37,11 +35,11 @@ const Overview = ({
                 °
               </p>
             </div>
-          </div>
+          </li>
 
           {snowDepth > 0 && (
-            <div className={styles.overview__snowDepth}>
-              <h6>Snow Depth</h6>
+            <li className={styles.overview__snowDepth}>
+              <h3 className={styles.overview__title}>Snow Depth</h3>
               <div>
                 <ArrowUpToLine className={styles.overview__icon} />
                 <p>
@@ -51,22 +49,22 @@ const Overview = ({
                   cm
                 </p>
               </div>
-            </div>
+            </li>
           )}
 
-          <div className={styles.overview__humidity}>
-            <h6>Humidity</h6>
+          <li className={styles.overview__humidity}>
+            <h3 className={styles.overview__title}>Humidity</h3>
             <div>
               <Droplet className={styles.overview__icon} />
               <p>
                 <span className={styles.overview__numberData}>{humidity}</span>%
               </p>
             </div>
-          </div>
+          </li>
 
           {visibility < 4 && (
-            <div className={styles.overview__visibility}>
-              <h6>Visibility</h6>
+            <li className={styles.overview__visibility}>
+              <h3 className={styles.overview__title}>Visibility</h3>
               <div>
                 <Eye className={styles.overview__icon} />
                 <p>
@@ -80,9 +78,9 @@ const Overview = ({
               <p className={styles.overview__weatherIndex}>
                 {getVisibilityIndex(visibility)}
               </p>
-            </div>
+            </li>
           )}
-        </div>
+        </ul>
       </div>
     </div>
   );
