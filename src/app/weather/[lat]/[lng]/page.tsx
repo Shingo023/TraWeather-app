@@ -50,23 +50,4 @@ export default function WeatherPage() {
       )}
     </div>
   );
-  // return (
-  //   <div className={styles.weatherPage}>
-  //     {errorMessage ? (
-  //       <ErrorMessage message={errorMessage} />
-  //     ) : (
-  //       <>
-  //         <div className={styles.weatherPage__leftContent}>
-  //           <SearchBar />
-  //           <CurrentWeather />
-  //           <TodaysForecast />
-  //           <TodaysHighlights />
-  //         </div>
-  //         <div className={styles.weatherPage__rightContent}>
-  //           <WeeklyComponent />
-  //         </div>
-  //       </>
-  //     )}
-  //   </div>
-  // );
 }

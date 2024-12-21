@@ -323,3 +323,11 @@ export type WeatherIconProps = {
   height?: number;
   priority?: boolean;
 };
+
+export type SunsetAndSunriseProps = {
+  sunrise: string | null;
+  sunset: string | null;
+  selectedDate: string;
+  lastWeatherFetchDateTime: string | null;
+  todaysDate: string | null;
+};

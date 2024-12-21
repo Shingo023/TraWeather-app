@@ -73,7 +73,6 @@ const HomeLocationIcon = ({
           }
         })
       );
-      console.log(favoriteCitiesData);
     } catch (error) {
       console.error(error);
     }

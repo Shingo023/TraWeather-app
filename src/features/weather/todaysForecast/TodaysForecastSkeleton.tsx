@@ -4,9 +4,10 @@ import styles from "./TodaysForecast.module.scss";
 const TodaysForecastSkeleton = () => {
   return (
     <div className={styles.todaysForecast}>
-      <div className={styles.todaysForecast__container}>
+      <div className={styles.todaysForecast__forecastWrapper}>
         <h2 className={styles.todaysForecast__titleSkeleton} />
-        <div className={styles.todaysForecast__content}>
+
+        <div className={styles.todaysForecast__forecastDetails}>
           <WeatherForecastSkeleton
             className="dailyForecast"
             isForFavoriteCityCard={false}

@@ -93,7 +93,6 @@ const StarIcon = () => {
           ...prev,
           newUserFavoriteCityWithWeather,
         ]);
-        console.log(newUserFavoriteCityWithWeather);
       }
     } catch (error) {
       console.error("Error bookmarking the city:", error);

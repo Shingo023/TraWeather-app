@@ -17,9 +17,9 @@ const WeatherCardSkeleton = ({
       }}
     >
       <div className={styles.weatherCard__top}>
-        <p className={styles.weatherCard__time}>
+        <div className={styles.weatherCard__time}>
           <p className={styles.weatherCard__timeSkeleton} />
-        </p>
+        </div>
         <div className={styles.weatherCard__weatherIcon}>
           <div className={styles.weatherCard__weatherIconSkeleton} />
         </div>

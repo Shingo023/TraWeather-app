@@ -5,8 +5,6 @@ import styles from "./WeatherIcon.module.scss";
 const WeatherIcon = ({
   className,
   weatherIcon,
-  width,
-  height,
   priority = false,
 }: WeatherIconProps) => {
   if (!weatherIcon) {
@@ -18,10 +16,10 @@ const WeatherIcon = ({
       className={`${styles.weatherIcon} ${className ? styles[className] : ""}`}
       src={weatherIcon}
       alt="Weather icon"
-      layout="responsive"
-      width={1}
-      height={1}
+      width={100}
+      height={100}
       priority={priority}
+      style={{ width: "100%", height: "auto" }}
     />
   );
 };

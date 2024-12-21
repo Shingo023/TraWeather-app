@@ -151,7 +151,6 @@ export const UserFavoriteCitiesProvider = ({
         }
         setFavoriteCitiesData(userFavoriteCities);
         setFavoriteCitiesReady(true);
-        console.log(userFavoriteCities);
         const placeIds = userFavoriteCities.map(
           (city: UserFavoriteCity) => city.placeId
         );
