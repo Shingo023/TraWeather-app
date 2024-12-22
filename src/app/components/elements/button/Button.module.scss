@@ -1,3 +1,5 @@
+@use '../../../../style/_mixins.scss' as *;
+
 .button {
   cursor: pointer;
   font-size: 14px;
@@ -17,9 +19,8 @@
     color: #1d1d1d;
   }
 
-  @media (max-width: 768px) {
-    font-size: 12px;
-    letter-spacing: 0.25px;
+  @include respond(tablet) {
+    letter-spacing: 0.15rem;
   }
 }
 
@@ -80,14 +81,13 @@
   height: 50px;
   padding: 15px 80px 15px 80px;
   font-size: 1.25rem;  
+  letter-spacing: 0.02rem;
   font-weight: 500;
   border-radius: 10px;
 
-  @media (max-width: 768px) {
+  @include respond(tablet) {
     width: 143px;
     height: 42px;
     padding: 10px 40px;
-    font-size: 18px;
-    letter-spacing: 0.36px;
   }
 }

@@ -1,5 +1,5 @@
 .externalLink {
-  font-size: 15px;
+  font-size: 0.875;
   font-weight: 500;
   display: flex;
   gap: 3px;
@@ -11,15 +11,9 @@
     color: #4299E1; 
     text-decoration: underline;
   }
-
-  @media (max-width: 768px) {
-    font-size: 10px;
-  }
 }
 
 .icon {
-  @media (max-width: 768px) {
-    width: 14px;
-    height: 14px;
-  }
+  width: 1.077rem;
+  height: 1.077rem;
 }

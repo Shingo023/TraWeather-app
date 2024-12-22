@@ -20,7 +20,7 @@ const ExternalLinkComponent = ({
       onClick={clickHandler}
     >
       {linkName}
-      <ExternalLink className={styles.icon} width={20} height={20} />
+      <ExternalLink className={styles.icon} />
     </div>
   );
 };

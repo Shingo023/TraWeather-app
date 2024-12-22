@@ -1,3 +1,5 @@
+@use '../../../../style/_mixins.scss' as *;
+
 .weatherPage {
 
   h1 {
@@ -24,26 +26,40 @@
   overflow: auto;
   padding: 18px 30px 18px 15px;
 
-  @media (max-width: 1015px) { 
+  @include respond(small-desktop) { 
     padding: 18px 30px 18px 5px; 
   }
-
-  @media (max-width: 768px) { 
-    padding: 18px 15px 18px 15px;
+  @include respond(tablet) { 
+    padding: 18px 15px;
     min-height: 620px;
+  }
+  @include respond(mobile) { 
+    padding: 18px 20px;
+    flex-direction: column;
   }
 
   &__leftContent {
     width: 65%;
     height: 100%;
+
+    @include respond(mobile) { 
+      width: unset;
+    }
   }
 
   &__rightContent {
     width: 35%;
     padding: 69px 0 0 26px;
 
-    @media (max-width: 1015px) { 
+    @include respond(small-desktop) { 
       padding: 69px 0 0 20px; 
+    }
+    @include respond(tablet) { 
+      padding: 69px 0 0 14px; 
+    }
+    @include respond(mobile) {
+      padding: unset; 
+      width: unset;
     }
   }
 }

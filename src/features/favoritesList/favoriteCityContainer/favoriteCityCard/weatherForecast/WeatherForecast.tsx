@@ -8,13 +8,9 @@ import { ChevronsLeft, ChevronsRight } from "lucide-react";
 
 const WeatherForecast = ({
   dailyOrWeeklyWeather,
-  iconWidth,
-  iconHeight,
   className,
 }: {
   dailyOrWeeklyWeather: WeatherDataForForecast[] | null;
-  iconWidth?: number;
-  iconHeight?: number;
   className: string;
 }) => {
   const [hovered, setHovered] = useState(false);
@@ -107,8 +103,6 @@ const WeatherForecast = ({
               key={index}
               dateTime={dateTime}
               weatherIconSrc={weatherIconSrc}
-              iconWidth={iconWidth}
-              iconHeight={iconHeight}
               temp={temp}
               tempMax={tempMax}
               tempMin={tempMin}

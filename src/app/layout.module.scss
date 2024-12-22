@@ -1,7 +1,10 @@
+@use '../style/_mixins.scss' as *;
+
 .container {
   display: flex;
   height: 100vh;
-  @media (max-width: 768px) { 
+
+  @include respond(tablet) { 
     flex-direction: column; 
   }
 }
@@ -13,7 +16,7 @@
   flex: none;
   padding: 18px 15px 18px 30px;
 
-  @media (max-width: 768px) {
+  @include respond(tablet) {
     position: fixed;
     bottom: 0; 
     width: 100%; 
@@ -29,7 +32,8 @@
   margin-left: 160px;
   height: 100vh;
   overflow: auto;
-  @media (max-width: 768px) {
+  
+  @include respond(tablet) {
     margin-left: 0; 
     padding-bottom: 60px; 
   }

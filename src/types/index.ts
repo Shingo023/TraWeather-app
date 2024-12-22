@@ -305,8 +305,6 @@ export type DefaultCityType = {
 export type WeatherCardType = {
   dateTime: string;
   weatherIconSrc: string;
-  iconWidth: number | undefined;
-  iconHeight: number | undefined;
   temp?: number;
   tempMax?: number;
   tempMin?: number;
@@ -317,10 +315,7 @@ export type WeatherCardType = {
 };
 
 export type WeatherIconProps = {
-  className?: string;
   weatherIcon: string | null;
-  width?: number;
-  height?: number;
   priority?: boolean;
 };
 

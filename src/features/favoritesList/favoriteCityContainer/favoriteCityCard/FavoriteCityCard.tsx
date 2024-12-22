@@ -20,7 +20,7 @@ const FavoriteCityCard = ({
   favoriteCityWithWeather,
 }: FavoriteCityCardPropsType) => {
   const [showTodaysWeather, setShowTodaysWeather] = useState(true);
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isTablet = useMediaQuery("(max-width: 768px)");
 
   const currentWeather = favoriteCityWithWeather.weather.currentConditions
     .icon as WeatherIconType;
@@ -125,8 +125,6 @@ const FavoriteCityCard = ({
               <WeatherIcon
                 className="favoriteCityCardCurrent"
                 weatherIcon={currentWeatherIcon}
-                width={70}
-                height={70}
               />
             </div>
             <h5 className={styles.cityCard__currentTemp}>{currentTemp}°</h5>
@@ -134,7 +132,7 @@ const FavoriteCityCard = ({
           <div className={styles.cityCard__buttons}>
             <Button
               className="primary"
-              text={isMobile ? "More" : "Weather Details"}
+              text={isTablet ? "More" : "Weather Details"}
               type="button"
               onClick={handleWeatherInfoClick}
             />
@@ -147,8 +145,6 @@ const FavoriteCityCard = ({
               dailyOrWeeklyWeather={
                 showTodaysWeather ? twentyFourHoursWeather : weeklyWeather
               }
-              iconHeight={40}
-              iconWidth={40}
               className={
                 isNight ? "favoriteCityCardNightMode" : "favoriteCityCard"
               }

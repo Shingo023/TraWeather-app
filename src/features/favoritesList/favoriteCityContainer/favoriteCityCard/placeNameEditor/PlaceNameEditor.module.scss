@@ -3,8 +3,8 @@
     position: relative;
   }
   &__editIcon {
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
     position: relative;
     transition: all 0.3s ease; 
     margin-left: 5px;
@@ -21,11 +21,6 @@
         visibility: visible;
         opacity: 1;
       }
-    }
-
-    @media (max-width: 768px) {
-      height: 24px;
-      width: 24px;
     }
   }
   &__tooltip {

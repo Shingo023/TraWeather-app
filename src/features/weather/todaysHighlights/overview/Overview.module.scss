@@ -6,6 +6,7 @@
   height: 100%;
   overflow-y: hidden;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  min-width: 115px;
 
   &__container {
     display: flex;
