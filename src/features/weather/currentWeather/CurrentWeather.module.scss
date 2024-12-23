@@ -2,12 +2,13 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 20px 0 10px 12px;
-  height: 26%;
+  padding-left: 12px;
+  // padding: 20px 0 10px 12px;
+  // height: 26%;
 
-  @media (max-height: 780px) {
-    height: 23%;
-  }
+  // @media (max-height: 750px) {
+  //   height: 23%;
+  // }
 
   // city section
   &__city {
@@ -29,8 +30,14 @@
 
   &__cityNameContainer {
     position: relative;
+    max-width: 80%;
+    // max-width: calc(100% - (5px + 1.5rem));
   }
   &__cityName {
+    // white-space: nowrap;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+
     &:hover {
       cursor: default;
       + .currentWeather__cityNameTooltip {
@@ -49,6 +56,8 @@
     margin: auto 0;
     width: 7.2rem;
     height: 7.2rem;
+    display: flex;
+    align-items: center;
   }
 
   // weather section

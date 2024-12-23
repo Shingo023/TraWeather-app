@@ -1,14 +1,11 @@
 .uvIndex {
   padding: 5px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  flex: 1;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  min-width: 115px;
+  height: 100%;
 
   &__wrapper {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     height: 100%;
     padding: 10px;
   }

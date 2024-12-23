@@ -9,7 +9,6 @@ import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 const TodaysHighlights = () => {
   const {
     dailyWeatherHighlights,
-    timezone,
     lastWeatherFetchDateTime,
     todaysDate,
     loading,
@@ -36,22 +35,28 @@ const TodaysHighlights = () => {
         </h2>
 
         <div className={styles.todaysHighlights__contents}>
-          <Overview
-            humidity={dailyWeatherHighlights.humidity}
-            snowDepth={dailyWeatherHighlights.snowDepth}
-            weatherOverview={dailyWeatherHighlights.weatherOverview}
-            visibility={dailyWeatherHighlights.visibility}
-            feelsLikeTempMax={dailyWeatherHighlights.feelsLikeTempMax}
-            feelsLikeTempMin={dailyWeatherHighlights.feelsLikeTempMin}
-          />
-          <UVIndex uvIndex={dailyWeatherHighlights.uvIndexData} />
-          <SunsetAndSunrise
-            sunrise={dailyWeatherHighlights.sunrise}
-            sunset={dailyWeatherHighlights.sunset}
-            selectedDate={dailyWeatherHighlights.datetime}
-            lastWeatherFetchDateTime={lastWeatherFetchDateTime}
-            todaysDate={todaysDate}
-          />
+          <div className={styles.todaysHighlights__contentWrapper}>
+            <Overview
+              humidity={dailyWeatherHighlights.humidity}
+              snowDepth={dailyWeatherHighlights.snowDepth}
+              weatherOverview={dailyWeatherHighlights.weatherOverview}
+              visibility={dailyWeatherHighlights.visibility}
+              feelsLikeTempMax={dailyWeatherHighlights.feelsLikeTempMax}
+              feelsLikeTempMin={dailyWeatherHighlights.feelsLikeTempMin}
+            />
+          </div>
+          <div className={styles.todaysHighlights__contentWrapper}>
+            <UVIndex uvIndex={dailyWeatherHighlights.uvIndexData} />
+          </div>
+          <div className={styles.todaysHighlights__contentWrapper}>
+            <SunsetAndSunrise
+              sunrise={dailyWeatherHighlights.sunrise}
+              sunset={dailyWeatherHighlights.sunset}
+              selectedDate={dailyWeatherHighlights.datetime}
+              lastWeatherFetchDateTime={lastWeatherFetchDateTime}
+              todaysDate={todaysDate}
+            />
+          </div>
         </div>
       </div>
     </section>

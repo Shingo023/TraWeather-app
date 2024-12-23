@@ -1,13 +1,13 @@
 .todaysForecast {
-  height: 34%;
+  // height: 34%;
 
-  @media (max-height: 780px) {
-    height: 36%;
-  }
+  // @media (max-height: 750px) {
+  //   height: 36%;
+  // }
 
   &__forecastWrapper {
     height: 100%;
-    padding: 15px 0 15px 0;
+    // padding: 15px 0 15px 0;
 
     h2 {
       span {

@@ -24,23 +24,31 @@
   height: 100%;
   min-height: 700px;
   overflow: auto;
-  padding: 18px 30px 18px 15px;
+  padding: 18px 30px 10px 15px;
 
   @include respond(small-desktop) { 
-    padding: 18px 30px 18px 5px; 
+    padding: 18px 30px 10px 5px; 
   }
   @include respond(tablet) { 
-    padding: 18px 15px;
+    padding: 18px 15px 10px 15px;
     min-height: 620px;
   }
   @include respond(mobile) { 
-    padding: 18px 20px;
+    padding: 18px 20px 10px 20px;
     flex-direction: column;
+    gap: 25px;
+    min-height: unset;
+    height: unset;
   }
 
   &__leftContent {
     width: 65%;
     height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    overflow-y: scroll;
 
     @include respond(mobile) { 
       width: unset;
@@ -49,13 +57,13 @@
 
   &__rightContent {
     width: 35%;
-    padding: 69px 0 0 26px;
+    padding: 69px 0 8px 26px;
 
     @include respond(small-desktop) { 
-      padding: 69px 0 0 20px; 
+      padding: 69px 0 8px 20px; 
     }
     @include respond(tablet) { 
-      padding: 69px 0 0 14px; 
+      padding: 69px 0 8px 14px; 
     }
     @include respond(mobile) {
       padding: unset; 

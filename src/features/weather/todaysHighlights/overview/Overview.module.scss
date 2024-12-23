@@ -1,12 +1,9 @@
+@use '../../../../style/_mixins.scss' as *;
+
 .overview {
-  background-color: #F9F9F9;
-  border-radius: 10px;
-  flex: 1;
   padding: 5px 5px 13px 5px;
+  overflow: hidden;
   height: 100%;
-  overflow-y: hidden;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  min-width: 115px;
 
   &__container {
     display: flex;
@@ -17,7 +14,7 @@
     height: 100%;
     width: 100%;
 
-    @media (max-width: 1015px) { 
+    @include respond(small-desktop) { 
       padding: 10px 3px;
     }
   }
@@ -63,7 +60,7 @@
     flex: 0;
     min-width: 120px;
 
-    @media (max-width: 1015px) { 
+    @include respond(small-desktop) { 
       min-width: 95px;
     }
     p {
@@ -82,9 +79,9 @@
   }
  
   &__feelsLikeTemps {
-    min-width: 115px;
+    min-width: 120px;
 
-    @media (max-width: 1015px) { 
+    @include respond(small-desktop) { 
       min-width: 95px;
     }
   }
