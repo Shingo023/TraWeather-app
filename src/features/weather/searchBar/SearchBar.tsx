@@ -6,8 +6,9 @@ import { debounce } from "@/utils/debounce";
 import styles from "./SearchBar.module.scss";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
-import { Search, TriangleAlert } from "lucide-react";
+import { Search, TriangleAlert, X } from "lucide-react";
 import { fetchPlaceCoordinate, fetchPlacePredictions } from "@/utils/apiHelper";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 // "places" library: necessary for autocomplete for addresses and places
 const SearchBar = React.memo(() => {
@@ -16,8 +17,11 @@ const SearchBar = React.memo(() => {
     autocompleteSuggestion[]
   >([]);
   const [error, setError] = useState<string | null>(null);
+  const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
+
   const router = useRouter();
   const searchParams = useSearchParams();
+  const isMobile = useMediaQuery("(max-width: 480px)");
 
   useEffect(() => {
     const address = searchParams.get("address");
@@ -94,19 +98,25 @@ const SearchBar = React.memo(() => {
     }
   };
 
+  const handleClick = () => {
+    setShowSearchBar((prev) => {
+      if (prev === true && inputRef.current) {
+        inputRef.current.value = "";
+        setAutocompleteSuggestions([]);
+      }
+      return !prev;
+    });
+  };
+
+  const clearInput = () => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+      setAutocompleteSuggestions([]);
+    }
+  };
+
   return (
     <div className={styles.searchBar}>
-      <input
-        ref={inputRef}
-        type="text"
-        placeholder="Search places ..."
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-      />
-      <div className={styles.searchBar__iconContainer}>
-        <Search className={styles.searchBar__searchIcon} />
-      </div>
-
       {autocompleteSuggestions.length > 0 && (
         <ul className={styles.searchBar__suggestionsList} role="listbox">
           {error && (
@@ -134,6 +144,41 @@ const SearchBar = React.memo(() => {
           ))}
         </ul>
       )}
+      <div className={styles.searchBar__inputWrapper}>
+        <div
+          className={`${styles.searchBar__input} ${
+            showSearchBar ? styles.showSearchBar : ""
+          } `}
+        >
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder="Search places ..."
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+          />
+          {!isMobile && (
+            <div className={styles.searchBar__iconContainer}>
+              <Search className={styles.searchBar__icon} />
+            </div>
+          )}
+          {inputRef.current && (
+            <div className={styles.searchBar__closeIcon} onClick={clearInput}>
+              <X className={styles.searchBar__icon} />
+            </div>
+          )}
+        </div>
+        {isMobile && (
+          <div
+            className={styles.searchBar__iconForToggle}
+            onClick={handleClick}
+          >
+            <div className={styles.searchBar__searchToggleContainer}>
+              <Search className={styles.searchBar__icon} />
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 });

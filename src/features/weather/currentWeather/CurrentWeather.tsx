@@ -8,13 +8,15 @@ import { useSearchParams } from "next/navigation";
 import CurrentWeatherSkelton from "./CurrentWeatherSkelton";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 import ToolTip from "@/app/components/elements/toolTip/ToolTip";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 const CurrentWeather = () => {
   const searchParams = useSearchParams();
   const cityToDisplay = searchParams.get("place");
   const address = searchParams.get("address");
 
-  const { currentWeather, timezone, loading } = useDisplayedCityWeather();
+  const { currentWeather, loading } = useDisplayedCityWeather();
+  const isMobile = useMediaQuery("(max-width: 480px)");
 
   if (loading) {
     return <CurrentWeatherSkelton />;
@@ -23,18 +25,21 @@ const CurrentWeather = () => {
   return (
     <div className={styles.currentWeather}>
       <header className={styles.currentWeather__city}>
-        <div className={styles.currentWeather__cityNameContainer}>
-          <h1 className={styles.currentWeather__cityName}>{cityToDisplay}</h1>
-          <div className={styles.currentWeather__cityNameTooltip}>
-            <ToolTip message={address!} width={160} />
+        <div className={styles.currentWeather__cityWrapper}>
+          <div className={styles.currentWeather__cityNameContainer}>
+            <h1 className={styles.currentWeather__cityName}>{cityToDisplay}</h1>
+            <div className={styles.currentWeather__cityNameTooltip}>
+              <ToolTip message={address!} width={160} />
+            </div>
           </div>
+          <StarIcon aria-label="Mark city as favorite" />
         </div>
-        <StarIcon aria-label="Mark city as favorite" />
+        {isMobile && <CurrentDateTime />}
       </header>
 
       <section className={styles.currentWeather__weather}>
         <div className={styles.currentWeather__info}>
-          {currentWeather && timezone && <CurrentDateTime />}
+          {!isMobile && <CurrentDateTime />}
           <p className={styles.currentWeather__temp}>
             {currentWeather?.currentTemp}°
           </p>
