@@ -1,18 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { autocompleteSuggestion } from "@/types";
 import { debounce } from "@/utils/debounce";
 import styles from "./SearchBar.module.scss";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
-import { Search, TriangleAlert, X } from "lucide-react";
+import { CircleX, Search, TriangleAlert } from "lucide-react";
 import { fetchPlaceCoordinate, fetchPlacePredictions } from "@/utils/apiHelper";
 import useMediaQuery from "@/hooks/useMediaQuery";
 
 // "places" library: necessary for autocomplete for addresses and places
 const SearchBar = React.memo(() => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [inputValue, setInputValue] = useState<string>("");
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState<
     autocompleteSuggestion[]
   >([]);
@@ -28,15 +28,19 @@ const SearchBar = React.memo(() => {
     const source = searchParams.get("source");
 
     // Only set the address in the input if the source is 'search'
-    if (address && inputRef.current && source === "search") {
-      inputRef.current.value = address;
+    if (address && inputValue && source === "search") {
+      setInputValue(address);
     }
   }, [searchParams]);
 
-  const handleInputChange = debounce(async () => {
-    const input = inputRef.current?.value;
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const input = event.target.value;
+    setInputValue(input);
+    debouncedFetchSuggestions(input);
+  };
 
-    if (!input) {
+  const debouncedFetchSuggestions = debounce(async (input: string) => {
+    if (!input.trim()) {
       setAutocompleteSuggestions([]);
       setError(null);
       return;
@@ -56,7 +60,12 @@ const SearchBar = React.memo(() => {
       console.error("Error fetching autocomplete data:", error);
       alert("Failed to fetch suggestions. Please try again.");
     }
-  }, 500);
+  }, 400);
+
+  const clearInput = () => {
+    setInputValue("");
+    setAutocompleteSuggestions([]);
+  };
 
   // Handle place selection and fetch weather data
   const handlePlaceSelect = async (
@@ -66,10 +75,7 @@ const SearchBar = React.memo(() => {
   ) => {
     setAutocompleteSuggestions([]);
     setError(null);
-
-    if (inputRef.current) {
-      inputRef.current.value = description;
-    }
+    setInputValue(description);
 
     try {
       const coordinateData = await fetchPlaceCoordinate(placeId);
@@ -100,34 +106,28 @@ const SearchBar = React.memo(() => {
 
   const handleClick = () => {
     setShowSearchBar((prev) => {
-      if (prev === true && inputRef.current) {
-        inputRef.current.value = "";
-        setAutocompleteSuggestions([]);
+      if (prev === true && inputValue) {
+        clearInput();
       }
       return !prev;
     });
   };
 
-  const clearInput = () => {
-    if (inputRef.current) {
-      inputRef.current.value = "";
-      setAutocompleteSuggestions([]);
-    }
-  };
-
   return (
     <div className={styles.searchBar}>
       {autocompleteSuggestions.length > 0 && (
-        <ul className={styles.searchBar__suggestionsList} role="listbox">
+        <ul className={styles.placeSuggestions__list} role="listbox">
           {error && (
-            <div className={styles.searchBar__error}>
-              <TriangleAlert className={styles.searchBar__errorIcon} />
+            <section className={styles.placeSuggestions__error}>
+              <div className={`iconContainer ${styles.warningIcon}`}>
+                <TriangleAlert className="icon" />
+              </div>
               <p>{error}</p>
-            </div>
+            </section>
           )}
           {autocompleteSuggestions.map((suggestion) => (
             <li
-              className={styles.searchBar__suggestion}
+              className={styles.placeSuggestions__item}
               role="option"
               key={suggestion.place_id}
               onClick={() =>
@@ -138,43 +138,56 @@ const SearchBar = React.memo(() => {
                 )
               }
             >
-              <Search className={styles.searchBar__suggestionIcon} />
+              <div
+                className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--middle"]}`}
+              >
+                <Search className="icon" />
+              </div>
               <p>{suggestion.description}</p>
             </li>
           ))}
         </ul>
       )}
+
       <div className={styles.searchBar__inputWrapper}>
         <div
-          className={`${styles.searchBar__input} ${
-            showSearchBar ? styles.showSearchBar : ""
-          } `}
+          className={`${styles.searchBar__inputField} ${
+            showSearchBar ? styles["searchBar__inputField--showSearchBar"] : ""
+          }`}
         >
           <input
-            ref={inputRef}
             type="text"
             placeholder="Search places ..."
+            value={inputValue}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
           />
           {!isMobile && (
-            <div className={styles.searchBar__iconContainer}>
-              <Search className={styles.searchBar__icon} />
+            <div
+              className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--small"]}`}
+            >
+              <Search className="icon" />
             </div>
           )}
-          {inputRef.current && (
-            <div className={styles.searchBar__closeIcon} onClick={clearInput}>
-              <X className={styles.searchBar__icon} />
+          {inputValue && (
+            <div
+              className={`iconContainer ${styles.clearIcon}`}
+              onClick={clearInput}
+            >
+              <CircleX className="icon" />
             </div>
           )}
         </div>
+
         {isMobile && (
           <div
-            className={styles.searchBar__iconForToggle}
+            className={styles.searchBar__searchBarToggle}
             onClick={handleClick}
           >
-            <div className={styles.searchBar__searchToggleContainer}>
-              <Search className={styles.searchBar__icon} />
+            <div
+              className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--large"]}`}
+            >
+              <Search className="icon" />
             </div>
           </div>
         )}

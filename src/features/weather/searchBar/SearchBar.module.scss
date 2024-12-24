@@ -17,32 +17,32 @@
  
     @include respond(mobile) { 
       height: 68px;
-      display: flex;
-      align-items: center;
+      justify-content: flex-end;
       z-index: 3001;
       overflow: hidden;
     }
   }
 
-  .showSearchBar {
-    @include respond(mobile) { 
-      transform: translateX(0);
-    }
-  }
-
-  &__input {
+  &__inputField {
     position: relative;
     width: 100%;
 
     @include respond(mobile) { 
+      position: absolute;
+      right: - 100%;
       display: flex;
       align-items: center;
       background-color: #F9F9F9;
       height: 68px;
       padding-left: 13px;
-      padding-right: 2px;
-      transform: translateX(calc(100% + 50px));
-      transition:transform ease 0.5s;
+      padding-right: 56px;
+      transition: all ease 0.5s;
+    }
+
+    &--showSearchBar {
+      @include respond(mobile) { 
+        right: 0;
+      }
     }
 
     input {
@@ -66,20 +66,7 @@
     }
   }
 
-  &__iconContainer {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 1.56rem;
-    height: 1.56rem;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0.94rem;
-    color: #878787;
-  }
-
-  &__iconForToggle {
+  &__searchBarToggle {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -87,58 +74,20 @@
     background-color: #F9F9F9;
     z-index: 3002;
   }
+}
 
-  &__searchToggleContainer {
-    width: 28px;
-    min-width: 28px;
-    height: 28px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #878787;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  &__closeIcon {
-    width: 22px;
-    height: 22px;
-    padding: 3px;
-    border-radius: 180px;
-    background-color: rgba(black, 0.1);
-    stroke-width: 3px;
-    color: white;
-    position: absolute;
-    right: 0.7rem;
-    top: 50%;
-    transform: translateY(- 50%);
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  &__icon {
-    width: 100%;
-    height: 100%;
-    stroke: 0.5px;
-  }
+// place suggestions
+.placeSuggestions {
 
   &__error {
     display: flex;
     gap: 5px;
     align-items: center;
-    color: red;
     padding: 15px;
+    color: red;
   }
 
-  &__errorIcon {
-    width: 18px;
-    height: 18px;
-  }
-
-  &__suggestionsList {
+  &__list {
     position: absolute; 
     top: 100%;
     left: 0;
@@ -159,7 +108,7 @@
     }
   }
 
-  &__suggestion {
+  &__item {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -171,11 +120,58 @@
       background-color: #F0F0F0;
     }
   }
-  &__suggestionIcon {
+}
+
+// icons
+.clearIcon {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  color: #878787;
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(- 50%);
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.searchIcon {
+  color: #878787;
+
+  &--small {
+    position: absolute;
+    width: 1.56rem;
+    min-width: 1.56rem;
+    height: 1.56rem;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0.94rem;
+  }
+
+  &--middle {
     color: #808080;
     width: 18px;
     min-width: 18px;
     height: 18px;
   }
+
+  &--large {
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
+
+.warningIcon {
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  color: red;
+}
+
 
