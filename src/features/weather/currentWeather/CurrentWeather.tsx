@@ -8,7 +8,6 @@ import { useSearchParams } from "next/navigation";
 import CurrentWeatherSkelton from "./CurrentWeatherSkelton";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 import ToolTip from "@/app/components/elements/toolTip/ToolTip";
-import useMediaQuery from "@/hooks/useMediaQuery";
 
 const CurrentWeather = () => {
   const searchParams = useSearchParams();
@@ -16,7 +15,6 @@ const CurrentWeather = () => {
   const address = searchParams.get("address");
 
   const { currentWeather, loading } = useDisplayedCityWeather();
-  const isMobile = useMediaQuery("(max-width: 480px)");
 
   if (loading) {
     return <CurrentWeatherSkelton />;
@@ -34,12 +32,11 @@ const CurrentWeather = () => {
           </div>
           <StarIcon aria-label="Mark city as favorite" />
         </div>
-        {isMobile && <CurrentDateTime />}
+        <CurrentDateTime />
       </header>
 
       <section className={styles.currentWeather__weather}>
         <div className={styles.currentWeather__info}>
-          {!isMobile && <CurrentDateTime />}
           <p className={styles.currentWeather__temp}>
             {currentWeather?.currentTemp}°
           </p>
@@ -47,7 +44,7 @@ const CurrentWeather = () => {
             Feels like {currentWeather?.currentFeelslikeTemp}°
           </p>
         </div>
-        <div className={styles.currentWeather__weatherIconContainer}>
+        <div className={`iconContainer ${styles.weatherIcon}`}>
           <WeatherIcon
             weatherIcon={currentWeather?.currentWeatherIcon ?? null}
             priority={true}

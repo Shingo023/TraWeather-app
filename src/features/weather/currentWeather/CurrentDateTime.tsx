@@ -24,8 +24,8 @@ const CurrentDateTime = () => {
       >
         {lastWeatherFetchDateTime}
       </div>
-      <div className={styles.currentWeather__updateIconContainer}>
-        <RotateCw className={styles.currentWeather__updateIcon} />
+      <div className={`iconContainer ${styles.updateIcon}`}>
+        <RotateCw className="icon" />
       </div>
     </div>
   );

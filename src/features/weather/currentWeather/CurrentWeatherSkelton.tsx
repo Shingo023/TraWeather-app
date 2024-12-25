@@ -7,15 +7,15 @@ const CurrentWeatherSkelton = () => {
         <div className={styles.currentWeather__cityNameContainer}>
           <div className={styles.currentWeather__skeletonCityName} />
         </div>
+        <div className={styles.currentWeather__skeletonDateTime} />
       </div>
 
       <div className={styles.currentWeather__weather}>
         <div className={styles.currentWeather__info}>
-          <div className={styles.currentWeather__skeletonDateTime} />
           <div className={styles.currentWeather__skeletonTemp} />
           <div className={styles.currentWeather__skeletonFeelslikeTemp} />
         </div>
-        <div className={styles.currentWeather__weatherIconContainer}>
+        <div className={`iconContainer ${styles.weatherIcon}`}>
           <div className={styles.currentWeather__skeletonWeatherIcon} />
         </div>
       </div>
