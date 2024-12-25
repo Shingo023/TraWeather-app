@@ -5,12 +5,11 @@
   flex-direction: column;
   justify-content: center;
   padding-left: 12px;
-  // padding: 20px 0 10px 12px;
-  // height: 26%;
-
-  // @media (max-height: 750px) {
-  //   height: 23%;
-  // }
+  
+  @include respond(mobile) { 
+    margin-top: 80px;
+    padding-left: 25px;
+  }
 
   // city section
   &__city {
@@ -45,16 +44,6 @@
     }
   }
 
-  &__starIcon {
-    cursor: pointer;
-    height: 1.5rem;
-    width: 1.5rem;
-    color: lightgray;
-  }
-  .isFavorite {
-    fill:yellow;
-    color: rgb(228, 228, 28);
-  }
 
   &__cityNameContainer {
     position: relative;
@@ -153,6 +142,18 @@
   }
 }
 
+// icons
+.starIcon {
+  cursor: pointer;
+  height: 1.5rem;
+  width: 1.5rem;
+  min-width: 1.5rem;
+  color: lightgray;
+}
+.isFavorite {
+  fill:yellow;
+  color: rgb(228, 228, 28);
+}
 
 // Skeletons
 .currentWeather {

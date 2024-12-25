@@ -115,81 +115,81 @@ const SearchBar = React.memo(() => {
 
   return (
     <div className={styles.searchBar}>
-      {autocompleteSuggestions.length > 0 && (
-        <ul className={styles.placeSuggestions__list} role="listbox">
-          {error && (
-            <section className={styles.placeSuggestions__error}>
-              <div className={`iconContainer ${styles.warningIcon}`}>
-                <TriangleAlert className="icon" />
-              </div>
-              <p>{error}</p>
-            </section>
-          )}
-          {autocompleteSuggestions.map((suggestion) => (
-            <li
-              className={styles.placeSuggestions__item}
-              role="option"
-              key={suggestion.place_id}
-              onClick={() =>
-                handlePlaceSelect(
-                  suggestion.structured_formatting.main_text,
-                  suggestion.place_id,
-                  suggestion.description
-                )
-              }
-            >
-              <div
-                className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--middle"]}`}
-              >
-                <Search className="icon" />
-              </div>
-              <p>{suggestion.description}</p>
-            </li>
-          ))}
-        </ul>
+      {isMobile && (
+        <div
+          className={styles.searchBar__searchBarToggle}
+          onClick={handleClick}
+        >
+          <div
+            className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--large"]}`}
+          >
+            <Search className="icon" />
+          </div>
+        </div>
       )}
 
-      <div className={styles.searchBar__inputWrapper}>
-        <div
-          className={`${styles.searchBar__inputField} ${
-            showSearchBar ? styles["searchBar__inputField--showSearchBar"] : ""
-          }`}
-        >
-          <input
-            type="text"
-            placeholder="Search places ..."
-            value={inputValue}
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-          />
-          {!isMobile && (
-            <div
-              className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--small"]}`}
-            >
-              <Search className="icon" />
-            </div>
-          )}
-          {inputValue && (
-            <div
-              className={`iconContainer ${styles.clearIcon}`}
-              onClick={clearInput}
-            >
-              <CircleX className="icon" />
-            </div>
-          )}
-        </div>
+      <div
+        className={`${styles.searchBar__inputField} ${
+          showSearchBar ? styles["searchBar__inputField--showSearchBar"] : ""
+        }`}
+      >
+        <input
+          type="text"
+          placeholder="Search places ..."
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+        />
 
-        {isMobile && (
+        {!isMobile && (
           <div
-            className={styles.searchBar__searchBarToggle}
-            onClick={handleClick}
+            className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--small"]}`}
           >
-            <div
-              className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--large"]}`}
-            >
-              <Search className="icon" />
-            </div>
+            <Search className="icon" />
           </div>
+        )}
+
+        {inputValue && (
+          <div
+            className={`iconContainer ${styles.clearIcon}`}
+            onClick={clearInput}
+          >
+            <CircleX className="icon" />
+          </div>
+        )}
+
+        {autocompleteSuggestions.length > 0 && (
+          <ul className={styles.placeSuggestions__list} role="listbox">
+            {error && (
+              <section className={styles.placeSuggestions__error}>
+                <div className={`iconContainer ${styles.warningIcon}`}>
+                  <TriangleAlert className="icon" />
+                </div>
+                <p>{error}</p>
+              </section>
+            )}
+            {autocompleteSuggestions.map((suggestion) => (
+              <li
+                className={styles.placeSuggestions__item}
+                role="option"
+                key={suggestion.place_id}
+                onClick={() =>
+                  handlePlaceSelect(
+                    suggestion.structured_formatting.main_text,
+                    suggestion.place_id,
+                    suggestion.description
+                  )
+                }
+              >
+                <div
+                  className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--middle"]}`}
+                >
+                  <Search className="icon" />
+                </div>
+                <p>{suggestion.description}</p>
+              </li>
+            ))}
+          </ul>
         )}
       </div>
     </div>

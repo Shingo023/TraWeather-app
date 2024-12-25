@@ -142,20 +142,18 @@ const StarIcon = () => {
   };
 
   return (
-    <div>
-      <div className={styles.currentWeather__starContainer}>
-        <Star
-          className={`${styles.currentWeather__starIcon} ${
-            placeId && favoriteCitiesPlaceIds?.includes(placeId)
-              ? styles.isFavorite
-              : ""
-          }`}
-          onClick={handleStarClick}
-          style={{
-            cursor: placeId ? "pointer" : "not-allowed",
-          }}
-        />
-      </div>
+    <div className={`iconContainer ${styles.starIcon}`}>
+      <Star
+        className={`icon ${
+          placeId && favoriteCitiesPlaceIds?.includes(placeId)
+            ? styles.isFavorite
+            : ""
+        }`}
+        onClick={handleStarClick}
+        style={{
+          cursor: placeId ? "pointer" : "not-allowed",
+        }}
+      />
     </div>
   );
 };
