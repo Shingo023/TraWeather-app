@@ -63,8 +63,20 @@ const WeatherForecast = ({
       onMouseLeave={() => setHovered(false)}
     >
       {hovered && canScrollLeft && (
-        <div className={styles.arrowLeft} onClick={scrollLeft}>
-          <ChevronsLeft className={styles.arrowIcon} />
+        <div
+          className={`iconContainer ${styles.arrowLeft}`}
+          onClick={scrollLeft}
+        >
+          <ChevronsLeft className={`icon ${styles.arrowIcon}`} />
+        </div>
+      )}
+
+      {hovered && canScrollRight && (
+        <div
+          className={`iconContainer ${styles.arrowRight}`}
+          onClick={scrollRight}
+        >
+          <ChevronsRight className={`icon ${styles.arrowIcon}`} />
         </div>
       )}
 
@@ -114,12 +126,6 @@ const WeatherForecast = ({
           );
         })}
       </div>
-
-      {hovered && canScrollRight && (
-        <div className={styles.arrowRight} onClick={scrollRight}>
-          <ChevronsRight className={styles.arrowIcon} />
-        </div>
-      )}
     </div>
   );
 };

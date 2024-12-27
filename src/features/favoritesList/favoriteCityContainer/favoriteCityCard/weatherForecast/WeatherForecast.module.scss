@@ -23,7 +23,14 @@
   }
 }
 
+// icons
 .arrowLeft, .arrowRight {
+  width: 45px;
+  height: 45px;
+  padding: 8px;
+  stroke-width: 2px;
+  color: rgba(255, 255, 255, 0.7);
+
   position: absolute; 
   top: 50%;
   transform: translateY(-50%);
@@ -32,14 +39,18 @@
   border-radius: 50%;
   cursor: pointer;
   z-index: 10; 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(#040219CC, 0.5);
+    color: rgba(255, 255, 255, 0.9);
+  }
 
   @include respond(tablet) {
-    padding: 3px;
-    width: 28px;
-    height: 28px;
+    padding: 5px;
+    width: 40px;
+    height: 40px;
   }
 }
 
@@ -49,25 +60,4 @@
 
 .arrowRight {
   right: 0; 
-}
-
-.arrowLeft:hover, .arrowRight:hover {
-  background: rgba(#040219CC, 0.5);
-}
-
-.arrowIcon {
-  width: 45px;
-  height: 45px;
-  stroke-width: 2px;
-  color: rgba(255, 255, 255, 0.7);
-  transition: color 0.3s ease;
-
-  @include respond(tablet) {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-.arrowIcon:hover {
-  color: rgba(255, 255, 255, 0.9);
 }
