@@ -1,3 +1,5 @@
+@use '../../../../style/_mixins.scss' as *;
+
 .weeklyForecast {
 
   &__item {
@@ -10,10 +12,27 @@
 
     h3,
     p {
-      font-size: 0.875rem;
+      font-size: 14px;
+
+      span {
+        font-weight: 400;
+        margin-right: 3px;
+      }
+
+      @include respond(tablet) { 
+        font-size: 12px; 
+      }
+    }
+
+    &:first-child {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom: none;
     }
 
     &:last-child {
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
       border-bottom: none;
     }
 
@@ -23,7 +42,7 @@
     }
 
     &.active {
-      background-color: #E0E0E0; 
+      background-color: #E8E8E8; 
     }
   }
 
@@ -40,21 +59,6 @@
     gap: 0.75rem;
   }
 
-  &__weatherIcon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: 0.5rem;
-  }
-
-  &__weatherIconContainer {
-    display: flex;
-    align-items: center; 
-    justify-content: center;
-    width: 2.2rem;
-    height: 2.2rem;
-  }
-
   &__stats {
     display: flex;
     flex-wrap: wrap;
@@ -69,27 +73,37 @@
   }
 
   &__chanceOfRain {
+    font-weight: 500;
     display: flex;
     align-items: center;
     gap: 2px;
     min-width: 3.75rem;
     
-    &.active {
+    &--active {
       color: #191970;
-      font-weight: 600;
   
-      .weeklyForecast__icon {
+      .umbrella {
         fill: #191970;
       }
     }
   }
-
-  &__icon {
-    width: 0.875rem;
-    height: 0.875rem;
-  }
 }
 
+// icons
+.weatherIcon {
+  margin-left: 0.5rem;
+  width: 2.2rem;
+  height: 2.2rem;
+}
+
+.umbrellaIcon {
+  width: 16px;
+  height: 16px;
+  @include respond(tablet) { 
+    width: 14px;
+    height: 14px; 
+  }
+}
 
 // skeleton
 .weeklyForecast {

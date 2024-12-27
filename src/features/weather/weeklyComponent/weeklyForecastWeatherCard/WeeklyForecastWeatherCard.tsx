@@ -26,26 +26,27 @@ const WeeklyForecastWeatherCard = ({
         {formatDate(dailyWeather.datetime)}
       </h3>
       <div className={styles.weeklyForecast__weatherInfo}>
-        <div className={styles.weeklyForecast__weatherIcon}>
-          <div className={styles.weeklyForecast__weatherIconContainer}>
-            <WeatherIcon weatherIcon={dailyWeatherIcon} />
-          </div>
+        <div className={`iconContainer ${styles.weatherIcon}`}>
+          <WeatherIcon weatherIcon={dailyWeatherIcon} />
         </div>
+
         <div className={styles.weeklyForecast__stats}>
           <div className={styles.weeklyForecast__weatherTemperature}>
             <p>
-              {Math.round(dailyWeather.tempmax)}°/
+              {Math.round(dailyWeather.tempmax)}°<span>/</span>
               {Math.round(dailyWeather.tempmin)}°
             </p>
           </div>
           <div
             className={`${styles.weeklyForecast__chanceOfRain} ${
               Math.round(dailyWeather.precipprob / 5) * 5 > 0
-                ? styles.active
+                ? styles["weeklyForecast__chanceOfRain--active"]
                 : ""
             }`}
           >
-            <Umbrella className={styles.weeklyForecast__icon} />
+            <div className={`iconContainer ${styles.umbrellaIcon}`}>
+              <Umbrella className={`icon ${styles.umbrella}`} />
+            </div>
             <p>{Math.round(dailyWeather.precipprob / 5) * 5}%</p>
           </div>
         </div>

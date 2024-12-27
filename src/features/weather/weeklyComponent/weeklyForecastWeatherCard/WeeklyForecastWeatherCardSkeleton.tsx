@@ -8,7 +8,7 @@ const WeeklyForecastWeatherCardSkeleton = () => {
       </h3>
       <div className={styles.weeklyForecast__weatherInfo}>
         <div className={styles.weeklyForecast__weatherIcon}>
-          <div className={styles.weeklyForecast__weatherIconContainer}>
+          <div className={styles.weatherIcon}>
             <div className={styles.weeklyForecast__weatherIconSkeleton} />
           </div>
         </div>
