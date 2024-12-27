@@ -48,7 +48,7 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 10px;
-    overflow-y: scroll;
+    // overflow-y: scroll;
 
     @include respond(mobile) { 
       width: unset;

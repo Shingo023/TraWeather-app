@@ -8,9 +8,9 @@ const ToolTip = ({
   className?: string;
 }) => {
   return (
-    <span className={`${styles.tooltip} ${className ? styles[className] : ""}`}>
-      {message}
-    </span>
+    <div className={`${styles.tooltip} ${className ? styles[className] : ""}`}>
+      <p className={styles.tooltip__message}>{message}</p>
+    </div>
   );
 };
 
