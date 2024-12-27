@@ -9,19 +9,19 @@ import { getCurrentHourInTimeZone } from "./dateUtils";
 // wind speed(kph)
 export const getWindStrength = (windspeed: number) => {
   if (windspeed >= 0 && windspeed <= 8) {
-    return "Calm"; // 0–8 kph
+    return "Calm Wind"; // 0–8 kph
   } else if (windspeed >= 9 && windspeed <= 23) {
-    return "Gentle"; // 9–23 kph
+    return "Gentle Wind"; // 9–23 kph
   } else if (windspeed >= 24 && windspeed <= 32) {
-    return "Breezy"; // 24–32 kph
+    return "Breezy Wind"; // 24–32 kph
   } else if (windspeed >= 33 && windspeed <= 48) {
-    return "Windy"; // 33–48 kph
+    return "Windy Wind"; // 33–48 kph
   } else if (windspeed >= 49 && windspeed <= 64) {
-    return "Gusty"; // 49–64 kph
+    return "Gusty Wind"; // 49–64 kph
   } else if (windspeed >= 65 && windspeed <= 102) {
-    return "Stormy"; // 65–102 kph
+    return "Stormy Wind"; // 65–102 kph
   } else if (windspeed >= 103) {
-    return "Fierce"; // 103+ kph
+    return "Fierce Wind"; // 103+ kph
   } else {
     return "Unknown";
   }
@@ -31,11 +31,11 @@ export const getWindStrength = (windspeed: number) => {
 export const getPrecipIntensity = (precip: number) => {
   if (precip === 0) return "No Precipitation";
 
-  if (precip < 2.5) return "Light";
-  if (precip < 7.6) return "Moderate";
-  if (precip < 50) return "Heavy";
+  if (precip < 2.5) return "Light Rain";
+  if (precip < 7.6) return "Moderate Rain";
+  if (precip < 50) return "Heavy Rain";
 
-  return "Torrential";
+  return "Torrential Rain";
 };
 
 // Function to return visibility index based on the visibility in km

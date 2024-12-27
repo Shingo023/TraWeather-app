@@ -41,7 +41,7 @@
     display: flex;
     align-items: center;
     gap: 4px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
 
     span {
@@ -76,6 +76,13 @@
   }
 }
 
+.tooltip__precip,
+.tooltip__wind {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
 // icons
 .weatherIcon {
   width: 40px;
@@ -89,18 +96,43 @@
 }
 
 .weatherCardIcon {
-  width: 16px;
-  min-width: 16px;
-  height: 16px;
+  width: 15px;
+  min-width: 15px;
+  height: 15px;
+  position: relative;
+
+  &__precip {
+    &:hover {
+      .tooltip__precip {
+        visibility: visible;
+        opacity: 1; 
+      }
+    }
+  }
+
+  &__wind {
+    &:hover {
+      .tooltip__wind {
+        visibility: visible;
+        opacity: 1; 
+      }
+    }
+  }
 }
 
 // different types of weather cards
 .dailyForecast {
   width: 115px;
   min-width: 115px;
-  height: 11.875rem;
+  height: 190px;
   background-color: #F9F9F9;
   padding: 0.75rem 0 0.75rem 0;
+
+  @include respond(tablet) {
+    width: 90px;
+    min-width: 90px;
+    height: 160px;
+  }
 }
 
 .favoriteCityCard,

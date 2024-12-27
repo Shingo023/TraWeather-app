@@ -1,10 +1,11 @@
-import { CloudHail, Umbrella, Wind } from "lucide-react";
+import { Umbrella } from "lucide-react";
 import styles from "./WeatherCard.module.scss";
 import { getPrecipIntensity, getWindStrength } from "@/utils/weatherUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import React from "react";
 import { WeatherCardType } from "@/types";
 import { precipIconMapping, windIconMapping } from "@/utils/weatherIconMapping";
+import ToolTip from "@/app/components/elements/toolTip/ToolTip";
 
 const WeatherCard = ({
   dateTime,
@@ -58,34 +59,35 @@ const WeatherCard = ({
 
           {typeof precipAmount === "number" ? (
             <li className={styles.weatherCard__precip}>
-              <div className={`iconContainer ${styles.weatherCardIcon}`}>
+              <div
+                className={`iconContainer ${styles.weatherCardIcon} ${styles.weatherCardIcon__precip}`}
+              >
                 <WeatherIcon weatherIcon={precipIconSrc} />
-                {/* <CloudHail className="icon" /> */}
+                <div className={styles.tooltip__precip}>
+                  <ToolTip message={precipIntensity} className="weatherCard" />
+                </div>
               </div>
               <p className={styles.weatherCard__stat}>
                 {precipAmount}
                 <span>mm</span>
               </p>
-
-              {/* <p className={styles.weatherCard__weatherIndex}>
-                {getPrecipIntensity(precipAmount)}
-              </p> */}
             </li>
           ) : null}
 
           {windSpeed ? (
             <li className={styles.weatherCard__wind}>
-              <div className={`iconContainer ${styles.weatherCardIcon}`}>
+              <div
+                className={`iconContainer ${styles.weatherCardIcon} ${styles.weatherCardIcon__wind}`}
+              >
                 <WeatherIcon weatherIcon={windIconSrc} />
-                {/* <Wind className="icon" /> */}
+                <div className={styles.tooltip__wind}>
+                  <ToolTip message={windStrength} className="weatherCard" />
+                </div>
               </div>
               <p className={styles.weatherCard__stat}>
                 {windSpeed}
                 <span>kph</span>
               </p>
-              {/* <p className={styles.weatherCard__weatherIndex}>
-                {getWindStrength(windSpeed)}
-              </p> */}
             </li>
           ) : null}
         </ul>

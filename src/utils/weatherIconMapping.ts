@@ -61,19 +61,19 @@ export const getBackgroundWeather = (
 
 export const precipIconMapping = {
   "No Precipitation": "/rain-icons/rain-drop.svg",
-  Light: "/rain-icons/light-rain.svg",
-  Moderate: "/rain-icons/moderate-rain.svg",
-  Heavy: "/rain-icons/heavy-rain.svg",
-  Torrential: "/rain-icons/torrential-rain.svg",
+  "Light Rain": "/rain-icons/light-rain.svg",
+  "Moderate Rain": "/rain-icons/moderate-rain.svg",
+  "Heavy Rain": "/rain-icons/heavy-rain.svg",
+  "Torrential Rain": "/rain-icons/torrential-rain.svg",
 };
 
 export const windIconMapping = {
-  Calm: "/wind-icons/calm-wind.svg",
-  Gentle: "/wind-icons/calm-wind.svg",
-  Breezy: "/wind-icons/breezy-wind.svg",
-  Windy: "/wind-icons/breezy-wind.svg",
-  Gusty: "/wind-icons/gusty-wind.svg",
-  Stormy: "/wind-icons/stormy-wind.svg",
-  Fierce: "/wind-icons/gusty-wind.svg",
+  "Calm Wind": "/wind-icons/calm-wind.svg",
+  "Gentle Wind": "/wind-icons/calm-wind.svg",
+  "Breezy Wind": "/wind-icons/breezy-wind.svg",
+  "Windy Wind": "/wind-icons/breezy-wind.svg",
+  "Gusty Wind": "/wind-icons/gusty-wind.svg",
+  "Stormy Wind": "/wind-icons/stormy-wind.svg",
+  "Fierce Wind": "/wind-icons/gusty-wind.svg",
   Unknown: "/wind-icons/calm-wind.svg",
 };

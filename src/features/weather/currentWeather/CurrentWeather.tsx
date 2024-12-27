@@ -27,7 +27,7 @@ const CurrentWeather = () => {
           <div className={styles.currentWeather__cityNameContainer}>
             <h1 className={styles.currentWeather__cityName}>{cityToDisplay}</h1>
             <div className={styles.currentWeather__cityNameTooltip}>
-              <ToolTip message={address!} width={160} />
+              <ToolTip message={address!} className="cityName" />
             </div>
           </div>
           <StarIcon aria-label="Mark city as favorite" />
