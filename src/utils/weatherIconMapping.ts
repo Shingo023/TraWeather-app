@@ -58,3 +58,22 @@ export const getBackgroundWeather = (
   const nightWeather = nightWeatherMap[currentWeather];
   return backgroundMapping[nightWeather] || backgroundMapping[currentWeather];
 };
+
+export const precipIconMapping = {
+  "No Precipitation": "/rain-icons/rain-drop.svg",
+  Light: "/rain-icons/light-rain.svg",
+  Moderate: "/rain-icons/moderate-rain.svg",
+  Heavy: "/rain-icons/heavy-rain.svg",
+  Torrential: "/rain-icons/torrential-rain.svg",
+};
+
+export const windIconMapping = {
+  Calm: "/wind-icons/calm-wind.svg",
+  Gentle: "/wind-icons/calm-wind.svg",
+  Breezy: "/wind-icons/breezy-wind.svg",
+  Windy: "/wind-icons/breezy-wind.svg",
+  Gusty: "/wind-icons/gusty-wind.svg",
+  Stormy: "/wind-icons/stormy-wind.svg",
+  Fierce: "/wind-icons/gusty-wind.svg",
+  Unknown: "/wind-icons/calm-wind.svg",
+};

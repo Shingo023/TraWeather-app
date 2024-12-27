@@ -4,6 +4,7 @@ import { getPrecipIntensity, getWindStrength } from "@/utils/weatherUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import React from "react";
 import { WeatherCardType } from "@/types";
+import { precipIconMapping, windIconMapping } from "@/utils/weatherIconMapping";
 
 const WeatherCard = ({
   dateTime,
@@ -16,14 +17,19 @@ const WeatherCard = ({
   windSpeed,
   className,
 }: WeatherCardType) => {
+  const precipIntensity = getPrecipIntensity(precipAmount!);
+  const precipIconSrc = precipIconMapping[precipIntensity];
+  const windStrength = getWindStrength(windSpeed!);
+  const windIconSrc = windIconMapping[windStrength];
+
   return (
     <div
       className={`${styles.weatherCard} ${className ? styles[className] : ""}`}
     >
       <section className={styles.weatherCard__top}>
         <h3 className={styles.weatherCard__time}>{dateTime}</h3>
-        <div className={styles.weatherCard__weatherIcon}>
-          <WeatherIcon className={className} weatherIcon={weatherIconSrc} />
+        <div className={`iconContainer ${styles.weatherIcon}`}>
+          <WeatherIcon weatherIcon={weatherIconSrc} />
         </div>
         {!isNaN(temp ?? NaN) ? (
           <p className={styles.weatherCard__temp}>{temp}°</p>
@@ -38,38 +44,48 @@ const WeatherCard = ({
         <ul className={styles.weatherCard__details}>
           <li
             className={`${styles.weatherCard__precipProb} ${
-              precipProb > 0 ? styles.active : ""
+              precipProb > 0 ? styles["weatherCard__precipProb--active"] : ""
             }`}
           >
-            <Umbrella className={styles.weatherCard__icon} />
-            <p>
+            <div className={`iconContainer ${styles.weatherCardIcon}`}>
+              <Umbrella className={`icon ${styles.umbrellaIcon}`} />
+            </div>
+            <p className={styles.weatherCard__stat}>
               {precipProb}
               <span>%</span>
             </p>
           </li>
+
           {typeof precipAmount === "number" ? (
             <li className={styles.weatherCard__precip}>
-              <CloudHail className={styles.weatherCard__icon} />
-              <p>
+              <div className={`iconContainer ${styles.weatherCardIcon}`}>
+                <WeatherIcon weatherIcon={precipIconSrc} />
+                {/* <CloudHail className="icon" /> */}
+              </div>
+              <p className={styles.weatherCard__stat}>
                 {precipAmount}
                 <span>mm</span>
               </p>
-              <p className={styles.weatherCard__weatherIndex}>
+
+              {/* <p className={styles.weatherCard__weatherIndex}>
                 {getPrecipIntensity(precipAmount)}
-              </p>
+              </p> */}
             </li>
           ) : null}
 
           {windSpeed ? (
             <li className={styles.weatherCard__wind}>
-              <Wind className={styles.weatherCard__icon} />
-              <p>
+              <div className={`iconContainer ${styles.weatherCardIcon}`}>
+                <WeatherIcon weatherIcon={windIconSrc} />
+                {/* <Wind className="icon" /> */}
+              </div>
+              <p className={styles.weatherCard__stat}>
                 {windSpeed}
                 <span>kph</span>
               </p>
-              <p className={styles.weatherCard__weatherIndex}>
+              {/* <p className={styles.weatherCard__weatherIndex}>
                 {getWindStrength(windSpeed)}
-              </p>
+              </p> */}
             </li>
           ) : null}
         </ul>

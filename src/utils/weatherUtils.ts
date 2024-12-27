@@ -23,19 +23,19 @@ export const getWindStrength = (windspeed: number) => {
   } else if (windspeed >= 103) {
     return "Fierce"; // 103+ kph
   } else {
-    return "Unknown"; // Catch-all for unexpected values
+    return "Unknown";
   }
 };
 
 // precipitation (mm/h)
 export const getPrecipIntensity = (precip: number) => {
-  if (precip === 0) return null;
+  if (precip === 0) return "No Precipitation";
 
   if (precip < 2.5) return "Light";
   if (precip < 7.6) return "Moderate";
   if (precip < 50) return "Heavy";
 
-  return "Violent";
+  return "Torrential";
 };
 
 // Function to return visibility index based on the visibility in km
