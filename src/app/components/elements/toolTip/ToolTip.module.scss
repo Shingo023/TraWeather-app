@@ -48,7 +48,7 @@
 }
 
 .weatherCard {
-    top: -250%;
+    top: -3rem;
     left: -50%; 
     @include respond(tablet) { 
         top: -310%;

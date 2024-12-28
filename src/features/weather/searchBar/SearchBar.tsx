@@ -60,7 +60,7 @@ const SearchBar = React.memo(() => {
       console.error("Error fetching autocomplete data:", error);
       alert("Failed to fetch suggestions. Please try again.");
     }
-  }, 400);
+  }, 100);
 
   const clearInput = () => {
     setInputValue("");

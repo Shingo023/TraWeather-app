@@ -20,11 +20,14 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 1.1rem;
+    padding: 0.5rem;
   }
 
   @include respond(mobile) { 
-    height: 350px; 
+    height: 450px; 
+  }
+  @include respond(weekly-forecast-wrap-mobile) { 
+    height: 550px; 
   }
 }
 

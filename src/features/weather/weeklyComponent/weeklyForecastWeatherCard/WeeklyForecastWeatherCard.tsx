@@ -39,17 +39,19 @@ const WeeklyForecastWeatherCard = ({
               {Math.round(dailyWeather.tempmin)}°
             </p>
           </div>
-          <div
-            className={`${styles.weeklyForecast__chanceOfRain} ${
-              Math.round(dailyWeather.precipprob / 5) * 5 > 0
-                ? styles["weeklyForecast__chanceOfRain--active"]
-                : ""
-            }`}
-          >
-            <div className={`iconContainer ${styles.umbrellaIcon}`}>
-              <Umbrella className={`icon ${styles.umbrella}`} />
+          <div className={styles.weeklyForecast__chanceOfRainWrapper}>
+            <div
+              className={`${styles.weeklyForecast__chanceOfRain} ${
+                Math.round(dailyWeather.precipprob / 5) * 5 > 0
+                  ? styles["weeklyForecast__chanceOfRain--active"]
+                  : ""
+              }`}
+            >
+              <div className={`iconContainer ${styles.umbrellaIcon}`}>
+                <Umbrella className={`icon ${styles.umbrella}`} />
+              </div>
+              <p>{Math.round(dailyWeather.precipprob / 5) * 5}%</p>
             </div>
-            <p>{Math.round(dailyWeather.precipprob / 5) * 5}%</p>
           </div>
         </div>
       </div>

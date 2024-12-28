@@ -2,7 +2,6 @@
 
 import {
   DailyWeatherHighlightsType,
-  WeatherData,
   WeatherDay,
   WeatherIconType,
 } from "@/types";
@@ -16,6 +15,7 @@ import {
 } from "@/utils/weatherUtils";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 import WeeklyForecastWeatherCard from "./weeklyForecastWeatherCard/WeeklyForecastWeatherCard";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 export const WeeklyComponent = () => {
   const {
@@ -26,6 +26,7 @@ export const WeeklyComponent = () => {
     loading,
   } = useDisplayedCityWeather();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const isMobile = useMediaQuery("(max-width: 480px)");
 
   // Synchronize selectedDate with todaysDate
   useEffect(() => {
@@ -55,6 +56,12 @@ export const WeeklyComponent = () => {
     const selectedDateWeatherHighlights: DailyWeatherHighlightsType =
       extractDailyHighlights(selectedDateWeather);
     setDailyWeatherHighlights(selectedDateWeatherHighlights);
+
+    if (isMobile) {
+      // scrollToTop();
+      const container = document.querySelector(".globalContent");
+      container?.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   // Render skeletons while loading

@@ -1,22 +1,7 @@
 .todaysForecast {
-  // height: 34%;
-
-  // @media (max-height: 750px) {
-  //   height: 36%;
-  // }
 
   &__forecastWrapper {
     height: 100%;
-    // padding: 15px 0 15px 0;
-
-    h2 {
-      span {
-        font-size: 0.75rem;
-        font-weight: 500;
-        margin-left: 12px;
-        color: #878787;
-      }
-    }
   }
 
   &__forecastDetails {
