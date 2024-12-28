@@ -26,8 +26,10 @@ const WeeklyForecastWeatherCard = ({
         {formatDate(dailyWeather.datetime)}
       </h3>
       <div className={styles.weeklyForecast__weatherInfo}>
-        <div className={`iconContainer ${styles.weatherIcon}`}>
-          <WeatherIcon weatherIcon={dailyWeatherIcon} />
+        <div className={styles.weeklyForecast__weatherIconWrapper}>
+          <div className={`iconContainer ${styles.weatherIcon}`}>
+            <WeatherIcon weatherIcon={dailyWeatherIcon} />
+          </div>
         </div>
 
         <div className={styles.weeklyForecast__stats}>
