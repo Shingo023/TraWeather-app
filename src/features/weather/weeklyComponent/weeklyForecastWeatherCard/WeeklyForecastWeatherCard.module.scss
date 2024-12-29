@@ -78,7 +78,7 @@
   &__weatherInfo {
     flex: 1;
     display: flex;
-    padding: 0 0.5rem 0 0;
+    // padding: 0 0.5rem 0 0;
 
     @include respond(weekly-forecast-wrap-desktop) { 
       flex: unset;
@@ -86,6 +86,9 @@
     }
     @include respond(small-desktop) { 
       justify-content: space-around;
+    }
+    @include respond(todays-highlight-shrink-mobile) { 
+      justify-content: space-between;
     }
     @include respond(mobile) { 
       justify-content: unset;

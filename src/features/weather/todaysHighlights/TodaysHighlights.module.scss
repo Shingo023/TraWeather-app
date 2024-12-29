@@ -9,13 +9,6 @@
     color: #878787;
   }
 
-  height: 34%;
-  // padding-top: 10px;
-
-  @media (max-height: 750px) {
-    height: 36%;
-  }
-
   &__container {
     display: flex;
     flex-direction: column;
@@ -25,23 +18,80 @@
 
   &__contents {
     display: flex;
+    
     justify-content: space-between;
     padding: 10px 2px 8px 2px;
     overflow: auto;
 
-    // @include respond(small-desktop) {
-    //   gap: 14px; 
-    // }
+    @include respond(tablet) {
+      flex-direction: column; 
+      gap: 14px;
+    }
+  }
+
+  &__visualContents {
+    display: flex;
+    width: 100%;
+    flex: 1;
+
+    @include respond(tablet) { 
+      gap: 14px;
+      flex: unset;
+    }
+  }
+
+  &__UVContent {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    @include respond(tablet) { 
+      flex: unset;
+    }
   }
 
   &__contentWrapper {
     background-color: #F9F9F9;
     border-radius: 10px;
-    width: 30%;
+    width: 220px;
+    min-width: 220px;
     aspect-ratio: 1 / 1;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    min-width: 115px;
+    
     overflow-y: hidden;
+
+    @include respond(weekly-forecast-wrap-desktop) { 
+      width: 200px;
+      min-width: 200px;
+      aspect-ratio: 1 / 1.1;
+    }
+    @include respond(todays-highlight-shrink-desktop) { 
+      width: 165px;
+      min-width: 165px;
+      aspect-ratio: 1 / 1.35;
+    }
+    @include respond(small-desktop) { 
+      width: 140px;
+      min-width: 140px;
+      aspect-ratio: 1 / 1.6;
+    }
+    @include respond(todays-highlight-shrink-tablet) { 
+      width: 120px;
+      min-width: 120px;
+      aspect-ratio: 1 / 1.85;
+    }
+    @include respond(tablet) { 
+      // width: 125px;
+      // min-width: 125px;
+      // aspect-ratio: 1 / 1.3;
+      width: 100%;
+      aspect-ratio: unset;
+    }
+    // @include respond(todays-highlight-shrink-mobile) { 
+    //   width: 111px;
+    //   aspect-ratio: 1 / 1.5;
+    // }
   }
 }
 

@@ -16,6 +16,9 @@
   flex: none;
   padding: 18px 15px 18px 30px;
 
+  @include respond(todays-highlight-shrink-tablet) { 
+    padding: 18px 5px 18px 18px;
+  }
   @include respond(tablet) {
     position: fixed;
     bottom: 0; 
@@ -34,6 +37,9 @@
   height: 100vh;
   overflow: auto;
   
+  @include respond(todays-highlight-shrink-tablet) { 
+    margin-left: 140px;
+  }
   @include respond(tablet) {
     margin-left: 0; 
     padding-bottom: 60px; 

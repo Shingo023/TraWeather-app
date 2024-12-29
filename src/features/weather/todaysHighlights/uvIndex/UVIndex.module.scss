@@ -1,3 +1,5 @@
+@use '../../../../style/_mixins.scss' as *;
+
 .uvIndex {
   padding: 5px;
   height: 100%;
@@ -88,6 +90,13 @@
     p {
       position:absolute;
       top: 50%;
+    }
+
+    @include respond(todays-highlight-shrink-tablet) {
+      font-size: 1.1rem;
+    }
+    @include respond(tablet) {
+      font-size: 1.25rem;
     }
   }
 }

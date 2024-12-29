@@ -85,28 +85,43 @@ const SunsetAndSunrise = ({
                   </div>
                 </div>
 
-                {/* hours container */}
+                {/* sunrise and sunset times */}
                 <div
-                  className={`${styles.sunsetAndSunrise__hoursContainer} ${
-                    daytimePeriod !== "middle" ? styles.nightHorizon : ""
+                  className={`${styles.sunsetAndSunrise__times} ${
+                    daytimePeriod !== "middle"
+                      ? styles["sunsetAndSunrise__times--night"]
+                      : ""
                   }`}
                 >
-                  <div className={`${styles.dayTime} ${styles.sunrise}`}>
-                    <Sunrise
-                      className={`${styles.dayTime__icon} ${
-                        daytimePeriod === "before" ? styles.active : ""
-                      }`}
-                    />
-                    {/* <span>sunrise</span> */}
+                  <div
+                    className={`${styles.sunsetAndSunrise__time} ${styles["sunsetAndSunrise__time--sunrise"]}`}
+                  >
+                    <div
+                      className={`iconContainer ${styles.sunriseContainer} `}
+                    >
+                      <Sunrise
+                        className={`icon ${styles.sunrise} ${
+                          daytimePeriod === "before"
+                            ? styles["sunrise--active"]
+                            : ""
+                        }`}
+                      />
+                    </div>
                     <p>{sunriseTime}</p>
                   </div>
-                  <div className={`${styles.dayTime} ${styles.sunset}`}>
-                    <Sunset
-                      className={`${styles.dayTime__icon} ${
-                        daytimePeriod === "after" ? styles.active : ""
-                      }`}
-                    />
-                    {/* <span>sunset</span> */}
+
+                  <div
+                    className={`${styles.sunsetAndSunrise__time} ${styles["sunsetAndSunrise__time--sunset"]}`}
+                  >
+                    <div className={`iconContainer ${styles.sunsetContainer} `}>
+                      <Sunset
+                        className={`icon ${styles.sunset} ${
+                          daytimePeriod === "after"
+                            ? styles["sunset--active"]
+                            : ""
+                        }`}
+                      />
+                    </div>
                     <p>{sunsetTime}</p>
                   </div>
                 </div>

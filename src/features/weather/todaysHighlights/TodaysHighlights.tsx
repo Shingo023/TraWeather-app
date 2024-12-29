@@ -45,17 +45,22 @@ const TodaysHighlights = () => {
               feelsLikeTempMin={dailyWeatherHighlights.feelsLikeTempMin}
             />
           </div>
-          <div className={styles.todaysHighlights__contentWrapper}>
-            <UVIndex uvIndex={dailyWeatherHighlights.uvIndexData} />
-          </div>
-          <div className={styles.todaysHighlights__contentWrapper}>
-            <SunsetAndSunrise
-              sunrise={dailyWeatherHighlights.sunrise}
-              sunset={dailyWeatherHighlights.sunset}
-              selectedDate={dailyWeatherHighlights.datetime}
-              lastWeatherFetchDateTime={lastWeatherFetchDateTime}
-              todaysDate={todaysDate}
-            />
+          <div className={styles.todaysHighlights__visualContents}>
+            <div className={styles.todaysHighlights__UVContent}>
+              <div className={styles.todaysHighlights__contentWrapper}>
+                <UVIndex uvIndex={dailyWeatherHighlights.uvIndexData} />
+              </div>
+            </div>
+
+            <div className={styles.todaysHighlights__contentWrapper}>
+              <SunsetAndSunrise
+                sunrise={dailyWeatherHighlights.sunrise}
+                sunset={dailyWeatherHighlights.sunset}
+                selectedDate={dailyWeatherHighlights.datetime}
+                lastWeatherFetchDateTime={lastWeatherFetchDateTime}
+                todaysDate={todaysDate}
+              />
+            </div>
           </div>
         </div>
       </div>

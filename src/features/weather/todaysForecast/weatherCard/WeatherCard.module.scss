@@ -101,6 +101,12 @@
   height: 15px;
   position: relative;
 
+  @include respond(tablet) {
+    width: 13px;
+    min-width: 13px;
+    height: 13px;
+  }
+
   &__precip {
     &:hover {
       .tooltip__precip {

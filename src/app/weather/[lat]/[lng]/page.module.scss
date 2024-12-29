@@ -29,6 +29,9 @@
   @include respond(small-desktop) { 
     padding: 18px 30px 10px 5px; 
   }
+  @include respond(todays-highlight-shrink-tablet) { 
+    padding: 18px 18px 10px 10px;
+  }
   @include respond(tablet) { 
     padding: 18px 15px 10px 15px;
     min-height: 620px;
@@ -50,6 +53,9 @@
     gap: 10px;
     // overflow-y: scroll;
 
+    @include respond(todays-highlight-shrink-mobile) {
+      width: 72%;
+    }
     @include respond(mobile) { 
       width: unset;
       gap: 20px;
@@ -61,10 +67,14 @@
     padding: 69px 0 8px 26px;
 
     @include respond(small-desktop) { 
-      padding: 69px 0 8px 20px; 
+      padding: 69px 0 8px 15px; 
     }
     @include respond(tablet) { 
       padding: 69px 0 8px 14px; 
+    }
+    @include respond(todays-highlight-shrink-mobile) {
+      width: 28%;
+      padding: 69px 0 8px 8px;
     }
     @include respond(mobile) {
       padding: unset; 

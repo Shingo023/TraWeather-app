@@ -1,8 +1,11 @@
 $breakpoints: (
   weekly-forecast-wrap-mobile: 340px,
   mobile: 480px,
+  // todays-highlight-shrink-mobile: 640px,
   tablet: 768px,
+  todays-highlight-shrink-tablet: 890px,
   small-desktop: 1024px,
+  todays-highlight-shrink-desktop: 1180px,
   weekly-forecast-wrap-desktop: 1280px,
   large-desktop: 1440px
 );
