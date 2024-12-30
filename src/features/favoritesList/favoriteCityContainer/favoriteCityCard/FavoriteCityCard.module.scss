@@ -40,14 +40,37 @@
     display: flex;
     align-items: center;
     gap: 3px;
- 
   }
+
+  &__cityNameContainer {
+    position: relative;
+    max-width: 50vw;
+
+    @include respond(mobile) {
+      max-width: 40vw;
+    }
+    @include respond(medium-mobile) {
+      max-width: 30vw;
+    }
+  }
+
   &__cityName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 28px;
     font-weight: 600;
 
     @include respond(tablet) {
       font-size: 14px;
+    }
+
+    &:hover {
+      cursor: default;
+      + .cityNameTooltip {
+        visibility: visible;
+        opacity: 1;
+      }
     }
   }
 
@@ -200,6 +223,7 @@
   }
   
 }
+.nightMode h2,
 .nightMode h5 {
   color: #F9F9F9CC;
 }

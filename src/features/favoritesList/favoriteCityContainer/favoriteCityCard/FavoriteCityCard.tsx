@@ -14,6 +14,7 @@ import PlaceNameEditor from "./placeNameEditor/PlaceNameEditor";
 import ExternalLinkComponent from "./externalLink/ExternalLink";
 import { isOutsideDaytime } from "@/utils/mathUtils";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import ToolTip from "@/app/components/elements/toolTip/ToolTip";
 
 const FavoriteCityCard = ({
   userId,
@@ -27,6 +28,7 @@ const FavoriteCityCard = ({
 
   const userFavoriteCityId = favoriteCityWithWeather.id;
   const cityName = favoriteCityWithWeather.customName;
+  const address = favoriteCityWithWeather.address;
   const timeZone = favoriteCityWithWeather.weather.timezone;
   const currentTemp = Math.round(
     favoriteCityWithWeather.weather.currentConditions.temp
@@ -77,7 +79,13 @@ const FavoriteCityCard = ({
             userFavoriteCityId={userFavoriteCityId}
             userId={userId}
           />
-          <h5 className={styles.cityCard__cityName}>{cityName}</h5>
+
+          <div className={styles.cityCard__cityNameContainer}>
+            <h2 className={styles.cityCard__cityName}>{cityName}</h2>
+            <div className={`tooltip ${styles.cityNameTooltip}`}>
+              <ToolTip message={address!} className="favoriteCityName" />
+            </div>
+          </div>
 
           <PlaceNameEditor
             cityName={cityName}
@@ -122,10 +130,7 @@ const FavoriteCityCard = ({
           </h5>
           <div className={styles.cityCard__currentWeather}>
             <div className={styles.cityCard__currentWeatherIconContainer}>
-              <WeatherIcon
-                className="favoriteCityCardCurrent"
-                weatherIcon={currentWeatherIcon}
-              />
+              <WeatherIcon weatherIcon={currentWeatherIcon} />
             </div>
             <h5 className={styles.cityCard__currentTemp}>{currentTemp}°</h5>
           </div>
