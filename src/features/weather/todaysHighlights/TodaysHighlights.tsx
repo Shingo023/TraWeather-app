@@ -35,7 +35,9 @@ const TodaysHighlights = () => {
         </h2>
 
         <div className={styles.todaysHighlights__contents}>
-          <div className={styles.todaysHighlights__contentWrapper}>
+          <div
+            className={`${styles.todaysHighlights__contentWrapper} ${styles["todaysHighlights__contentWrapper--overview"]}`}
+          >
             <Overview
               humidity={dailyWeatherHighlights.humidity}
               snowDepth={dailyWeatherHighlights.snowDepth}
@@ -47,12 +49,16 @@ const TodaysHighlights = () => {
           </div>
           <div className={styles.todaysHighlights__visualContents}>
             <div className={styles.todaysHighlights__UVContent}>
-              <div className={styles.todaysHighlights__contentWrapper}>
+              <div
+                className={`${styles.todaysHighlights__contentWrapper} ${styles["todaysHighlights__contentWrapper--UV"]}`}
+              >
                 <UVIndex uvIndex={dailyWeatherHighlights.uvIndexData} />
               </div>
             </div>
 
-            <div className={styles.todaysHighlights__contentWrapper}>
+            <div
+              className={`${styles.todaysHighlights__contentWrapper} ${styles["todaysHighlights__contentWrapper--sunriseSunset"]}`}
+            >
               <SunsetAndSunrise
                 sunrise={dailyWeatherHighlights.sunrise}
                 sunset={dailyWeatherHighlights.sunset}

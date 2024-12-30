@@ -26,7 +26,7 @@ export const WeeklyComponent = () => {
     loading,
   } = useDisplayedCityWeather();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const isMobile = useMediaQuery("(max-width: 480px)");
+  const isSmallTablet = useMediaQuery("(max-width: 550px)");
 
   // Synchronize selectedDate with todaysDate
   useEffect(() => {
@@ -57,7 +57,7 @@ export const WeeklyComponent = () => {
       extractDailyHighlights(selectedDateWeather);
     setDailyWeatherHighlights(selectedDateWeatherHighlights);
 
-    if (isMobile) {
+    if (isSmallTablet) {
       // scrollToTop();
       const container = document.querySelector(".globalContent");
       container?.scrollTo({ top: 0, behavior: "smooth" });

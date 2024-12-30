@@ -94,7 +94,7 @@ const SunsetAndSunrise = ({
                   }`}
                 >
                   <div
-                    className={`${styles.sunsetAndSunrise__time} ${styles["sunsetAndSunrise__time--sunrise"]}`}
+                    className={`${styles.sunsetAndSunrise__timeWrapper} ${styles["sunsetAndSunrise__timeWrapper--sunrise"]}`}
                   >
                     <div
                       className={`iconContainer ${styles.sunriseContainer} `}
@@ -111,7 +111,7 @@ const SunsetAndSunrise = ({
                   </div>
 
                   <div
-                    className={`${styles.sunsetAndSunrise__time} ${styles["sunsetAndSunrise__time--sunset"]}`}
+                    className={`${styles.sunsetAndSunrise__timeWrapper} ${styles["sunsetAndSunrise__timeWrapper--sunset"]}`}
                   >
                     <div className={`iconContainer ${styles.sunsetContainer} `}>
                       <Sunset
@@ -129,9 +129,12 @@ const SunsetAndSunrise = ({
             ) : (
               <div className={styles.sunsetAndSunrise__timesWrapper}>
                 <div className={styles.sunsetAndSunrise__iconAndTime}>
-                  <div className={styles.sunsetAndSunrise__iconContainer}>
-                    <Sunrise width={30} height={30} />
+                  <div
+                    className={`iconContainer ${styles["sunriseContainer--large"]}`}
+                  >
+                    <Sunrise className="icon" />
                   </div>
+
                   <div className={styles.sunsetAndSunrise__time}>
                     <p className={styles.sunsetAndSunrise__timePart}>
                       {sunriseTimePart}
@@ -141,9 +144,12 @@ const SunsetAndSunrise = ({
                     </p>
                   </div>
                 </div>
+
                 <div className={styles.sunsetAndSunrise__iconAndTime}>
-                  <div className={styles.sunsetAndSunrise__iconContainer}>
-                    <Sunset width={30} height={30} />
+                  <div
+                    className={`iconContainer ${styles["sunsetContainer--large"]}`}
+                  >
+                    <Sunset className="icon" />
                   </div>
                   <div className={styles.sunsetAndSunrise__time}>
                     <p className={styles.sunsetAndSunrise__timePart}>

@@ -23,10 +23,10 @@
     padding: 0.5rem;
   }
 
-  @include respond(mobile) { 
+  @include respond(small-tablet) { 
     height: 450px; 
   }
-  @include respond(weekly-forecast-wrap-mobile) { 
+  @include respond(small-mobile) { 
     height: 550px; 
   }
 }

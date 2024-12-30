@@ -29,19 +29,22 @@
   @include respond(small-desktop) { 
     padding: 18px 30px 10px 5px; 
   }
-  @include respond(todays-highlight-shrink-tablet) { 
+  @include respond(large-tablet) { 
     padding: 18px 18px 10px 10px;
   }
   @include respond(tablet) { 
     padding: 18px 15px 10px 15px;
     min-height: 620px;
   }
-  @include respond(mobile) { 
-    padding: 0 20px 10px 20px;
+  @include respond(small-tablet) { 
+    padding: 18px 20px 10px 20px;
     flex-direction: column;
     gap: 25px;
     min-height: unset;
     height: unset;
+  }
+  @include respond(mobile) { 
+    padding: 0 20px 10px 20px;
   }
 
   &__leftContent {
@@ -51,12 +54,11 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 10px;
-    // overflow-y: scroll;
 
-    @include respond(todays-highlight-shrink-mobile) {
+    @include respond(medium-tablet) {
       width: 72%;
     }
-    @include respond(mobile) { 
+    @include respond(small-tablet) { 
       width: unset;
       gap: 20px;
     }
@@ -72,11 +74,11 @@
     @include respond(tablet) { 
       padding: 69px 0 8px 14px; 
     }
-    @include respond(todays-highlight-shrink-mobile) {
+    @include respond(medium-tablet) {
       width: 28%;
       padding: 69px 0 8px 8px;
     }
-    @include respond(mobile) {
+    @include respond(small-tablet) {
       padding: unset; 
       width: unset;
     }

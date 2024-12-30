@@ -3,10 +3,22 @@
 .todaysHighlights {
 
   h3 {
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 500;
-    letter-spacing: 0.013125rem;
+    letter-spacing: 0.21px;
     color: #878787;
+
+    @media (max-height:735px) {
+      @include respond(small-desktop) {
+        font-size: 12px;
+        letter-spacing: 0.18px;
+      }
+    }
+
+    @include respond(tablet) { 
+      font-size: 12px;
+      letter-spacing: 0.18px;
+    }
   }
 
   &__container {
@@ -23,9 +35,19 @@
     padding: 10px 2px 8px 2px;
     overflow: auto;
 
-    @include respond(tablet) {
+    @include respond(mobile) {
       flex-direction: column; 
       gap: 14px;
+
+      @media (max-height:775px) {
+        flex-direction: unset; 
+        gap: 8px;
+
+        @include respond(mobile) {
+          flex-direction: column; 
+          gap: 14px;
+        }
+      }
     }
   }
 
@@ -33,10 +55,16 @@
     display: flex;
     width: 100%;
     flex: 1;
+    margin-left: 14px;
 
-    @include respond(tablet) { 
+    @include respond(mobile) { 
       gap: 14px;
       flex: unset;
+      margin-left: unset;
+
+      @media (max-height:775px) {
+        gap: 8px;
+      }
     }
   }
 
@@ -45,53 +73,139 @@
     display: flex;
     justify-content: center;
     width: 100%;
+    margin-right: 14px;
 
-    @include respond(tablet) { 
+    @include respond(mobile) { 
       flex: unset;
+      margin-right: unset;
     }
   }
 
   &__contentWrapper {
     background-color: #F9F9F9;
     border-radius: 10px;
+
+    height: 220px;
+    min-height: 220px;
     width: 220px;
     min-width: 220px;
-    aspect-ratio: 1 / 1;
+
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    
     overflow-y: hidden;
 
-    @include respond(weekly-forecast-wrap-desktop) { 
-      width: 200px;
-      min-width: 200px;
-      aspect-ratio: 1 / 1.1;
+    // width
+    @include respond(desktop) { 
+      width: 100%;
+      min-width: 180px;
     }
-    @include respond(todays-highlight-shrink-desktop) { 
-      width: 165px;
+    @include respond(medium-desktop) { 
       min-width: 165px;
-      aspect-ratio: 1 / 1.35;
     }
     @include respond(small-desktop) { 
-      width: 140px;
       min-width: 140px;
-      aspect-ratio: 1 / 1.6;
     }
-    @include respond(todays-highlight-shrink-tablet) { 
-      width: 120px;
-      min-width: 120px;
-      aspect-ratio: 1 / 1.85;
+    @include respond(large-tablet) { 
+      min-width: 117px;
     }
-    @include respond(tablet) { 
-      // width: 125px;
-      // min-width: 125px;
-      // aspect-ratio: 1 / 1.3;
-      width: 100%;
-      aspect-ratio: unset;
+    @include respond(medium-tablet) { 
+      min-width: 113px;
     }
-    // @include respond(todays-highlight-shrink-mobile) { 
-    //   width: 111px;
-    //   aspect-ratio: 1 / 1.5;
-    // }
+    @include respond(small-tablet) { 
+      height: unset;
+      min-height: unset;
+    }
+
+    // height
+    @media (max-height:775px) {
+      height: 200px;
+      min-height: 200px;
+      @include respond(small-tablet) { 
+        height: unset;
+        min-height: unset;
+      }
+    }
+    @media (max-height:750px) {
+      height: 180px;
+      min-height: 180px;
+      @include respond(small-tablet) { 
+        height: unset;
+        min-height: unset;
+      }
+    }
+    @media (max-height:735px) {
+      height: 160px;
+      min-height: 160px;
+      @media (min-width:1281px) { 
+        width: 200px;
+        min-width: 200px;
+      }
+      @include respond(small-tablet) { 
+        height: unset;
+        min-height: unset;
+      }
+    }
+    @media (max-height:715px) {
+      height: 145px;
+      min-height: 145px;
+      @media (min-width:1281px) { 
+        width: 170px;
+        min-width: 170px;
+      }
+      @include respond(small-tablet) { 
+        height: unset;
+        min-height: unset;
+      }
+    }
+
+    &--overview {
+      @media (max-height:775px) {
+        @include respond(medium-tablet) { 
+          min-width: 100px;
+        }
+      }
+    }
+    &--UV {
+      @media (max-height:775px) {
+        @include respond(medium-tablet) { 
+          min-width: 100px;
+        }
+      }
+      @media (max-height:715px) {
+        @include respond(small-desktop) { 
+          min-width: 125px;
+        }
+        @include respond(large-tablet) { 
+          min-width: 115px;
+        }
+        @include respond(tablet) { 
+          min-width: 105px;
+        }
+        @include respond(tablet) { 
+          min-width: 100px;
+        }
+      }
+    }
+    &--sunriseSunset {
+      @media (max-height:775px) {
+        @include respond(medium-tablet) { 
+          min-width: 100px;
+        }
+      }
+      @media (max-height:715px) {
+        @include respond(desktop) { 
+          min-width: 170px;
+        }
+        @include respond(medium-desktop) { 
+          min-width: 155px;
+        }
+        @include respond(large-tablet) { 
+          min-width: 135px;
+        }
+        @include respond(small-tablet) { 
+          min-width: 105px;
+        }
+      }
+    }
   }
 }
 

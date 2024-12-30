@@ -75,14 +75,18 @@
   }
 
   &__snowDepth {
-    min-width: 82px;
+    min-width: 96px;
+
+    @include respond(tablet) { 
+      min-width: 85px;
+    }
   }
  
   &__feelsLikeTemps {
     min-width: 118px;
 
-    @include respond(small-desktop) { 
-      min-width: 95px;
+    @include respond(tablet) { 
+      min-width: 105px;
     }
   }
 

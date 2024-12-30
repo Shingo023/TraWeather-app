@@ -11,19 +11,19 @@
     padding: 0 0.75rem;
     transition: all 0.3s ease;
 
-    @include respond(weekly-forecast-wrap-desktop) { 
+    @include respond(desktop) { 
       flex-direction: column;
       justify-content: center; 
       align-items: flex-start;
       gap: 0.5rem;
     }
-    @include respond(mobile) { 
+    @include respond(small-tablet) { 
       flex-direction: unset;
       justify-content: space-between; 
       align-items: center;
       gap: unset;
     }
-    @include respond(weekly-forecast-wrap-mobile) { 
+    @include respond(small-mobile) { 
       flex-direction: column;
       justify-content: center; 
       align-items: flex-start;
@@ -78,9 +78,8 @@
   &__weatherInfo {
     flex: 1;
     display: flex;
-    // padding: 0 0.5rem 0 0;
 
-    @include respond(weekly-forecast-wrap-desktop) { 
+    @include respond(desktop) { 
       flex: unset;
       width: 100%;
     }
@@ -93,7 +92,7 @@
     @include respond(mobile) { 
       justify-content: unset;
     }
-    @include respond(weekly-forecast-wrap-mobile) { 
+    @include respond(small-mobile) { 
       flex: unset;
       width: 100%;
     }
@@ -125,7 +124,7 @@
       width: unset;
       gap: 0.3rem;
     }
-    @include respond(mobile) { 
+    @include respond(small-tablet) { 
       flex-direction: unset; 
       align-items: center;
       width: 8.8rem;

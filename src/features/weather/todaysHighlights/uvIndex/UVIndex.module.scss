@@ -63,7 +63,7 @@
     border-top-right-radius: 100% 200%;
   }
   &__value {
-    font-size: 1.5rem;
+    font-size: 24px;
     font-weight: 700;
     letter-spacing: 0.36px;
     span {
@@ -74,15 +74,28 @@
     }
     position: absolute;
     bottom: 0;
+
+    @include respond(large-tablet) {
+      font-size: 22px;
+      letter-spacing: 0.33px;
+    }
+    @include respond(tablet) {
+      font-size: 20px;
+      letter-spacing: 0.3px;
+    }
+    @include respond(medium-tablet) {
+      font-size: 16px;
+      letter-spacing: 0.24px;
+    }
   }
 
   // Indicator message
   &__indicator {
     height: 56px;
     width: 100%;
-    font-size: 1.25rem;
+    font-size: 20px;
     font-weight: 700;
-    letter-spacing: 0.01875rem;
+    letter-spacing: 0.3px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -90,14 +103,28 @@
     p {
       position:absolute;
       top: 50%;
+      @media (max-height:735px) {
+        top: 30%;
+      }
     }
 
-    @include respond(todays-highlight-shrink-tablet) {
-      font-size: 1.1rem;
+    @include respond(large-tablet) {
+      font-size: 18px;
+      letter-spacing: 0.27px;
     }
     @include respond(tablet) {
-      font-size: 1.25rem;
+      font-size: 16px;
+      letter-spacing: 0.24px;
     }
+    @include respond(medium-tablet) {
+      font-size: 13px;
+      letter-spacing: 0.195px;
+    }
+
+    @media (max-height:735px) {
+      font-size: 1.1rem;
+    }
+
   }
 }
 
