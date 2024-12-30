@@ -3,14 +3,14 @@
 .cityCard {
   &__card {
     border-radius: 10px;
-    height: 230px;
+    height: 14.375rem;
     width: 100%;
 
     background-color: #F9F9F9;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    padding: 15px 20px 10px 15px;
+    padding: 0.9375rem 1.25rem 0.625rem 0.9375rem;
     transition: all 0.3s ease;
     cursor: grab;
     overflow: auto;
@@ -24,6 +24,12 @@
     }
 
     @include respond(tablet) {
+      padding-bottom: 0.1rem;
+    }
+    @include respond(medium-tablet) {
+      padding-bottom: 0;
+    }
+    @include respond(small-tablet) {
       padding: 5px 10px;
       height: 185px;
       position: relative;
@@ -46,7 +52,7 @@
     position: relative;
     max-width: 50vw;
 
-    @include respond(mobile) {
+    @include respond(large-tablet) {
       max-width: 40vw;
     }
     @include respond(medium-mobile) {
@@ -58,10 +64,10 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: 600;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       font-size: 14px;
     }
 
@@ -80,12 +86,15 @@
     gap: 25px;
     align-items: flex-start;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       position: absolute;
       left: 115px;
-      top: 38px;
+      top: 33px;
       gap: 12px;
       z-index: 1000;
+    }
+    @include respond(small-mobile) {
+      gap: 6px;
     }
   }
 
@@ -98,9 +107,9 @@
     color: rgba(black, 0.7);
     transition:all 0.3s ease;
 
-    @include respond(tablet) {
-      font-size: 10px;
-      letter-spacing: 0.2px;
+    @include respond(small-tablet) {
+      font-size: 12px;
+      letter-spacing: 0.24px;
     }
 
     &.forecastActive {
@@ -123,7 +132,7 @@
     margin-top: 8px;
     margin-left: 29px;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       flex-direction: column;
       height:unset;
       margin-top: unset;
@@ -135,9 +144,9 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-width: 200px;
+    min-width: 12.5rem;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       flex-direction: unset;
       justify-content: unset;
       align-items: center;
@@ -147,11 +156,11 @@
     }
   }
   &__currentDateTime {
-    font-size: 0.8125rem;
-    letter-spacing: 0.0122rem;
+    font-size: 1rem;
+    letter-spacing: 0.015rem;
     font-weight: 400; 
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       position: absolute;
       top: 12px;
       right: 10px;
@@ -166,20 +175,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 70px;
-    height: 70px;
+    width: 3.75rem;
+    height: 3.75rem;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       width: 30px;
       height: 30px;
     }
   }
   &__currentTemp {
-    font-size: 58px;
+    font-size: 3.625rem;
     font-weight: 500;
-    letter-spacing: -1.2px;
+    letter-spacing: -0.075rem;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       font-size: 30px;
     }    
   }
@@ -188,7 +197,7 @@
     margin-left: 12px;
     margin-bottom: 10px;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       margin: 0;
       position: absolute;
       top: 30px;
@@ -214,7 +223,7 @@
     align-items: flex-end;
     gap: 25px;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       gap: 12px;
       position: absolute;
       bottom: 8px;
@@ -259,7 +268,7 @@
     width: 25px;
     margin-right: 5px;
     border-radius: 180px;
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       height: 13px;
       width: 10px;
     }
@@ -269,7 +278,7 @@
     width: 150px;
     height: 34px;
     border-radius: 8px;
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       height: 17px;
       width: 65px;
     }
@@ -287,7 +296,7 @@
     border-radius: 8px;
     margin-top: 10px;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       margin-top: unset;
     }
   }
@@ -298,7 +307,7 @@
     margin: 5px;
     border-radius: 8px;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       height: 30px;
       width: 30px;
       margin: unset;
@@ -311,7 +320,7 @@
     margin: 5px;
     border-radius: 8px;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       height: 36px;
       width: 34px;
     }
@@ -322,7 +331,7 @@
     height: 32px;
     border-radius: 194px;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       height: 30px;
       width: 56px;
     }
@@ -333,7 +342,7 @@
     height: 20px;
     border-radius: 8px;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       height: 14px;
       width: 80px;
     }
@@ -343,7 +352,7 @@
     height: 20px;
     border-radius: 8px;
 
-    @include respond(tablet) {
+    @include respond(small-tablet) {
       height: 14px;
       width: 49px;
     }

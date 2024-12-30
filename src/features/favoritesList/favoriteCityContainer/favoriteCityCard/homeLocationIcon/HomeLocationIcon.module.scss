@@ -1,36 +1,33 @@
 @use '../../../../../style/_mixins.scss' as *;
 
-.cityCard {
-  &__homeIconContainer {
-    position: relative;
-  }
-  &__homeIcon {
-    height: 30px;
-    width: 30px;
-    transition: all 0.3s ease; 
-    color: #e2e2ed;
-    &:hover {
-      cursor: pointer; 
-      color: #60A8FF;
-      /* Make the tooltip visible when the icon is hovered */
-      + .cityCard__tooltip {
-        visibility: visible;
-        opacity: 1; 
-      }
-    }
-    &.homeIconActive {
-      color: #5592FF;
-    }
+.homeIconContainer {
+  position: relative;
+  height: 1.875rem;
+  width: 1.875rem;
+  transition: all 0.3s ease;
 
-    @include respond(tablet) {
-      height: 15px;
-      width: 15px;
-    }
-  }
-  &__tooltip {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+  @include respond(small-tablet) {
+    height: 15px;
+    width: 15px;
   }
 }
+
+.homeIcon {
+  color: #e2e2ed;
+
+  &:hover {
+    cursor: pointer; 
+    color: #60A8FF;
+    
+    + .homeIconTooltip {
+      visibility: visible;
+      opacity: 1; 
+    }
+  }
+
+  &--active {
+    color: #5592FF;
+  }
+}
+
 

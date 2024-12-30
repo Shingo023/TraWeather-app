@@ -21,7 +21,7 @@ const FavoriteCityCard = ({
   favoriteCityWithWeather,
 }: FavoriteCityCardPropsType) => {
   const [showTodaysWeather, setShowTodaysWeather] = useState(true);
-  const isTablet = useMediaQuery("(max-width: 768px)");
+  const isSmallTablet = useMediaQuery("(max-width: 550px)");
 
   const currentWeather = favoriteCityWithWeather.weather.currentConditions
     .icon as WeatherIconType;
@@ -137,7 +137,7 @@ const FavoriteCityCard = ({
           <div className={styles.cityCard__buttons}>
             <Button
               className="primary"
-              text={isTablet ? "More" : "Weather Details"}
+              text={isSmallTablet ? "More" : "Weather Details"}
               type="button"
               onClick={handleWeatherInfoClick}
             />

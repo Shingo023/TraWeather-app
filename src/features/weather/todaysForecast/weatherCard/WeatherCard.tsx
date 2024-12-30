@@ -63,7 +63,7 @@ const WeatherCard = ({
                 className={`iconContainer ${styles.weatherCardIcon} ${styles.weatherCardIcon__precip}`}
               >
                 <WeatherIcon weatherIcon={precipIconSrc} />
-                <div className={styles.tooltip__precip}>
+                <div className={`tooltip ${styles.precipTooltip}`}>
                   <ToolTip message={precipIntensity} className="weatherCard" />
                 </div>
               </div>
@@ -80,7 +80,7 @@ const WeatherCard = ({
                 className={`iconContainer ${styles.weatherCardIcon} ${styles.weatherCardIcon__wind}`}
               >
                 <WeatherIcon weatherIcon={windIconSrc} />
-                <div className={styles.tooltip__wind}>
+                <div className={`tooltip ${styles.windTooltip}`}>
                   <ToolTip message={windStrength} className="weatherCard" />
                 </div>
               </div>

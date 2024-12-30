@@ -4,8 +4,14 @@
   &__favoritesContainer {
     margin: 0 30px 30px 15px;
 
+    @include respond(large-tablet) {
+      margin: 0 18px 30px 15px;
+    }
     @include respond(tablet) {
       margin: 30px 10px;
+    }
+    @include respond(mobile) {
+      margin: 30px 5px;
     }
   }
 }

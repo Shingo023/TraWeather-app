@@ -8,7 +8,7 @@
 }
 
 .primary {
-  padding: 8px 14px;
+  padding: 0.6rem 1rem;
   font-size: 1rem;  
   color: white;
   background-color: #1d1d1d ;
@@ -19,7 +19,7 @@
     color: #1d1d1d;
   }
 
-  @include respond(tablet) {
+  @include respond(small-tablet) {
     letter-spacing: 0.15rem;
   }
 }

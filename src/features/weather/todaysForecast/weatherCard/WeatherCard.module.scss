@@ -32,6 +32,11 @@
     font-size: 1.125rem;
     font-weight: 700;  
     letter-spacing: 0.017rem;
+
+    span {
+      font-size: 0.875rem;
+      font-weight: 400;
+    }
   }
 
   // card bottom
@@ -76,17 +81,10 @@
   }
 }
 
-.tooltip__precip,
-.tooltip__wind {
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
 // icons
 .weatherIcon {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   margin: 0.625rem 0 0.625rem 0;
 
   @include respond(tablet) {
@@ -109,7 +107,7 @@
 
   &__precip {
     &:hover {
-      .tooltip__precip {
+      .precipTooltip {
         visibility: visible;
         opacity: 1; 
       }
@@ -118,7 +116,7 @@
 
   &__wind {
     &:hover {
-      .tooltip__wind {
+      .windTooltip {
         visibility: visible;
         opacity: 1; 
       }
@@ -143,24 +141,49 @@
 
 .favoriteCityCard,
 .favoriteCityCardNightMode {
-  width: 100px;
-  min-width: 100px;
+  width: 6.25rem;
+  min-width: 6.25rem;
+  padding: 0.5rem 0 0.6rem 0;
   
-  @include respond(tablet) {
-    width: 60px;
-    min-width: 60px;
+  @include respond(small-tablet) {
+    width: 70px;
+    min-width: 70px;
     height: 90px;
   }
 
-  .weatherCard__weatherIcon {
-    margin: 8px 0 3px 0;
-    width: 40px;
-    height: 40px;
-    
-  @include respond(tablet) {
-    width: 20px;
-    height: 20px;
+  .weatherCard__time {
+    font-size: 0.875rem;
+
+    @include respond(tablet) {
+      font-size: 12px;
+      letter-spacing: -0.4px;
+    }
+    @include respond(small-tablet) {
+      font-size: 11px;
+      letter-spacing: -0.4px;
+    }
   }
+
+  .weatherCard__temp {
+    @include respond(small-tablet) {
+      font-size: 13px;
+      letter-spacing: -0.3px;
+    }
+  }
+
+  .weatherIcon {
+    margin: 0.5rem 0;
+    width: 2.1875rem;
+    height: 2.1875rem;
+
+    @include respond(large-tablet) {
+      margin: 0.4rem 0;
+
+    }
+    @include respond(small-tablet) {
+      width: 20px;
+      height: 20px;
+    }
   }
 }
 

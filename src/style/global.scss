@@ -9,8 +9,17 @@
 html {
   font-size: 16px; 
 
+  @include respond(small-desktop) {
+    font-size: 15px;
+  }
+  @include respond(large-tablet) {
+    font-size: 14px;
+  }
   @include respond(tablet) {
     font-size: 13px;
+  }
+  @include respond(medium-tablet) {
+    font-size: 12px;
   }
 }
 

@@ -88,21 +88,22 @@ const HomeLocationIcon = ({
   };
 
   return (
-    <div className={styles.cityCard__homeIconContainer}>
+    <div className={`iconContainer ${styles.homeIconContainer}`}>
       <MapPinIcon
-        className={`${styles.cityCard__homeIcon} ${
-          userFavoriteCityId === homeLocationId ? styles.homeIconActive : ""
+        className={`icon ${styles.homeIcon} ${
+          userFavoriteCityId === homeLocationId
+            ? styles["homeIcon--active"]
+            : ""
         }`}
         onClick={handleIconClick}
       />
-      <div className={styles.cityCard__tooltip}>
+      <div className={`tooltip ${styles.homeIconTooltip}`}>
         <ToolTip
           message={
             userFavoriteCityId === homeLocationId
               ? "Unset home location"
               : "Set as home location"
           }
-          width={110}
         />
       </div>
     </div>
