@@ -1,6 +1,7 @@
 @use '../../../../style/_mixins.scss' as *;
 
 .sidebar {
+  position: relative;
   padding: 24px 10px;
   width: 115px;
   height: 100%;
@@ -20,10 +21,12 @@
     height: 63px;
     min-height: 63px;
     flex-direction: row;
-    padding: 5px 5%;
+    justify-content: center;
+    padding: 5px 15px 5px 15px;
     align-items: flex-end;
     border-radius: unset;
     box-shadow: unset;
+    gap: unset;
   }
 
   &__links {
@@ -32,41 +35,53 @@
     @include respond(tablet) {
       display: flex;
       align-items: flex-end;
-      gap: 24px;
+      justify-content: space-around;
       margin: 0;
+      width: 50%;
     }
   }
 
   &__user {
     margin-bottom: 40px;
-    p {
-      font-size: 14px;
-    }
 
     @include respond(tablet) {
-      margin-bottom: 0;
-      padding: 5px;
-      p {
-        font-size: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 180px;
+      background-color: #040219CC;
+    }
+
+    p {
+      font-size: 12px;
+      
+      @include respond(tablet) {
+        font-size: 16px;
+        font-weight: 300;
+        text-align: center;
+        color: #F9F9F9CC;
       }
     }
   }
+
   &__userIcon {
     height: 40px;
     width: 40px;
-
-    @include respond(tablet) {
-      height: 25px;
-      width: 25px;
-    }
+    color: #040219CC;
   }
 
   &__bottom {
     width: 100%;
+
     @include respond(tablet) {
       display: flex;
-      width: unset;
-      gap: 24px;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: space-around;
+      width: 50%;
     }
   }
 

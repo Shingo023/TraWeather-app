@@ -11,9 +11,12 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
 import SidebarSkeleton from "./SidebarSkeleton";
+import { getInitials } from "@/utils/getInitials";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 const Sidebar = () => {
   const { data: session, status } = useSession();
+  const isTablet = useMediaQuery("(max-width: 768px)");
 
   if (status === "loading") {
     return <SidebarSkeleton />;
@@ -25,7 +28,7 @@ const Sidebar = () => {
 
   return (
     <div className={styles.sidebar}>
-      {status === "authenticated" ? (
+      {status === "authenticated" && session.user.name ? (
         <>
           <div className={styles.sidebar__links}>
             <SidebarLink
@@ -46,8 +49,14 @@ const Sidebar = () => {
 
           <div className={styles.sidebar__bottom}>
             <div className={styles.sidebar__user}>
-              <UserCircleIcon className={styles.sidebar__userIcon} />
-              <p>{session.user?.name}</p>
+              {!isTablet ? (
+                <>
+                  <UserCircleIcon className={styles.sidebar__userIcon} />
+                  <p>{session.user?.name}</p>
+                </>
+              ) : (
+                <p>{getInitials(session.user.name)}</p>
+              )}
             </div>
 
             <div className={styles.sidebar__log} onClick={handleSignOut}>
