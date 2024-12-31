@@ -20,9 +20,10 @@ const WeatherCardSkeleton = ({
         <div className={styles.weatherCard__time}>
           <p className={styles.weatherCard__timeSkeleton} />
         </div>
-        <div className={styles.weatherCard__weatherIcon}>
+        <div className={`iconContainer ${styles.weatherIcon}`}>
           <div className={styles.weatherCard__weatherIconSkeleton} />
         </div>
+
         <div className={styles.weatherCard__temp}>
           <div className={styles.weatherCard__tempSkeleton} />
         </div>
@@ -43,9 +44,6 @@ const WeatherCardSkeleton = ({
             </div>
           </>
         )}
-        {/* {!isForFavoriteCityCard && (
-          <div className={styles.weatherCard__windSkeleton} />
-        )} */}
       </div>
     </div>
   );

@@ -228,6 +228,10 @@
     border-radius: 10px;
     flex: 1 1;
     min-width: 115px;
+
+    @include respond(small-desktop) { 
+      height: 158px;
+    }
   }
 }
 

@@ -31,7 +31,6 @@ const WeeklyForecastWeatherCard = ({
             <WeatherIcon weatherIcon={dailyWeatherIcon} />
           </div>
         </div>
-
         <div className={styles.weeklyForecast__stats}>
           <div className={styles.weeklyForecast__weatherTemperature}>
             <p>
