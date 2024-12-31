@@ -178,7 +178,6 @@
 
     @include respond(large-tablet) {
       margin: 0.4rem 0;
-
     }
     @include respond(small-tablet) {
       width: 20px;
@@ -235,15 +234,6 @@
   &__windSkeleton {
     width: 3.125rem;
     height: 0.875rem;
-  }
-}
-
-.favoriteCityCard .weatherCard__weatherIconSkeleton {
-  width: 40px;
-  height: 40px;
-  @include respond(tablet) {
-    width: 20px;
-    height: 20px;
   }
 }
 

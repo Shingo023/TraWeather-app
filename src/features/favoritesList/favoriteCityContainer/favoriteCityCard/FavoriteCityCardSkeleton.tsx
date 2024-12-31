@@ -38,9 +38,6 @@ const FavoriteCityCardSkeleton = () => {
           <div className={styles.cityCard__weatherForecast}>
             <WeatherForecastSkeleton
               className="favoriteCityCard"
-              // iconHeight={40}
-              // iconWidth={40}
-              // weatherCardWidth={100}
               weatherCardColor="rgba(255, 255, 255, 0.3)"
               isForFavoriteCityCard={true}
             />
