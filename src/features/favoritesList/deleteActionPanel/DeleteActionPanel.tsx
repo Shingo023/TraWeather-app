@@ -56,11 +56,6 @@ const DeleteActionPanel = () => {
         );
       });
 
-      // const updatedFavoritePlaceIds = favoriteCitiesData?.map(
-      //   (city) => city.placeId
-      // );
-      // setFavoriteCitiesPlaceIds(updatedFavoritePlaceIds ?? []);
-
       setFavoriteCitiesToDelete([]);
       setDeleteActive(false);
       toast.success("Selected cities have been removed from your favorites.");
