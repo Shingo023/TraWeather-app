@@ -37,11 +37,17 @@ const StarIcon = () => {
 
   const bookmarkCity = async () => {
     if (!session) {
-      alert("You need to log in to use the favorites feature.");
+      toast.error("You need to log in to use the favorites feature.");
       return;
     }
 
     if (!placeId || !cityToDisplay || !address || !timezone) return;
+
+    if (favoriteCitiesPlaceIds && favoriteCitiesPlaceIds.length >= 5) {
+      return toast.error(
+        "You can only bookmark up to five favorite cities. Please remove one from your list to add this city."
+      );
+    }
 
     setFavoriteCitiesPlaceIds((prev) => [...prev, placeId]);
 
@@ -103,7 +109,7 @@ const StarIcon = () => {
 
   const unbookmarkCity = async () => {
     if (!session) {
-      alert("You need to log in to use the favorites feature.");
+      toast.error("You need to log in to use the favorites feature.");
       return;
     }
 

@@ -41,9 +41,13 @@ const DeleteActionPanel = () => {
       );
 
       setFavoriteCitiesData((prev) => {
-        return prev.filter(
+        const updatedFavoriteCities = prev.filter(
           (item) => !favoriteCitiesToDelete.includes(item.favoriteCityId)
         );
+        setFavoriteCitiesPlaceIds(
+          updatedFavoriteCities.map((city) => city.placeId) ?? []
+        );
+        return updatedFavoriteCities;
       });
 
       setFavoriteCitiesWithWeather((prev) => {
@@ -52,10 +56,10 @@ const DeleteActionPanel = () => {
         );
       });
 
-      const updatedFavoritePlaceIds = favoriteCitiesData?.map(
-        (city) => city.placeId
-      );
-      setFavoriteCitiesPlaceIds(updatedFavoritePlaceIds ?? []);
+      // const updatedFavoritePlaceIds = favoriteCitiesData?.map(
+      //   (city) => city.placeId
+      // );
+      // setFavoriteCitiesPlaceIds(updatedFavoritePlaceIds ?? []);
 
       setFavoriteCitiesToDelete([]);
       setDeleteActive(false);

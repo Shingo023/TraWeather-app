@@ -9,6 +9,8 @@ import React from "react";
 import { CircleX, Search, TriangleAlert } from "lucide-react";
 import { fetchPlaceCoordinate, fetchPlacePredictions } from "@/utils/apiHelper";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // "places" library: necessary for autocomplete for addresses and places
 const SearchBar = React.memo(() => {
@@ -58,7 +60,7 @@ const SearchBar = React.memo(() => {
       }
     } catch (error) {
       console.error("Error fetching autocomplete data:", error);
-      alert("Failed to fetch suggestions. Please try again.");
+      toast.error("Failed to fetch suggestions. Please try again.");
     }
   }, 100);
 
@@ -86,11 +88,11 @@ const SearchBar = React.memo(() => {
           `/weather/${latitude}/${longitude}?place=${placeName}&address=${description}&id=${placeId}&source=search`
         );
       } else {
-        alert("Invalid place data. Please try again.");
+        toast.error("Invalid place data. Please try again.");
       }
     } catch (error) {
       console.error("Error fetching place details:", error);
-      alert("Failed to fetch place details. Please try again.");
+      toast.error("Failed to fetch place details. Please try again.");
     }
   };
 
