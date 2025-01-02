@@ -33,11 +33,11 @@
     margin-top: 20px;
 
     @include respond(tablet) {
+      flex: 1;
       display: flex;
       align-items: flex-end;
       justify-content: space-around;
       margin: 0;
-      width: 50%;
     }
   }
 

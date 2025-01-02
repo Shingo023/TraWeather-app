@@ -10,17 +10,12 @@ import {
   ArrowRightStartOnRectangleIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
-import SidebarSkeleton from "./SidebarSkeleton";
 import { getInitials } from "@/utils/getInitials";
 import useMediaQuery from "@/hooks/useMediaQuery";
 
 const Sidebar = () => {
   const { data: session, status } = useSession();
   const isTablet = useMediaQuery("(max-width: 768px)");
-
-  if (status === "loading") {
-    return <SidebarSkeleton />;
-  }
 
   const handleSignOut = () => {
     signOut({ callbackUrl: "/weather" });
@@ -84,14 +79,27 @@ const Sidebar = () => {
               iconPale={"/favorite-list-icon-pale.svg"}
               alt={"favorite-list-icon"}
             />
+            {isTablet ? (
+              <div className={styles.sidebar__log} onClick={() => signIn()}>
+                <ArrowRightStartOnRectangleIcon
+                  className={styles.sidebar__logIcon}
+                />
+                <p>Log In</p>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-
-          <div className={styles.sidebar__log} onClick={() => signIn()}>
-            <ArrowRightStartOnRectangleIcon
-              className={styles.sidebar__logIcon}
-            />
-            <p>Log In</p>
-          </div>
+          {!isTablet ? (
+            <div className={styles.sidebar__log} onClick={() => signIn()}>
+              <ArrowRightStartOnRectangleIcon
+                className={styles.sidebar__logIcon}
+              />
+              <p>Log In</p>
+            </div>
+          ) : (
+            <></>
+          )}
         </>
       )}
     </div>

@@ -8,8 +8,11 @@ import styles from "./layout.module.scss";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Weather App",
+  title: "TraWeather",
   description: "Weather application",
+  icons: {
+    icon: "/weather-icon.svg",
+  },
 };
 
 export default function RootLayout({
