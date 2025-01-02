@@ -1,44 +1,16 @@
 import styles from "./WeeklyComponent.module.scss";
+import WeeklyForecastWeatherCardSkeleton from "./weeklyForecastWeatherCard/WeeklyForecastWeatherCardSkeleton";
 
 const WeeklyComponentSkeleton = () => {
-  const items = Array(7).fill(null); // Create an array with 7 undefined elements
+  const items = Array(7).fill(null);
 
   return (
-    <div className={styles.WeeklyComponent}>
-      <div className={styles.WeeklyComponent__content}>
-        <h2 className={styles.WeeklyComponent__headerSkeleton} />
-        <ul className={styles.WeeklyComponentList}>
+    <div className={styles.weeklyForecast}>
+      <h2 className={styles.weeklyForecast__headerSkeleton} />
+      <div className={styles.weeklyForecast__content}>
+        <ul className={styles.weeklyForecast__list}>
           {items.map((_, index) => (
-            <li className={styles.WeeklyComponentItem} key={index}>
-              <p className={styles.WeeklyComponentItem__dateSkeleton} />
-              <div className={styles.WeeklyComponentItem__weatherInfo}>
-                <div className={styles.WeeklyComponentItem__weatherInfoLeft}>
-                  <div
-                    className={styles.WeeklyComponentItem__weatherIconSkeleton}
-                  />
-                </div>
-                <div className={styles.WeeklyComponentItem__weatherInfoRight}>
-                  <div
-                    className={styles.WeeklyComponentItem__tempsSkeletonWrapper}
-                  >
-                    <div
-                      className={styles.WeeklyComponentItem__tempsSkeleton}
-                    />
-                  </div>
-                  <div
-                    className={
-                      styles.WeeklyComponentItem__chanceOfRainSkeletonSkeletonWrapper
-                    }
-                  >
-                    <div
-                      className={
-                        styles.WeeklyComponentItem__chanceOfRainSkeleton
-                      }
-                    />
-                  </div>
-                </div>
-              </div>
-            </li>
+            <WeeklyForecastWeatherCardSkeleton key={index} />
           ))}
         </ul>
       </div>

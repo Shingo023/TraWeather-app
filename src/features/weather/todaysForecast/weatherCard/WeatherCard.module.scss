@@ -1,19 +1,14 @@
+@use '../../../../style/_mixins.scss' as *;
+
 .weatherCard {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  height: 100%;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  padding: 8px 0;
-  p {
-    font-size: 14px;
-  }
-  span {
-    font-size: 12px;
-    margin-left: 1px;
-  }
+  padding: 8px 0 12px 0;
+  background-color: rgba(255, 255, 255, 0.3);
 
   // card top
   &__top {
@@ -21,33 +16,60 @@
     flex-direction: column;
     align-items: center;
   }
+
   &__time {
     font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.21px;
+
+    @include respond(tablet) {
+      font-size: 12px;
+      letter-spacing: 0.18px;
+    }
   }
-  &__weatherIcon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+
   &__temp {
-    font-size: 16px;
+    font-size: 1.125rem;
     font-weight: 700;  
+    letter-spacing: 0.017rem;
+
     span {
-      font-size: 14px;
-      font-weight: 300;
+      font-size: 0.875rem;
+      font-weight: 400;
     }
   }
 
   // card bottom
-  &__precipProb {
+  &__precipProb,
+  &__precip,
+  &__wind {
     display: flex;
-    align-items: flex-end;
-    height: 17px;
-    &.precipProbActive {
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 500;
+
+    span {
+      margin-left: 2px;
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+  &__stat {
+    letter-spacing: 0.18px;
+  }
+
+  &__weatherIndex {
+    color: #878787;
+    letter-spacing: -0.025px;
+  }
+
+  &__precipProb {
+    &--active {
       color: #191970;
-      font-weight: 600;
   
-      .weatherCard__icon {
+      .umbrellaIcon {
         fill: #191970;
       }
     }
@@ -55,25 +77,120 @@
 
   &__precip,
   &__wind {
-    display: flex;
-    align-items: flex-end;
-    margin-top: 5px;
-    height: 17px;
-  }
-  
-  &__icon {
-    width: 15px;
-    height: 15px;
-    margin-right: 2px;
-  }
-
-  &__weatherIndex {
-    font-size: 12px;
-    font-weight: 500;
-    color: #4F4F4F;
-    margin-left: 4px;
+    margin-top: 0.3125rem;
   }
 }
+
+// icons
+.weatherIcon {
+  width: 35px;
+  height: 35px;
+  margin: 0.625rem 0 0.625rem 0;
+
+  @include respond(tablet) {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.weatherCardIcon {
+  width: 15px;
+  min-width: 15px;
+  height: 15px;
+  position: relative;
+
+  @include respond(tablet) {
+    width: 13px;
+    min-width: 13px;
+    height: 13px;
+  }
+
+  &__precip {
+    &:hover {
+      .precipTooltip {
+        visibility: visible;
+        opacity: 1; 
+      }
+    }
+  }
+
+  &__wind {
+    &:hover {
+      .windTooltip {
+        visibility: visible;
+        opacity: 1; 
+      }
+    }
+  }
+}
+
+// different types of weather cards
+.dailyForecast {
+  width: 115px;
+  min-width: 115px;
+  height: 190px;
+  background-color: #F9F9F9;
+  padding: 0.75rem 0 0.75rem 0;
+
+  @include respond(tablet) {
+    width: 90px;
+    min-width: 90px;
+    height: 160px;
+  }
+}
+
+.favoriteCityCard,
+.favoriteCityCardNightMode {
+  width: 6.25rem;
+  min-width: 6.25rem;
+  padding: 0.5rem 0 0.6rem 0;
+  
+  @include respond(small-tablet) {
+    width: 70px;
+    min-width: 70px;
+    height: 90px;
+  }
+
+  .weatherCard__time {
+    font-size: 0.875rem;
+
+    @include respond(tablet) {
+      font-size: 12px;
+      letter-spacing: -0.4px;
+    }
+    @include respond(small-tablet) {
+      font-size: 11px;
+      letter-spacing: -0.4px;
+    }
+  }
+
+  .weatherCard__temp {
+    @include respond(small-tablet) {
+      font-size: 13px;
+      letter-spacing: -0.3px;
+    }
+  }
+
+  .weatherIcon {
+    margin: 0.5rem 0;
+    width: 2.1875rem;
+    height: 2.1875rem;
+
+    @include respond(large-tablet) {
+      margin: 0.4rem 0;
+    }
+    @include respond(small-tablet) {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.favoriteCityCardNightMode {
+  background-color: rgba(white, 0.6);
+}
+
+
 
 // Skeleton
 .weatherCard {
@@ -90,36 +207,33 @@
   }
 
   &__timeSkeleton {
-    width: 62px;
-    height: 17px;
+    width: 3.8rem;
+    height: 1.06rem;
   }
 
   &__weatherIconSkeleton {
-    margin-top: 10px;
-    margin-bottom: 10px;
+    width: 100%;
+    height: 100%;
   }
 
   &__tempSkeleton {
-    width: 28px;
-    height: 17px;
-    margin-bottom: 3px;
+    width: 1.75rem;
+    height: 1.06rem;
   }
 
   &__precipProbSkeleton {
-    width: 50px;
-    height: 14px;
-    margin-bottom: 3px;
+    width: 3.125rem;
+    height: 0.875rem;
   }
 
   &__precipSkeleton {
-    width: 70px;
-    height: 14px;
-    margin-bottom: 3px;
+    width: 4.375rem;
+    height: 0.875rem;
   }
 
   &__windSkeleton {
-    width: 90px;
-    height: 14px;
+    width: 3.125rem;
+    height: 0.875rem;
   }
 }
 

@@ -1,15 +1,15 @@
+@use '../../../../style/_mixins.scss' as *;
+
 .sunsetAndSunrise {
-  display: flex;
-  flex-direction: column;
+  padding: 5px;
+  height: 100%;
 
-  padding: 15px 10px 10px 10px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  flex: 1;
-
-  &__title {
-    font-size: 14px;
-    font-weight: 500;
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 10px;
   }
 
   &__container {
@@ -21,6 +21,7 @@
     align-items: center;
   }
 
+  // design for today
   // sun orbit 
   &__sunOrbitContainer {
    width: 100%;
@@ -35,7 +36,7 @@
   &__sunOrbitLeft {
     width: 100%;
     height: 0;
-    border: #FD8A03 dashed 1.75px;
+    border: #FD8A03 dashed 2.5px;
     border-bottom: none; 
     border-top-left-radius: 100% 200%; 
     border-top-right-radius: 100% 200%;
@@ -46,195 +47,188 @@
   &__sunOrbitRight {
     width: 80%;
     height: 0;
-    border: black dashed 1.75px;
+    border: #878787 dashed 2px;
     border-bottom: none; 
     border-top-left-radius: 100% 200%; 
     border-top-right-radius: 100% 200%;
     position: absolute;  
     padding-bottom: 40%;
+    background: rgba(white, 0.5);
     // clip-path: polygon(30% 0, 100% 0, 100% 100%, 30% 100%);
+  }
+  .night {
+    background-image: url(/backgrounds/clear-night-bg.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    border-bottom: #040219CC solid 3px;
   }
 
   &__clockHandWrapper {
     position: absolute;
-    bottom: calc(0% - 11px);
+    bottom: calc(0% - 15px);
     right: 50%;
-    width: calc(40% + 11px);
-    height: 22px;
+    width: calc(40% + 15px);
+    height: 30px;
 
     transform-origin: right center;
   }
 
-  
-  // hours
-  &__hoursContainer {
+  // sunrise and sunset times
+  &__times {
     display: flex;
     justify-content: space-between;
-    width: 90%;
-    border-top:  black solid 1.5px;
-    padding-top: 3px;
+    width: 93%;
+    border-top:  #878787 solid 2px;
+    padding-top: 5px;
+    gap: 1rem;
+
+    &--night {
+      border-top:  #040219CC solid 2px;
+    }
+
+    @include respond(small-desktop) { 
+      width: 99%;
+    }
+    @include respond(tablet) { 
+      width: 100%;
+    }
   }
 
-  .dayTime {
-   display: flex;
+  &__timeWrapper {
+    display: flex;
     flex-direction: column;
+    font-size: 14px;
+    font-weight: 500;
 
-    &__icon {
-     min-height: 18px;
-     height: 18px;
-     stroke-width: 1.5px;
-     color: #4F4F4F;
+      @include respond(tablet) { 
+        font-size: 12px;
+      }
+      @media (max-height:735px) {
+        font-size: 12px;
+      }
+
+    &--sunrise {
+      align-items: flex-start;
     }
 
-    span {
-     font-size: 10px;
-     font-weight: 500;
-     color: #FD8A03;
+    &--sunset {
+      align-items: flex-end;
+      text-align: end;
     }
+  }
+
+  // icons
+  .sunriseContainer,
+  .sunsetContainer {
+    width: 25px;
+    min-width: 25px;
+
+    @include respond(tablet) { 
+      width: 22px;
+      min-width: 22px;
+    }
+    @media (max-height:735px) {
+      width: 22px;
+      min-width: 22px;
+    }
+
+    &--large {
+      width: 42px;
+      border-radius: 180px;
+      background-color: #F3C545;
+      border: #EE9B55 solid 2px;
+      color: #7A7A7A;
+      padding: 6px;
+
+      @include respond(medium-desktop) { 
+        width: 35px;
+        padding: 3px;
+      }
+      @include respond(small-desktop) { 
+        width: 30px;
+        padding: 2px;
+      }
+      @include respond(large-tablet) { 
+        width: 25px;
+        padding: 1px;
+      }
+      @include respond(tablet) { 
+        width: 30px;
+        padding: 2px;
+      }
+      @include respond(medium-tablet) { 
+        width: 25px;
+        padding: 1px;
+      }
+    }
+  }
+
+  .sunrise,
+  .sunset {
+    stroke-width: 1.5px;
+    color: #878787;
+
+    &--active {
+      fill: #FD8A03;
+      color: #FD8A03;
+      stroke-width: 2px;
+    }
+  }
+
+  // design except for today
+  &__timesWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  &__iconAndTime {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__time {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.01875rem;
+    display: flex;
+    gap:3px;
+
+    @include respond(medium-desktop) { 
+      font-size: 16px;
+    }
+    @include respond(small-desktop) { 
+      font-size: 14px;
+    }
+    @include respond(large-tablet) { 
+      font-size: 12px;
+    }
+    @include respond(tablet) { 
+      font-size: 14px;
+    }
+    @include respond(medium-tablet) { 
+      font-size: 12px;
+    }
+  }
+
+  &__message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 600;
     p {
-     font-size: 11px;
-     font-weight: 500;
+      text-align: left;
     }
+  }
 
-    &.sunrise {
-     align-items: left;
-    }
-
-    &.sunset {
-     align-items: flex-end;
-    }
+  &__messageIcon {
+    width: 2rem;
+    height: 2rem;
+    color: #878787;
+    stroke-width: 2.5px;
   }
 }
-
-
-// .sunsetAndSunrise {
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: space-between;
-
-//   padding: 15px 10px;
-//   background-color: #f9f9f9;
-//   border-radius: 10px;
-//   flex: 1;
-// }
-
-// .SunsetAndSunriseTitle {
-//   font-size: 14px;
-//   font-weight: 500;
-// }
-
-// .sunsetAndSunriseContainer {
-//   width: 100%;
-//   height: 80%;
-//   display: flex;
-//   justify-content: center;
-// }
-
-// .circles {
-//   width: 80%;
-//   display: flex;
-//   justify-content: space-between;
-//   align-items: center;
-//   flex-direction: column;
-// }
-
-// .gaugeSun {
-//   width: 90%;
-//   max-width: 250px;
-// }
-
-// .gaugeBodySun {
-//   width: 100%;
-//   height: 0;
-//   padding-bottom: 50%;
-//   border: 1.5px black dashed;
-  
-//   border-bottom: none;
-//   position: relative;
-//   border-top-left-radius: 100% 200%;
-//   border-top-right-radius: 100% 200%;
-//   overflow: hidden;
-// }
-
-// .gaugeFillSun {
-//   position: absolute;
-//   top: 100%;
-//   left: -12px;
-//   width: 110%;
-//   height: 100%;
-//   background-color: #fd8a03;
-//   opacity: 0.7;
-//   border-bottom: none;
-//   transform-origin: center top;
-//   transition: transform 0.2s ease-out;
-// }
-
-// .gaugeFillMoon {
-//   position: absolute;
-//   top: 100%;
-//   left: -12px;
-//   width: 110%;
-//   height: 100%;
-//   background-color: #2f009d;
-//   border-bottom: none;
-//   transform-origin: center top;
-//   transition: transform 0.2s ease-out;
-// }
-
-// .gaugeCoverSun {
-//   width: 90%;
-//   height: 175%;
-//   background-color: #f9f9f9;
-//   border-radius: 50%;
-//   position: absolute;
-//   top: 10%;
-//   left: 5%;
-//   transform: translateX(-50%);
-
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   transition: transform 0.2s ease-in-out;
-// }
-
-// .hoursContainer {
-//   display: flex;
-//   justify-content: space-between;
-//   padding-top: 5px;
-//   width: 103%;
-// }
-
-// .dayTime {
-//   display: flex;
-//   flex-direction: column;
-
-//   &__icon {
-//     min-height: 20px;
-//     height: 20px;
-//     stroke-width: 1.25px;
-//     color: #4F4F4F;
-//   }
-
-//   span {
-//     font-size: 11px;
-//     font-weight: 500;
-//     color: #FD8A03;
-//   }
-//   p {
-//     font-size: 11px;
-//     font-weight: 500;
-//   }
-
-//   &.sunrise {
-//     align-items: left;
-//   }
-
-//   &.sunset {
-//     align-items: flex-end;
-//   }
-// }
-
-// .sunIcon {
-//   position: absolute;
-//   left: -9px;
-// }

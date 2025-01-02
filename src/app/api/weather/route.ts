@@ -34,23 +34,18 @@ export async function GET(request: Request) {
     const weatherData: WeatherData = {
       latitude: data.latitude,
       longitude: data.longitude,
-      address: data.address,
       timezone: data.timezone,
       days: data.days.slice(0, 7).map(
         (day: any): WeatherDay => ({
           datetime: day.datetime,
           tempmax: day.tempmax,
           tempmin: day.tempmin,
-          temp: day.temp,
-          feelslike: day.feelslike,
           feelslikemax: day.feelslikemax,
           feelslikemin: day.feelslikemin,
           humidity: day.humidity,
-          precip: day.precip || null,
           precipprob: day.precipprob,
           snow: day.snow || null,
           snowdepth: day.snowdepth || null,
-          windspeed: day.windspeed,
           description: day.description,
           uvindex: day.uvindex,
           sunrise: day.sunrise,
@@ -63,17 +58,11 @@ export async function GET(request: Request) {
             (hour: any): WeatherHour => ({
               datetime: hour.datetime,
               temp: hour.temp,
-              feelslike: hour.feelslike,
-              humidity: hour.humidity,
               precip: hour.precip || null,
               precipprob: hour.precipprob,
-              snow: hour.snow || null,
-              snowdepth: hour.snowdepth || null,
               windspeed: hour.windspeed,
-              uvindex: hour.uvindex,
               conditions: hour.conditions,
               icon: hour.icon,
-              visibility: hour.visibility,
             })
           ),
         })

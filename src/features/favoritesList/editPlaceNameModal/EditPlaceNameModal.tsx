@@ -1,22 +1,23 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import styles from "./EditPlaceNameModal.module.scss";
 import { EditPlaceNameModalPropsType } from "@/types";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { MapPin } from "lucide-react";
 import Button from "@/app/components/elements/button/Button";
+import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
+import { updatePlaceName } from "@/utils/apiHelper";
 
 const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
-  cityName,
   isModalOpen,
   setIsModalOpen,
-  // setPlaceNameToDisplay,
-  userFavoriteCityId,
-  cityAddress,
-  setFavoriteCitiesWithWeather,
-  setPlaceInfoToEdit,
 }) => {
-  const [editedCityName, setEditedCityName] = useState(cityName);
+  const {
+    placeInfoToEdit,
+    setFavoriteCitiesWithWeather,
+    setPlaceInfoToEdit,
+    setFavoriteCitiesData,
+  } = useUserFavoriteCities();
   const inputRef = useRef<HTMLInputElement>(null);
 
   if (!isModalOpen) return null;
@@ -26,33 +27,25 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
 
     const updatedCityName = inputRef.current?.value.trim();
 
-    if (!updatedCityName) return;
+    if (!updatedCityName || !placeInfoToEdit) return;
 
     try {
-      const response = await fetch(
-        `/api/user-favorite-cities?id=${userFavoriteCityId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ customName: updatedCityName }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to update city name");
-      }
-
+      updatePlaceName(placeInfoToEdit, updatedCityName);
       toast.success(`City name updated to ${updatedCityName}`);
       setFavoriteCitiesWithWeather((prev) => {
         return prev.map((city) =>
-          city.id === userFavoriteCityId
+          city.id === placeInfoToEdit?.userFavoriteCityId
             ? { ...city, customName: updatedCityName }
             : city
         );
       });
-      setEditedCityName(updatedCityName);
+      setFavoriteCitiesData((prev) => {
+        return prev.map((city) =>
+          city.id === placeInfoToEdit?.userFavoriteCityId
+            ? { ...city, customName: updatedCityName }
+            : city
+        );
+      });
       setPlaceInfoToEdit(null);
       setIsModalOpen(false);
     } catch (error) {
@@ -67,14 +60,14 @@ const EditPlaceNameModal: React.FC<EditPlaceNameModalPropsType> = ({
       <form onSubmit={handleUpdatePlaceName}>
         <input
           type="text"
-          defaultValue={editedCityName}
+          defaultValue={placeInfoToEdit?.cityName}
           ref={inputRef}
           placeholder="Enter a custom place name"
           required
         />
         <div className={styles.modal__address}>
           <MapPin className={styles.modal__mapPinIcon} />
-          <p>{cityAddress}</p>
+          <p>{placeInfoToEdit?.cityAddress}</p>
         </div>
         <div className={styles.modal__buttons}>
           <Button

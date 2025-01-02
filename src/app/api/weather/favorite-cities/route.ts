@@ -1,4 +1,8 @@
-import { WeatherDataForFavoritesList, WeatherDay, WeatherHour } from "@/types";
+import {
+  WeatherDataForFavoritesList,
+  WeatherDataForForecast,
+  WeatherDay,
+} from "@/types";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
@@ -32,6 +36,8 @@ export async function GET(request: Request) {
 
     // format the weather to extract only the necessary fields of the data
     const weatherData: WeatherDataForFavoritesList = {
+      sunrise: data.days[0].sunrise,
+      sunset: data.days[0].sunset,
       timezone: data.timezone,
       weeklyWeather: data.days.slice(0, 7).map((day: WeatherDay) => ({
         datetime: day.datetime,
@@ -41,7 +47,7 @@ export async function GET(request: Request) {
         tempmin: day.tempmin,
       })),
       days: data.days.slice(0, 2).map((day: WeatherDay) => ({
-        hours: day.hours.map((hour: WeatherHour) => ({
+        hours: day.hours.map((hour: WeatherDataForForecast) => ({
           datetime: hour.datetime,
           temp: hour.temp,
           precipprob: hour.precipprob,

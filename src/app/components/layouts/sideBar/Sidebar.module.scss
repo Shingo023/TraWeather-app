@@ -1,90 +1,156 @@
-@import "src/app/variables.module.scss";
+@use '../../../../style/_mixins.scss' as *;
 
 .sidebar {
+  position: relative;
   padding: 24px 10px;
   width: 115px;
   height: 100%;
   min-height: 433px;
   border-radius: 10px;
   background-color: #F9F9F9;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   text-align: center;
   gap: 24px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+  @include respond(tablet) {
+    width: 100%; 
+    height: 63px;
+    min-height: 63px;
+    flex-direction: row;
+    justify-content: center;
+    padding: 5px 15px 5px 15px;
+    align-items: flex-end;
+    border-radius: unset;
+    box-shadow: unset;
+    gap: unset;
+  }
 
   &__links {
     margin-top: 20px;
+
+    @include respond(tablet) {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      margin: 0;
+    }
   }
 
   &__user {
     margin-bottom: 40px;
+
+    @include respond(tablet) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 180px;
+      background-color: #040219CC;
+    }
+
     p {
-      font-size: 14px;
+      font-size: 12px;
+      
+      @include respond(tablet) {
+        font-size: 16px;
+        font-weight: 300;
+        text-align: center;
+        color: #F9F9F9CC;
+      }
     }
   }
+
   &__userIcon {
     height: 40px;
     width: 40px;
+    color: #040219CC;
   }
 
   &__bottom {
     width: 100%;
+
+    @include respond(tablet) {
+      display: flex;
+      flex-direction: row-reverse;
+      align-items: center;
+      justify-content: space-around;
+      width: 50%;
+    }
   }
 
   &__log {
     display: flex;
     align-items: center;
     gap: 5px;
-    padding: 6px 3px;
-    border-radius: 6px;
+    padding: 6px 6px;
+    border-radius: 8px;
     transition: all 0.3s ease; 
+
+    p {
+      letter-spacing: -0.9px;
+    }
+
     &:hover {
       background-color: rgba(180, 180, 180, 0.5);
       cursor: pointer;
+    }
+
+    @include respond(tablet) {
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: unset;
+      padding: 5px;
+      font-size: 12px;
     }
   }
   &__logIcon {
     width: 24px;
     height: 24px;
-  }
+
+    @include respond(tablet) {
+      width: 25px;
+      height: 25px;
+      margin-bottom: 3px;
+    }
+  } 
 }
 
 // Skeletons
-.skeleton {
-  padding: 24px 10px;
-  width: 115px;
-  height: 100%;
-  border-radius: 10px;
-  background-color: #e0e0e0;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  gap: 24px;
-
-  &__link,
-  &__log {
+.sidebar {
+  &__linkSkeleton,
+  &__logIconSkeleton {
     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
   }
 
-  &__link {
+  &__linkSkeleton {
     width: 69px;
     height: 65px;
     margin-bottom: 20px;
     border-radius: 10px;
+    @include respond(tablet) {
+      width: 53px;
+      height: 48px;
+      margin-bottom: unset;
+    }
   }
 
-  &__log {
+  &__logIconSkeleton {
     width: 90px;
     height: 25px;
     border-radius: 6px;
+    @include respond(tablet) {
+      width: 50px;
+      height: 49px;
+    }
   }
 }
 

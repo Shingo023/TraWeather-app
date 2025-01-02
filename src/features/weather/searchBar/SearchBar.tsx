@@ -1,37 +1,48 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { autocompleteSuggestion } from "@/types";
 import { debounce } from "@/utils/debounce";
 import styles from "./SearchBar.module.scss";
 import { useRouter, useSearchParams } from "next/navigation";
 import React from "react";
-import { Search, TriangleAlert } from "lucide-react";
+import { CircleX, Search, TriangleAlert } from "lucide-react";
+import { fetchPlaceCoordinate, fetchPlacePredictions } from "@/utils/apiHelper";
+import useMediaQuery from "@/hooks/useMediaQuery";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // "places" library: necessary for autocomplete for addresses and places
 const SearchBar = React.memo(() => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [inputValue, setInputValue] = useState<string>("");
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState<
     autocompleteSuggestion[]
   >([]);
   const [error, setError] = useState<string | null>(null);
+  const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
+
   const router = useRouter();
   const searchParams = useSearchParams();
+  const isMobile = useMediaQuery("(max-width: 480px)");
 
   useEffect(() => {
     const address = searchParams.get("address");
     const source = searchParams.get("source");
 
     // Only set the address in the input if the source is 'search'
-    if (address && inputRef.current && source === "search") {
-      inputRef.current.value = address;
+    if (address && inputValue && source === "search") {
+      setInputValue(address);
     }
   }, [searchParams]);
 
-  const handleInputChange = debounce(async () => {
-    const input = inputRef.current?.value;
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const input = event.target.value;
+    setInputValue(input);
+    debouncedFetchSuggestions(input);
+  };
 
-    if (!input) {
+  const debouncedFetchSuggestions = debounce(async (input: string) => {
+    if (!input.trim()) {
       setAutocompleteSuggestions([]);
       setError(null);
       return;
@@ -40,21 +51,23 @@ const SearchBar = React.memo(() => {
     setError(null);
 
     try {
-      const response = await fetch(
-        `/api/autocomplete?input=${encodeURIComponent(input)}`
-      );
-      const data = await response.json();
+      const placePredictions = await fetchPlacePredictions(input);
 
-      if (data.predictions) {
-        setAutocompleteSuggestions(data.predictions);
+      if (placePredictions) {
+        setAutocompleteSuggestions(placePredictions);
       } else {
         setAutocompleteSuggestions([]);
       }
     } catch (error) {
       console.error("Error fetching autocomplete data:", error);
-      alert("Failed to fetch suggestions. Please try again.");
+      toast.error("Failed to fetch suggestions. Please try again.");
     }
-  }, 500);
+  }, 100);
+
+  const clearInput = () => {
+    setInputValue("");
+    setAutocompleteSuggestions([]);
+  };
 
   // Handle place selection and fetch weather data
   const handlePlaceSelect = async (
@@ -64,16 +77,10 @@ const SearchBar = React.memo(() => {
   ) => {
     setAutocompleteSuggestions([]);
     setError(null);
-
-    if (inputRef.current) {
-      inputRef.current.value = description;
-    }
+    setInputValue(description);
 
     try {
-      const coordinateResponse = await fetch(
-        `/api/place-coordinate?placeId=${placeId}`
-      );
-      const coordinateData = await coordinateResponse.json();
+      const coordinateData = await fetchPlaceCoordinate(placeId);
       const { latitude, longitude } = coordinateData;
 
       if (latitude && longitude && placeName && description && placeId) {
@@ -81,11 +88,11 @@ const SearchBar = React.memo(() => {
           `/weather/${latitude}/${longitude}?place=${placeName}&address=${description}&id=${placeId}&source=search`
         );
       } else {
-        alert("Invalid place data. Please try again.");
+        toast.error("Invalid place data. Please try again.");
       }
     } catch (error) {
       console.error("Error fetching place details:", error);
-      alert("Failed to fetch place details. Please try again.");
+      toast.error("Failed to fetch place details. Please try again.");
     }
   };
 
@@ -99,44 +106,94 @@ const SearchBar = React.memo(() => {
     }
   };
 
+  const handleClick = () => {
+    setShowSearchBar((prev) => {
+      if (prev === true && inputValue) {
+        clearInput();
+      }
+      return !prev;
+    });
+  };
+
   return (
     <div className={styles.searchBar}>
-      <Search className={styles.searchBar__searchIcon} />
-      <input
-        ref={inputRef}
-        type="text"
-        placeholder="Search places ..."
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-      />
-
-      {autocompleteSuggestions.length > 0 && (
-        <ul className={styles.searchBar__suggestionsList} role="listbox">
-          {error && (
-            <div className={styles.searchBar__error}>
-              <TriangleAlert className={styles.searchBar__errorIcon} />
-              <p>{error}</p>
-            </div>
-          )}
-          {autocompleteSuggestions.map((suggestion) => (
-            <li
-              className={styles.searchBar__suggestion}
-              role="option"
-              key={suggestion.place_id}
-              onClick={() =>
-                handlePlaceSelect(
-                  suggestion.structured_formatting.main_text,
-                  suggestion.place_id,
-                  suggestion.description
-                )
-              }
-            >
-              <Search className={styles.searchBar__suggestionIcon} />
-              <p>{suggestion.description}</p>
-            </li>
-          ))}
-        </ul>
+      {isMobile && (
+        <div
+          className={styles.searchBar__searchBarToggle}
+          onClick={handleClick}
+        >
+          <div
+            className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--large"]}`}
+          >
+            <Search className="icon" />
+          </div>
+        </div>
       )}
+
+      <div
+        className={`${styles.searchBar__inputField} ${
+          showSearchBar ? styles["searchBar__inputField--showSearchBar"] : ""
+        }`}
+      >
+        <input
+          type="text"
+          placeholder="Search places ..."
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+        />
+
+        {!isMobile && (
+          <div
+            className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--small"]}`}
+          >
+            <Search className="icon" />
+          </div>
+        )}
+
+        {inputValue && (
+          <div
+            className={`iconContainer ${styles.clearIcon}`}
+            onClick={clearInput}
+          >
+            <CircleX className="icon" />
+          </div>
+        )}
+
+        {autocompleteSuggestions.length > 0 && (
+          <ul className={styles.placeSuggestions__list} role="listbox">
+            {error && (
+              <section className={styles.placeSuggestions__error}>
+                <div className={`iconContainer ${styles.warningIcon}`}>
+                  <TriangleAlert className="icon" />
+                </div>
+                <p>{error}</p>
+              </section>
+            )}
+            {autocompleteSuggestions.map((suggestion) => (
+              <li
+                className={styles.placeSuggestions__item}
+                role="option"
+                key={suggestion.place_id}
+                onClick={() =>
+                  handlePlaceSelect(
+                    suggestion.structured_formatting.main_text,
+                    suggestion.place_id,
+                    suggestion.description
+                  )
+                }
+              >
+                <div
+                  className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--middle"]}`}
+                >
+                  <Search className="icon" />
+                </div>
+                <p>{suggestion.description}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </div>
   );
 });

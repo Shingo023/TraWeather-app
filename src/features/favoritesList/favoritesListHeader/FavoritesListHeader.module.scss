@@ -1,3 +1,5 @@
+@use '../../../style/_mixins.scss' as *;
+
 .favoritesList {
   &__header {
     display: flex;
@@ -8,9 +10,16 @@
     padding: 18px 45px 10px 45px;
     background-color: rgba(white, 0.95);
     z-index: 1000;
+
+    @include respond(tablet) {
+      background-color: #F9F9F9;
+      height: 68px;
+      padding-top: 10px;
+    }
   }
   &__headerTitle {
-    font-size: 25px;
+    font-size: 1.5625rem;
+    letter-spacing: 0.03124rem;
     font-weight: 500;
     padding: 8px 0;
     text-align: center;
@@ -31,8 +40,8 @@
     }
   }
   &__icon {
-    width: 25px;
-    height: 25px;
+    width: 1.5625rem;
+    height: 1.5625rem;
     stroke-width: 1.5px;
     color: rgba(0, 0, 255, 0.8);
   }

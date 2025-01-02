@@ -4,6 +4,7 @@ import { useState, FormEvent } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import styles from "./RegisterForm.module.scss";
 
 export default function RegisterForm() {
   const [name, setName] = useState("");
@@ -67,70 +68,79 @@ export default function RegisterForm() {
   };
 
   return (
-    <div>
-      <h2>Create an account</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
+    <div className={styles.register}>
+      <form className={styles.register__form} onSubmit={handleSubmit}>
+        {error && <p className={styles.register__error}>{error}</p>}
+        <div className={styles.register__brand}>
+          <img
+            src="/weather-icon.svg"
+            alt="Weather Icon"
+            className={styles.register__icon}
+          />
+          <h1 className={styles.register__appName}>TraWeather</h1>
+        </div>
+        <h2 className={styles.register__title}>
+          Create an Account<p>Please enter your details</p>
+        </h2>
+        <div className={styles.register__formGroup}>
+          <label className={styles.register__label}>
             Name
             <input
               type="text"
-              placeholder="Name"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              className={styles.register__input}
             />
           </label>
         </div>
 
-        <div>
-          <label>
+        <div className={styles.register__formGroup}>
+          <label className={styles.register__label}>
             Email
             <input
               type="email"
-              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className={styles.register__input}
             />
           </label>
         </div>
 
-        <div>
-          <label>
+        <div className={styles.register__formGroup}>
+          <label className={styles.register__label}>
             Password
             <input
               type="password"
-              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              className={styles.register__input}
             />
           </label>
-          <p>
-            at least 6 characters; must include a number or special character,
+          <p className={styles.register__hint}>
+            At least 6 characters; must include a number or special character,
             e.g., !@#$%^&*
           </p>
         </div>
 
-        <div>
-          <label>
+        <div className={styles.register__formGroup}>
+          <label className={styles.register__label}>
             Confirm Password
             <input
               type="password"
-              placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
+              className={styles.register__input}
             />
           </label>
         </div>
 
-        <div>
-          <button type="submit">Register</button>
-        </div>
-
-        <div>{error && <p>{error}</p>}</div>
+        <button type="submit" className={styles.register__button}>
+          Sign Up
+        </button>
       </form>
     </div>
   );

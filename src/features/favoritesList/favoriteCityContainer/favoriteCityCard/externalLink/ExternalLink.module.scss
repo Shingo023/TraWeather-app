@@ -1,0 +1,20 @@
+.externalLink {
+  font-size: 1rem;
+  font-weight: 500;
+  display: flex;
+  gap: 3px;
+  align-items: flex-end;
+  color: #5592FF;
+  transition: all 0.3s ease; 
+
+  &:hover {
+    cursor: pointer;
+    color: #4299E1; 
+    text-decoration: underline;
+  }
+}
+
+.icon {
+  width: 1.4rem;
+  height: 1.4rem;
+}

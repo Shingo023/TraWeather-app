@@ -4,6 +4,8 @@ import React from "react";
 import styles from "./SidebarLink.module.scss";
 import { usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type SidebarLinkProps = {
   linkName: string;
@@ -28,13 +30,14 @@ const SidebarLink = ({
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!session && path === "/favorite-list") {
       e.preventDefault();
-      alert("Please log in to access the favorite cities feature.");
+      toast.error("Please log in to access the favorite cities feature.");
     }
   };
 
   return (
     <Link className={styles.link} href={path} onClick={handleClick}>
       <Image
+        className={styles.image}
         src={isActive ? icon : iconPale}
         alt={alt}
         width={50}

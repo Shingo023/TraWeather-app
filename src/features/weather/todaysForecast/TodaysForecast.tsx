@@ -1,47 +1,46 @@
-import { WeatherDataForForecast, WeatherDay } from "@/types";
 import styles from "./TodaysForecast.module.scss";
 import WeatherForecast from "@/features/favoritesList/favoriteCityContainer/favoriteCityCard/weatherForecast/WeatherForecast";
 import { formatDate } from "@/utils/dateUtils";
 import TodaysForecastSkeleton from "./TodaysForecastSkeleton";
+import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
-const TodaysForecast = ({
-  twentyFourHoursWeather,
-  todaysWeather,
-}: {
-  twentyFourHoursWeather: WeatherDataForForecast[] | null;
-  todaysWeather: WeatherDay | null;
-}) => {
-  const date = todaysWeather ? formatDate(todaysWeather.datetime) : "";
+const TodaysForecast = () => {
+  const {
+    dailyWeatherHighlights,
+    twentyFourHoursWeather,
+    todaysDate,
+    loading,
+  } = useDisplayedCityWeather();
 
-  if (!twentyFourHoursWeather || !todaysWeather) {
+  if (loading) {
     return <TodaysForecastSkeleton />;
   }
 
+  if (!dailyWeatherHighlights) return;
+
+  const date = dailyWeatherHighlights
+    ? formatDate(dailyWeatherHighlights.datetime)
+    : "";
+
   return (
-    <div className={styles.todaysForecast}>
-      <div className={styles.todaysForecast__container}>
-        <h2>
-          Daily Forecast
-          <span
-            style={{
-              fontSize: "12px",
-              fontWeight: "normal",
-              marginLeft: "12px",
-            }}
-          >
-            {date}
-          </span>
-        </h2>
-        <div className={styles.todaysForecast__hourlyWeatherCards}>
+    <section className={styles.todaysForecast}>
+      <div className={styles.todaysForecast__forecastWrapper}>
+        {dailyWeatherHighlights.datetime === todaysDate ? (
+          <h2>Today's Forecast</h2>
+        ) : (
+          <h2>
+            Daily Forecast
+            <span>{date}</span>
+          </h2>
+        )}
+        <div className={styles.todaysForecast__forecastDetails}>
           <WeatherForecast
             dailyOrWeeklyWeather={twentyFourHoursWeather}
-            iconHeight={60}
-            iconWidth={60}
-            cardWidth={130}
+            className="dailyForecast"
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

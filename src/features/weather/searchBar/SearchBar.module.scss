@@ -1,60 +1,100 @@
-@import "@/style/base/variables.scss";
+@use '../../../style/_mixins.scss' as *;
 
 .searchBar {
-  position: relative;
-  height: 6%;
-  min-height: 44px;
 
-  &__searchIcon {
-    position: absolute;
-    top: 9px;
-    left: 15px;
-    width: 25px;
-    height: 25px;
-    stroke: 0.5px;
-  }
-  input {
-    height: 100%;
+  &__inputField {
+    position: relative;
     width: 100%;
-    border-radius: 10px;
-    background-color: #D9D9D9;
-    border: 2px solid #D9D9D9;
-    padding: 20px 15px 20px 50px;
-    font-size: 16px;
+
+    @include respond(mobile) { 
+      position: fixed;
+      left: 100%;
+      z-index: 3001;
+      display: flex;
+      align-items: center;
+      background-color: #F9F9F9;
+      height: 68px;
+      padding-left: 13px;
+      padding-right: 56px;
+      transition: all ease 0.5s;
+    }
+
+    &--showSearchBar {
+      @include respond(mobile) { 
+        left: 0;
+      }
+    }
+
+    input {
+      width: 100%;
+      border-radius: 10px;
+      background-color: #F9F9F9CC;
+      border: 2px solid #F9F9F9CC;
+      padding: 0.8rem 1.1rem 0.8rem 3.125rem;
+      font-size: 1rem;
+      box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+      @include respond(mobile) { 
+        padding: 0.8rem 1.1rem 0.8rem 0.8rem;
+        background-color: rgba(white, 0.8);
+        border: 2px solid rgba(white, 0.8);
+      }
+    }
+
+    input::placeholder {
+      color: #0000004D;
+    }
   }
+
+  &__searchBarToggle {
+    position: fixed;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 13px;
+    background-color: #F9F9F9;
+    z-index: 3002;
+  }
+}
+
+// place suggestions
+.placeSuggestions {
 
   &__error {
     display: flex;
     gap: 5px;
     align-items: center;
-    color: red;
     padding: 15px;
-  }
-  &__errorIcon {
-    width: 18px;
-    height: 18px;
+    color: red;
   }
 
-  &__suggestionsList {
+  &__list {
     position: absolute; 
     top: 100%;
     left: 0;
-    z-index: 1000;
+    z-index: 4000;
     list-style-type: none;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
     background-color: white;
     border: 1px solid #ddd;
     width: 100%;
     border-radius: 10px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+
+    @include respond(mobile) { 
+      left: 13px;
+      margin-top: -13px;
+      width: calc(100% - 67px);
+    }
   }
 
-  &__suggestion {
+  &__item {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 16px;
+    font-size: 1rem;
     cursor: pointer;
     padding: 10px 15px;
     border-bottom: 1px solid #ddd;
@@ -62,10 +102,63 @@
       background-color: #F0F0F0;
     }
   }
-  &__suggestionIcon {
+}
+
+// icons
+.clearIcon {
+  width: 22px;
+  min-width: 22px;
+  height: 22px;
+  color: #878787;
+  position: absolute;
+  right: 0.7rem;
+  top: 50%;
+  transform: translateY(- 50%);
+  &:hover {
+    cursor: pointer;
+  }
+
+  @include respond(mobile) { 
+    right: calc(0.7rem + 54px);
+  }
+}
+
+.searchIcon {
+  color: #878787;
+
+  &--small {
+    position: absolute;
+    width: 1.56rem;
+    min-width: 1.56rem;
+    height: 1.56rem;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0.94rem;
+  }
+
+  &--middle {
     color: #808080;
+    width: 18px;
     min-width: 18px;
     height: 18px;
   }
+
+  &--large {
+    color: rgba(0, 0, 255, 0.8);
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
+
+.warningIcon {
+  width: 18px;
+  min-width: 18px;
+  height: 18px;
+  color: red;
+}
+
 

@@ -3,17 +3,15 @@
 import { Check } from "lucide-react";
 import styles from "./FavoriteCityDeletionSelector.module.scss";
 import { useEffect, useState } from "react";
+import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
 const FavoriteCityDeletionSelector = ({
-  deleteActive,
-  setFavoriteCitiesToDelete,
   favoriteCityId,
 }: {
-  deleteActive: boolean;
-  setFavoriteCitiesToDelete: React.Dispatch<React.SetStateAction<number[]>>;
   favoriteCityId: number;
 }) => {
   const [isChecked, setIsChecked] = useState(false);
+  const { deleteActive, setFavoriteCitiesToDelete } = useUserFavoriteCities();
 
   useEffect(() => {
     if (!deleteActive) {

@@ -1,45 +1,19 @@
 "use client";
 
-import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import styles from "./CurrentWeather.module.scss";
 import { RotateCw } from "lucide-react";
-import { CurrentDateAndTimePropsType, WeatherData } from "@/types";
 import React from "react";
+import { useParams } from "next/navigation";
+import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
-const CurrentDateTime = ({
-  placeTimeZone,
-  setDisplayedCityWeather,
-  latitude,
-  longitude,
-  setLoading,
-  setCurrentDateTime,
-}: CurrentDateAndTimePropsType) => {
-  const currentTimeAndDate =
-    placeTimeZone !== undefined
-      ? getCurrentTimeAndDate(placeTimeZone)
-      : undefined;
-
-  setCurrentDateTime(currentTimeAndDate ?? "N/A");
+const CurrentDateTime = () => {
+  const { lat, lng } = useParams();
+  const { updateWeatherStates, lastWeatherFetchDateTime } =
+    useDisplayedCityWeather();
 
   const updateWeatherInfo = async () => {
-    setLoading(true);
-    setDisplayedCityWeather(null);
-
-    if (latitude !== undefined && longitude !== undefined) {
-      try {
-        const weatherResponse = await fetch(
-          `/api/weather?lat=${latitude}&lng=${longitude}`
-        );
-        const updatedWeather: WeatherData = await weatherResponse.json();
-
-        setDisplayedCityWeather(updatedWeather);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error updating weather information:", error);
-      }
-    } else {
-      console.error("Latitude or longitude is undefined.");
-    }
+    if (!lat || !lng) return;
+    updateWeatherStates(Number(lat), Number(lng));
   };
 
   return (
@@ -48,10 +22,10 @@ const CurrentDateTime = ({
         className={styles.currentWeather__dateTime}
         onClick={updateWeatherInfo}
       >
-        {currentTimeAndDate}
+        {lastWeatherFetchDateTime}
       </div>
-      <div className={styles.currentWeather__updateIconContainer}>
-        <RotateCw className={styles.currentWeather__updateIcon} />
+      <div className={`iconContainer ${styles.updateIcon}`}>
+        <RotateCw className="icon" />
       </div>
     </div>
   );

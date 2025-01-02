@@ -15,70 +15,72 @@ const Overview = ({
     <div className={styles.overview}>
       <div className={styles.overview__container}>
         <div className={styles.overview__weatherOverview}>
-          <h5>Overview</h5>
-          <div>
-            <p>{weatherOverview}</p>
-          </div>
+          <h3 className={styles.overview__title}>Overview</h3>
+          <p>{weatherOverview}</p>
         </div>
 
-        <div className={styles.overview__feelsLikeTemps}>
-          <h5>Feels-like temp</h5>
-          <div>
-            <Thermometer className={styles.overview__icon} />
-            <p>
-              <span className={styles.overview__numberData}>
-                {feelsLikeTempMax}
-              </span>
-              ° /{" "}
-              <span className={styles.overview__numberData}>
-                {feelsLikeTempMin}
-              </span>
-              °
-            </p>
-          </div>
-        </div>
-
-        {snowDepth > 0 && (
-          <div className={styles.overview__snowDepth}>
-            <h5>Snow Depth</h5>
+        <ul className={styles.overview__bottomContents}>
+          <li className={styles.overview__feelsLikeTemps}>
+            <h3 className={styles.overview__title}>Feels-like temp</h3>
             <div>
-              <ArrowUpToLine className={styles.overview__icon} />
-              <p>
-                <span className={styles.overview__numberData}>{snowDepth}</span>
-                cm
-              </p>
-            </div>
-          </div>
-        )}
-
-        <div className={styles.overview__humidity}>
-          <h5>Humidity</h5>
-          <div>
-            <Droplet className={styles.overview__icon} />
-            <p>
-              <span className={styles.overview__numberData}>{humidity}</span>%
-            </p>
-          </div>
-        </div>
-
-        {visibility < 4 && (
-          <div className={styles.overview__visibility}>
-            <h5>Visibility</h5>
-            <div>
-              <Eye className={styles.overview__icon} />
+              <Thermometer className={styles.overview__icon} />
               <p>
                 <span className={styles.overview__numberData}>
-                  {visibility}
+                  {feelsLikeTempMax}
                 </span>
-                km
+                ° /{" "}
+                <span className={styles.overview__numberData}>
+                  {feelsLikeTempMin}
+                </span>
+                °
               </p>
             </div>
+          </li>
 
-            <p className={styles.overview__weatherIndex}>
-              {getVisibilityIndex(visibility)}
-            </p>
-          </div>
-        )}
+          {snowDepth > 0 && (
+            <li className={styles.overview__snowDepth}>
+              <h3 className={styles.overview__title}>Snow Depth</h3>
+              <div>
+                <ArrowUpToLine className={styles.overview__icon} />
+                <p>
+                  <span className={styles.overview__numberData}>
+                    {snowDepth}
+                  </span>
+                  cm
+                </p>
+              </div>
+            </li>
+          )}
+
+          <li className={styles.overview__humidity}>
+            <h3 className={styles.overview__title}>Humidity</h3>
+            <div>
+              <Droplet className={styles.overview__icon} />
+              <p>
+                <span className={styles.overview__numberData}>{humidity}</span>%
+              </p>
+            </div>
+          </li>
+
+          {visibility < 4 && (
+            <li className={styles.overview__visibility}>
+              <h3 className={styles.overview__title}>Visibility</h3>
+              <div>
+                <Eye className={styles.overview__icon} />
+                <p>
+                  <span className={styles.overview__numberData}>
+                    {visibility}
+                  </span>
+                  km
+                </p>
+              </div>
+
+              <p className={styles.overview__weatherIndex}>
+                {getVisibilityIndex(visibility)}
+              </p>
+            </li>
+          )}
+        </ul>
       </div>
     </div>
   );

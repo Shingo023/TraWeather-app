@@ -12,7 +12,7 @@ export async function POST(req: Request) {
 
   try {
     // Start a transaction to update the display order for each city
-    await prisma.$transaction(
+    const updatedUserFavoriteCities = await prisma.$transaction(
       cityOrder.map((cityId, index) =>
         prisma.userFavoriteCity.update({
           where: { id: cityId },
@@ -24,7 +24,10 @@ export async function POST(req: Request) {
     );
 
     return NextResponse.json(
-      { message: "Order updated successfully" },
+      {
+        message: "Order updated successfully",
+        userFavoriteCities: updatedUserFavoriteCities,
+      },
       { status: 200 }
     );
   } catch (error) {

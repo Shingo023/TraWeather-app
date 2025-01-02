@@ -1,14 +1,86 @@
+@use '../../../../style/_mixins.scss' as *;
+
 .weatherPage {
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: 0.035rem;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.025rem;
+    span {
+      font-size: 12px;
+      font-weight: 500;
+      margin-left: 12px;
+      color: #878787;
+    }
+  }
+  
   display: flex;
   height: 100%;
+  min-height: 700px;
+  overflow: auto;
+  padding: 18px 30px 10px 15px;
+
+  @include respond(small-desktop) { 
+    padding: 18px 30px 10px 5px; 
+  }
+  @include respond(large-tablet) { 
+    padding: 18px 18px 10px 10px;
+  }
+  @include respond(tablet) { 
+    padding: 18px 15px 10px 15px;
+    min-height: 620px;
+  }
+  @include respond(small-tablet) { 
+    padding: 18px 20px 10px 20px;
+    flex-direction: column;
+    gap: 25px;
+    min-height: unset;
+    height: unset;
+  }
+  @include respond(mobile) { 
+    padding: 0 20px 10px 20px;
+  }
 
   &__leftContent {
-  width: 65%;
-  height: 100%;
+    width: 65%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+
+    @include respond(medium-tablet) {
+      width: 72%;
+    }
+    @include respond(small-tablet) { 
+      width: unset;
+      gap: 20px;
+    }
   }
 
   &__rightContent {
-  width: 35%;
-  padding: 69px 30px 0 26px;
+    width: 35%;
+    padding: 69px 0 8px 26px;
+
+    @include respond(small-desktop) { 
+      padding: 69px 0 8px 15px; 
+    }
+    @include respond(tablet) { 
+      padding: 69px 0 8px 14px; 
+    }
+    @include respond(medium-tablet) {
+      width: 28%;
+      padding: 69px 0 8px 8px;
+    }
+    @include respond(small-tablet) {
+      padding: unset; 
+      width: unset;
+    }
   }
 }

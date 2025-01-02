@@ -10,27 +10,12 @@ import {
   ArrowRightStartOnRectangleIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
+import { getInitials } from "@/utils/getInitials";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 const Sidebar = () => {
   const { data: session, status } = useSession();
-
-  // Render nothing while the session status is "loading"
-  if (status === "loading") {
-    return (
-      <div className={styles.skeleton}>
-        <>
-          <div className={styles.sidebar__links}>
-            <div className={styles.skeleton__link} />
-            <div className={styles.skeleton__link} />
-          </div>
-
-          <div className={styles.sidebar__bottom}>
-            <div className={styles.skeleton__log} />
-          </div>
-        </>
-      </div>
-    );
-  }
+  const isTablet = useMediaQuery("(max-width: 768px)");
 
   const handleSignOut = () => {
     signOut({ callbackUrl: "/weather" });
@@ -38,7 +23,7 @@ const Sidebar = () => {
 
   return (
     <div className={styles.sidebar}>
-      {status === "authenticated" ? (
+      {status === "authenticated" && session.user.name ? (
         <>
           <div className={styles.sidebar__links}>
             <SidebarLink
@@ -59,8 +44,14 @@ const Sidebar = () => {
 
           <div className={styles.sidebar__bottom}>
             <div className={styles.sidebar__user}>
-              <UserCircleIcon className={styles.sidebar__userIcon} />
-              <p>{session.user?.name}</p>
+              {!isTablet ? (
+                <>
+                  <UserCircleIcon className={styles.sidebar__userIcon} />
+                  <p>{session.user?.name}</p>
+                </>
+              ) : (
+                <p>{getInitials(session.user.name)}</p>
+              )}
             </div>
 
             <div className={styles.sidebar__log} onClick={handleSignOut}>
@@ -88,14 +79,27 @@ const Sidebar = () => {
               iconPale={"/favorite-list-icon-pale.svg"}
               alt={"favorite-list-icon"}
             />
+            {isTablet ? (
+              <div className={styles.sidebar__log} onClick={() => signIn()}>
+                <ArrowRightStartOnRectangleIcon
+                  className={styles.sidebar__logIcon}
+                />
+                <p>Log In</p>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
-
-          <div className={styles.sidebar__log} onClick={() => signIn()}>
-            <ArrowRightStartOnRectangleIcon
-              className={styles.sidebar__logIcon}
-            />
-            <p>Log In</p>
-          </div>
+          {!isTablet ? (
+            <div className={styles.sidebar__log} onClick={() => signIn()}>
+              <ArrowRightStartOnRectangleIcon
+                className={styles.sidebar__logIcon}
+              />
+              <p>Log In</p>
+            </div>
+          ) : (
+            <></>
+          )}
         </>
       )}
     </div>

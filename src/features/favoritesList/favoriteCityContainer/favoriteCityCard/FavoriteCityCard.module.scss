@@ -1,16 +1,16 @@
-@import "@/style/base/variables.scss";
+@use '../../../../style/_mixins.scss' as *;
 
 .cityCard {
   &__card {
     border-radius: 10px;
-    height: 230px;
+    height: 14.375rem;
     width: 100%;
 
     background-color: #F9F9F9;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    padding: 15px 20px 10px 15px;
+    padding: 0.9375rem 1.25rem 0.625rem 0.9375rem;
     transition: all 0.3s ease;
     cursor: grab;
     overflow: auto;
@@ -21,6 +21,18 @@
     }    
     &:hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+    @include respond(tablet) {
+      padding-bottom: 0.1rem;
+    }
+    @include respond(medium-tablet) {
+      padding-bottom: 0;
+    }
+    @include respond(small-tablet) {
+      padding: 5px 10px;
+      height: 185px;
+      position: relative;
     }
   }
 
@@ -34,62 +46,38 @@
     display: flex;
     align-items: center;
     gap: 3px;
- 
   }
-  &__cityName {
-    font-size: 28px;
-    font-weight: 600;
-  }
-  &__homeIconContainer {
+
+  &__cityNameContainer {
     position: relative;
-  }
-  &__homeIcon {
-    height: 30px;
-    width: 30px;
-    transition: all 0.3s ease; 
-    color: #e2e2ed;
-    &:hover {
-      cursor: pointer; 
-      color: rgba(0, 0, 255, 0.4);
-      /* Make the tooltip visible when the icon is hovered */
-      + .cityCard__tooltip {
-        visibility: visible;
-        opacity: 1; 
-      }
+    max-width: 50vw;
+
+    @include respond(large-tablet) {
+      max-width: 40vw;
     }
-    &.homeIconActive {
-      color: rgba(0, 0, 255, 1);
+    @include respond(medium-mobile) {
+      max-width: 30vw;
     }
   }
 
-  &__editIconContainer {
-    position: relative;
-  }
-  &__editIcon {
-    width: 32px;
-    height: 32px;
-    position: relative;
-    transition: all 0.3s ease; 
-    margin-left: 5px;
-    color: rgba(0, 0, 255, 0.8);
-    padding: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 16px;
-    cursor: pointer;
+  &__cityName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 1.75rem;
+    font-weight: 600;
+
+    @include respond(small-tablet) {
+      font-size: 14px;
+    }
+
     &:hover {
-      background-color: rgba(black, 0.1);
-      + .cityCard__tooltip {
+      cursor: default;
+      + .cityNameTooltip {
         visibility: visible;
         opacity: 1;
       }
     }
-  }
-  &__tooltip {
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
   }
 
   // Forecast toggle
@@ -97,16 +85,32 @@
     display: flex;
     gap: 25px;
     align-items: flex-start;
+
+    @include respond(small-tablet) {
+      position: absolute;
+      left: 115px;
+      top: 33px;
+      gap: 12px;
+      z-index: 1000;
+    }
+    @include respond(small-mobile) {
+      gap: 6px;
+    }
   }
 
   &__selectedForecast {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: 400;
     padding: 4px 10px;
     border: rgba(black, 0.7) solid 0.5px;
     border-radius: 18px;
     color: rgba(black, 0.7);
     transition:all 0.3s ease;
+
+    @include respond(small-tablet) {
+      font-size: 12px;
+      letter-spacing: 0.24px;
+    }
 
     &.forecastActive {
       color: rgba(white, 1);
@@ -117,7 +121,6 @@
       color: rgba(white, 1);
       background-color: rgb(black, 0.7);
       cursor: pointer;
-
     }
   }
 
@@ -128,34 +131,78 @@
     height: calc(100% - 44px);
     margin-top: 8px;
     margin-left: 29px;
+
+    @include respond(small-tablet) {
+      flex-direction: column;
+      height:unset;
+      margin-top: unset;
+      margin-left: unset;
+    }
   }
 
   &__currentInfo {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-width: 200px;
+    min-width: 12.5rem;
+
+    @include respond(small-tablet) {
+      flex-direction: unset;
+      justify-content: unset;
+      align-items: center;
+      min-width: 110px;
+      gap: 12px;
+      margin-left: 10px;
+    }
   }
   &__currentDateTime {
+    font-size: 1rem;
+    letter-spacing: 0.015rem;
     font-weight: 400; 
+
+    @include respond(small-tablet) {
+      position: absolute;
+      top: 12px;
+      right: 10px;
+    }
   }
   &__currentWeather {
     display: flex;
     align-items: center;
+    gap: 16px;
   }
   &__currentWeatherIconContainer {
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 3.75rem;
+    height: 3.75rem;
+
+    @include respond(small-tablet) {
+      width: 30px;
+      height: 30px;
+    }
   }
   &__currentTemp {
-    font-size: 58px;
+    font-size: 3.625rem;
     font-weight: 500;
+    letter-spacing: -0.075rem;
+
+    @include respond(small-tablet) {
+      font-size: 30px;
+    }    
   }
   // Button
   &__buttons {
     margin-left: 12px;
     margin-bottom: 10px;
+
+    @include respond(small-tablet) {
+      margin: 0;
+      position: absolute;
+      top: 30px;
+      right: 10px;
+    }
   }
 
   // Right side content
@@ -175,23 +222,29 @@
     justify-content: flex-end;
     align-items: flex-end;
     gap: 25px;
-    div {
-      font-size: 15px;
-      font-weight: 500;
-      display: flex;
-      gap: 3px;
-      align-items: flex-end;
-      color: rgba(0, 0, 255, 0.8);
-      transition: all 0.3s ease; 
-      &:hover {
-       cursor: pointer;
-        color: rgba(0, 0, 255, 1); 
-        text-decoration: underline;
-        font-weight: 600;
-      }
+
+    @include respond(small-tablet) {
+      gap: 12px;
+      position: absolute;
+      bottom: 8px;
+      right: 10px;
     }
   }
+  
 }
+.nightMode h2,
+.nightMode h5 {
+  color: #F9F9F9CC;
+}
+.nightMode .cityCard__selectedForecast {
+  color: #F9F9F9CC;
+  border: rgba(#F9F9F9CC, 0.7) solid 0.5px;
+  &.forecastActive {
+    border: black solid 1px;
+    color: white;
+  }
+}
+
 
 // Skeleton
 .cityCard {
@@ -211,36 +264,56 @@
   }
 
   &__homeIconSkeleton {
-    height: 30px;
-    width: 25px;
-    margin-right: 5px;
+    height: 1.6rem;
+    width: 1.3rem;
+    margin-right: 0.3125rem;
     border-radius: 180px;
+
+    @include respond(small-tablet) {
+      height: 13px;
+      width: 10px;
+    }
   }
 
   &__cityNameSkeleton {
-    width: 150px;
-    height: 34px;
+    width: 5.8rem;
+    height: 2rem;
     border-radius: 8px;
+
+    @include respond(small-tablet) {
+      height: 17px;
+      width: 65px;
+    }
   }
 
   &__selectedForecastSkeleton {
-    width: 62px;
-    height: 27px;
+    width: 3.875rem;
+    height: 1.6875rem;
     border-radius: 18px;
   }
 
   &__currentDateTimeSkeleton {
-    width: 150px;
-    height: 20px;
+    width: 9.375rem;
+    height: 1rem;
     border-radius: 8px;
     margin-top: 10px;
+
+    @include respond(small-tablet) {
+      margin-top: unset;
+    }
   }
 
   &__currentWeatherIconSkeleton {
-    width: 45px;
-    height: 45px;
+    width: 3.75rem;
+    height: 3.75rem;
     margin: 5px;
     border-radius: 8px;
+
+    @include respond(small-tablet) {
+      height: 30px;
+      width: 30px;
+      margin: unset;
+    }
   }
 
     &__currentTempSkeleton {
@@ -248,23 +321,43 @@
     height: 50px;
     margin: 5px;
     border-radius: 8px;
+
+    @include respond(small-tablet) {
+      height: 36px;
+      width: 34px;
+    }
   }
 
     &__buttonSkeleton {
     width: 127px;
     height: 32px;
     border-radius: 194px;
+
+    @include respond(small-tablet) {
+      height: 28px;
+      width: 56px;
+    }
   }
 
   &__placeInfoSkeleton1 {
-    width: 155px;
-    height: 20px;
+    width: 7.875rem;
+    height: 1.25rem;
     border-radius: 8px;
+
+    @include respond(small-tablet) {
+      height: 12px;
+      width: 80px;
+    }
   }
   &__placeInfoSkeleton2 {
-    width: 71px;
-    height: 20px;
+    width: 4.8rem;
+    height: 1.25rem;
     border-radius: 8px;
+
+    @include respond(small-tablet) {
+      height: 12px;
+      width: 49px;
+    }
   }
 }
 

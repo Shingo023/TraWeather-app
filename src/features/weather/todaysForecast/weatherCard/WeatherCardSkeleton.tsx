@@ -1,45 +1,48 @@
 import styles from "./WeatherCard.module.scss";
 
 const WeatherCardSkeleton = ({
-  iconHeight,
-  iconWidth,
-  weatherCardWidth,
+  className,
   weatherCardColor,
   isForFavoriteCityCard,
 }: {
-  iconHeight: number;
-  iconWidth: number;
-  weatherCardWidth: number;
+  className?: string;
   weatherCardColor: string;
   isForFavoriteCityCard: boolean;
 }) => {
   return (
     <div
-      className={styles.weatherCard}
+      className={`${styles.weatherCard} ${className ? styles[className] : ""}`}
       style={{
-        width: `${weatherCardWidth}px`,
-        minWidth: `${weatherCardWidth}px`,
         backgroundColor: `${weatherCardColor}`,
       }}
     >
       <div className={styles.weatherCard__top}>
-        <p className={styles.weatherCard__timeSkeleton} />
-        <div className={styles.weatherCard__weatherIcon}>
-          <div
-            className={styles.weatherCard__weatherIconSkeleton}
-            style={{ width: `${iconWidth}px`, height: `${iconHeight}px` }}
-          />
+        <div className={styles.weatherCard__time}>
+          <p className={styles.weatherCard__timeSkeleton} />
         </div>
-        <div className={styles.weatherCard__tempSkeleton} />
+        <div className={`iconContainer ${styles.weatherIcon}`}>
+          <div className={styles.weatherCard__weatherIconSkeleton} />
+        </div>
+
+        <div className={styles.weatherCard__temp}>
+          <div className={styles.weatherCard__tempSkeleton} />
+        </div>
       </div>
 
       <div className={styles.weatherCard__bottom}>
-        <div className={styles.weatherCard__precipProbSkeleton} />
+        <div className={styles.weatherCard__precipProb}>
+          <div className={styles.weatherCard__precipProbSkeleton} />
+        </div>
+
         {!isForFavoriteCityCard && (
-          <div className={styles.weatherCard__precipSkeleton} />
-        )}
-        {!isForFavoriteCityCard && (
-          <div className={styles.weatherCard__windSkeleton} />
+          <>
+            <div className={styles.weatherCard__precip}>
+              <div className={styles.weatherCard__precipSkeleton} />
+            </div>
+            <div className={styles.weatherCard__wind}>
+              <div className={styles.weatherCard__windSkeleton} />
+            </div>
+          </>
         )}
       </div>
     </div>

@@ -1,102 +1,97 @@
-import { CloudHail, Umbrella, Wind } from "lucide-react";
+import { Umbrella } from "lucide-react";
 import styles from "./WeatherCard.module.scss";
 import { getPrecipIntensity, getWindStrength } from "@/utils/weatherUtils";
 import WeatherIcon from "@/app/components/elements/weatherIcon/WeatherIcon";
 import React from "react";
+import { WeatherCardType } from "@/types";
+import { precipIconMapping, windIconMapping } from "@/utils/weatherIconMapping";
+import ToolTip from "@/app/components/elements/toolTip/ToolTip";
 
 const WeatherCard = ({
   dateTime,
   weatherIconSrc,
-  iconWidth,
-  iconHeight,
   temp,
   tempMax,
   tempMin,
   precipProb,
   precipAmount,
   windSpeed,
-  cardWidth,
-  cardColor,
-}: {
-  dateTime: string;
-  weatherIconSrc: string;
-  iconWidth: number;
-  iconHeight: number;
-  temp?: number;
-  tempMax?: number;
-  tempMin?: number;
-  precipProb: number;
-  precipAmount?: number | null;
-  windSpeed?: number | null;
-  cardWidth: number;
-  cardColor: string;
-}) => {
+  className,
+}: WeatherCardType) => {
+  const precipIntensity = getPrecipIntensity(precipAmount!);
+  const precipIconSrc = precipIconMapping[precipIntensity];
+  const windStrength = getWindStrength(windSpeed!);
+  const windIconSrc = windIconMapping[windStrength];
+
   return (
     <div
-      className={styles.weatherCard}
-      style={{
-        width: `${cardWidth}px`,
-        minWidth: `${cardWidth}px`,
-        backgroundColor: `${cardColor}`,
-      }}
+      className={`${styles.weatherCard} ${className ? styles[className] : ""}`}
     >
-      <div className={styles.weatherCard__top}>
-        <p className={styles.weatherCard__time}>{dateTime}</p>
-        <div className={styles.weatherCard__weatherIcon}>
-          <WeatherIcon
-            weatherIcon={weatherIconSrc}
-            width={iconWidth}
-            height={iconHeight}
-          />
+      <section className={styles.weatherCard__top}>
+        <h3 className={styles.weatherCard__time}>{dateTime}</h3>
+        <div className={`iconContainer ${styles.weatherIcon}`}>
+          <WeatherIcon weatherIcon={weatherIconSrc} />
         </div>
         {!isNaN(temp ?? NaN) ? (
-          <div className={styles.weatherCard__temp}>{temp}°</div>
+          <p className={styles.weatherCard__temp}>{temp}°</p>
         ) : (
-          <div className={styles.weatherCard__temp}>
+          <p className={styles.weatherCard__temp}>
             {tempMax}°<span>/</span> {tempMin}°
-          </div>
-        )}
-      </div>
-
-      <div className={styles.weatherCard__bottom}>
-        <div
-          className={`${styles.weatherCard__precipProb} ${
-            precipProb > 0 ? styles.precipProbActive : ""
-          }`}
-        >
-          <Umbrella className={styles.weatherCard__icon} />
-          <p>
-            {precipProb}
-            <span>%</span>
           </p>
-        </div>
+        )}
+      </section>
 
-        {typeof precipAmount === "number" ? (
-          <div className={styles.weatherCard__precip}>
-            <CloudHail className={styles.weatherCard__icon} />
-            <p>
-              {precipAmount}
-              <span>mm</span>
-            </p>
-            <div className={styles.weatherCard__weatherIndex}>
-              {getPrecipIntensity(precipAmount)}
+      <section className={styles.weatherCard__bottom}>
+        <ul className={styles.weatherCard__details}>
+          <li
+            className={`${styles.weatherCard__precipProb} ${
+              precipProb > 0 ? styles["weatherCard__precipProb--active"] : ""
+            }`}
+          >
+            <div className={`iconContainer ${styles.weatherCardIcon}`}>
+              <Umbrella className={`icon ${styles.umbrellaIcon}`} />
             </div>
-          </div>
-        ) : null}
+            <p className={styles.weatherCard__stat}>
+              {precipProb}
+              <span>%</span>
+            </p>
+          </li>
 
-        {windSpeed ? (
-          <div className={styles.weatherCard__wind}>
-            <Wind className={styles.weatherCard__icon} />
-            <p>
-              {windSpeed}
-              <span>kph</span>
-            </p>
-            <div className={styles.weatherCard__weatherIndex}>
-              {getWindStrength(windSpeed)}
-            </div>
-          </div>
-        ) : null}
-      </div>
+          {typeof precipAmount === "number" ? (
+            <li className={styles.weatherCard__precip}>
+              <div
+                className={`iconContainer ${styles.weatherCardIcon} ${styles.weatherCardIcon__precip}`}
+              >
+                <WeatherIcon weatherIcon={precipIconSrc} />
+                <div className={`tooltip ${styles.precipTooltip}`}>
+                  <ToolTip message={precipIntensity} className="weatherCard" />
+                </div>
+              </div>
+              <p className={styles.weatherCard__stat}>
+                {precipAmount}
+                <span>mm</span>
+              </p>
+            </li>
+          ) : null}
+
+          {windSpeed ? (
+            <li className={styles.weatherCard__wind}>
+              <div
+                className={`iconContainer ${styles.weatherCardIcon} ${styles.weatherCardIcon__wind}`}
+              >
+                <WeatherIcon weatherIcon={windIconSrc} />
+                <div className={`tooltip ${styles.windTooltip}`}>
+                  <ToolTip message={windStrength} className="weatherCard" />
+                </div>
+              </div>
+              <p className={styles.weatherCard__stat}>
+                {windSpeed}
+                <span>kph</span>
+              </p>
+            </li>
+          ) : null}
+        </ul>
+      </section>
     </div>
   );
 };

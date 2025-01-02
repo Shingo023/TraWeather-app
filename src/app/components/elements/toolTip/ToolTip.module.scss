@@ -1,15 +1,63 @@
+@use '../../../../style/_mixins.scss' as *;
+
 .tooltip {
-    background-color: rgba(29, 29, 29, 0.9);
+    width: max-content;
+    
+    background-color: rgba(29, 29, 29, 0.8);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;    
-    font-size: 14px;
-    color: #fff;
-    padding: 8px;
+    padding: 12px;
     border-radius: 10px;  
     position: absolute;
-    z-index: 1;
-    text-align: center;
-
-    top: 105%; 
+    z-index: 5000;
+    top: 120%; 
     left: 0; 
     transition: opacity 0.3s ease-in-out;
+
+    &__message {
+        font-size: 12px;
+        color: #fff;
+    }
+
+    &::after {
+        content: "";
+        position: absolute;
+        left: 10px; 
+        width: 0;
+        height: 0;
+        border-style: solid;
+    }
+}
+
+.cityName {
+    max-width: 80vw;
+    @include respond(mobile) { 
+        max-width: calc(100vw - 150px);
+        text-align: left;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+    &::after {
+        top: -6px; 
+        border-width: 0 6px 6px 6px; 
+        border-color: transparent transparent  rgba(29, 29, 29, 0.8) transparent;
+        @include respond(mobile) { 
+            border-width: 0; 
+        }
+    }
+}
+
+.favoriteCityName {
+    max-width: 60vw;
+}
+
+.weatherCard {
+    top: -48px;
+    left: -50%; 
+
+    &::after {
+        bottom: -6px;
+        border-width: 6px 6px 0 6px; 
+        border-color: rgba(29, 29, 29, 0.8) transparent transparent  transparent;
+    }
 }

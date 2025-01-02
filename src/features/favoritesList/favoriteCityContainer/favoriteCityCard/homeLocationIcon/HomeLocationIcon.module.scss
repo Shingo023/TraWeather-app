@@ -1,0 +1,33 @@
+@use '../../../../../style/_mixins.scss' as *;
+
+.homeIconContainer {
+  position: relative;
+  height: 1.875rem;
+  width: 1.875rem;
+  transition: all 0.3s ease;
+
+  @include respond(small-tablet) {
+    height: 15px;
+    width: 15px;
+  }
+}
+
+.homeIcon {
+  color: #e2e2ed;
+
+  &:hover {
+    cursor: pointer; 
+    color: #60A8FF;
+    
+    + .homeIconTooltip {
+      visibility: visible;
+      opacity: 1; 
+    }
+  }
+
+  &--active {
+    color: #5592FF;
+  }
+}
+
+

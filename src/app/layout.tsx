@@ -8,8 +8,11 @@ import styles from "./layout.module.scss";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Weather App",
+  title: "TraWeather",
   description: "Weather application",
+  icons: {
+    icon: "/weather-icon.svg",
+  },
 };
 
 export default function RootLayout({
@@ -25,7 +28,8 @@ export default function RootLayout({
             <div className={styles.sidebar}>
               <Sidebar />
             </div>
-            <div className={styles.content}>{children}</div>
+
+            <div className={`globalContent ${styles.content}`}>{children}</div>
           </div>
         </SessionLayout>
       </body>

@@ -1,10 +1,16 @@
 import styles from "./ToolTip.module.scss";
 
-const ToolTip = ({ message, width }: { message: string; width?: number }) => {
+const ToolTip = ({
+  message,
+  className,
+}: {
+  message: string;
+  className?: string;
+}) => {
   return (
-    <span className={styles.tooltip} style={{ width: `${width}px` }}>
-      {message}
-    </span>
+    <div className={`${styles.tooltip} ${className ? styles[className] : ""}`}>
+      <p className={styles.tooltip__message}>{message}</p>
+    </div>
   );
 };
 

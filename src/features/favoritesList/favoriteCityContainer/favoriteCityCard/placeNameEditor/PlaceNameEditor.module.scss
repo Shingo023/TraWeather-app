@@ -1,0 +1,35 @@
+.cityCard {
+  &__editIconContainer {
+    position: relative;
+  }
+  &__editIcon {
+    width: 2rem;
+    height: 2rem;
+    position: relative;
+    transition: all 0.3s ease; 
+    margin-left: 5px;
+    color: #5592FF;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(black, 0.1);
+      + .cityCard__tooltip {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+  &__tooltip {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+}
+
+.nightMode:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* White background */
+}

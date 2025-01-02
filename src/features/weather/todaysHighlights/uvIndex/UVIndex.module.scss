@@ -1,14 +1,15 @@
-.uvIndex {
-  display: flex;
-  flex-direction: column;
-  padding: 15px 10px 10px 10px;
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  flex: 1;
+@use '../../../../style/_mixins.scss' as *;
 
-  &__title {
-    font-size: 14px;
-    font-weight: 500;
+.uvIndex {
+  padding: 5px;
+  height: 100%;
+
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 10px;
   }
 
   &__contents {
@@ -36,7 +37,7 @@
     width: 90%;
     height: 0;
     padding-bottom: 45%;
-    background: linear-gradient(to right, #07070740, #00000090);
+    background:#5FA5ED;
     border-top-left-radius: 100% 200%; 
     border-top-right-radius: 100% 200%;
     position: relative;
@@ -46,7 +47,7 @@
     height: 0;
     padding-bottom: 55%;
     background: #f9f9f9;
-    opacity: 0.9;
+    opacity: 0.8;
     position: absolute;
     bottom: 0;
     transform-origin: bottom;
@@ -64,21 +65,66 @@
   &__value {
     font-size: 24px;
     font-weight: 700;
+    letter-spacing: 0.36px;
     span {
-      font-size: 12px;
+      font-size: 0.75rem;
       font-weight: 500;
+      color: #878787;
+      letter-spacing: 0.0225rem;
     }
     position: absolute;
-    bottom: 5%;
+    bottom: 0;
+
+    @include respond(large-tablet) {
+      font-size: 22px;
+      letter-spacing: 0.33px;
+    }
+    @include respond(tablet) {
+      font-size: 20px;
+      letter-spacing: 0.3px;
+    }
+    @include respond(medium-tablet) {
+      font-size: 16px;
+      letter-spacing: 0.24px;
+    }
   }
 
   // Indicator message
   &__indicator {
-    height: 36px;
-    font-size: 16px;
-    font-weight: 500;
+    height: 56px;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
     display: flex;
+    justify-content: center;
     align-items: center;
+    position: relative;
+    p {
+      position:absolute;
+      top: 50%;
+      @media (max-height:735px) {
+        top: 30%;
+      }
+    }
+
+    @include respond(large-tablet) {
+      font-size: 18px;
+      letter-spacing: 0.27px;
+    }
+    @include respond(tablet) {
+      font-size: 16px;
+      letter-spacing: 0.24px;
+    }
+    @include respond(medium-tablet) {
+      font-size: 13px;
+      letter-spacing: 0.195px;
+    }
+
+    @media (max-height:735px) {
+      font-size: 1.1rem;
+    }
+
   }
 }
 

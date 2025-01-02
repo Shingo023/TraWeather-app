@@ -1,23 +1,11 @@
 .todaysForecast {
-  height: 34%;
-  min-height: 252px;
-  padding-top: 10px;
 
-  &__container {
-    background-color: #D9D9D9;
+  &__forecastWrapper {
     height: 100%;
-    border-radius: 10px;
-    padding: 15px 20px 15px 20px;
-
-    h2 {
-      font-size: 20px;
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
   }
 
-  &__hourlyWeatherCards {
-    height: calc(100% - 39px);
+  &__forecastDetails {
+    margin-top: 10px;
   }
 
   // Skeleton
@@ -25,9 +13,8 @@
     background-image: linear-gradient(90deg, #f0f0f0 25%, #fafafa 50%, #f0f0f0 75%);
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite linear;
-
-    height: 24px;
-    width: 200px;
+    height: 1.5rem;
+    width: 12.5rem;
     border-radius: 6px;
   }
 }

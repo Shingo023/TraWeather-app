@@ -19,7 +19,10 @@ const FavoriteCityCardSkeleton = () => {
 
       <div className={styles.cityCard__weather}>
         <div className={styles.cityCard__currentInfo}>
-          <div className={styles.cityCard__currentDateTimeSkeleton} />
+          <h5 className={styles.cityCard__currentDateTime}>
+            <div className={styles.cityCard__currentDateTimeSkeleton} />
+          </h5>
+
           <div className={styles.cityCard__currentWeather}>
             <div className={styles.cityCard__currentWeatherIconContainer}>
               <div className={styles.cityCard__currentWeatherIconSkeleton} />
@@ -34,9 +37,7 @@ const FavoriteCityCardSkeleton = () => {
         <div className={styles.cityCard__contentRight}>
           <div className={styles.cityCard__weatherForecast}>
             <WeatherForecastSkeleton
-              iconHeight={30}
-              iconWidth={30}
-              weatherCardWidth={100}
+              className="favoriteCityCard"
               weatherCardColor="rgba(255, 255, 255, 0.3)"
               isForFavoriteCityCard={true}
             />

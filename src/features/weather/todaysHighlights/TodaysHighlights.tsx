@@ -1,74 +1,76 @@
 import SunsetAndSunrise from "./sunsetAndSunrise/SunsetAndSunrise";
 import UVIndex from "./uvIndex/UVIndex";
 import styles from "./TodaysHighlights.module.scss";
-import { WeatherDay } from "@/types";
 import Overview from "./overview/Overview";
 import { formatDate } from "@/utils/dateUtils";
 import TodaysHighlightsSkeleton from "./TodaysHighlightsSkeleton";
+import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 
-const TodaysHighlights = ({
-  todaysWeather,
-  timeZone,
-  currentDateTime,
-}: {
-  todaysWeather: WeatherDay | null;
-  timeZone: string | undefined;
-  currentDateTime: string | null;
-}) => {
-  if (!todaysWeather) {
+const TodaysHighlights = () => {
+  const {
+    dailyWeatherHighlights,
+    lastWeatherFetchDateTime,
+    todaysDate,
+    loading,
+  } = useDisplayedCityWeather();
+
+  if (loading) {
     return <TodaysHighlightsSkeleton />;
   }
 
-  const date = formatDate(todaysWeather.datetime);
+  if (!dailyWeatherHighlights) return;
 
-  const humidity = Math.round(todaysWeather.humidity);
-  const snowDepth = todaysWeather.snowdepth ?? 0;
-  const weatherOverview = todaysWeather.description;
-  const visibility = todaysWeather.visibility;
-  const feelsLikeTempMax = Math.round(todaysWeather.feelslikemax);
-  const feelsLikeTempMin = Math.round(todaysWeather.feelslikemin);
-
-  const sunrise = todaysWeather.sunrise;
-  const sunset = todaysWeather.sunset;
-  const selectedDate = todaysWeather.datetime;
-
-  const uvIndexData = (180 * todaysWeather.uvindex * 10) / 100;
+  const date = formatDate(dailyWeatherHighlights.datetime);
 
   return (
-    <div className={styles.todaysHighlights}>
+    <section className={styles.todaysHighlights}>
       <div className={styles.todaysHighlights__container}>
         <h2>
-          Daily Highlights
-          <span
-            style={{
-              fontSize: "12px",
-              fontWeight: "normal",
-              marginLeft: "8px",
-            }}
-          >
-            {date}
-          </span>
+          Highlights{" "}
+          {dailyWeatherHighlights.datetime === todaysDate ? (
+            ""
+          ) : (
+            <span>{date}</span>
+          )}
         </h2>
+
         <div className={styles.todaysHighlights__contents}>
-          <Overview
-            humidity={humidity}
-            snowDepth={snowDepth}
-            weatherOverview={weatherOverview}
-            visibility={visibility}
-            feelsLikeTempMax={feelsLikeTempMax}
-            feelsLikeTempMin={feelsLikeTempMin}
-          />
-          <UVIndex uvIndex={uvIndexData} />
-          <SunsetAndSunrise
-            timeZone={timeZone}
-            sunrise={sunrise}
-            sunset={sunset}
-            selectedDate={selectedDate}
-            currentDateTime={currentDateTime}
-          />
+          <div
+            className={`${styles.todaysHighlights__contentWrapper} ${styles["todaysHighlights__contentWrapper--overview"]}`}
+          >
+            <Overview
+              humidity={dailyWeatherHighlights.humidity}
+              snowDepth={dailyWeatherHighlights.snowDepth}
+              weatherOverview={dailyWeatherHighlights.weatherOverview}
+              visibility={dailyWeatherHighlights.visibility}
+              feelsLikeTempMax={dailyWeatherHighlights.feelsLikeTempMax}
+              feelsLikeTempMin={dailyWeatherHighlights.feelsLikeTempMin}
+            />
+          </div>
+          <div className={styles.todaysHighlights__visualContents}>
+            <div className={styles.todaysHighlights__UVContent}>
+              <div
+                className={`${styles.todaysHighlights__contentWrapper} ${styles["todaysHighlights__contentWrapper--UV"]}`}
+              >
+                <UVIndex uvIndex={dailyWeatherHighlights.uvIndexData} />
+              </div>
+            </div>
+
+            <div
+              className={`${styles.todaysHighlights__contentWrapper} ${styles["todaysHighlights__contentWrapper--sunriseSunset"]}`}
+            >
+              <SunsetAndSunrise
+                sunrise={dailyWeatherHighlights.sunrise}
+                sunset={dailyWeatherHighlights.sunset}
+                selectedDate={dailyWeatherHighlights.datetime}
+                lastWeatherFetchDateTime={lastWeatherFetchDateTime}
+                todaysDate={todaysDate}
+              />
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

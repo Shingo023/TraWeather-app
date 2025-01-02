@@ -1,26 +1,20 @@
 "use client";
 
-import { Dispatch, SetStateAction } from "react";
 import styles from "./FavoritesListHeader.module.scss";
 import { RotateCw, Trash2 } from "lucide-react";
 import { useSession } from "next-auth/react";
-import { UserFavoriteCity } from "@/types";
 import React from "react";
+import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 
-const FavoritesListHeader = ({
-  deleteActive,
-  setDeleteActive,
-  setLoading,
-  fetchWeatherData,
-  favoriteCities,
-}: {
-  deleteActive: boolean;
-  setDeleteActive: Dispatch<SetStateAction<boolean>>;
-  setLoading: Dispatch<SetStateAction<boolean>>;
-  fetchWeatherData: (cities: UserFavoriteCity[]) => Promise<void>;
-  favoriteCities: UserFavoriteCity[];
-}) => {
+const FavoritesListHeader = () => {
   const { data: session } = useSession();
+  const {
+    deleteActive,
+    setDeleteActive,
+    setLoading,
+    fetchWeatherData,
+    favoriteCitiesData,
+  } = useUserFavoriteCities();
 
   return (
     <div className={styles.favoritesList__header}>
@@ -36,10 +30,10 @@ const FavoritesListHeader = ({
       <div
         className={styles.favoritesList__iconContainer}
         onClick={() => {
-          if (!session?.user?.id) return;
+          if (!session?.user?.id || !Array.isArray(favoriteCitiesData)) return;
 
           setLoading(true);
-          fetchWeatherData(favoriteCities);
+          fetchWeatherData();
         }}
       >
         <RotateCw className={styles.favoritesList__icon} />

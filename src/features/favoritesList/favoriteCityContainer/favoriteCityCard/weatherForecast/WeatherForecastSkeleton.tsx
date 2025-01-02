@@ -2,15 +2,11 @@ import WeatherCardSkeleton from "@/features/weather/todaysForecast/weatherCard/W
 import styles from "./WeatherForecast.module.scss";
 
 const WeatherForecastSkeleton = ({
-  iconHeight,
-  iconWidth,
-  weatherCardWidth,
+  className,
   weatherCardColor,
   isForFavoriteCityCard,
 }: {
-  iconHeight: number;
-  iconWidth: number;
-  weatherCardWidth: number;
+  className?: string;
   weatherCardColor: string;
   isForFavoriteCityCard: boolean;
 }) => {
@@ -21,9 +17,7 @@ const WeatherForecastSkeleton = ({
         {skeletons.map((_, index) => (
           <WeatherCardSkeleton
             key={index}
-            iconHeight={iconHeight}
-            iconWidth={iconWidth}
-            weatherCardWidth={weatherCardWidth}
+            className={className}
             weatherCardColor={weatherCardColor}
             isForFavoriteCityCard={isForFavoriteCityCard}
           />

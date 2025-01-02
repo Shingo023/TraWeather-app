@@ -1,3 +1,5 @@
+@use '../../../style/_mixins.scss' as *;
+
 .favoritesList {   
   &__deleteButtons {
     display: flex;
@@ -11,8 +13,15 @@
     padding: 18px 0 36px 20px;
 
     transform: translateY(100%); /* Initial hidden state */
-
     transition: transform 0.3s ease-in-out; /* Smooth transition */
+
+    @include respond(tablet) {
+      bottom: 0;
+      width: 100%;
+      padding: 18px 0 0 0;
+      justify-content: center;
+      height: 138px;
+    }
 
     &.deleteActive {
       transform: translateY(0)

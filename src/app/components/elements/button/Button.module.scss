@@ -1,3 +1,5 @@
+@use '../../../../style/_mixins.scss' as *;
+
 .button {
   cursor: pointer;
   font-size: 14px;
@@ -6,7 +8,7 @@
 }
 
 .primary {
-  padding: 8px 14px;
+  padding: 0.6rem 1rem;
   font-size: 1rem;  
   color: white;
   background-color: #1d1d1d ;
@@ -15,6 +17,10 @@
   &:hover {
     background-color: #8c8aff ;
     color: #1d1d1d;
+  }
+
+  @include respond(small-tablet) {
+    letter-spacing: 0.15rem;
   }
 }
 
@@ -75,6 +81,13 @@
   height: 50px;
   padding: 15px 80px 15px 80px;
   font-size: 1.25rem;  
+  letter-spacing: 0.02rem;
   font-weight: 500;
   border-radius: 10px;
+
+  @include respond(tablet) {
+    width: 143px;
+    height: 42px;
+    padding: 10px 40px;
+  }
 }

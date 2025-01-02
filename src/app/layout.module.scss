@@ -1,6 +1,12 @@
+@use '../style/_mixins.scss' as *;
+
 .container {
   display: flex;
   height: 100vh;
+
+  @include respond(tablet) { 
+    flex-direction: column; 
+  }
 }
 
 .sidebar {
@@ -9,6 +15,20 @@
   overflow: auto;
   flex: none;
   padding: 18px 15px 18px 30px;
+
+  @include respond(large-tablet) { 
+    padding: 18px 5px 18px 18px;
+  }
+  @include respond(tablet) {
+    position: fixed;
+    bottom: 0; 
+    width: 100%; 
+    height: 63px; 
+    padding: 0; 
+    overflow: hidden;
+    z-index: 2000;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  }
 }
 
 .content {
@@ -16,4 +36,15 @@
   margin-left: 160px;
   height: 100vh;
   overflow: auto;
+  
+  @include respond(large-tablet) { 
+    margin-left: 140px;
+  }
+  @include respond(tablet) {
+    margin-left: 0; 
+    padding-bottom: 60px; 
+  }
+  @include respond(tablet) {
+    padding-bottom: 80px; 
+  }
 }

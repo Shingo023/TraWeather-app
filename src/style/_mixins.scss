@@ -1,0 +1,21 @@
+$breakpoints: (
+  small-mobile: 340px,
+  medium-mobile: 400px,
+  mobile: 480px,
+  small-tablet: 550px,
+  medium-tablet: 640px,
+  tablet: 768px,
+  large-tablet: 890px,
+  small-desktop: 1024px,
+  medium-desktop: 1180px,
+  desktop: 1280px,
+  large-desktop: 1440px
+);
+
+@mixin respond($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (max-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+}

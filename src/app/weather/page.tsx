@@ -3,83 +3,88 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { FavoriteCity } from "@/types";
-import styles from "./page.module.scss";
+import { fetchDefaultCity, fetchLocationDetails } from "@/utils/apiHelper";
+import { DefaultCityType, LocationDetailsType } from "@/types";
+import LoadingSpinner from "../components/elements/loadingSpinner/LoadingSpinner";
 
 export default function Home() {
   const router = useRouter();
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchLocationAndRedirect = () => {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          async (position) => {
-            const { latitude, longitude } = position.coords;
+  const DEFAULT_LOCATION = {
+    latitude: 49.2827291,
+    longitude: -123.1207375,
+    cityName: "Vancouver",
+    address: "Vancouver, BC, Canada",
+    placeId: "ChIJs0-pQ_FzhlQRi_OBm-qWkbs",
+  };
 
-            try {
-              const locationDetailsResponse = await fetch(
-                `/api/location-details?lat=${latitude}&lng=${longitude}`
-              );
-              const locationDetailsData = await locationDetailsResponse.json();
+  const fetchLocationAndRedirect = async () => {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
 
-              if (locationDetailsData.cityName && locationDetailsData.address) {
-                const { cityName, address, placeId } = locationDetailsData;
-
-                router.push(
-                  `/weather/${latitude}/${longitude}?place=${encodeURIComponent(
-                    cityName
-                  )}&address=${encodeURIComponent(address)}&id=${placeId}`
-                );
-                setLoading(false);
-              } else {
-                console.error("Failed to retrieve necessary location details.");
-                setLoading(false);
-              }
-            } catch (error) {
-              console.error("Error fetching location details:", error);
-              setLoading(false);
-            }
-          },
-          (error) => {
-            console.error("Error getting geolocation:", error);
-            setLoading(false);
-          }
-        );
-      } else {
-        console.error("Geolocation is not supported by this browser.");
-        setLoading(false);
-      }
-    };
-
-    const fetchDefaultCityAndRedirect = async (userId: string) => {
-      try {
-        const response = await fetch(`/api/users/${userId}/default-city`);
-
-        if (!response.ok) {
-          throw new Error("Default city not found");
-        }
-
-        const data: FavoriteCity = await response.json();
-
-        if (data) {
-          const { latitude, longitude, customName, address, placeId } = data;
+        try {
+          const locationDetails: LocationDetailsType =
+            await fetchLocationDetails(latitude, longitude);
           router.push(
             `/weather/${latitude}/${longitude}?place=${encodeURIComponent(
-              customName
-            )}&address=${encodeURIComponent(address)}&id=${placeId}`
+              locationDetails.cityName
+            )}&address=${encodeURIComponent(locationDetails.address)}&id=${
+              locationDetails.placeId
+            }`
           );
+        } catch (error) {
+          console.error("Error fetching location details:", error);
+        } finally {
           setLoading(false);
-        } else {
-          fetchLocationAndRedirect();
         }
-      } catch (error) {
-        console.error("Error fetching default city:", error);
+      },
+      (error) => {
+        let reason = "Geolocation failed.";
+        if (error.code === 1) reason = "Permission denied.";
+        else if (error.code === 2) reason = "Position unavailable.";
+        else if (error.code === 3) reason = "Request timed out.";
+        console.warn(`Using default location: ${reason}`);
+        router.push(
+          `/weather/${DEFAULT_LOCATION.latitude}/${
+            DEFAULT_LOCATION.longitude
+          }?place=${encodeURIComponent(
+            DEFAULT_LOCATION.cityName
+          )}&address=${encodeURIComponent(DEFAULT_LOCATION.address)}&id=${
+            DEFAULT_LOCATION.placeId
+          }`
+        );
+        setLoading(false);
+      }
+    );
+  };
+
+  const fetchDefaultCityAndRedirect = async (userId: string) => {
+    try {
+      const defaultCityData: DefaultCityType = await fetchDefaultCity(userId);
+
+      if (defaultCityData) {
+        const { latitude, longitude, customName, address, placeId } =
+          defaultCityData;
+        router.push(
+          `/weather/${latitude}/${longitude}?place=${encodeURIComponent(
+            customName
+          )}&address=${encodeURIComponent(address)}&id=${placeId}`
+        );
+      } else {
         fetchLocationAndRedirect();
       }
-    };
+    } catch (error) {
+      console.error("Error fetching default city:", error);
+      fetchLocationAndRedirect();
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     // Check if the user is logged in
     if (status === "authenticated" && session?.user?.id) {
       // If logged in, fetch the user's default city
@@ -91,13 +96,7 @@ export default function Home() {
   }, [router, session, status]);
 
   if (loading) {
-    return (
-      <div className={styles.loadingContainer}>
-        <div className={styles.spinner}></div>
-        <p className={styles.loadingMessage}>Loading weather data...</p>
-      </div>
-    );
+    return <LoadingSpinner message="Loading weather data..." />;
   }
-
   return null;
 }
