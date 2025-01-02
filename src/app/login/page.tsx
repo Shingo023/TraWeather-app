@@ -31,18 +31,20 @@ export default function LoginPage() {
 
   return (
     <div className={styles.login}>
-      <header className={styles.login__header}>
-        <div className={styles.login__brand}>
-          <img
-            src="/weather-icon.svg"
-            alt="Weather Icon"
-            className={styles.login__icon}
-          />
-          <h1 className={styles.login__appName}>TraWeather</h1>
-        </div>
-        <h2 className={styles.login__welcomeMessage}>Welcome Back!</h2>
-      </header>
       <div className={styles.login__container}>
+        <header className={styles.login__header}>
+          <div className={styles.login__brand}>
+            <img
+              src="/weather-icon.svg"
+              alt="Weather Icon"
+              className={styles.login__icon}
+            />
+            <h1 className={styles.login__appName}>TraWeather</h1>
+          </div>
+          <h2 className={styles.login__welcomeMessage}>
+            Welcome Back!<p>Please enter your details</p>
+          </h2>
+        </header>
         <form className={styles.login__form} onSubmit={handleSubmit}>
           {error && <p className={styles.login__error}>{error}</p>}
           <div className={styles.login__formGroup}>
@@ -69,12 +71,13 @@ export default function LoginPage() {
               />
             </label>
           </div>
-          <p className={styles.login__register}>
-            No account? <Link href="/register">Create one!</Link>
-          </p>
+
           <button type="submit" className={styles.login__button}>
             Log In
           </button>
+          <p className={styles.login__register}>
+            Don't have an account? <Link href="/register">Sigh up!</Link>
+          </p>
         </form>
       </div>
     </div>
