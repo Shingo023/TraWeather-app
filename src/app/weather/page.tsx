@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { fetchDefaultCity, fetchLocationDetails } from "@/utils/apiHelper";
@@ -20,7 +20,7 @@ export default function Home() {
     placeId: "ChIJs0-pQ_FzhlQRi_OBm-qWkbs",
   };
 
-  const fetchLocationAndRedirect = async () => {
+  const fetchLocationAndRedirect = useCallback(async () => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
@@ -59,9 +59,9 @@ export default function Home() {
         setLoading(false);
       }
     );
-  };
+  }, []);
 
-  const fetchDefaultCityAndRedirect = async (userId: string) => {
+  const fetchDefaultCityAndRedirect = useCallback(async (userId: string) => {
     try {
       const defaultCityData: DefaultCityType = await fetchDefaultCity(userId);
 
@@ -82,7 +82,7 @@ export default function Home() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     // Check if the user is logged in
@@ -93,10 +93,19 @@ export default function Home() {
       // If not logged in, use the user's current location
       fetchLocationAndRedirect();
     }
-  }, [router, session, status]);
+  }, [
+    router,
+    session,
+    status,
+    fetchDefaultCityAndRedirect,
+    fetchLocationAndRedirect,
+  ]);
 
   if (loading) {
     return <LoadingSpinner message="Loading weather data..." />;
   }
   return null;
+}
+function callBack(arg0: () => Promise<void>, arg1: never[]) {
+  throw new Error("Function not implemented.");
 }
