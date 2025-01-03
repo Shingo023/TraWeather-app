@@ -25,7 +25,7 @@ export default function WeatherPage() {
     if (!lat || !lng) return;
     updateWeatherStates(Number(lat), Number(lng));
     setLoading(false);
-  }, [lat, lng]);
+  }, [lat, lng, updateWeatherStates]);
 
   useEffect(() => {
     window.scrollTo(0, 0);

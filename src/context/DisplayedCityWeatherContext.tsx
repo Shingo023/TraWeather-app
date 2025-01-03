@@ -11,7 +11,13 @@ import { fetchDisplayedCityWeatherData } from "@/utils/apiHelper";
 import { getCurrentTimeAndDate } from "@/utils/dateUtils";
 import { iconMapping } from "@/utils/weatherIconMapping";
 import { getWeatherForNext24Hours } from "@/utils/weatherUtils";
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useCallback,
+} from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -62,7 +68,7 @@ export const DisplayedCityWeatherProvider = ({
   const [todaysDate, setTodaysDate] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const updateWeatherStates = async (lat: number, lng: number) => {
+  const updateWeatherStates = useCallback(async (lat: number, lng: number) => {
     setLoading(true);
     try {
       const weatherData = await fetchDisplayedCityWeatherData(lat, lng);
@@ -119,7 +125,7 @@ export const DisplayedCityWeatherProvider = ({
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   return (
     <DisplayedCityWeatherContext.Provider
