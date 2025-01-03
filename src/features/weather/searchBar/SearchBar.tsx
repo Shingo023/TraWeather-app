@@ -13,13 +13,14 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // "places" library: necessary for autocomplete for addresses and places
-const SearchBar = React.memo(() => {
+const SearchBar = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const [autocompleteSuggestions, setAutocompleteSuggestions] = useState<
     autocompleteSuggestion[]
   >([]);
   const [error, setError] = useState<string | null>(null);
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
+  const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
 
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -33,7 +34,7 @@ const SearchBar = React.memo(() => {
     if (address && inputValue && source === "search") {
       setInputValue(address);
     }
-  }, [searchParams]);
+  }, [searchParams, inputValue]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
@@ -78,6 +79,7 @@ const SearchBar = React.memo(() => {
     setAutocompleteSuggestions([]);
     setError(null);
     setInputValue(description);
+    setSelectedPlaceId(placeId);
 
     try {
       const coordinateData = await fetchPlaceCoordinate(placeId);
@@ -182,6 +184,9 @@ const SearchBar = React.memo(() => {
                     suggestion.description
                   )
                 }
+                aria-selected={
+                  selectedPlaceId === suggestion.place_id ? "true" : "false"
+                }
               >
                 <div
                   className={`iconContainer  ${styles.searchIcon} ${styles["searchIcon--middle"]}`}
@@ -196,6 +201,6 @@ const SearchBar = React.memo(() => {
       </div>
     </div>
   );
-});
+};
 
-export default SearchBar;
+export default React.memo(SearchBar);
