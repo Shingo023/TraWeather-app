@@ -27,15 +27,16 @@ const SidebarLink = ({
 
   const isActive = pathname.includes(path);
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!session && path === "/favorite-list") {
-      e.preventDefault();
-      toast.error("Please log in to access the favorite cities feature.");
-    }
-  };
+  // const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  //   if (!session && path === "/favorite-list") {
+  //     e.preventDefault();
+  //     toast.error("Please log in to access the favorite cities feature.");
+  //   }
+  // };
 
   return (
-    <Link className={styles.link} href={path} onClick={handleClick}>
+    <Link className={styles.link} href={path}>
+      {/* <Link className={styles.link} href={path} onClick={handleClick}> */}
       <Image
         className={styles.image}
         src={isActive ? icon : iconPale}
