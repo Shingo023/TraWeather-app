@@ -59,30 +59,33 @@ export default function Home() {
         setLoading(false);
       }
     );
-  }, []);
+  }, [DEFAULT_LOCATION, router]);
 
-  const fetchDefaultCityAndRedirect = useCallback(async (userId: string) => {
-    try {
-      const defaultCityData: DefaultCityType = await fetchDefaultCity(userId);
+  const fetchDefaultCityAndRedirect = useCallback(
+    async (userId: string) => {
+      try {
+        const defaultCityData: DefaultCityType = await fetchDefaultCity(userId);
 
-      if (defaultCityData) {
-        const { latitude, longitude, customName, address, placeId } =
-          defaultCityData;
-        router.push(
-          `/weather/${latitude}/${longitude}?place=${encodeURIComponent(
-            customName
-          )}&address=${encodeURIComponent(address)}&id=${placeId}`
-        );
-      } else {
+        if (defaultCityData) {
+          const { latitude, longitude, customName, address, placeId } =
+            defaultCityData;
+          router.push(
+            `/weather/${latitude}/${longitude}?place=${encodeURIComponent(
+              customName
+            )}&address=${encodeURIComponent(address)}&id=${placeId}`
+          );
+        } else {
+          fetchLocationAndRedirect();
+        }
+      } catch (error) {
+        console.error("Error fetching default city:", error);
         fetchLocationAndRedirect();
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching default city:", error);
-      fetchLocationAndRedirect();
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    },
+    [fetchLocationAndRedirect, router]
+  );
 
   useEffect(() => {
     // Check if the user is logged in
