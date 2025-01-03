@@ -12,15 +12,15 @@ export default function Home() {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(true);
 
-  const DEFAULT_LOCATION = {
-    latitude: 49.2827291,
-    longitude: -123.1207375,
-    cityName: "Vancouver",
-    address: "Vancouver, BC, Canada",
-    placeId: "ChIJs0-pQ_FzhlQRi_OBm-qWkbs",
-  };
-
   const fetchLocationAndRedirect = useCallback(async () => {
+    const DEFAULT_LOCATION = {
+      latitude: 49.2827291,
+      longitude: -123.1207375,
+      cityName: "Vancouver",
+      address: "Vancouver, BC, Canada",
+      placeId: "ChIJs0-pQ_FzhlQRi_OBm-qWkbs",
+    };
+
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
@@ -59,7 +59,7 @@ export default function Home() {
         setLoading(false);
       }
     );
-  }, [DEFAULT_LOCATION, router]);
+  }, [router]);
 
   const fetchDefaultCityAndRedirect = useCallback(
     async (userId: string) => {
