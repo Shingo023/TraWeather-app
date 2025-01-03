@@ -39,7 +39,7 @@ const PlaceNameEditor = ({
         <Pencil width={20} height={20} />
       </div>
       <div className={styles.cityCard__tooltip}>
-        <ToolTip message="Edit Place Name" width={130} />
+        <ToolTip message="Edit Place Name" />
       </div>
     </div>
   );

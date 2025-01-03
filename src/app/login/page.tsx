@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import styles from "./LoginPage.module.scss";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -34,10 +35,12 @@ export default function LoginPage() {
       <div className={styles.login__container}>
         <header className={styles.login__header}>
           <div className={styles.login__brand}>
-            <img
+            <Image
               src="/weather-icon.svg"
               alt="Weather Icon"
-              className={styles.login__icon}
+              width={25}
+              height={25}
+              priority
             />
             <h1 className={styles.login__appName}>TraWeather</h1>
           </div>
@@ -76,7 +79,7 @@ export default function LoginPage() {
             Log In
           </button>
           <p className={styles.login__register}>
-            Don't have an account? <Link href="/register">Sigh up!</Link>
+            Don&apos;t have an account? <Link href="/register">Sigh up!</Link>
           </p>
         </form>
       </div>
