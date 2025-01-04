@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
-    "@prisma/client": "^5.19.1",
+    "@prisma/client": "^6.1.0",
     "@react-google-maps/api": "^2.19.3",
     "@vercel/postgres": "^0.10.0",
     "bcrypt": "^5.1.1",
