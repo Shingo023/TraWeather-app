@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { fetchDefaultCity, fetchLocationDetails } from "@/utils/apiHelper";
@@ -12,15 +12,15 @@ export default function Home() {
   const { data: session, status } = useSession();
   const [loading, setLoading] = useState(true);
 
-  const DEFAULT_LOCATION = {
-    latitude: 49.2827291,
-    longitude: -123.1207375,
-    cityName: "Vancouver",
-    address: "Vancouver, BC, Canada",
-    placeId: "ChIJs0-pQ_FzhlQRi_OBm-qWkbs",
-  };
+  const fetchLocationAndRedirect = useCallback(async () => {
+    const DEFAULT_LOCATION = {
+      latitude: 49.2827291,
+      longitude: -123.1207375,
+      cityName: "Vancouver",
+      address: "Vancouver, BC, Canada",
+      placeId: "ChIJs0-pQ_FzhlQRi_OBm-qWkbs",
+    };
 
-  const fetchLocationAndRedirect = async () => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
@@ -59,30 +59,33 @@ export default function Home() {
         setLoading(false);
       }
     );
-  };
+  }, [router]);
 
-  const fetchDefaultCityAndRedirect = async (userId: string) => {
-    try {
-      const defaultCityData: DefaultCityType = await fetchDefaultCity(userId);
+  const fetchDefaultCityAndRedirect = useCallback(
+    async (userId: string) => {
+      try {
+        const defaultCityData: DefaultCityType = await fetchDefaultCity(userId);
 
-      if (defaultCityData) {
-        const { latitude, longitude, customName, address, placeId } =
-          defaultCityData;
-        router.push(
-          `/weather/${latitude}/${longitude}?place=${encodeURIComponent(
-            customName
-          )}&address=${encodeURIComponent(address)}&id=${placeId}`
-        );
-      } else {
+        if (defaultCityData) {
+          const { latitude, longitude, customName, address, placeId } =
+            defaultCityData;
+          router.push(
+            `/weather/${latitude}/${longitude}?place=${encodeURIComponent(
+              customName
+            )}&address=${encodeURIComponent(address)}&id=${placeId}`
+          );
+        } else {
+          fetchLocationAndRedirect();
+        }
+      } catch (error) {
+        console.error("Error fetching default city:", error);
         fetchLocationAndRedirect();
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching default city:", error);
-      fetchLocationAndRedirect();
-    } finally {
-      setLoading(false);
-    }
-  };
+    },
+    [fetchLocationAndRedirect, router]
+  );
 
   useEffect(() => {
     // Check if the user is logged in
@@ -93,10 +96,19 @@ export default function Home() {
       // If not logged in, use the user's current location
       fetchLocationAndRedirect();
     }
-  }, [router, session, status]);
+  }, [
+    router,
+    session,
+    status,
+    fetchDefaultCityAndRedirect,
+    fetchLocationAndRedirect,
+  ]);
 
   if (loading) {
     return <LoadingSpinner message="Loading weather data..." />;
   }
   return null;
+}
+function callBack(arg0: () => Promise<void>, arg1: never[]) {
+  throw new Error("Function not implemented.");
 }

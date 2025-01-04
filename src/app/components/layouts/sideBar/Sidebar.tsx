@@ -12,6 +12,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { getInitials } from "@/utils/getInitials";
 import useMediaQuery from "@/hooks/useMediaQuery";
+import Link from "next/link";
 
 const Sidebar = () => {
   const { data: session, status } = useSession();
@@ -58,7 +59,7 @@ const Sidebar = () => {
               <ArrowLeftStartOnRectangleIcon
                 className={styles.sidebar__logIcon}
               />
-              <p>Log Out</p>
+              <p>Logout</p>
             </div>
           </div>
         </>
@@ -80,23 +81,23 @@ const Sidebar = () => {
               alt={"favorite-list-icon"}
             />
             {isTablet ? (
-              <div className={styles.sidebar__log} onClick={() => signIn()}>
+              <Link className={styles.sidebar__log} href="/login">
                 <ArrowRightStartOnRectangleIcon
                   className={styles.sidebar__logIcon}
                 />
-                <p>Log In</p>
-              </div>
+                <p>Login</p>
+              </Link>
             ) : (
               <></>
             )}
           </div>
           {!isTablet ? (
-            <div className={styles.sidebar__log} onClick={() => signIn()}>
+            <Link className={styles.sidebar__log} href="/login">
               <ArrowRightStartOnRectangleIcon
                 className={styles.sidebar__logIcon}
               />
-              <p>Log In</p>
-            </div>
+              <p>Login</p>
+            </Link>
           ) : (
             <></>
           )}

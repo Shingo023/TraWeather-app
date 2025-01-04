@@ -26,7 +26,7 @@ const TodaysForecast = () => {
     <section className={styles.todaysForecast}>
       <div className={styles.todaysForecast__forecastWrapper}>
         {dailyWeatherHighlights.datetime === todaysDate ? (
-          <h2>Today's Forecast</h2>
+          <h2>Today&apos;s Forecast</h2>
         ) : (
           <h2>
             Daily Forecast

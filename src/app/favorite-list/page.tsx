@@ -35,7 +35,13 @@ const FavoriteList = () => {
       return;
 
     fetchWeatherData();
-  }, [session?.user?.id, favoriteCitiesReady]);
+  }, [
+    session?.user?.id,
+    favoriteCitiesReady,
+    favoriteCitiesData,
+    fetchWeatherData,
+    weatherFetched,
+  ]);
 
   return (
     <div className={styles.favoritesList}>

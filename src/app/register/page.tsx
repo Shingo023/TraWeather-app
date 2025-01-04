@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import styles from "./RegisterForm.module.scss";
+import Image from "next/image";
 
 export default function RegisterForm() {
   const [name, setName] = useState("");
@@ -72,10 +73,13 @@ export default function RegisterForm() {
       <form className={styles.register__form} onSubmit={handleSubmit}>
         {error && <p className={styles.register__error}>{error}</p>}
         <div className={styles.register__brand}>
-          <img
+          <Image
             src="/weather-icon.svg"
             alt="Weather Icon"
-            className={styles.register__icon}
+            className={styles.login__icon}
+            width={25}
+            height={25}
+            priority
           />
           <h1 className={styles.register__appName}>TraWeather</h1>
         </div>

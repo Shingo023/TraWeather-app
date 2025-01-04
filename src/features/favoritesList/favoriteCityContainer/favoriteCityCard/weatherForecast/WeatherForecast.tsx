@@ -48,12 +48,11 @@ const WeatherForecast = ({
 
   useEffect(() => {
     checkScrollPosition(); // Initial check
-    scrollContainer.current?.addEventListener("scroll", checkScrollPosition);
+    const scrollElement = scrollContainer.current;
+
+    scrollElement?.addEventListener("scroll", checkScrollPosition);
     return () =>
-      scrollContainer.current?.removeEventListener(
-        "scroll",
-        checkScrollPosition
-      );
+      scrollElement?.removeEventListener("scroll", checkScrollPosition);
   }, []);
 
   return (

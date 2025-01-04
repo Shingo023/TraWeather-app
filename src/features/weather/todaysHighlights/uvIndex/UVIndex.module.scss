@@ -67,7 +67,7 @@
     font-weight: 700;
     letter-spacing: 0.36px;
     span {
-      font-size: 0.75rem;
+      font-size: 12px;
       font-weight: 500;
       color: #878787;
       letter-spacing: 0.0225rem;
@@ -86,6 +86,10 @@
     @include respond(medium-tablet) {
       font-size: 16px;
       letter-spacing: 0.24px;
+    }
+    @include respond(mobile) {
+      font-size: 22px;
+      letter-spacing: 0.33px;
     }
   }
 
