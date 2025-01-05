@@ -40,6 +40,7 @@ const Sidebar = () => {
               icon={"/favorite-list-icon.svg"}
               iconPale={"/favorite-list-icon-pale.svg"}
               alt={"favorite-list-icon"}
+              prefetch={false}
             />
           </div>
 

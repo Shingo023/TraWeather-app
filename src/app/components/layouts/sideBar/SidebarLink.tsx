@@ -13,6 +13,7 @@ type SidebarLinkProps = {
   icon: string;
   iconPale: string;
   alt: string;
+  prefetch?: boolean;
 };
 
 const SidebarLink = ({
@@ -21,6 +22,7 @@ const SidebarLink = ({
   icon,
   iconPale,
   alt,
+  prefetch = true,
 }: SidebarLinkProps) => {
   const { data: session } = useSession();
   const pathname = usePathname();
@@ -39,7 +41,7 @@ const SidebarLink = ({
       className={styles.link}
       href={path}
       onClick={handleClick}
-      prefetch={false}
+      prefetch={prefetch}
     >
       <Image
         className={styles.image}
