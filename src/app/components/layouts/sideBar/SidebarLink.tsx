@@ -35,7 +35,12 @@ const SidebarLink = ({
   };
 
   return (
-    <Link className={styles.link} href={path} onClick={handleClick}>
+    <Link
+      className={styles.link}
+      href={path}
+      onClick={handleClick}
+      prefetch={false}
+    >
       <Image
         className={styles.image}
         src={isActive ? icon : iconPale}
