@@ -48,7 +48,15 @@ const FavoriteList = () => {
       <FavoritesListHeader />
 
       <div className={styles.favoritesList__favoritesContainer}>
-        {favoriteCitiesWithWeather.length === 0 ? (
+        {loading ? (
+          <div className={styles.favoritesList}>
+            {Array(favoriteCitiesData?.length || 3)
+              .fill(null)
+              .map((_, index) => (
+                <FavoriteCityCardSkeleton key={index} />
+              ))}
+          </div>
+        ) : favoriteCitiesWithWeather.length === 0 ? (
           <div className={styles.favoritesList__notification}>
             <h1>You have no favorite places yet.</h1>
             <p>
@@ -56,14 +64,6 @@ const FavoriteList = () => {
               star icon to add them to your favorites list!
             </p>
             <Link href={"/weather"}>Search for favorite places</Link>
-          </div>
-        ) : loading ? (
-          <div className={styles.favoritesList}>
-            {Array(favoriteCitiesData?.length ?? 0)
-              .fill(null)
-              .map((_, index) => (
-                <FavoriteCityCardSkeleton key={index} />
-              ))}
           </div>
         ) : (
           favoriteCitiesWithWeather.map((favoriteCityWithWeather) => {
