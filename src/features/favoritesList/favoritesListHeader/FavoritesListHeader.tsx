@@ -16,28 +16,36 @@ const FavoritesListHeader = () => {
     favoriteCitiesData,
   } = useUserFavoriteCities();
 
+  const favoriteCityExists = favoriteCitiesData!.length > 0;
+
   return (
     <div className={styles.favoritesList__header}>
-      <div
-        className={`${styles.favoritesList__iconContainer} ${
-          deleteActive ? styles.deleteActive : ""
-        }`}
-        onClick={() => setDeleteActive((prev) => !prev)}
-      >
-        <Trash2 className={styles.favoritesList__icon} />
-      </div>
-      <div className={styles.favoritesList__headerTitle}>Favorite List</div>
-      <div
-        className={styles.favoritesList__iconContainer}
-        onClick={() => {
-          if (!session?.user?.id || !Array.isArray(favoriteCitiesData)) return;
+      {favoriteCityExists ? (
+        <div
+          className={`${styles.favoritesList__iconContainer} ${
+            deleteActive ? styles.deleteActive : ""
+          }`}
+          onClick={() => setDeleteActive((prev) => !prev)}
+        >
+          <Trash2 className={styles.favoritesList__icon} />
+        </div>
+      ) : null}
 
-          setLoading(true);
-          fetchWeatherData();
-        }}
-      >
-        <RotateCw className={styles.favoritesList__icon} />
-      </div>
+      <div className={styles.favoritesList__headerTitle}>Favorite List</div>
+      {favoriteCityExists ? (
+        <div
+          className={styles.favoritesList__iconContainer}
+          onClick={() => {
+            if (!session?.user?.id || !Array.isArray(favoriteCitiesData))
+              return;
+
+            setLoading(true);
+            fetchWeatherData();
+          }}
+        >
+          <RotateCw className={styles.favoritesList__icon} />
+        </div>
+      ) : null}
     </div>
   );
 };

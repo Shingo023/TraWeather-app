@@ -22,6 +22,14 @@
     padding: 5px 5px;
     gap: 3px;
   }
+
+  &--disabled {
+    cursor: not-allowed; 
+    
+    &:hover {
+      background-color: unset;
+    }
+  }
 }
 
 .link.disabled {

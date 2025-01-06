@@ -15,6 +15,8 @@ import { useParams, useSearchParams } from "next/navigation";
 import { useDisplayedCityWeather } from "@/context/DisplayedCityWeatherContext";
 import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
 import { formatWeatherDataForFavoriteList } from "@/utils/weatherUtils";
+import { useRef, useState } from "react";
+import LinkTooltip from "@/app/components/elements/toolTip/LinkTooltip";
 
 const StarIcon = () => {
   const { data: session } = useSession();
@@ -25,6 +27,8 @@ const StarIcon = () => {
   const cityToDisplay = searchParams.get("place");
   const address = searchParams.get("address");
   const placeId = searchParams.get("id");
+  const linkRef = useRef(null);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   const {
     favoriteCitiesPlaceIds,
@@ -36,12 +40,12 @@ const StarIcon = () => {
     useDisplayedCityWeather();
 
   const bookmarkCity = async () => {
-    if (!session) {
-      toast.error("You need to log in to use the favorites feature.");
-      return;
-    }
+    // if (!session) {
+    //   toast.error("You need to log in to use the favorites feature.");
+    //   return;
+    // }
 
-    if (!placeId || !cityToDisplay || !address || !timezone) return;
+    if (!session || !placeId || !cityToDisplay || !address || !timezone) return;
 
     if (favoriteCitiesPlaceIds && favoriteCitiesPlaceIds.length >= 5) {
       return toast.error(
@@ -140,6 +144,8 @@ const StarIcon = () => {
   };
 
   const handleStarClick = () => {
+    if (!session) return;
+
     if (placeId && favoriteCitiesPlaceIds?.includes(placeId)) {
       unbookmarkCity();
     } else {
@@ -148,7 +154,16 @@ const StarIcon = () => {
   };
 
   return (
-    <div className={`iconContainer ${styles.starIcon}`}>
+    <div
+      className={`iconContainer ${styles.starIcon}`}
+      ref={!session ? linkRef : null}
+      onMouseEnter={() => {
+        if (!session) setShowTooltip(true);
+      }}
+      onMouseLeave={() => {
+        if (!session) setShowTooltip(false);
+      }}
+    >
       <Star
         className={`icon ${
           placeId && favoriteCitiesPlaceIds?.includes(placeId)
@@ -157,8 +172,15 @@ const StarIcon = () => {
         }`}
         onClick={handleStarClick}
         style={{
-          cursor: placeId ? "pointer" : "not-allowed",
+          cursor: !placeId || !session ? "not-allowed" : "pointer",
         }}
+      />
+      <LinkTooltip
+        text="Please login to bookmark cities."
+        targetRef={linkRef}
+        visible={showTooltip}
+        topToAdjust={-40}
+        className="starIcon"
       />
     </div>
   );

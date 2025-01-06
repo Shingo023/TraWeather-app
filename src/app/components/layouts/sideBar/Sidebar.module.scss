@@ -41,6 +41,10 @@
     }
   }
 
+  &__linkWrapper {
+    position: relative;
+  }
+
   &__user {
     margin-bottom: 40px;
 
@@ -94,10 +98,6 @@
     padding: 6px 6px;
     border-radius: 8px;
     transition: all 0.3s ease; 
-
-    // p {
-    //   letter-spacing: -0.9px;
-    // }
 
     &:hover {
       background-color: rgba(180, 180, 180, 0.5);
