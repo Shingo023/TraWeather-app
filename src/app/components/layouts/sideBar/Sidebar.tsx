@@ -1,9 +1,9 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import styles from "./Sidebar.module.scss";
 import SidebarLink from "./SidebarLink";
-import { memo } from "react";
+import { memo, useRef, useState } from "react";
 import React from "react";
 import {
   ArrowLeftStartOnRectangleIcon,
@@ -13,9 +13,12 @@ import {
 import { getInitials } from "@/utils/getInitials";
 import useMediaQuery from "@/hooks/useMediaQuery";
 import Link from "next/link";
+import LinkTooltip from "../../elements/toolTip/LinkTooltip";
 
 const Sidebar = () => {
   const { data: session, status } = useSession();
+  const linkRef = useRef(null);
+  const [showListLinkTooltip, setShowListLinkTooltip] = useState(false);
   const isTablet = useMediaQuery("(max-width: 768px)");
 
   const handleSignOut = () => {
@@ -40,6 +43,7 @@ const Sidebar = () => {
               icon={"/favorite-list-icon.svg"}
               iconPale={"/favorite-list-icon-pale.svg"}
               alt={"favorite-list-icon"}
+              prefetch={false}
             />
           </div>
 
@@ -73,13 +77,30 @@ const Sidebar = () => {
               iconPale={"/weather-icon-pale.svg"}
               alt={"weather-icon"}
             />
-            <SidebarLink
-              linkName={"Favorite List"}
-              path={"/favorite-list"}
-              icon={"/favorite-list-icon.svg"}
-              iconPale={"/favorite-list-icon-pale.svg"}
-              alt={"favorite-list-icon"}
-            />
+            <div
+              className={styles.sidebar__linkWrapper}
+              ref={linkRef}
+              onMouseEnter={() => setShowListLinkTooltip(true)}
+              onMouseLeave={() => setShowListLinkTooltip(false)}
+            >
+              <SidebarLink
+                linkName={"Favorite List"}
+                path={"/favorite-list"}
+                icon={"/favorite-list-icon.svg"}
+                iconPale={"/favorite-list-icon-pale.svg"}
+                alt={"favorite-list-icon"}
+                prefetch={false}
+                disabled={true}
+              />
+              <LinkTooltip
+                text="Please login to use Favorite List."
+                targetRef={linkRef}
+                visible={showListLinkTooltip}
+                topToAdjust={!isTablet ? -80 : 45}
+                className="favoritesLink"
+              />
+            </div>
+
             {isTablet ? (
               <Link className={styles.sidebar__log} href="/login">
                 <ArrowRightStartOnRectangleIcon

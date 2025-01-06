@@ -10,6 +10,7 @@ import EditPlaceNameModal from "@/features/favoritesList/editPlaceNameModal/Edit
 import FavoritesListHeader from "@/features/favoritesList/favoritesListHeader/FavoritesListHeader";
 import DeleteActionPanel from "@/features/favoritesList/deleteActionPanel/DeleteActionPanel";
 import { useUserFavoriteCities } from "@/context/UserFavoriteCitiesContext";
+import Link from "next/link";
 
 const FavoriteList = () => {
   const {
@@ -17,7 +18,6 @@ const FavoriteList = () => {
     favoriteCitiesWithWeather,
     fetchWeatherData,
     loading,
-    setLoading,
     isEditModalOpen,
     setIsEditModalOpen,
     weatherFetched,
@@ -48,7 +48,16 @@ const FavoriteList = () => {
       <FavoritesListHeader />
 
       <div className={styles.favoritesList__favoritesContainer}>
-        {loading ? (
+        {favoriteCitiesWithWeather.length === 0 ? (
+          <div className={styles.favoritesList__notification}>
+            <h1>You have no favorite places yet.</h1>
+            <p>
+              Search for your favorite places on the weather page and click the
+              star icon to add them to your favorites list!
+            </p>
+            <Link href={"/weather"}>Search for favorite places</Link>
+          </div>
+        ) : loading ? (
           <div className={styles.favoritesList}>
             {Array(favoriteCitiesData?.length ?? 0)
               .fill(null)

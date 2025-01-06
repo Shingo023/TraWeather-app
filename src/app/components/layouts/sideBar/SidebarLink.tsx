@@ -3,9 +3,6 @@ import Link from "next/link";
 import React from "react";
 import styles from "./SidebarLink.module.scss";
 import { usePathname } from "next/navigation";
-import { useSession } from "next-auth/react";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 type SidebarLinkProps = {
   linkName: string;
@@ -13,6 +10,8 @@ type SidebarLinkProps = {
   icon: string;
   iconPale: string;
   alt: string;
+  prefetch?: boolean;
+  disabled?: boolean;
 };
 
 const SidebarLink = ({
@@ -21,25 +20,24 @@ const SidebarLink = ({
   icon,
   iconPale,
   alt,
+  prefetch = true,
+  disabled = false,
 }: SidebarLinkProps) => {
-  const { data: session } = useSession();
   const pathname = usePathname();
 
   const isActive = pathname.includes(path);
 
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!session && path === "/favorite-list") {
-      e.preventDefault();
-      toast.error("Please log in to access the favorite cities feature.");
-    }
-  };
-
   return (
     <Link
-      className={styles.link}
+      // href={disabled ? "#" : path}
       href={path}
-      onClick={handleClick}
-      prefetch={false}
+      prefetch={prefetch}
+      onClick={(e) => {
+        if (disabled) {
+          e.preventDefault();
+        }
+      }}
+      className={`${styles.link} ${disabled ? styles["link--disabled"] : ""}`}
     >
       <Image
         className={styles.image}
