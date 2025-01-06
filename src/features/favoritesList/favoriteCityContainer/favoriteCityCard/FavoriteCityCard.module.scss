@@ -169,7 +169,11 @@
   &__currentWeather {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 1rem;
+
+    @include respond(small-tablet) {
+      gap: 5px;
+    }
   }
   &__currentWeatherIconContainer {
     display: flex;
