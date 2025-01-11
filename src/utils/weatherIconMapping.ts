@@ -61,10 +61,10 @@ export const getBackgroundWeather = (
 
 export const precipIconMapping = {
   "No Precipitation": "/rain-icons/rain-drop.svg",
-  "Light Rain": "/rain-icons/light-rain.svg",
-  "Moderate Rain": "/rain-icons/moderate-rain.svg",
-  "Heavy Rain": "/rain-icons/heavy-rain.svg",
-  "Torrential Rain": "/rain-icons/torrential-rain.svg",
+  "Light Precipitation": "/rain-icons/light-rain.svg",
+  "Moderate Precipitation": "/rain-icons/moderate-rain.svg",
+  "Heavy Precipitation": "/rain-icons/heavy-rain.svg",
+  "Torrential Precipitation": "/rain-icons/torrential-rain.svg",
 };
 
 export const windIconMapping = {
