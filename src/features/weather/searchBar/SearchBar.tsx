@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { autocompleteSuggestion } from "@/types";
 import { debounce } from "@/utils/debounce";
 import styles from "./SearchBar.module.scss";
@@ -22,19 +22,20 @@ const SearchBar = () => {
   const [showSearchBar, setShowSearchBar] = useState<boolean>(false);
   const [selectedPlaceId, setSelectedPlaceId] = useState<string | null>(null);
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
   const isMobile = useMediaQuery("(max-width: 480px)");
 
-  useEffect(() => {
-    const address = searchParams.get("address");
-    const source = searchParams.get("source");
+  // useEffect(() => {
+  //   const address = searchParams.get("address");
+  //   const source = searchParams.get("source");
 
-    // Only set the address in the input if the source is 'search'
-    if (address && inputValue && source === "search") {
-      setInputValue(address);
-    }
-  }, [searchParams, inputValue]);
+  //   // Only set the address in the input if the source is 'search'
+  //   if (address && source === "search") {
+  //     setInputValue(address);
+  //   }
+  // }, [searchParams, inputValue]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target.value;
@@ -68,6 +69,7 @@ const SearchBar = () => {
   const clearInput = () => {
     setInputValue("");
     setAutocompleteSuggestions([]);
+    inputRef.current?.focus();
   };
 
   // Handle place selection and fetch weather data
@@ -87,7 +89,8 @@ const SearchBar = () => {
 
       if (latitude && longitude && placeName && description && placeId) {
         router.push(
-          `/weather/${latitude}/${longitude}?place=${placeName}&address=${description}&id=${placeId}&source=search`
+          // `/weather/${latitude}/${longitude}?place=${placeName}&address=${description}&id=${placeId}&source=search`
+          `/weather/${latitude}/${longitude}?place=${placeName}&address=${description}&id=${placeId}`
         );
       } else {
         toast.error("Invalid place data. Please try again.");
@@ -115,6 +118,9 @@ const SearchBar = () => {
       }
       return !prev;
     });
+    if (!showSearchBar) {
+      inputRef.current?.focus();
+    }
   };
 
   return (
@@ -138,6 +144,7 @@ const SearchBar = () => {
         }`}
       >
         <input
+          ref={inputRef}
           type="text"
           placeholder="Search places ..."
           value={inputValue}

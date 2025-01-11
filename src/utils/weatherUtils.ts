@@ -31,11 +31,11 @@ export const getWindStrength = (windspeed: number) => {
 export const getPrecipIntensity = (precip: number) => {
   if (precip === 0) return "No Precipitation";
 
-  if (precip < 2.5) return "Light Rain";
-  if (precip < 7.6) return "Moderate Rain";
-  if (precip < 50) return "Heavy Rain";
+  if (precip < 2.5) return "Light Precipitation";
+  if (precip < 7.6) return "Moderate Precipitation";
+  if (precip < 50) return "Heavy Precipitation";
 
-  return "Torrential Rain";
+  return "Torrential Precipitation";
 };
 
 // Function to return visibility index based on the visibility in km
