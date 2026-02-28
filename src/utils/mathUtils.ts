@@ -129,9 +129,23 @@ export function isOutsideDaytime(
   sunset: string,
   targetTime: string
 ): boolean {
-  // Extract the time portion from the target time
-  const targetTimeString = new Date(targetTime).toTimeString().split(" ")[0]; // Format: "HH:MM:SS"
 
-  // Compare the times as strings
+  const match = targetTime.match(/(\d{1,2}):(\d{2})\s?(AM|PM)/i);
+
+  if (!match) {
+    console.warn("Invalid targetTime format:", targetTime);
+    return false; 
+  }
+
+  let hour = Number(match[1]);
+  const minute = Number(match[2]);
+  const period = match[3].toUpperCase();
+
+  if (period === "PM" && hour !== 12) hour += 12;
+  if (period === "AM" && hour === 12) hour = 0;
+
+  const targetTimeString =
+    `${String(hour).padStart(2, "0")}:${String(minute).padStart(2, "0")}:00`;
+
   return targetTimeString < sunrise || targetTimeString > sunset;
 }
